@@ -23,7 +23,7 @@
 | `작업기록/<과목>/<시험id>/` | 답 제거 단계의 결정(`fixes.json`, `meta.json`) — 수업별 PDF 재생성에 필요 |
 | `문제지/<과목>/` | 수업별 PDF, `00_전체_수업순.pdf`, `README.md`(목차), `시험별/`(시험 통째 PDF) |
 | `원본/<과목>/` | 처리 끝난 원본 |
-| `fonts/` | KoPubWorld 바탕체 Pro Medium / Bold |
+| `fonts/` | 문제지 폰트 2개 (현재 Apple SD 산돌고딕 Neo Medium / SemiBold). `setup_fonts.py`가 파일명으로 보통/굵은체를 구분 |
 | `work/` | 임시, 커밋 금지 |
 
 ## 여러 파일

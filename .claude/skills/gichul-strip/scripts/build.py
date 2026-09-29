@@ -35,7 +35,7 @@ def src_of(path):
 
 F = 1.30259            # wkhtmltopdf lays out at 125dpi, prints at 96dpi -> pre-scale all CSS
 BODY_MM = 186.0        # A4 210 - 12 - 12
-FAMILY = 'KoPubBatangTT'
+FAMILY = 'GichulTT'     # registered by setup_fonts.py from whatever font is in fonts/
 CIRCLE = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳'
 HANGUL = re.compile(r'[\uac00-\ud7a3\u3131-\u318e]')
 NO_SPACE_BEFORE = '.,)]}?!;:%’”℃/'
@@ -47,6 +47,37 @@ APPLIED = []
 BOX_PAD_V = 2.4
 BYLINE_GAP = 3.0
 BYLINE_GAP_BF = 0.95
+
+
+# characters the chosen font may lack (e.g. Apple SD Gothic Neo has no ₀ ₅ · −):
+# replaced before rendering so the text layer stays in our font instead of a fallback
+_SUB = dict(zip('₀₁₂₃₄₅₆₇₈₉₊₋', '0123456789+−'))
+_SUP = dict(zip('⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻', '0123456789+−'))
+_ALT = {'·': '∙ㆍ・•', '−': '–-', '×': 'x', 'é': 'e', 'ö': 'o', '℃': '', '→': '', '↑': '', '↓': ''}
+
+
+def glyph_safe(doc):
+    """Swap characters missing from the installed font. Returns (doc, still-missing chars)."""
+    from fontTools.ttLib import TTFont
+    cm = TTFont(os.path.expanduser(f'~/.fonts/{FAMILY}-Regular.ttf')).getBestCmap()
+    have = lambda c: ord(c) in cm
+    left = set()
+
+    def one(c):
+        if c.isascii() or have(c):
+            return c
+        for tbl, tag in ((_SUB, 'sub'), (_SUP, 'sup')):
+            if c in tbl:
+                return f'<{tag}>{one(tbl[c])}</{tag}>'
+        for alt in _ALT.get(c, ''):
+            if have(alt):
+                return alt
+        left.add(c)
+        return c
+
+    head, sep, body = doc.partition('<body>')
+    body = re.sub(r'>([^<]+)<', lambda m: '>' + ''.join(one(c) for c in m.group(1)) + '<', body)
+    return head + sep + body, sorted(left)
 
 
 def mm(v): return f'{v * F:.3f}mm'
@@ -306,6 +337,7 @@ ol.ch li {{ font-size:{pt(11)}; font-weight:400; padding-left:{mm(6.4)}; text-in
 .figwrap {{ text-align:center; margin:{mm(2.0)} 0; text-indent:0; }}
 .figwrap img, .gimg img {{ display:inline-block; }}
 sup {{ font-size:70%; line-height:0; vertical-align:super; }}
+sub {{ font-size:70%; line-height:0; vertical-align:sub; }}
 .qhead {{ page-break-inside:avoid; page-break-after:avoid; }}
 .grid {{ font-size:0; }}
 .cell {{ display:inline-block; vertical-align:top; width:49.5%; page-break-inside:avoid;
@@ -328,6 +360,9 @@ def main():
 
 def render_pdf(doc, work, out, title):
     """HTML -> wkhtmltopdf -> 'n / N' page numbers. Returns page count."""
+    doc, left = glyph_safe(doc)
+    if left:
+        print(f"note: font lacks {''.join(left)} -> drawn with a fallback font")
     hp = os.path.join(work, 'worksheet.html'); open(hp, 'w', encoding='utf-8').write(doc)
     raw = os.path.join(work, 'raw.pdf')
     subprocess.run(['wkhtmltopdf', '--enable-local-file-access', '-q', '--page-size', 'A4',

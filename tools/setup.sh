@@ -17,12 +17,10 @@ fi
 command -v wkhtmltopdf >/dev/null && wkhtmltopdf --version
 
 echo "== Fonts"
-if fc-list | grep -q KoPubBatangTT; then
-  echo "이미 설치됨"
-elif ls fonts/*.otf fonts/*.ttf >/dev/null 2>&1; then
+if ls fonts/*.otf fonts/*.ttf fonts/*.OTF fonts/*.TTF >/dev/null 2>&1; then
   python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
 else
-  echo "!! fonts/ 폴더에 KoPubWorld 바탕체 Pro Medium/Bold 파일이 없습니다. 사용자에게 올려 달라고 할 것."
+  echo "!! fonts/ 폴더에 폰트 파일이 없습니다 (보통체+굵은체 2개, 예: AppleSDGothicNeo-Medium/SemiBold.ttf). 사용자에게 올려 달라고 할 것."
 fi
 command -v node >/dev/null || echo "!! node 없음 — 과목정보 새로 만들기(make_subject_info.py)만 안 됨"
 

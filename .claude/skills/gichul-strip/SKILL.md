@@ -33,11 +33,11 @@ between user skills and plugins).
 
 ### 1. Fonts
 ```bash
-python $S/setup_fonts.py            # needs KoPubWorld Batang Pro Medium + Bold in uploads
+python $S/setup_fonts.py fonts      # regular + bold file of one font in fonts/ (now Apple SD Gothic Neo Medium/SemiBold)
 ```
 If either font file is missing, ask the user to upload it before going further.
-The script copies the OTFs to `~/.fonts` and also registers TrueType copies as
-family `KoPubBatangTT`. That second part matters: wkhtmltopdf draws `@font-face`
+The script registers TrueType copies of the two files as
+family `GichulTT` (the builder only knows that name, so any font works). That matters: wkhtmltopdf draws `@font-face`
 and CFF-OTF fonts as outlines, which leaves a PDF with no text layer (unsearchable,
 and the leak scan in step 5 would silently see nothing).
 

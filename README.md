@@ -3,13 +3,14 @@
 기출 PDF를 올리면 Claude가 **정답 표시를 지우고, 문항마다 어느 수업에서 나왔는지 분류해서,
 수업별 문제지 PDF**로 만들어 줍니다. 해마다 새 기출을 올리면 같은 수업 파일에 이어서 쌓입니다.
 
-> ⚠️ **먼저 저장소를 비공개로 바꿔 주세요.** 지금 공개(Public) 상태라면 기출이 누구에게나 보입니다.
-> 저장소 위쪽 `Settings` → 맨 아래 **Danger Zone** → `Change visibility` → `Make private`.
+> ⚠️ **저장소는 반드시 비공개(Private)로 두세요.** 공개로 바뀌면 기출이 누구에게나 보입니다.
 > 비공개가 아니면 Claude가 기출 파일을 저장(커밋)하지 않도록 막혀 있습니다.
+> (바꾸는 곳: 저장소 `Settings` → 맨 아래 **Danger Zone** → `Change visibility`)
 
 ## 처음 한 번만
-1. 위 안내대로 저장소를 **Private**로 바꾸기
-2. `fonts` 폴더에 KoPubWorld 바탕체 Pro **Medium**, **Bold** 두 파일(.otf) 올리기
+1. 저장소가 **Private**인지 확인 (지금은 Private입니다)
+2. `fonts` 폴더에 `AppleSDGothicNeo-Medium.ttf`, `AppleSDGothicNeo-SemiBold.ttf` 두 파일 올리기
+   (다른 폰트로 바꾸고 싶으면 `fonts/README.md` 참고)
 
 ## 매번 할 일
 1. **기출 올리기** — `올리기` 폴더 → 과목 폴더(예: `진단의기본`) → `Add file → Upload files`
