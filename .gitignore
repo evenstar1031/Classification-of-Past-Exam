@@ -1,0 +1,6 @@
+# 작업 중 임시 폴더 (추출 결과, 미리보기 이미지)
+work/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
