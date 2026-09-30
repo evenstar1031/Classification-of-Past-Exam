@@ -359,7 +359,7 @@ def main():
 
 
 MARGIN_PT = 11 / 25.4 * 72      # top/bottom page margin passed to wkhtmltopdf
-KEEP_PASSES = 30
+KEEP_PASSES = 30   # re-render passes; each fixes the first split question of every page-break segment
 
 
 def _splits(raw, n_q):
@@ -372,7 +372,7 @@ def _splits(raw, n_q):
     usable = ph - 2 * MARGIN_PT
     pages, starts = [], []
     for k, p in enumerate(d):
-        items = []
+        items = []        # (top, bottom, is_heading): headings = numbers, bylines, year/lecture titles
         for b in p.get_text('dict')['blocks']:
             if b['type'] != 0:
                 continue
@@ -381,10 +381,11 @@ def _splits(raw, n_q):
                     t = s_['text'].strip()
                     if not t:
                         continue
-                    items.append((s_['bbox'][1], s_['bbox'][3]))
+                    head = s_['color'] in (0x1a4f8a, 0x777777) or s_['size'] >= 18
+                    items.append((s_['bbox'][1], s_['bbox'][3], head))
                     if s_['color'] == 0x1a4f8a and re.match(r'^\d{1,3}\.$', t):
                         starts.append((k, s_['bbox'][1]))
-        items += [(im['bbox'][1], im['bbox'][3]) for im in p.get_image_info()]
+        items += [(im['bbox'][1], im['bbox'][3], False) for im in p.get_image_info()]
         pages.append(items)
     out = []
     if len(starts) != n_q:            # numbers not recognised reliably -> leave the layout alone
@@ -396,20 +397,53 @@ def _splits(raw, n_q):
         nk, ny = starts[i + 1] if i + 1 < len(starts) else (len(pages), 0)
         if nk == k:                   # ends on its own page
             continue
-        if nk > k + 2 or (nk == k + 2 < len(pages) and any(b <= ny - 20 for a, b in pages[nk])):
-            continue                  # runs over three pages: taller than a page anyway
+        first = max(b for a, b, h in pages[k] if a >= y - 30) - top    # its height on this page
+        if nk > k + 2 or (nk == k + 2 < len(pages) and any(b <= ny - 20 and not h for a, b, h in pages[nk])):
+            # runs over three pages: taller than a page anyway, but don't start it with a
+            # few stem lines at the foot of a page
+            if first < 0.35 * usable:
+                out.append(i)
+            continue
         lim = ny - 20 if nk == k + 1 else ph
-        spill = [b for a, b in pages[k + 1] if b <= lim]
+        spill = [b for a, b, h in pages[k + 1] if b <= lim and not h]   # headings belong to what follows
         if not spill:
             continue
-        here = max(b for a, b in pages[k] if a >= y - 30)
-        need = (here - top) + (max(spill) - MARGIN_PT)
-        if need < usable - 12:
+        need = first + (max(spill) - MARGIN_PT)
+        if need < usable - 12 or first < 0.35 * usable:
             out.append(i)
     return out
 
 
 PB = '<div style="page-break-before:always"></div>'
+YR = '<h2 class="yr"'     # year header of the lecture PDFs (tools/build_lectures.py)
+
+
+def _stranded(raw, n_h):
+    """0-based indices of year headers left as the last thing on their page
+    (wkhtmltopdf ignores page-break-after:avoid when it moves the next question on)."""
+    import pymupdf
+    d = pymupdf.open(raw)
+    out, j = [], -1
+    for p in d:
+        spans = [(s_['bbox'][1], s_['bbox'][3], s_['text'].strip(), s_['color'])
+                 for b in p.get_text('dict')['blocks'] if b['type'] == 0
+                 for l in b['lines'] for s_ in l['spans'] if s_['text'].strip()]
+        imgs = [im['bbox'][1] for im in p.get_image_info()]
+        for y0, y1, t, c in sorted(spans):
+            if c == 0x1a4f8a and re.match(r'^\d{4}년', t):
+                j += 1
+                if not any(a > y1 + 1 for a, _, _, _ in spans) and not any(a > y1 for a in imgs):
+                    out.append(j)
+    return out if j + 1 == n_h else []
+
+
+def _h2_break(doc, j):
+    """Page break before the j-th year header (None if one is already there)."""
+    at = list(re.finditer(re.escape(YR), doc))[j].start()
+    before = doc[:at].rstrip()
+    if before.endswith(PB) or doc.startswith(YR + ' style="page-break-before', at):
+        return None
+    return doc[:at] + PB + doc[at:]
 
 
 def _break_before(doc, i):
@@ -435,21 +469,34 @@ def render_pdf(doc, work, out, title):
     raw = os.path.join(work, 'raw.pdf')
     n_q = len(re.findall(r'<div class="q[ "]', doc))
     pushed = 0
-    for _ in range(KEEP_PASSES + 1):
+    for npass in range(KEEP_PASSES + 1):
         open(hp, 'w', encoding='utf-8').write(doc)
         subprocess.run(['wkhtmltopdf', '--enable-local-file-access', '-q', '--page-size', 'A4',
                         '-T', '11mm', '-B', '11mm', '-L', '12mm', '-R', '12mm', hp, raw],
                        check=True, stderr=subprocess.DEVNULL)
-        new = None
-        for i in (_splits(raw, n_q) if pushed < KEEP_PASSES else []):
-            new = _break_before(doc, i)
-            if new:
-                break
-        if not new:
+        if npass == KEEP_PASSES:
             break
-        doc = new; pushed += 1
+        # a push only moves content up to the next forced page break, so the first split of
+        # every such segment (lecture section, pushed question, image grid) can be fixed per pass
+        hard = [m.start() for m in re.finditer(r'<div class="lect">|<div class="q flow|' + re.escape(PB), doc)]
+        qpos = [m.start() for m in re.finditer(r'<div class="q[ "]', doc)]
+        hpos = [m.start() for m in re.finditer(re.escape(YR), doc)]
+        acts = sorted([(qpos[i], _break_before, i) for i in _splits(raw, n_q)]
+                      + [(hpos[j], _h2_break, j) for j in (_stranded(raw, len(hpos)) if hpos else [])],
+                      key=lambda t: t[0])
+        done, new = set(), doc
+        for pos, fn, idx in acts:
+            seg = sum(1 for h in hard if h <= pos)
+            if seg in done:
+                continue
+            nxt = fn(new, idx)
+            if nxt:
+                new = nxt; done.add(seg); pushed += 1
+        if new == doc:
+            break
+        doc = new
     if pushed:
-        print(f'keep-together: {pushed} question(s) moved to a new page')
+        print(f'keep-together: {pushed} question(s)/year header(s) moved to a new page')
 
     # page numbers (trailing empty pages from the last question's bottom margin are dropped)
     import pymupdf

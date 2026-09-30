@@ -73,7 +73,8 @@ def section_html(L, items, subj_name, title_tag='h1'):
             f'총 {len(items)}문항 · 문제만 수록 (정답 표시 없음)</div>')
     out.append(head)
     for ex, q, e in items:
-        if ex['year'] != cur_year:
+        new_year = ex['year'] != cur_year
+        if new_year:
             cur_year = ex['year']
             profs = ', '.join(L.get('profs', {}).get(str(cur_year), [])) if 'profs' in L else ''
             extra = f'담당 {profs}' if profs else ''
@@ -83,7 +84,14 @@ def section_html(L, items, subj_name, title_tag='h1'):
         by = f"{ex['year']}년 시험 {q['n']}번"
         if e.get('author'):
             by += f" · 출제자 {e['author']}"
-        out.append(B.build_q(q, disp=k, byline_text=by))
+        qh = B.build_q(q, disp=k, byline_text=by)
+        if new_year and qh.startswith('<div class="q flow'):
+            # image-choice grids start a new page; take the year header along instead of
+            # stranding it (the first year of a lecture stays under the lecture title)
+            qh = qh.replace('">', '" style="page-break-before:auto">', 1)
+            if len(out) > 2:
+                out[-1] = out[-1].replace('<h2 class="yr">', '<h2 class="yr" style="page-break-before:always">', 1)
+        out.append(qh)
     return '\n'.join(out), nums
 
 
