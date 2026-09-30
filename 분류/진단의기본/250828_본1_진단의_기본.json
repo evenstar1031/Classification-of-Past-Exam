@@ -1,0 +1,658 @@
+{
+ "exam": {
+  "id": "250828_본1_진단의_기본",
+  "subject": "진단의기본",
+  "title": "250828 본1 진단의기본",
+  "date": "2025-08-28",
+  "year": 2025,
+  "source": "원본/진단의기본/250828_본1_진단의_기본.pdf"
+ },
+ "questions": {
+  "1": {
+   "lecture": "39",
+   "by": "출제자",
+   "author": "원동일",
+   "candidates": [
+    "39"
+   ],
+   "note": ""
+  },
+  "2": {
+   "lecture": "09",
+   "by": "출제자",
+   "author": "박지연",
+   "candidates": [
+    "09"
+   ],
+   "note": ""
+  },
+  "3": {
+   "lecture": "35",
+   "by": "내용",
+   "author": "원동일",
+   "candidates": [
+    "39"
+   ],
+   "note": "출제자 원동일(2025 명단엔 진단면역학만)이지만 내용은 참고치 범위 설정 → 진단검사의학 총론 II (2026엔 원동일이 총론 담당)"
+  },
+  "4": {
+   "lecture": "29",
+   "by": "내용",
+   "author": "안병철",
+   "candidates": [
+    "01",
+    "29"
+   ],
+   "note": "안병철 담당 중 강좌소개(01) 제외 → 핵의학/분자영상 입문 (방사성핵종·요오드섭취율)"
+  },
+  "5": {
+   "lecture": "35",
+   "by": "내용",
+   "author": "원동일",
+   "candidates": [
+    "39"
+   ],
+   "note": "출제자 원동일(2025 명단엔 진단면역학만)이지만 내용은 식후 채혈의 지질검사 영향(분석전 변동) → 진단검사의학 총론 II"
+  },
+  "6": {
+   "lecture": "39",
+   "by": "출제자",
+   "author": "원동일",
+   "candidates": [
+    "39"
+   ],
+   "note": ""
+  },
+  "7": {
+   "lecture": "29",
+   "by": "내용",
+   "author": "안병철",
+   "candidates": [
+    "01",
+    "29"
+   ],
+   "note": "안병철 담당 중 강좌소개(01) 제외 → 핵의학/분자영상 입문 (방사성핵종·요오드섭취율)"
+  },
+  "8": {
+   "lecture": "39",
+   "by": "출제자",
+   "author": "원동일",
+   "candidates": [
+    "39"
+   ],
+   "note": ""
+  },
+  "9": {
+   "lecture": "16",
+   "by": "출제자",
+   "author": "황양하",
+   "candidates": [
+    "16"
+   ],
+   "note": ""
+  },
+  "10": {
+   "lecture": "20",
+   "by": "내용",
+   "author": "박병헌",
+   "candidates": [],
+   "note": "출제자 '박병헌'(목록은 '박병건'), Chest PA/AP 차이 → 흉부 X선 판독 OSCE 강의"
+  },
+  "11": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "정민규",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "12": {
+   "lecture": "23",
+   "by": "출제자",
+   "author": "염헌규",
+   "candidates": [
+    "23"
+   ],
+   "note": ""
+  },
+  "13": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "곽지혜",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "14": {
+   "lecture": "24",
+   "by": "출제자",
+   "author": "이소미",
+   "candidates": [
+    "24"
+   ],
+   "note": ""
+  },
+  "15": {
+   "lecture": "08",
+   "by": "출제자",
+   "author": "김남균",
+   "candidates": [
+    "08"
+   ],
+   "note": ""
+  },
+  "16": {
+   "lecture": "37",
+   "by": "내용",
+   "author": "이난영",
+   "candidates": [
+    "37",
+    "38"
+   ],
+   "note": "분자유전검사 방법 → 진단분자유전학"
+  },
+  "17": {
+   "lecture": "32",
+   "by": "내용",
+   "author": "정신영",
+   "candidates": [
+    "32",
+    "33"
+   ],
+   "note": "PET·18F-FDG 섭취 → PET"
+  },
+  "18": {
+   "lecture": "14",
+   "by": "출제자",
+   "author": "김아솔",
+   "candidates": [
+    "14"
+   ],
+   "note": ""
+  },
+  "19": {
+   "lecture": "06",
+   "by": "출제자",
+   "author": "석흥열",
+   "candidates": [
+    "06"
+   ],
+   "note": ""
+  },
+  "20": {
+   "lecture": "17",
+   "by": "내용",
+   "author": "김홍련",
+   "candidates": [],
+   "note": "출제자 '김홍련'은 수업 목록의 '김홍년'(심장진찰 OSCE)과 한 글자 차이, 내용도 심장 진찰"
+  },
+  "21": {
+   "lecture": "18",
+   "by": "출제자",
+   "author": "최선하",
+   "candidates": [
+    "18"
+   ],
+   "note": ""
+  },
+  "22": {
+   "lecture": "30",
+   "by": "내용",
+   "author": "이상우",
+   "candidates": [
+    "30",
+    "31"
+   ],
+   "note": "선량한도·결정적 영향 → 방사선생물학"
+  },
+  "23": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "민유선",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "24": {
+   "lecture": "12",
+   "by": "출제자",
+   "author": "이현석",
+   "candidates": [
+    "12"
+   ],
+   "note": ""
+  },
+  "25": {
+   "lecture": "15",
+   "by": "출제자",
+   "author": "이호원",
+   "candidates": [
+    "15"
+   ],
+   "note": ""
+  },
+  "26": {
+   "lecture": "13",
+   "by": "출제자",
+   "author": "고혜진",
+   "candidates": [
+    "13"
+   ],
+   "note": ""
+  },
+  "27": {
+   "lecture": "02",
+   "by": "출제자",
+   "author": "김신우",
+   "candidates": [
+    "02"
+   ],
+   "note": ""
+  },
+  "28": {
+   "lecture": "07",
+   "by": "출제자",
+   "author": "고판우",
+   "candidates": [
+    "07"
+   ],
+   "note": ""
+  },
+  "29": {
+   "lecture": "22",
+   "by": "출제자",
+   "author": "김혜정",
+   "candidates": [
+    "22"
+   ],
+   "note": ""
+  },
+  "30": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "이장훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "31": {
+   "lecture": "04",
+   "by": "출제자",
+   "author": "여인환",
+   "candidates": [
+    "04"
+   ],
+   "note": ""
+  },
+  "32": {
+   "lecture": "09",
+   "by": "출제자",
+   "author": "박지연",
+   "candidates": [
+    "09"
+   ],
+   "note": ""
+  },
+  "33": {
+   "lecture": "25",
+   "by": "출제자",
+   "author": "윤성원",
+   "candidates": [
+    "25"
+   ],
+   "note": ""
+  },
+  "34": {
+   "lecture": "33",
+   "by": "내용",
+   "author": "정신영",
+   "candidates": [
+    "32",
+    "33"
+   ],
+   "note": "방사면역검사(RIA/IRMA) → 방사성의약품 원리"
+  },
+  "35": {
+   "lecture": "13",
+   "by": "출제자",
+   "author": "고혜진",
+   "candidates": [
+    "13"
+   ],
+   "note": ""
+  },
+  "36": {
+   "lecture": "14",
+   "by": "출제자",
+   "author": "김아솔",
+   "candidates": [
+    "14"
+   ],
+   "note": ""
+  },
+  "37": {
+   "lecture": "09",
+   "by": "출제자",
+   "author": "박지연",
+   "candidates": [
+    "09"
+   ],
+   "note": ""
+  },
+  "38": {
+   "lecture": "04",
+   "by": "출제자",
+   "author": "여인환",
+   "candidates": [
+    "04"
+   ],
+   "note": ""
+  },
+  "39": {
+   "lecture": "06",
+   "by": "출제자",
+   "author": "석흥열",
+   "candidates": [
+    "06"
+   ],
+   "note": ""
+  },
+  "40": {
+   "lecture": "02",
+   "by": "출제자",
+   "author": "김신우",
+   "candidates": [
+    "02"
+   ],
+   "note": ""
+  },
+  "41": {
+   "lecture": "12",
+   "by": "출제자",
+   "author": "이현석",
+   "candidates": [
+    "12"
+   ],
+   "note": ""
+  },
+  "42": {
+   "lecture": "25",
+   "by": "출제자",
+   "author": "윤성원",
+   "candidates": [
+    "25"
+   ],
+   "note": ""
+  },
+  "43": {
+   "lecture": "07",
+   "by": "출제자",
+   "author": "고판우",
+   "candidates": [
+    "07"
+   ],
+   "note": ""
+  },
+  "44": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "곽지혜",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "45": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "정민규",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "46": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "민유선",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "47": {
+   "lecture": "08",
+   "by": "출제자",
+   "author": "김남균",
+   "candidates": [
+    "08"
+   ],
+   "note": ""
+  },
+  "48": {
+   "lecture": "31",
+   "by": "내용",
+   "author": "이상우",
+   "candidates": [
+    "30",
+    "31"
+   ],
+   "note": "치료용-진단용 방사성의약품 짝 → 방사성핵종치료술"
+  },
+  "49": {
+   "lecture": "19",
+   "by": "내용",
+   "author": "박병헌",
+   "candidates": [],
+   "note": "출제자 '박병헌'(목록은 '박병건'), 흉부 CT window 설정 → 흉부 방사선해부학"
+  },
+  "50": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "이장훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "51": {
+   "lecture": "38",
+   "by": "내용",
+   "author": "이난영",
+   "candidates": [
+    "37",
+    "38"
+   ],
+   "note": "채혈 순서·주의사항 → 채혈 및 혈액배양"
+  },
+  "52": {
+   "lecture": "07",
+   "by": "출제자",
+   "author": "고판우",
+   "candidates": [
+    "07"
+   ],
+   "note": ""
+  },
+  "53": {
+   "lecture": "14",
+   "by": "출제자",
+   "author": "김아솔",
+   "candidates": [
+    "14"
+   ],
+   "note": ""
+  },
+  "54": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "곽지혜",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "55": {
+   "lecture": "21",
+   "by": "내용",
+   "author": "박병헌",
+   "candidates": [],
+   "note": "출제자 '박병헌'(목록은 '박병건'), 흉부 X선 이상소견 판독(흉수) → 흉부 X선 판독 TBL"
+  },
+  "56": {
+   "lecture": "02",
+   "by": "출제자",
+   "author": "김신우",
+   "candidates": [
+    "02"
+   ],
+   "note": ""
+  },
+  "57": {
+   "lecture": "06",
+   "by": "출제자",
+   "author": "석흥열",
+   "candidates": [
+    "06"
+   ],
+   "note": ""
+  },
+  "58": {
+   "lecture": "12",
+   "by": "출제자",
+   "author": "이현석",
+   "candidates": [
+    "12"
+   ],
+   "note": ""
+  },
+  "59": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "민유선",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "60": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "이장훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "61": {
+   "lecture": "08",
+   "by": "출제자",
+   "author": "김남균",
+   "candidates": [
+    "08"
+   ],
+   "note": ""
+  },
+  "62": {
+   "lecture": "13",
+   "by": "출제자",
+   "author": "고혜진",
+   "candidates": [
+    "13"
+   ],
+   "note": ""
+  },
+  "63": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "정민규",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "64": {
+   "lecture": "04",
+   "by": "출제자",
+   "author": "여인환",
+   "candidates": [
+    "04"
+   ],
+   "note": ""
+  },
+  "65": {
+   "lecture": "06",
+   "by": "출제자",
+   "author": "석흥열",
+   "candidates": [
+    "06"
+   ],
+   "note": ""
+  },
+  "66": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "곽지혜",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "67": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "이장훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "68": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "민유선",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "69": {
+   "lecture": "19",
+   "by": "내용",
+   "author": "박병헌",
+   "candidates": [],
+   "note": "출제자 '박병헌'(목록은 '박병건'), 흉부 X선에서 병변 위치(폐엽) → 흉부 방사선해부학"
+  },
+  "70": {
+   "lecture": "08",
+   "by": "출제자",
+   "author": "김남균",
+   "candidates": [
+    "08"
+   ],
+   "note": ""
+  },
+  "71": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "정민규",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "72": {
+   "lecture": "07",
+   "by": "출제자",
+   "author": "고판우",
+   "candidates": [
+    "07"
+   ],
+   "note": ""
+  }
+ }
+}

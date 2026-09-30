@@ -5,8 +5,8 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo "== Python packages"
-pip install -q --break-system-packages pymupdf pypdf reportlab fonttools numpy pillow 2>/dev/null \
-  || pip install -q pymupdf pypdf reportlab fonttools numpy pillow
+pip install -q --break-system-packages pymupdf pypdf reportlab fonttools numpy pillow cffi 2>/dev/null \
+  || pip install -q pymupdf pypdf reportlab fonttools numpy pillow cffi
 
 echo "== wkhtmltopdf"
 if ! command -v wkhtmltopdf >/dev/null; then
@@ -17,7 +17,7 @@ fi
 command -v wkhtmltopdf >/dev/null && wkhtmltopdf --version
 
 echo "== Fonts"
-if ls fonts/*.otf fonts/*.ttf fonts/*.OTF fonts/*.TTF >/dev/null 2>&1; then
+if [ -n "$(find fonts -maxdepth 1 -iname '*.ttf' -o -maxdepth 1 -iname '*.otf')" ]; then
   python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
 else
   echo "!! fonts/ 폴더에 폰트 파일이 없습니다 (보통체+굵은체 2개, 예: AppleSDGothicNeo-Medium/SemiBold.ttf). 사용자에게 올려 달라고 할 것."

@@ -1,0 +1,614 @@
+{
+ "exam": {
+  "id": "211029_본1_진단의_기본",
+  "subject": "진단의기본",
+  "title": "211029 본1 진단의기본",
+  "date": "2021-10-29",
+  "year": 2021,
+  "source": "원본/진단의기본/211029_본1_진단의_기본.pdf"
+ },
+ "questions": {
+  "1": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "핵산교잡/DNA chip·target amplification → 진단분자유전학"
+  },
+  "2": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "혈액배양 채혈·세균배양 검체 채취 → 채혈 및 혈액배양"
+  },
+  "3": {
+   "lecture": "16",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "반사감각검사 결과로 병변 위치 → 반사감각검사"
+  },
+  "4": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "설사 증례(위막성결장염·과민대장·장결핵) → 설사"
+  },
+  "5": {
+   "lecture": "31",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "방사성요오드·Lu-177 치료 → 방사성핵종치료술"
+  },
+  "6": {
+   "lecture": "25",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "조영증강·Brain CT/MRI → 신경계 영상 입문"
+  },
+  "7": {
+   "lecture": "20",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선 촬영 적절성(투과도·회전) → 흉부 X선 판독 OSCE 강의"
+  },
+  "8": {
+   "lecture": "17",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심장 진찰 → 심장진찰 OSCE"
+  },
+  "9": {
+   "lecture": "22",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "유방영상 → 유방영상진단"
+  },
+  "10": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "목덩이 감별·악성 소견·갑상설관낭종·경부 전이 → 목덩이/눈목부위 진찰"
+  },
+  "11": {
+   "lecture": "23",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "간 영상검사·간 분절 → 복부영상진단"
+  },
+  "12": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "적혈구 자가항체·ANA·SARS-CoV-2 항체·면역측정 label → 진단면역학"
+  },
+  "13": {
+   "lecture": "02",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "동맥혈 채혈·정맥관 삽관 → 내과적 처치"
+  },
+  "14": {
+   "lecture": "19",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선에서 병변 위치(폐엽) → 흉부 방사선해부학"
+  },
+  "15": {
+   "lecture": "33",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "방사성의약품 일반·방사면역검사 → 방사성의약품 원리"
+  },
+  "16": {
+   "lecture": "03",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "쇼크 기전·혈압 측정 → 저혈압/혈압측정"
+  },
+  "17": {
+   "lecture": "15",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "뇌신경 검사(부신경) → 뇌신경기능검사"
+  },
+  "18": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실신 red flag·의식저하·GCS → 의식변화"
+  },
+  "19": {
+   "lecture": "34",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "현장검사(POCT) → 진단검사의학 총론 I"
+  },
+  "20": {
+   "lecture": "26",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "중재시술 access route·시술 사진(Nutcracker) → 혈관촬영 및 중재시술"
+  },
+  "21": {
+   "lecture": "18",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "폐진찰 → 폐진찰/호흡음"
+  },
+  "22": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "pronator drift·Gower sign·NMJ 질환·MRC 등급 → 팔다리 근력약화/운동계진찰"
+  },
+  "23": {
+   "lecture": "13",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피로 원인 감별 → 피로"
+  },
+  "24": {
+   "lecture": "30",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "결정적 영향·방사선 방호와 단위 → 방사선생물학"
+  },
+  "25": {
+   "lecture": "24",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 흉부 X선(이물)·NEC 미숙아 → 소아영상진단"
+  },
+  "26": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "황달 증례 → 황달/복부진찰"
+  },
+  "27": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "청진 부위·심음·심잡음 → 심잡음/심음"
+  },
+  "28": {
+   "lecture": "33",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "방사성의약품 일반·방사면역검사 → 방사성의약품 원리"
+  },
+  "29": {
+   "lecture": "20",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선 촬영 적절성(투과도·회전) → 흉부 X선 판독 OSCE 강의"
+  },
+  "30": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "pronator drift·Gower sign·NMJ 질환·MRC 등급 → 팔다리 근력약화/운동계진찰"
+  },
+  "31": {
+   "lecture": "09",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "급성 복통 증례(요관결석·담낭염·천공) → 급성 복통"
+  },
+  "32": {
+   "lecture": "22",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "유방영상 → 유방영상진단"
+  },
+  "33": {
+   "lecture": "02",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "동맥혈 채혈·정맥관 삽관 → 내과적 처치"
+  },
+  "34": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "PET 영상 기술·정량 변수 → PET"
+  },
+  "35": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "설사 증례(위막성결장염·과민대장·장결핵) → 설사"
+  },
+  "36": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "PET 영상 기술·정량 변수 → PET"
+  },
+  "37": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "황달 증례 → 황달/복부진찰"
+  },
+  "38": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "핵산교잡/DNA chip·target amplification → 진단분자유전학"
+  },
+  "39": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "적혈구 자가항체·ANA·SARS-CoV-2 항체·면역측정 label → 진단면역학"
+  },
+  "40": {
+   "lecture": "24",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 흉부 X선(이물)·NEC 미숙아 → 소아영상진단"
+  },
+  "41": {
+   "lecture": "03",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "쇼크 기전·혈압 측정 → 저혈압/혈압측정"
+  },
+  "42": {
+   "lecture": "09",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "급성 복통 증례(요관결석·담낭염·천공) → 급성 복통"
+  },
+  "43": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "목덩이 감별·악성 소견·갑상설관낭종·경부 전이 → 목덩이/눈목부위 진찰"
+  },
+  "44": {
+   "lecture": "35",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "위양성률 계산·단백 측정법 → 진단검사의학 총론 II"
+  },
+  "45": {
+   "lecture": "13",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피로 원인 감별 → 피로"
+  },
+  "46": {
+   "lecture": "23",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "간 영상검사·간 분절 → 복부영상진단"
+  },
+  "47": {
+   "lecture": "25",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "조영증강·Brain CT/MRI → 신경계 영상 입문"
+  },
+  "48": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실신 red flag·의식저하·GCS → 의식변화"
+  },
+  "49": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "청진 부위·심음·심잡음 → 심잡음/심음"
+  },
+  "50": {
+   "lecture": "26",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "중재시술 access route·시술 사진(Nutcracker) → 혈관촬영 및 중재시술"
+  },
+  "51": {
+   "lecture": "30",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "결정적 영향·방사선 방호와 단위 → 방사선생물학"
+  },
+  "52": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선/CT 이상소견 판독(벌집폐·무기폐·흉수·기흉) → 흉부 X선 판독 TBL"
+  },
+  "53": {
+   "lecture": "29",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "요오드섭취율 → 핵의학/분자영상 입문"
+  },
+  "54": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선/CT 이상소견 판독(벌집폐·무기폐·흉수·기흉) → 흉부 X선 판독 TBL"
+  },
+  "55": {
+   "lecture": "36",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "ALP 증가 원인 → 진단효소학"
+  },
+  "56": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "목덩이 감별·악성 소견·갑상설관낭종·경부 전이 → 목덩이/눈목부위 진찰"
+  },
+  "57": {
+   "lecture": "31",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "방사성요오드·Lu-177 치료 → 방사성핵종치료술"
+  },
+  "58": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "황달 증례 → 황달/복부진찰"
+  },
+  "59": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "청진 부위·심음·심잡음 → 심잡음/심음"
+  },
+  "60": {
+   "lecture": "29",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "치료용 방사성핵종 (2025년 같은 문항이 안병철 출제) → 핵의학/분자영상 입문"
+  },
+  "61": {
+   "lecture": "13",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피로 원인 감별 → 피로"
+  },
+  "62": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실신 red flag·의식저하·GCS → 의식변화"
+  },
+  "63": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "설사 증례(위막성결장염·과민대장·장결핵) → 설사"
+  },
+  "64": {
+   "lecture": "09",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "급성 복통 증례(요관결석·담낭염·천공) → 급성 복통"
+  },
+  "65": {
+   "lecture": "03",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "쇼크 기전·혈압 측정 → 저혈압/혈압측정"
+  },
+  "66": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "적혈구 자가항체·ANA·SARS-CoV-2 항체·면역측정 label → 진단면역학"
+  },
+  "67": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "황달 증례 → 황달/복부진찰"
+  },
+  "68": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "청진 부위·심음·심잡음 → 심잡음/심음"
+  },
+  "69": {
+   "lecture": "03",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "쇼크 기전·혈압 측정 → 저혈압/혈압측정"
+  },
+  "70": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선/CT 이상소견 판독(벌집폐·무기폐·흉수·기흉) → 흉부 X선 판독 TBL"
+  },
+  "71": {
+   "lecture": "31",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "방사성요오드·Lu-177 치료 → 방사성핵종치료술"
+  },
+  "72": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "pronator drift·Gower sign·NMJ 질환·MRC 등급 → 팔다리 근력약화/운동계진찰"
+  },
+  "73": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "목덩이 감별·악성 소견·갑상설관낭종·경부 전이 → 목덩이/눈목부위 진찰"
+  },
+  "74": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "적혈구 자가항체·ANA·SARS-CoV-2 항체·면역측정 label → 진단면역학"
+  },
+  "75": {
+   "lecture": "35",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "위양성률 계산·단백 측정법 → 진단검사의학 총론 II"
+  },
+  "76": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "혈액배양 채혈·세균배양 검체 채취 → 채혈 및 혈액배양"
+  },
+  "77": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실조 평가·소뇌 병변·실조 원인/설명 → 운동실조/소뇌기능검사"
+  },
+  "78": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉부 X선/CT 이상소견 판독(벌집폐·무기폐·흉수·기흉) → 흉부 X선 판독 TBL"
+  },
+  "79": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실조 평가·소뇌 병변·실조 원인/설명 → 운동실조/소뇌기능검사"
+  },
+  "80": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "pronator drift·Gower sign·NMJ 질환·MRC 등급 → 팔다리 근력약화/운동계진찰"
+  },
+  "81": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실조 평가·소뇌 병변·실조 원인/설명 → 운동실조/소뇌기능검사"
+  },
+  "82": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "실조 평가·소뇌 병변·실조 원인/설명 → 운동실조/소뇌기능검사"
+  },
+  "83": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "감각신경 영역·감각경로·피부분절·척수 반절손상 → 손발저림/감각계진찰"
+  },
+  "84": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "감각신경 영역·감각경로·피부분절·척수 반절손상 → 손발저림/감각계진찰"
+  },
+  "85": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "감각신경 영역·감각경로·피부분절·척수 반절손상 → 손발저림/감각계진찰"
+  },
+  "86": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "감각신경 영역·감각경로·피부분절·척수 반절손상 → 손발저림/감각계진찰"
+  }
+ }
+}

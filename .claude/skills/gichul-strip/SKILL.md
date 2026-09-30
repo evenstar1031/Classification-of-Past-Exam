@@ -153,7 +153,13 @@ box-first number is aligned with the box's first text line, `BOX_PAD_V` below th
 box edge. Change them together and re-run the build's gap check. Grey boxes (11 pt, weight 400, #333) hold conditions, lab data, <보기>,
 and clinical numbers. Figure width is min(186 mm, px/4.2); height caps are
 165/140/115 mm by aspect (>1.7 / >1.3 / else). Each question uses
-`page-break-inside: avoid`. Questions whose choices are all images get a
+`page-break-inside: avoid`, but wkhtmltopdf ignores it when the page boundary falls
+inside a figure, so `render_pdf` re-renders (up to `KEEP_PASSES`) and puts a page break
+before any question that starts mid-page, spills onto the next page and would fit on
+one page, or that is taller than a page but would start with less than ~⅓ of itself at
+the foot of a page. In the lecture PDFs it also moves a year header ("2024년") left alone
+at the bottom of a page (the build prints `keep-together: N … moved`). Trailing blank
+pages are dropped. Questions whose choices are all images get a
 two-column grid on a fresh page (caps 85/66 mm) so the whole set fits on one page.
 Questions that open with a box hang their number in the margin beside it. Page
 numbers `n / N` are overlaid bottom-centre with pypdf + reportlab.
