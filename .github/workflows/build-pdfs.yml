@@ -18,7 +18,7 @@ on:
         required: false
         default: ''
   push:
-    branches: [main, claude/vigilant-bardeen-5i48au]   # TEMP: 병합 전 시험 실행용 — 확인 후 main 만 남김
+    branches: [main]
     paths:
       - '분류/**'
       - '해설/**'
@@ -51,9 +51,9 @@ jobs:
           echo "Settings → 맨 아래 Danger Zone → Change visibility → Make private 로 바꾼 뒤 다시 돌리세요."
           exit 1
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
