@@ -5,8 +5,10 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo "== Python packages"
-pip install -q --break-system-packages pymupdf pypdf reportlab fonttools numpy pillow cffi 2>/dev/null \
-  || pip install -q pymupdf pypdf reportlab fonttools numpy pillow cffi
+# 버전 고정: 같은 내용이면 PDF가 바이트까지 똑같이 나오도록 (GitHub Actions
+# .github/workflows/build-pdfs.yml 과 같은 버전이어야 함 — 바꾸면 둘 다 바꿀 것)
+PKGS="pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 numpy==2.4.6 pillow==12.3.0 cffi==2.1.1"
+pip install -q --break-system-packages $PKGS 2>/dev/null || pip install -q $PKGS
 
 echo "== wkhtmltopdf"
 if ! command -v wkhtmltopdf >/dev/null; then

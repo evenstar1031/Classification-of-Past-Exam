@@ -212,3 +212,12 @@ Knowing these helps when a new file breaks a check:
   not an answer; reword it to "(답 3개)" with a fix and report it.
 - **ⓘ-headed boxes are notes.** They are dropped up to the next non-box element,
   and the box-line count check proves nothing else was dropped.
+- **What is dropped is still recorded (for the separate 정답·해설 edition only).** Each
+  question in `parsed.json` keeps `notes` (the dropped ⓘ 오답노트/해설 lines), `answer_text`
+  (주관식 typed answers) and, per choice, `mk_num` (the choice number itself was marked) and
+  `mk_lines` (marked text lines). `build.py` never prints these; `tools/answer_key.py` reads
+  them to make `해설/<과목>/*.json`. An old `parsed.json` without these keys → delete
+  `work/<시험id>` and let `build_lectures.ensure_work` re-extract.
+- **PDFs are reproducible.** `render_pdf` renames the random 6-letter font-subset tags in
+  order of appearance, so the same input gives a byte-identical PDF (no git churn when
+  GitHub Actions or a later session rebuilds unchanged files).

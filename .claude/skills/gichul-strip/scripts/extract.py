@@ -270,7 +270,7 @@ for q in qs:
     def before(el, y=None):
         return (el['page'], el['y'] if y is None else y) < first_key
 
-    blocks, note = [], False
+    blocks, note, notes = [], False, []      # notes: dropped ⓘ 오답노트/해설 lines (for the answer edition)
     for s in items:
         if not before(s, s['y1'] if s['k'] == 'fig' else s['y']):
             continue
@@ -279,6 +279,7 @@ for q in qs:
                 note = True
             if note:
                 dropped_total += 1
+                notes.append(s['t'])
                 continue
             if blocks and blocks[-1]['t'] == 'box' and s['page'] == blocks[-1]['_p'] \
                     and s['y'] - blocks[-1]['_y'] < 22:
@@ -311,8 +312,10 @@ for q in qs:
         if s['k'] == 'box' and markers and not before(s) and (s['page'], s['y']) < note_key:
             s['k'] = 'ctext'
     ctexts = [s for s in items if s['k'] == 'ctext']          # ALL of them
+    answer_text = []
     if not markers and ctexts:
         # 주관식: choice-size text under a question with no choice numbers is the typed answer
+        answer_text = [s_['t'].strip() for s_ in ctexts]
         for s_ in ctexts:
             s_['k'] = 'answer'
             print(f'  !! Q{q["n"]}: 주관식 answer text dropped: {s_["t"][:60]!r}')
@@ -320,7 +323,8 @@ for q in qs:
     groups = dp_assign(ctexts, markers)
     choices = [{'n': mk['t'].strip(), 'page': mk['page'], 'y': mk['y'],
                 'lines': [b['t'] for b in g], 'figs': [], 'label': None,
-                'mk': mk['mk'] or any(b['mk'] for b in g)} for mk, g in zip(markers, groups)]
+                'mk': mk['mk'] or any(b['mk'] for b in g), 'mk_num': mk['mk'],
+                'mk_lines': [b['t'] for b in g if b['mk']]} for mk, g in zip(markers, groups)]
 
     def owner(page, y):
         tgt = None
@@ -342,6 +346,7 @@ for q in qs:
                 note = True
             if note:
                 dropped_total += 1
+                notes.append(s['t'])
             elif s['k'] == 'aside':
                 o = owner(s['page'], s['y'])
                 if o:
@@ -356,10 +361,15 @@ for q in qs:
                     else:
                         s['k'] = 'ctext'; row['lines'].append(s['t'])
                         row['mk'] = row['mk'] or s['mk']
+                        if s['mk']:
+                            row['mk_lines'].append(s['t'])
                     continue
                 print(f'  !! Q{q["n"]}: box line after choices kept nowhere: {s["t"][:60]!r}')
-    out.append({'n': q['n'], 'blocks': blocks,
-                'choices': [{k: c[k] for k in ('n', 'lines', 'figs', 'label', 'mk')} for c in choices]})
+    # notes / answer_text / mk_num / mk_lines feed the answer edition (tools/build_answers.py);
+    # the question-only build never reads them
+    out.append({'n': q['n'], 'blocks': blocks, 'notes': notes, 'answer_text': answer_text,
+                'choices': [{k: c[k] for k in ('n', 'lines', 'figs', 'label', 'mk', 'mk_num', 'mk_lines')}
+                            for c in choices]})
 
 json.dump(out, open(os.path.join(WORK, 'parsed.json'), 'w'), ensure_ascii=False, indent=1)
 json.dump({'title': title, 'date': date, 'profile': prof, 'source': SRC, 'authors': authors},

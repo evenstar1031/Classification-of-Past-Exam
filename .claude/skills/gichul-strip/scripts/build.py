@@ -518,9 +518,28 @@ def render_pdf(doc, work, out, title):
         c.save(); buf.seek(0); page.merge_page(PdfReader(buf).pages[0]); w.add_page(page)
     w.add_metadata({'/Title': f'{title} — 문제'})
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    buf = io.BytesIO(); w.write(buf)
     with open(out, 'wb') as f:
-        w.write(f)
+        f.write(_stable_font_tags(buf.getvalue()))
     return total
+
+
+def _stable_font_tags(data):
+    """wkhtmltopdf names font subsets with a random 6-letter tag (QFHAAA+GichulTT-Bold), so the
+    same document came out with different bytes every build. Renumber the tags in order of first
+    appearance (same length, so xref offsets stay valid): unchanged content -> identical file,
+    which keeps git from storing a new copy of every PDF on each rebuild."""
+    seen = {}
+
+    def tag(m):
+        t = m.group(1)
+        if t not in seen:
+            i = len(seen); s_ = ''
+            for _ in range(6):
+                s_ = chr(65 + i % 26) + s_; i //= 26
+            seen[t] = s_.encode()
+        return b'/' + seen[t] + b'+'
+    return re.sub(rb'/([A-Z]{6})\+', tag, data)
 
 
 def verify(doc, work, out, total, numbers, report_fixes=True):
