@@ -219,5 +219,7 @@ Knowing these helps when a new file breaks a check:
   them to make `해설/<과목>/*.json`. An old `parsed.json` without these keys → delete
   `work/<시험id>` and let `build_lectures.ensure_work` re-extract.
 - **PDFs are reproducible.** `render_pdf` renames the random 6-letter font-subset tags in
-  order of appearance, so the same input gives a byte-identical PDF (no git churn when
-  GitHub Actions or a later session rebuilds unchanged files).
+  order of appearance, and `setup_fonts.py` keeps the source font's timestamp, so the same
+  input gives a byte-identical PDF on any machine with the pinned package versions
+  (`tools/setup.sh` = the GitHub workflow) — no git churn when GitHub Actions or a later
+  session rebuilds unchanged files.

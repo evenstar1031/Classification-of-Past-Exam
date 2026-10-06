@@ -33,7 +33,9 @@ def otf2ttf(src, dst, style):
     from fontTools.ttLib import TTFont, newTable
     from fontTools.pens.cu2quPen import Cu2QuPen
     from fontTools.pens.ttGlyphPen import TTGlyphPen
-    f = TTFont(src)
+    # keep the source font's 'modified' date: a fresh timestamp would make every PDF differ
+    # from session to session (and from GitHub Actions) although nothing visible changed
+    f = TTFont(src, recalcTimestamp=False)
     if 'CFF ' in f:
         gs, order = f.getGlyphSet(), f.getGlyphOrder()
         glyf = newTable('glyf'); glyf.glyphOrder = order; glyf.glyphs = {}
