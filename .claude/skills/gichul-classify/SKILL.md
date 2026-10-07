@@ -1,6 +1,6 @@
 ---
 name: gichul-classify
-description: The main workflow of this repository — take 기출 PDFs from 올리기/<과목>/, strip the answers, classify every question into its lecture (수업) using 과목정보/<과목>.json (출제자 + 연도, then content), and build one answer-free PDF per lecture in 문제지/<과목>/. Use whenever the user asks here to 정리/분류/수업별로 만들어/올린 기출 처리해줘, to add a new year's exam, to move a question to another lecture, or to add a new subject.
+description: The main workflow of this repository — take 기출 PDFs from 올리기/<과목>/, strip the answers, classify every question into its lecture (수업) using 과목정보/<과목>.json (출제자 + 연도, then content), and build one answer-free PDF per lecture in 문제지/<과목>/, plus a separate 정답·해설 edition in 해설지/<과목>/. Use whenever the user asks here to 정리/분류/수업별로 만들어/올린 기출 처리해줘, to add a new year's exam, to move a question to another lecture, to add or fix 정답·해설, or to add a new subject.
 ---
 
 # 기출 → 수업별 문제지
@@ -68,13 +68,46 @@ answer-leak scan pass for every PDF). Then look at pages: `work/_lectures/<과�
 — at least the lectures that received questions this session and the first pages of
 `00/pv/`. Check year headers, that no question is split oddly, figures are legible.
 
+## 3b. 정답·해설판 (per subject, after stage 3)
+The question-only PDFs in `문제지/` never show answers (absolute rule 2). The answers live in a
+separate edition, `해설지/<과목>/` (same lecture files and question numbers + a green answer box).
+```bash
+python3 tools/answer_key.py <과목>        # 해설/<과목>/<시험id>.json: 정답 from the original's marks,
+                                          # 원본 오답노트, and an empty "explanation" for new questions
+```
+- `answer` = choice numbers read from the original's colour/size marks (regroup-aware). A
+  question with no mark is listed as `!! N번(정답 표시 없음)` — look at the original and say so in
+  the explanation (do not invent an answer). If the user says the answer is wrong, set
+  `"answer": [..], "answer_by": "직접"` in the JSON; `answer_key.py` then keeps it.
+- Write `explanation` for every question with an empty one (Korean, 2–5 sentences: why the answer
+  is right, why the main distractors are wrong; for figure questions look at `work/<id>/fig/`).
+  Identical questions repeated across years get the same text (check that the choice order and
+  answer really match first). If the marked answer looks wrong or the question is broken, still
+  explain the marked answer and add a line starting `※ 확인 필요:` — README lists these.
+  `answer_key.py` never overwrites an explanation, so re-running it is safe.
+```bash
+python3 tools/build_answers.py <과목>     # 해설지/<과목>/: lecture PDFs, 00_전체, 시험별/, README
+```
+It must end `[OK] 모든 정답·해설 PDF 검증` and `해설이 비어 있는 문항: 0`. Look at a few pages in
+`work/_answers/<과목>/<id>/pv/` (answer box under each question, green choice highlighted).
+
 ## 4. Save
 ```bash
 git mv 올리기/<과목>/<시험id>.pdf 원본/<과목>/     # originals move once processed
 python3 tools/classify.py auto <과목> <시험id>     # refreshes the stored source path (decisions kept)
-python3 tools/check_private.py && git add 원본 문제지 작업기록 분류 && git commit -m "<과목>: <시험id> 분류 및 수업별 문제지"
+python3 tools/check_private.py && git add 원본 문제지 작업기록 분류 해설 해설지 && git commit -m "<과목>: <시험id> 분류 및 수업별 문제지"
 git push
 ```
+PDFs are reproducible (same input → byte-identical file), so rebuilding unchanged lectures adds
+nothing to the commit.
+
+### GitHub Actions (`.github/workflows/build-pdfs.yml`)
+On every push to `main` that touches 분류/해설/원본/작업기록/과목정보/fonts/the build scripts, GitHub
+rebuilds `문제지/` and `해설지/` for every classified subject and commits changed PDFs back (it stops
+if the repo is public). The user can also run it by hand: Actions → "문제지·해설지 PDF 만들기" →
+Run workflow. So small fixes (an explanation, an answer, a lecture move in the JSON) can be made
+on GitHub's web editor without a Claude session. The runner pins the same package versions as
+`tools/setup.sh` installs; if you upgrade a package locally, update the pins there too.
 One commit per exam is fine; push to `main` when allowed, otherwise push the branch, open a PR,
 and tell the user to press the green Merge button. Never commit `work/` or fonts outside `fonts/`.
 
@@ -85,7 +118,10 @@ and tell the user to press the green Merge button. Never commit `work/` or fonts
 
 ## Other requests
 - **"12번은 ○○ 수업이야"** → `classify.py set <과목> <시험id> 12=<id> --by 직접`, rebuild with
-  `build_lectures.py <과목>`, commit.
+  `build_lectures.py <과목>` and `build_answers.py <과목>`, commit.
+- **"이 해설 틀렸어 / 고쳐줘"** → edit `explanation` in `해설/<과목>/<시험id>.json` (every year that
+  has the same question), `build_answers.py <과목> --only <수업id>`, commit. Wrong answer key →
+  `"answer_by": "직접"` as above, and fix the explanation too.
 - **New subject / new year's lecture list** → user uploads the new 3개년 비교 HTML to `과목정보/`;
   run `python3 tools/make_subject_info.py 과목정보/<파일>.html`. Existing lecture ids are kept
   when the lecture name is unchanged; report any lecture whose name changed (its id changes,
