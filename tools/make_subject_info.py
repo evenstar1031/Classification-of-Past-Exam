@@ -4,8 +4,8 @@
 usage: python3 tools/make_subject_info.py [과목정보/본1-2학기_3개년비교.html]
 
 HTML 안의 <script>에 들어 있는 COURSES 데이터를 node로 평가해서 꺼낸다.
-이미 있는 과목정보 JSON의 수업 id·keywords·memo 는 수업 이름이 같으면 그대로 유지한다
-(새 학년도 비교 파일로 다시 돌려도 분류 기록이 깨지지 않게).
+이미 있는 과목정보 JSON의 수업 id·keywords·memo·exam·show_name·merged_into 는 수업 이름이 같으면
+그대로 유지하고, 과목의 file_marks 도 유지한다 (새 학년도 비교 파일로 다시 돌려도 분류 기록이 깨지지 않게).
 """
 import glob, json, os, re, subprocess, sys, tempfile
 
@@ -48,9 +48,10 @@ def main():
     for c in courses:
         subj = slug(c['name'])
         path = os.path.join(OUTDIR, f'{subj}.json')
-        old = {}
+        old, old_info = {}, {}
         if os.path.exists(path):
-            for L in json.load(open(path, encoding='utf-8'))['lectures']:
+            old_info = json.load(open(path, encoding='utf-8'))
+            for L in old_info['lectures']:
                 old[L['name']] = L
         lectures, cat, years = [], None, set()
         for r in c.get('rows') or []:
@@ -75,6 +76,9 @@ def main():
                 L['keywords'] = old[r['n']].get('keywords', [])
                 L['memo'] = old[r['n']].get('memo', '')
                 L['exam'] = old[r['n']].get('exam', L['exam'])
+                for k in ('show_name', 'merged_into'):   # 사용자가 정한 표시 이름·수업 합치기
+                    if old[r['n']].get(k):
+                        L[k] = old[r['n']][k]
             lectures.append(L)
         used = {L['id'] for L in lectures if L['id']}
         k = 1
@@ -91,6 +95,8 @@ def main():
             'source': os.path.relpath(src, ROOT),
             'lectures': lectures,
         }
+        if old_info.get('file_marks'):
+            info['file_marks'] = old_info['file_marks']
         json.dump(info, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         allp = sorted({p for L in lectures for v in L['profs'].values() for p in v})
         print(f'{subj}: 수업 {len(lectures)}개, 연도 {info["years"]}, 교수 {len(allp)}명 -> {os.path.relpath(path, ROOT)}')

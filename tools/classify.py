@@ -74,7 +74,7 @@ def exam_year(meta, fixes, exam):
 
 def candidates(inf, who, year):
     """who: list of names. returns (lecture ids, note)."""
-    exam_lects = [L for L in inf['lectures'] if L.get('exam', True)]
+    exam_lects = [L for L in inf['lectures'] if L.get('exam', True) and not L.get('merged_into')]
     same = [L['id'] for L in exam_lects if any(n in L['profs'].get(str(year), []) for n in who)]
     if same:
         return same, ''
@@ -183,8 +183,8 @@ def cmd_show(a):
             print(f'  보기: {ch}')
     print('\n수업 목록:')
     for x in inf['lectures']:
-        if x.get('exam', True):
-            print(f"  {x['id']} {x['name']}  [{year}: {', '.join(x['profs'].get(str(year), [])) or '-'}]")
+        if x.get('exam', True) and not x.get('merged_into'):
+            print(f"  {x['id']} {x.get('show_name') or x['name']}  [{year}: {', '.join(x['profs'].get(str(year), [])) or '-'}]")
     print(f"  99 {OTHER['name']}")
 
 
@@ -196,13 +196,15 @@ def cmd_set(a):
         lid = lid.zfill(2)
         if lid not in L:
             sys.exit(f'수업 id {lid} 가 과목정보에 없습니다.')
+        if L[lid].get('merged_into'):
+            sys.exit(f"수업 {lid} 는 {L[lid]['merged_into']} 에 합쳐진 수업입니다. {L[lid]['merged_into']} 로 지정하세요.")
         if n not in d['questions']:
             sys.exit(f'{n}번 문항이 이 시험에 없습니다.')
         e = d['questions'][n]
         e['lecture'], e['by'] = lid, a.by
         if a.why:
             e['note'] = a.why
-        print(f"{n}번 → {lid} {L[lid]['name']} ({a.by})")
+        print(f"{n}번 → {lid} {L[lid].get('show_name') or L[lid]['name']} ({a.by})")
     save_out(a.subject, a.exam, d)
 
 
@@ -225,7 +227,7 @@ def cmd_check(a):
     print('수업'.ljust(34) + ''.join(str(y).rjust(6) for y in years) + '   합계')
     for lid in sorted(table):
         row = table[lid]
-        print(f"{lid} {L[lid]['name']}"[:34].ljust(34) + ''.join(str(row.get(y, '')).rjust(6) for y in years)
+        print(f"{lid} {L[lid].get('show_name') or L[lid]['name']}"[:34].ljust(34) + ''.join(str(row.get(y, '')).rjust(6) for y in years)
               + str(sum(row.values())).rjust(7))
     print(f"[{'OK' if not bad else 'FAIL'}] 수업이 정해지지 않은 문항: {len(bad)}" + (f' → {bad}' if bad else ''))
     sys.exit(1 if bad else 0)

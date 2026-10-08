@@ -8,6 +8,11 @@ usage: python3 tools/build_lectures.py <과목> [--only 09 11] [--allow-missing]
 출력: 문제지/<과목>/<수업id>_<수업명>.pdf   수업마다 한 파일, 최신 연도부터
       문제지/<과목>/00_전체_수업순.pdf        모든 수업을 한 파일로 (수업마다 새 페이지)
       문제지/<과목>/README.md                수업 × 연도 문항 수 표 (GitHub 폴더 화면에 보임)
+
+과목정보에서 읽는 표시용 설정 (없으면 무시):
+  수업 "show_name"   파일·제목에 쓰는 이름 (학교 수업명 "name" 은 그대로 두어 make_subject_info 와 맞춤)
+  수업 "merged_into" 다른 수업에 합쳐진 수업 — 문항을 받지 않고 README 에 "→ 합침" 으로만 표시
+  과목 "file_marks"  {"34": "(수정)", "00": "(수정)"} 처럼 파일 이름 끝에 붙일 표시 ("00" = 전체 한 권)
 """
 import argparse, glob, html, json, os, re, shutil, subprocess, sys, urllib.parse
 
@@ -24,6 +29,24 @@ h2.yr span {{ font-size:{B.pt(9)}; font-weight:normal; color:#777; }}
 .lect {{ page-break-before:always; }}
 .lect:first-of-type {{ page-break-before:auto; }}
 """
+
+
+def lname(L):
+    """수업 표시 이름 (show_name 이 있으면 그것)."""
+    return L.get('show_name') or L['name']
+
+
+def fmark(inf, lid):
+    """파일 이름 끝에 붙일 표시, 예: '(수정)'."""
+    return (inf.get('file_marks') or {}).get(lid, '')
+
+
+def all_name(inf, tail=''):
+    return f"00_전체_수업순{tail}{fmark(inf, '00')}.pdf"
+
+
+def lect_file(inf, L, tail=''):
+    return f"{L['id']}_{safe(lname(L))}{tail}{fmark(inf, L['id'])}.pdf"
 
 
 def safe(name):
@@ -68,7 +91,7 @@ def section_html(L, items, subj_name, title_tag='h1'):
     for ex, q, e in items:
         if ex['year'] not in years:
             years.append(ex['year'])
-    head = (f'<{title_tag}>{html.escape(L["id"])}. {html.escape(L["name"])}</{title_tag}>'
+    head = (f'<{title_tag}>{html.escape(L["id"])}. {html.escape(lname(L))}</{title_tag}>'
             f'<div class="sub">{html.escape(subj_name)} · {", ".join(str(y) for y in years)}년 기출 · '
             f'총 {len(items)}문항 · 문제만 수록 (정답 표시 없음)</div>')
     out.append(head)
@@ -144,13 +167,13 @@ def main():
         sections.append((lid, body, nums))
         if lid not in todo:
             continue
-        name = f"{lid}_{safe(L[lid]['name'])}.pdf"
+        name = lect_file(inf, L[lid])
         work = os.path.join(ROOT, 'work', '_lectures', a.subject, lid)
         os.makedirs(work, exist_ok=True)
         doc = page_doc(body)
         out = os.path.join(outdir, name)
         print(f'\n== {name}  ({len(nums)}문항)')
-        tot = B.render_pdf(doc, work, out, f"{inf['name']} {L[lid]['name']}")
+        tot = B.render_pdf(doc, work, out, f"{inf['name']} {lname(L[lid])}")
         all_ok &= bool(B.verify(doc, work, out, tot, nums, report_fixes=False))
         made.add(name)
 
@@ -160,20 +183,20 @@ def main():
         work = os.path.join(ROOT, 'work', '_lectures', a.subject, '00')
         os.makedirs(work, exist_ok=True)
         doc = page_doc(body)
-        out = os.path.join(outdir, '00_전체_수업순.pdf')
-        print(f'\n== 00_전체_수업순.pdf  ({total}문항)')
+        out = os.path.join(outdir, all_name(inf))
+        print(f'\n== {all_name(inf)}  ({total}문항)')
         tot = B.render_pdf(doc, work, out, f"{inf['name']} 수업별 기출 전체")
         all_ok &= bool(B.verify(doc, work, out, tot, [], report_fixes=False))
         # 수업이 바뀌어 더는 문항이 없는 옛 PDF 정리
         for f in glob.glob(os.path.join(outdir, '[0-9][0-9]_*.pdf')):
             b = os.path.basename(f)
-            if b != '00_전체_수업순.pdf' and b not in made:
+            if b != all_name(inf) and b not in made:
                 os.remove(f); print(f'  옛 파일 삭제: {b}')
 
     # README 목차
     years = sorted({t[0]['year'] for v in groups.values() for t in v}, reverse=True)
     lines = [f"# {inf['name']} — 수업별 기출", '',
-             f"시험 {len(files)}개 · 총 {total}문항 · 한 권으로 보기: [00_전체_수업순.pdf](00_전체_수업순.pdf)", '',
+             f"시험 {len(files)}개 · 총 {total}문항 · 한 권으로 보기: [{all_name(inf)}]({urllib.parse.quote(all_name(inf))})", '',
              '| 수업 | ' + ' | '.join(f'{y}' for y in years) + ' | 합계 |',
              '|---|' + '---:|' * (len(years) + 1)]
     for lid in order:
@@ -182,12 +205,16 @@ def main():
         cnt = {}
         for ex, _, _ in groups[lid]:
             cnt[ex['year']] = cnt.get(ex['year'], 0) + 1
-        fn = f"{lid}_{safe(L[lid]['name'])}.pdf"
-        link = f"[{lid}. {L[lid]['name']}]({urllib.parse.quote(fn)})"
+        fn = lect_file(inf, L[lid])
+        link = f"[{lid}. {lname(L[lid])}]({urllib.parse.quote(fn)})"
         lines.append(f'| {link} | ' + ' | '.join(str(cnt.get(y, '')) for y in years) + f' | {sum(cnt.values())} |')
-    none = [x for x in inf['lectures'] if x['id'] not in groups and x.get('exam', True)]
+    none = [x for x in inf['lectures'] if x['id'] not in groups and x.get('exam', True) and not x.get('merged_into')]
     if none:
-        lines += ['', '아직 기출이 없는 수업: ' + ', '.join(f"{x['id']} {x['name']}" for x in none)]
+        lines += ['', '아직 기출이 없는 수업: ' + ', '.join(f"{x['id']} {lname(x)}" for x in none)]
+    merged = [x for x in inf['lectures'] if x.get('merged_into')]
+    if merged:
+        lines += ['', '합친 수업: ' + ', '.join(f"{x['id']} {x['name']} → {x['merged_into']} {lname(L[x['merged_into']])}"
+                                            for x in merged)]
     open(os.path.join(outdir, 'README.md'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
 
     counted = sum(len(n) for _, _, n in sections)

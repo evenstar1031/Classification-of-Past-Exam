@@ -151,7 +151,7 @@ def main():
         for ex, q, e, an in items:
             if ex['year'] not in years:
                 years.append(ex['year'])
-        out.append(f'<h1>{html.escape(Lx["id"])}. {html.escape(Lx["name"])}</h1>'
+        out.append(f'<h1>{html.escape(Lx["id"])}. {html.escape(BL.lname(Lx))}</h1>'
                    f'<div class="sub">{html.escape(inf["name"])} · {", ".join(str(y) for y in years)}년 기출 · '
                    f'총 {len(items)}문항 · 정답·해설판</div>')
         for ex, q, e, an in items:
@@ -180,23 +180,23 @@ def main():
         sections.append((lid, body, nums))
         if a.only and lid not in a.only:
             continue
-        name = f"{lid}_{BL.safe(L[lid]['name'])}_정답해설.pdf"
+        name = BL.lect_file(inf, L[lid], '_정답해설')
         work = os.path.join(ROOT, 'work', '_answers', a.subject, lid); os.makedirs(work, exist_ok=True)
         out = os.path.join(outdir, name)
         print(f'\n== {name}  ({len(nums)}문항)')
-        B.render_pdf(page_doc(body), work, out, f"{inf['name']} {L[lid]['name']} 정답·해설")
+        B.render_pdf(page_doc(body), work, out, f"{inf['name']} {BL.lname(L[lid])} 정답·해설")
         ok &= verify(out, nums, len(nums), work); made.add(name)
 
     if not a.only:
         body = '\n'.join(f'<div class="lect">{b}</div>' for _, b, _ in sections)
         work = os.path.join(ROOT, 'work', '_answers', a.subject, '00'); os.makedirs(work, exist_ok=True)
-        out = os.path.join(outdir, '00_전체_수업순_정답해설.pdf')
-        print(f'\n== 00_전체_수업순_정답해설.pdf  ({total}문항)')
+        out = os.path.join(outdir, BL.all_name(inf, '_정답해설'))
+        print(f'\n== {BL.all_name(inf, "_정답해설")}  ({total}문항)')
         B.render_pdf(page_doc(body), work, out, f"{inf['name']} 수업별 기출 정답·해설 전체")
         ok &= verify(out, [], total, work)
         for f in glob.glob(os.path.join(outdir, '[0-9][0-9]_*_정답해설.pdf')):
             b = os.path.basename(f)
-            if b != '00_전체_수업순_정답해설.pdf' and b not in made:
+            if b != BL.all_name(inf, '_정답해설') and b not in made:
                 os.remove(f); print(f'  옛 파일 삭제: {b}')
 
     if not a.no_exams and not a.only:
@@ -212,25 +212,25 @@ def main():
             B.render_pdf(page_doc(body), work, out, f'{title} 정답·해설')
             ok &= verify(out, [q['n'] for q in B.P], len(B.P), work)
 
+    import urllib.parse
     years = sorted({t[0]['year'] for v in groups.values() for t in v}, reverse=True)
+    all_fn = BL.all_name(inf, '_정답해설')
     lines = [f"# {inf['name']} — 수업별 기출 정답·해설", '',
-             f"시험 {len(files)}개 · 총 {total}문항 · 한 권으로 보기: "
-             f"[00_전체_수업순_정답해설.pdf](00_%EC%A0%84%EC%B2%B4_%EC%88%98%EC%97%85%EC%88%9C_%EC%A0%95%EB%8B%B5%ED%95%B4%EC%84%A4.pdf)", '',
+             f"시험 {len(files)}개 · 총 {total}문항 · 한 권으로 보기: [{all_fn}]({urllib.parse.quote(all_fn)})", '',
              '- 정답: 원본 기출에 표시된 정답 그대로 (정답 보기는 초록색으로 표시)',
              '- 해설: Claude가 작성 · 원본에 오답노트가 있던 문항은 "원본 오답노트"를 함께 실음',
              '- 해설은 공부를 돕기 위한 것이라 틀릴 수 있습니다. 이상한 해설은 알려 주세요.',
              '- 해설에 "※ 확인 필요"가 붙은 문항은 원본 정답이나 문제 자체에 의문이 있는 문항입니다 (아래 목록).',
              '- 문제만 있는 PDF는 `문제지/` 폴더에 그대로 있습니다.', '',
              '| 수업 | ' + ' | '.join(str(y) for y in years) + ' | 합계 |', '|---|' + '---:|' * (len(years) + 1)]
-    import urllib.parse
     for lid in order:
         if lid not in groups:
             continue
         cnt = {}
         for t in groups[lid]:
             cnt[t[0]['year']] = cnt.get(t[0]['year'], 0) + 1
-        fn = f"{lid}_{BL.safe(L[lid]['name'])}_정답해설.pdf"
-        lines.append(f"| [{lid}. {L[lid]['name']}]({urllib.parse.quote(fn)}) | "
+        fn = BL.lect_file(inf, L[lid], '_정답해설')
+        lines.append(f"| [{lid}. {BL.lname(L[lid])}]({urllib.parse.quote(fn)}) | "
                      + ' | '.join(str(cnt.get(y, '')) for y in years) + f' | {sum(cnt.values())} |')
     doubt = [(ex['year'], q['n'], lid, an) for lid in order for ex, q, e, an in groups.get(lid, [])
              if '확인 필요' in (an.get('explanation') or '') or not (an.get('answer') or an.get('answer_text'))]
@@ -238,7 +238,7 @@ def main():
         lines += ['', '## 확인이 필요한 문항', '']
         for y, n, lid, an in sorted(doubt, key=lambda t: (-t[0], t[1])):
             why = '원본에 정답 표시 없음' if not (an.get('answer') or an.get('answer_text')) else '원본 정답·문제에 의문'
-            lines.append(f"- {y}년 {n}번 ({lid}. {L[lid]['name']}) — {why}")
+            lines.append(f"- {y}년 {n}번 ({lid}. {BL.lname(L[lid])}) — {why}")
     open(os.path.join(outdir, 'README.md'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
 
     print(f"\n[{'OK' if ok else 'FAIL'}] 모든 정답·해설 PDF 검증 (폰트·문항번호·정답 상자)")

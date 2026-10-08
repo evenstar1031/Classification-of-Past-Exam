@@ -129,10 +129,10 @@
   },
   "18": {
    "lecture": "34",
-   "by": "내용",
+   "by": "직접",
    "author": null,
    "candidates": [],
-   "note": "검사 종류(panel test)·검사실 자동화(TLA) → 진단검사의학 총론 I"
+   "note": "사용자 지정: 총론 I·II 합침"
   },
   "19": {
    "lecture": "24",
@@ -346,10 +346,10 @@
   },
   "49": {
    "lecture": "34",
-   "by": "내용",
+   "by": "직접",
    "author": null,
    "candidates": [],
-   "note": "검사 종류(panel test)·검사실 자동화(TLA) → 진단검사의학 총론 I"
+   "note": "사용자 지정: 총론 I·II 합침"
   },
   "50": {
    "lecture": "32",
@@ -569,11 +569,11 @@
    "note": "황달 증례 감별 → 황달/복부진찰"
   },
   "81": {
-   "lecture": "36",
-   "by": "내용",
+   "lecture": "34",
+   "by": "직접",
    "author": null,
    "candidates": [],
-   "note": "용혈 시 LD·ALP 증가 원인 → 진단효소학"
+   "note": "사용자 지정: 진단검사의학 총론 문제"
   },
   "82": {
    "lecture": "09",
