@@ -119,6 +119,14 @@ and tell the user to press the green Merge button. Never commit `work/` or fonts
 ## Other requests
 - **"12번은 ○○ 수업이야"** → `classify.py set <과목> <시험id> 12=<id> --by 직접`, rebuild with
   `build_lectures.py <과목>` and `build_answers.py <과목>`, commit.
+- **"두 수업 합쳐줘" / "이름 바꿔줘" / "바뀐 파일은 (수정) 붙여줘"** → edit `과목정보/<과목>.json`, never the
+  school's `name`: `"show_name"` (name used in PDFs/files), `"merged_into": "<id>"` on the absorbed
+  lecture (it keeps its id so numbers don't shift, gets no file, `classify.py` refuses it and
+  `auto` skips it; README shows "합친 수업"), and subject-level `"file_marks": {"34": "(수정)",
+  "00": "(수정)"}` (suffix at the end of that lecture's file names; "00" = the 전체 book). Then
+  `classify.py set … --by 직접` the moved questions, rebuild both editions, commit. Old file names
+  are deleted by the builds. `make_subject_info.py` keeps these fields when it is re-run. When the
+  user later asks to drop or move the marks, change `file_marks` only.
 - **"이 해설 틀렸어 / 고쳐줘"** → edit `explanation` in `해설/<과목>/<시험id>.json` (every year that
   has the same question), `build_answers.py <과목> --only <수업id>`, commit. Wrong answer key →
   `"answer_by": "직접"` as above, and fix the explanation too.
