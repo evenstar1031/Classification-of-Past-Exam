@@ -49,6 +49,20 @@ def lect_file(inf, L, tail=''):
     return f"{L['id']}_{safe(lname(L))}{tail}{fmark(inf, L['id'])}.pdf"
 
 
+def mark_exam_labels(exams):
+    """Set ex['_label'] used in bylines: '2025년 시험', or '2023년 9월 18일 시험' when the
+    subject has more than one exam in that year (e.g. 230911 and 230918)."""
+    per_year = {}
+    for ex in exams:
+        per_year[ex['year']] = per_year.get(ex['year'], 0) + 1
+    for ex in exams:
+        m = re.match(r'\d{4}-(\d{2})-(\d{2})', ex.get('date') or '')
+        if per_year[ex['year']] > 1 and m:
+            ex['_label'] = f"{ex['year']}년 {int(m.group(1))}월 {int(m.group(2))}일 시험"
+        else:
+            ex['_label'] = f"{ex['year']}년 시험"
+
+
 def safe(name):
     s = re.sub(r'\s*/\s*', '·', name)
     s = re.sub(r'[\\:*?"<>|]', '', s)
@@ -104,7 +118,7 @@ def section_html(L, items, subj_name, title_tag='h1'):
             out.append(f'<h2 class="yr">{cur_year}년 <span>{html.escape(extra)}</span></h2>')
         k += 1; nums.append(k)
         B.load(ex['_work'])
-        by = f"{ex['year']}년 시험 {q['n']}번"
+        by = f"{ex.get('_label') or str(ex['year']) + '년 시험'} {q['n']}번"
         if e.get('author'):
             by += f" · 출제자 {e['author']}"
         qh = B.build_q(q, disp=k, byline_text=by)
@@ -147,6 +161,7 @@ def main():
             if n not in parsed:
                 sys.exit(f"!! {ex['id']} {n}번이 parsed.json 에 없습니다 (분류 파일과 원본이 안 맞음).")
             groups.setdefault(lid, []).append((ex, parsed[n], e)); total += 1
+    mark_exam_labels({id(t[0]): t[0] for v in groups.values() for t in v}.values())
     if missing:
         sys.exit(f'!! 수업이 정해지지 않은 문항 {len(missing)}개: {missing}\n'
                  f'   classify.py show 로 확인 후 set 하거나, --allow-missing 으로 "99 기타"에 넣으세요.')

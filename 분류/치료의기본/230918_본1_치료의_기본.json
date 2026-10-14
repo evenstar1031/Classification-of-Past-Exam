@@ -1,0 +1,606 @@
+{
+ "exam": {
+  "id": "230918_본1_치료의_기본",
+  "subject": "치료의기본",
+  "title": "230918 본1 치료의 기본",
+  "date": "2023-09-18",
+  "year": 2023,
+  "source": "원본/치료의기본/230918_본1_치료의_기본.pdf"
+ },
+ "questions": {
+  "1": {
+   "lecture": "45",
+   "by": "출제자",
+   "author": "안재윤",
+   "candidates": [
+    "45"
+   ],
+   "note": ""
+  },
+  "2": {
+   "lecture": "45",
+   "by": "출제자",
+   "author": "안재윤",
+   "candidates": [
+    "45"
+   ],
+   "note": ""
+  },
+  "3": {
+   "lecture": "48",
+   "by": "내용",
+   "author": "류정엽",
+   "candidates": [
+    "48",
+    "49"
+   ],
+   "note": "류정엽 교수 강의(흉터교정술): 상처 장력·켈로이드·Z-성형술"
+  },
+  "4": {
+   "lecture": "37",
+   "by": "출제자",
+   "author": "서강석",
+   "candidates": [
+    "37"
+   ],
+   "note": ""
+  },
+  "5": {
+   "lecture": "45",
+   "by": "출제자",
+   "author": "안재윤",
+   "candidates": [
+    "45"
+   ],
+   "note": ""
+  },
+  "6": {
+   "lecture": "48",
+   "by": "내용",
+   "author": "류정엽",
+   "candidates": [
+    "48",
+    "49"
+   ],
+   "note": "류정엽 교수 강의(흉터교정술): 상처 장력·켈로이드·Z-성형술"
+  },
+  "7": {
+   "lecture": "45",
+   "by": "출제자",
+   "author": "안재윤",
+   "candidates": [
+    "45"
+   ],
+   "note": ""
+  },
+  "8": {
+   "lecture": "45",
+   "by": "출제자",
+   "author": "안재윤",
+   "candidates": [
+    "45"
+   ],
+   "note": ""
+  },
+  "9": {
+   "lecture": "37",
+   "by": "출제자",
+   "author": "서강석",
+   "candidates": [
+    "37"
+   ],
+   "note": ""
+  },
+  "10": {
+   "lecture": "37",
+   "by": "출제자",
+   "author": "서강석",
+   "candidates": [
+    "37"
+   ],
+   "note": ""
+  },
+  "11": {
+   "lecture": "41",
+   "by": "출제자",
+   "author": "박정배",
+   "candidates": [
+    "41"
+   ],
+   "note": ""
+  },
+  "12": {
+   "lecture": "48",
+   "by": "내용",
+   "author": "류정엽",
+   "candidates": [
+    "48",
+    "49"
+   ],
+   "note": "류정엽 교수 강의(흉터교정술): 상처 장력·켈로이드·Z-성형술"
+  },
+  "13": {
+   "lecture": "37",
+   "by": "출제자",
+   "author": "서강석",
+   "candidates": [
+    "37"
+   ],
+   "note": ""
+  },
+  "14": {
+   "lecture": "45",
+   "by": "출제자",
+   "author": "안재윤",
+   "candidates": [
+    "45"
+   ],
+   "note": ""
+  },
+  "15": {
+   "lecture": "41",
+   "by": "출제자",
+   "author": "박정배",
+   "candidates": [
+    "41"
+   ],
+   "note": ""
+  },
+  "16": {
+   "lecture": "33",
+   "by": "내용",
+   "author": "김창호",
+   "candidates": [
+    "33",
+    "36"
+   ],
+   "note": "기본소생술 순서·비율·기도폐쇄(하임리히) → 기본소생술(BLS)"
+  },
+  "17": {
+   "lecture": "50",
+   "by": "출제자",
+   "author": "이준석",
+   "candidates": [
+    "50"
+   ],
+   "note": ""
+  },
+  "18": {
+   "lecture": "32",
+   "by": "내용",
+   "author": "김종근",
+   "candidates": [
+    "31",
+    "32",
+    "36"
+   ],
+   "note": "기본/전문 기도유지·실패한 기도 → 응급기도관리"
+  },
+  "19": {
+   "lecture": "51",
+   "by": "출제자",
+   "author": "정호윤",
+   "candidates": [
+    "51"
+   ],
+   "note": ""
+  },
+  "20": {
+   "lecture": "41",
+   "by": "출제자",
+   "author": "박정배",
+   "candidates": [
+    "41"
+   ],
+   "note": ""
+  },
+  "21": {
+   "lecture": "39",
+   "by": "내용",
+   "author": "이동언",
+   "candidates": [
+    "39",
+    "40"
+   ],
+   "note": "자발순환회복 후 검사·CPC·신경학적 예후 → ACLS, 심정지 후 치료"
+  },
+  "22": {
+   "lecture": "38",
+   "by": "출제자",
+   "author": "류현욱",
+   "candidates": [
+    "38"
+   ],
+   "note": ""
+  },
+  "23": {
+   "lecture": "32",
+   "by": "내용",
+   "author": "김종근",
+   "candidates": [
+    "31",
+    "32",
+    "36"
+   ],
+   "note": "기본/전문 기도유지·실패한 기도 → 응급기도관리"
+  },
+  "24": {
+   "lecture": "35",
+   "by": "출제자",
+   "author": "김윤정",
+   "candidates": [
+    "35"
+   ],
+   "note": ""
+  },
+  "25": {
+   "lecture": "47",
+   "by": "출제자",
+   "author": "최강영",
+   "candidates": [
+    "47"
+   ],
+   "note": ""
+  },
+  "26": {
+   "lecture": "50",
+   "by": "출제자",
+   "author": "이준석",
+   "candidates": [
+    "50"
+   ],
+   "note": ""
+  },
+  "27": {
+   "lecture": "51",
+   "by": "출제자",
+   "author": "정호윤",
+   "candidates": [
+    "51"
+   ],
+   "note": ""
+  },
+  "28": {
+   "lecture": "38",
+   "by": "출제자",
+   "author": "류현욱",
+   "candidates": [
+    "38"
+   ],
+   "note": ""
+  },
+  "29": {
+   "lecture": "35",
+   "by": "출제자",
+   "author": "김윤정",
+   "candidates": [
+    "35"
+   ],
+   "note": ""
+  },
+  "30": {
+   "lecture": "32",
+   "by": "내용",
+   "author": "김종근",
+   "candidates": [
+    "31",
+    "32",
+    "36"
+   ],
+   "note": "기본/전문 기도유지·실패한 기도 → 응급기도관리"
+  },
+  "31": {
+   "lecture": "39",
+   "by": "내용",
+   "author": "이동언",
+   "candidates": [
+    "39",
+    "40"
+   ],
+   "note": "자발순환회복 후 검사·CPC·신경학적 예후 → ACLS, 심정지 후 치료"
+  },
+  "32": {
+   "lecture": "47",
+   "by": "출제자",
+   "author": "최강영",
+   "candidates": [
+    "47"
+   ],
+   "note": ""
+  },
+  "33": {
+   "lecture": "33",
+   "by": "내용",
+   "author": "김창호",
+   "candidates": [
+    "33",
+    "36"
+   ],
+   "note": "기본소생술 순서·비율·기도폐쇄(하임리히) → 기본소생술(BLS)"
+  },
+  "34": {
+   "lecture": "50",
+   "by": "출제자",
+   "author": "이준석",
+   "candidates": [
+    "50"
+   ],
+   "note": ""
+  },
+  "35": {
+   "lecture": "39",
+   "by": "내용",
+   "author": "이동언",
+   "candidates": [
+    "39",
+    "40"
+   ],
+   "note": "자발순환회복 후 검사·CPC·신경학적 예후 → ACLS, 심정지 후 치료"
+  },
+  "36": {
+   "lecture": "51",
+   "by": "출제자",
+   "author": "정호윤",
+   "candidates": [
+    "51"
+   ],
+   "note": ""
+  },
+  "37": {
+   "lecture": "47",
+   "by": "출제자",
+   "author": "최강영",
+   "candidates": [
+    "47"
+   ],
+   "note": ""
+  },
+  "38": {
+   "lecture": "38",
+   "by": "출제자",
+   "author": "류현욱",
+   "candidates": [
+    "38"
+   ],
+   "note": ""
+  },
+  "39": {
+   "lecture": "33",
+   "by": "내용",
+   "author": "김창호",
+   "candidates": [
+    "33",
+    "36"
+   ],
+   "note": "기본소생술 순서·비율·기도폐쇄(하임리히) → 기본소생술(BLS)"
+  },
+  "40": {
+   "lecture": "35",
+   "by": "출제자",
+   "author": "김윤정",
+   "candidates": [
+    "35"
+   ],
+   "note": ""
+  },
+  "41": {
+   "lecture": "35",
+   "by": "출제자",
+   "author": "김윤정",
+   "candidates": [
+    "35"
+   ],
+   "note": ""
+  },
+  "42": {
+   "lecture": "51",
+   "by": "출제자",
+   "author": "정호윤",
+   "candidates": [
+    "51"
+   ],
+   "note": ""
+  },
+  "43": {
+   "lecture": "38",
+   "by": "출제자",
+   "author": "류현욱",
+   "candidates": [
+    "38"
+   ],
+   "note": ""
+  },
+  "44": {
+   "lecture": "40",
+   "by": "내용",
+   "author": "이동언",
+   "candidates": [
+    "39",
+    "40"
+   ],
+   "note": "eFAST·응급초음파/CT로 쇼크 원인 판단 → 응급영상"
+  },
+  "45": {
+   "lecture": "47",
+   "by": "출제자",
+   "author": "최강영",
+   "candidates": [
+    "47"
+   ],
+   "note": ""
+  },
+  "46": {
+   "lecture": "50",
+   "by": "출제자",
+   "author": "이준석",
+   "candidates": [
+    "50"
+   ],
+   "note": ""
+  },
+  "47": {
+   "lecture": "38",
+   "by": "출제자",
+   "author": "류현욱",
+   "candidates": [
+    "38"
+   ],
+   "note": ""
+  },
+  "48": {
+   "lecture": "50",
+   "by": "출제자",
+   "author": "이준석",
+   "candidates": [
+    "50"
+   ],
+   "note": ""
+  },
+  "49": {
+   "lecture": "40",
+   "by": "내용",
+   "author": "이동언",
+   "candidates": [
+    "39",
+    "40"
+   ],
+   "note": "eFAST·응급초음파/CT로 쇼크 원인 판단 → 응급영상"
+  },
+  "50": {
+   "lecture": "51",
+   "by": "출제자",
+   "author": "정호윤",
+   "candidates": [
+    "51"
+   ],
+   "note": ""
+  },
+  "51": {
+   "lecture": "35",
+   "by": "출제자",
+   "author": "김윤정",
+   "candidates": [
+    "35"
+   ],
+   "note": ""
+  },
+  "52": {
+   "lecture": "47",
+   "by": "출제자",
+   "author": "최강영",
+   "candidates": [
+    "47"
+   ],
+   "note": ""
+  },
+  "53": {
+   "lecture": "47",
+   "by": "출제자",
+   "author": "최강영",
+   "candidates": [
+    "47"
+   ],
+   "note": ""
+  },
+  "54": {
+   "lecture": "50",
+   "by": "출제자",
+   "author": "이준석",
+   "candidates": [
+    "50"
+   ],
+   "note": ""
+  },
+  "55": {
+   "lecture": "51",
+   "by": "출제자",
+   "author": "정호윤",
+   "candidates": [
+    "51"
+   ],
+   "note": ""
+  },
+  "56": {
+   "lecture": "38",
+   "by": "출제자",
+   "author": "류현욱",
+   "candidates": [
+    "38"
+   ],
+   "note": ""
+  },
+  "57": {
+   "lecture": "40",
+   "by": "내용",
+   "author": "이동언",
+   "candidates": [
+    "39",
+    "40"
+   ],
+   "note": "eFAST·응급초음파/CT로 쇼크 원인 판단 → 응급영상"
+  },
+  "58": {
+   "lecture": "35",
+   "by": "출제자",
+   "author": "김윤정",
+   "candidates": [
+    "35"
+   ],
+   "note": ""
+  },
+  "59": {
+   "lecture": "44",
+   "by": "출제자",
+   "author": "문성배",
+   "candidates": [
+    "44"
+   ],
+   "note": ""
+  },
+  "60": {
+   "lecture": "44",
+   "by": "출제자",
+   "author": "문성배",
+   "candidates": [
+    "44"
+   ],
+   "note": ""
+  },
+  "61": {
+   "lecture": "44",
+   "by": "출제자",
+   "author": "문성배",
+   "candidates": [
+    "44"
+   ],
+   "note": ""
+  },
+  "62": {
+   "lecture": "44",
+   "by": "출제자",
+   "author": "문성배",
+   "candidates": [
+    "44"
+   ],
+   "note": ""
+  },
+  "63": {
+   "lecture": "44",
+   "by": "출제자",
+   "author": "문성배",
+   "candidates": [
+    "44"
+   ],
+   "note": ""
+  },
+  "64": {
+   "lecture": "44",
+   "by": "출제자",
+   "author": "문성배",
+   "candidates": [
+    "44"
+   ],
+   "note": ""
+  }
+ }
+}

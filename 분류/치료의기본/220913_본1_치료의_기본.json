@@ -1,0 +1,488 @@
+{
+ "exam": {
+  "id": "220913_본1_치료의_기본",
+  "subject": "치료의기본",
+  "title": "220913 본1 치료의기본",
+  "date": "2022-09-13",
+  "year": 2022,
+  "source": "원본/치료의기본/220913_본1_치료의_기본.pdf"
+ },
+ "questions": {
+  "1": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외과 중환자 패혈증 관리·중환자실 감시장치 → 외과 중환자 관리"
+  },
+  "2": {
+   "lecture": "33",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "기본소생술 순서·압박:환기 비율 → 기본소생술(BLS)"
+  },
+  "3": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "동종이식 면역반응·HLA → 면역과 이식"
+  },
+  "4": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수액 종류·RAAS·재관류 후 치료·Na 결핍량 → 수술 환자의 수분, 전해질 관리"
+  },
+  "5": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·접근성·응급구조사·응급의료법 → 응급의료체계"
+  },
+  "6": {
+   "lecture": "02",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "손상별 대사량·비경구 영양 → 외과적 대사"
+  },
+  "7": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제 → 외과 감염과 항생제 선택"
+  },
+  "8": {
+   "lecture": "34",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급실 패혈성 쇼크·아나필락시스 초기 치료 → Shock, Time-critical disease"
+  },
+  "9": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·폐쇄공·배꼽·직접 서혜부 탈장 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "10": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독 고압산소·저체온·열사병 → 환경 응급"
+  },
+  "11": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 연기 기준·수술 전후 처치 → 수술 전 위험도 평가와 준비"
+  },
+  "12": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 기도·혈액제제·병원 전 처치·1차 평가 → 외상 응급(ATLS)"
+  },
+  "13": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 리듬·리듬 확인 주기·예후·불응성 VF·ETCO2·자발순환회복 후 처치 → ACLS, 심정지 후 치료"
+  },
+  "14": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "노인 수술·고령 생리 변화 → 노인 환자 수술"
+  },
+  "15": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·폐쇄공·배꼽·직접 서혜부 탈장 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "16": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "DISASTER·MASS 분류·보호장비·DMAT → 재난 의학"
+  },
+  "17": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 응급 특징·소아 심정지·소아 기본소생술·열성경련 → 소아응급"
+  },
+  "18": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독 고압산소·저체온·열사병 → 환경 응급"
+  },
+  "19": {
+   "lecture": "15",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "위조루관·코위관 영양 → 외과 환자에서의 영양관리"
+  },
+  "20": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급 기도관리·CICO → 응급기도관리"
+  },
+  "21": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "22": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "동종이식 면역반응·HLA → 면역과 이식"
+  },
+  "23": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외과 중환자 패혈증 관리·중환자실 감시장치 → 외과 중환자 관리"
+  },
+  "24": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 응급 특징·소아 심정지·소아 기본소생술·열성경련 → 소아응급"
+  },
+  "25": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독 고압산소·저체온·열사병 → 환경 응급"
+  },
+  "26": {
+   "lecture": "02",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "손상별 대사량·비경구 영양 → 외과적 대사"
+  },
+  "27": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "노인 수술·고령 생리 변화 → 노인 환자 수술"
+  },
+  "28": {
+   "lecture": "33",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "기본소생술 순서·압박:환기 비율 → 기본소생술(BLS)"
+  },
+  "29": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급 기도관리·CICO → 응급기도관리"
+  },
+  "30": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "31": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 기도·혈액제제·병원 전 처치·1차 평가 → 외상 응급(ATLS)"
+  },
+  "32": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 장마비·상처열개·유착성 장폐쇄 → 수술합병증"
+  },
+  "33": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 연기 기준·수술 전후 처치 → 수술 전 위험도 평가와 준비"
+  },
+  "34": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독 고압산소·저체온·열사병 → 환경 응급"
+  },
+  "35": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·접근성·응급구조사·응급의료법 → 응급의료체계"
+  },
+  "36": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수액 종류·RAAS·재관류 후 치료·Na 결핍량 → 수술 환자의 수분, 전해질 관리"
+  },
+  "37": {
+   "lecture": "15",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "위조루관·코위관 영양 → 외과 환자에서의 영양관리"
+  },
+  "38": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "39": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "DISASTER·MASS 분류·보호장비·DMAT → 재난 의학"
+  },
+  "40": {
+   "lecture": "34",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급실 패혈성 쇼크·아나필락시스 초기 치료 → Shock, Time-critical disease"
+  },
+  "41": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 리듬·리듬 확인 주기·예후·불응성 VF·ETCO2·자발순환회복 후 처치 → ACLS, 심정지 후 치료"
+  },
+  "42": {
+   "lecture": "35",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "두피 열상 처치·봉합 전 상처 준비 → 응급 창상 관리"
+  },
+  "43": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 리듬·리듬 확인 주기·예후·불응성 VF·ETCO2·자발순환회복 후 처치 → ACLS, 심정지 후 치료"
+  },
+  "44": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·폐쇄공·배꼽·직접 서혜부 탈장 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "45": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수액 종류·RAAS·재관류 후 치료·Na 결핍량 → 수술 환자의 수분, 전해질 관리"
+  },
+  "46": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "DISASTER·MASS 분류·보호장비·DMAT → 재난 의학"
+  },
+  "47": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 응급 특징·소아 심정지·소아 기본소생술·열성경련 → 소아응급"
+  },
+  "48": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 리듬·리듬 확인 주기·예후·불응성 VF·ETCO2·자발순환회복 후 처치 → ACLS, 심정지 후 치료"
+  },
+  "49": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 장마비·상처열개·유착성 장폐쇄 → 수술합병증"
+  },
+  "50": {
+   "lecture": "40",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상초음파·응급초음파로 쇼크 원인 판단 → 응급영상"
+  },
+  "51": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·접근성·응급구조사·응급의료법 → 응급의료체계"
+  },
+  "52": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 기도·혈액제제·병원 전 처치·1차 평가 → 외상 응급(ATLS)"
+  },
+  "53": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "54": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 리듬·리듬 확인 주기·예후·불응성 VF·ETCO2·자발순환회복 후 처치 → ACLS, 심정지 후 치료"
+  },
+  "55": {
+   "lecture": "40",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상초음파·응급초음파로 쇼크 원인 판단 → 응급영상"
+  },
+  "56": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "DISASTER·MASS 분류·보호장비·DMAT → 재난 의학"
+  },
+  "57": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수액 종류·RAAS·재관류 후 치료·Na 결핍량 → 수술 환자의 수분, 전해질 관리"
+  },
+  "58": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 리듬·리듬 확인 주기·예후·불응성 VF·ETCO2·자발순환회복 후 처치 → ACLS, 심정지 후 치료"
+  },
+  "59": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·접근성·응급구조사·응급의료법 → 응급의료체계"
+  },
+  "60": {
+   "lecture": "35",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "두피 열상 처치·봉합 전 상처 준비 → 응급 창상 관리"
+  },
+  "61": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 응급 특징·소아 심정지·소아 기본소생술·열성경련 → 소아응급"
+  },
+  "62": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 장마비·상처열개·유착성 장폐쇄 → 수술합병증"
+  },
+  "63": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 기도·혈액제제·병원 전 처치·1차 평가 → 외상 응급(ATLS)"
+  },
+  "64": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·폐쇄공·배꼽·직접 서혜부 탈장 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "65": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제 → 외과 감염과 항생제 선택"
+  },
+  "66": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제 → 외과 감염과 항생제 선택"
+  },
+  "67": {
+   "lecture": "16",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "최소침습·로봇 수술 → 최소침습수술"
+  },
+  "68": {
+   "lecture": "16",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "최소침습·로봇 수술 → 최소침습수술"
+  }
+ }
+}

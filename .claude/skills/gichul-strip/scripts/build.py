@@ -267,7 +267,7 @@ def build_q(q, disp=None, byline_text=None):
     for e in extras:
         if e.get('after_block') is None:
             parts.append(extra_fig(n, e))
-    if first:
+    if first and not boxfirst:   # a box-first question whose box is the whole stem is not empty
         parts.insert(head_start, f'<p class="stem"><span class="num">{dn}.</span> '
                                  '(문항 지문 없음 — 원본 PDF에 지문이 비어 있습니다)</p>')
 

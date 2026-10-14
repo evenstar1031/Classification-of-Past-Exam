@@ -1,0 +1,838 @@
+{
+ "exam": {
+  "id": "201123_본1_치료의_기본",
+  "subject": "치료의기본",
+  "title": "201123 본1 치료의기본",
+  "date": "2020-11-23",
+  "year": 2020,
+  "source": "원본/치료의기본/201123_본1_치료의_기본.pdf"
+ },
+ "questions": {
+  "1": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·응급구조사 업무·의료지도·응급의료체계 → 응급의료체계"
+  },
+  "2": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·응급구조사 업무·의료지도·응급의료체계 → 응급의료체계"
+  },
+  "3": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·응급구조사 업무·의료지도·응급의료체계 → 응급의료체계"
+  },
+  "4": {
+   "lecture": "38",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급의료기관·응급구조사 업무·의료지도·응급의료체계 → 응급의료체계"
+  },
+  "5": {
+   "lecture": "33",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "기본심폐소생술·자동심장충격기 → 기본소생술(BLS)"
+  },
+  "6": {
+   "lecture": "33",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "기본심폐소생술·자동심장충격기 → 기본소생술(BLS)"
+  },
+  "7": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제·수술 후 발열·수술부위 감염 예방 → 외과 감염과 항생제 선택"
+  },
+  "8": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 장폐쇄·폐색전증·장마비 → 수술합병증"
+  },
+  "9": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 장폐쇄·폐색전증·장마비 → 수술합병증"
+  },
+  "10": {
+   "lecture": "04",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 장폐쇄·폐색전증·장마비 → 수술합병증"
+  },
+  "11": {
+   "lecture": "22",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "척추마취 접근법·경막천자후두통 → 척추 마취, 경막외 마취"
+  },
+  "12": {
+   "lecture": "22",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "척추마취 접근법·경막천자후두통 → 척추 마취, 경막외 마취"
+  },
+  "13": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경신경총·좌골신경 차단, 국소마취제 약리·전신독성 → 말초신경차단, 국소마취"
+  },
+  "14": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경신경총·좌골신경 차단, 국소마취제 약리·전신독성 → 말초신경차단, 국소마취"
+  },
+  "15": {
+   "lecture": "35",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "두피 열상 봉합(스테이플) → 응급 창상 관리"
+  },
+  "16": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독·벌/뱀 교상·열사병·저체온 → 환경 응급"
+  },
+  "17": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독·벌/뱀 교상·열사병·저체온 → 환경 응급"
+  },
+  "18": {
+   "lecture": "35",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "두피 열상 봉합(스테이플) → 응급 창상 관리"
+  },
+  "19": {
+   "lecture": "18",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "최소폐포농도·흡입마취제 영향·아산화질소 → 흡입마취"
+  },
+  "20": {
+   "lecture": "18",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "최소폐포농도·흡입마취제 영향·아산화질소 → 흡입마취"
+  },
+  "21": {
+   "lecture": "18",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "최소폐포농도·흡입마취제 영향·아산화질소 → 흡입마취"
+  },
+  "22": {
+   "lecture": "18",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "최소폐포농도·흡입마취제 영향·아산화질소 → 흡입마취"
+  },
+  "23": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급 기도관리·CICO·전문기도 → 응급기도관리"
+  },
+  "24": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급 기도관리·CICO·전문기도 → 응급기도관리"
+  },
+  "25": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급 기도관리·CICO·전문기도 → 응급기도관리"
+  },
+  "26": {
+   "lecture": "32",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급 기도관리·CICO·전문기도 → 응급기도관리"
+  },
+  "27": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 수혈 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "28": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 수혈 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "29": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 수혈 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "30": {
+   "lecture": "11",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "출혈성 쇼크 기전·승압제·수술 후 출혈·대동맥류 파열 수혈 → 쇼크, 외과적 출혈과 수혈"
+  },
+  "31": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "개인보호장비·재난의료지원팀·MASS 분류·DISASTER → 재난 의학"
+  },
+  "32": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "개인보호장비·재난의료지원팀·MASS 분류·DISASTER → 재난 의학"
+  },
+  "33": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "개인보호장비·재난의료지원팀·MASS 분류·DISASTER → 재난 의학"
+  },
+  "34": {
+   "lecture": "44",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "개인보호장비·재난의료지원팀·MASS 분류·DISASTER → 재난 의학"
+  },
+  "35": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 환자 기도·혈액제제·손상통제소생술·외상성 심정지 → 외상 응급(ATLS)"
+  },
+  "36": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 환자 기도·혈액제제·손상통제소생술·외상성 심정지 → 외상 응급(ATLS)"
+  },
+  "37": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 환자 기도·혈액제제·손상통제소생술·외상성 심정지 → 외상 응급(ATLS)"
+  },
+  "38": {
+   "lecture": "37",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "외상 환자 기도·혈액제제·손상통제소생술·외상성 심정지 → 외상 응급(ATLS)"
+  },
+  "39": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·상복부 탈장·음낭수종 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "40": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·상복부 탈장·음낭수종 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "41": {
+   "lecture": "08",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복직근초 혈종·상복부 탈장·음낭수종 → 배벽과 서혜부 덩이, 탈장"
+  },
+  "42": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제·수술 후 발열·수술부위 감염 예방 → 외과 감염과 항생제 선택"
+  },
+  "43": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독·벌/뱀 교상·열사병·저체온 → 환경 응급"
+  },
+  "44": {
+   "lecture": "45",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일산화탄소 중독·벌/뱀 교상·열사병·저체온 → 환경 응급"
+  },
+  "45": {
+   "lecture": "40",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급초음파·외상초음파로 쇼크 원인 판단 → 응급영상"
+  },
+  "46": {
+   "lecture": "40",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급초음파·외상초음파로 쇼크 원인 판단 → 응급영상"
+  },
+  "47": {
+   "lecture": "26",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "혈역학 감시·수술 중 관리(BIS·저체온)·혈압 커프·동맥압 파형 → 환자감시장치, 수술중 환자관리"
+  },
+  "48": {
+   "lecture": "26",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "혈역학 감시·수술 중 관리(BIS·저체온)·혈압 커프·동맥압 파형 → 환자감시장치, 수술중 환자관리"
+  },
+  "49": {
+   "lecture": "34",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급실 쇼크(아나필락시스·패혈성 쇼크) 초기 치료 → Shock, Time-critical disease"
+  },
+  "50": {
+   "lecture": "34",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급실 쇼크(아나필락시스·패혈성 쇼크) 초기 치료 → Shock, Time-critical disease"
+  },
+  "51": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 후 예후 평가·자발순환회복 후 관상동맥조영술 → ACLS, 심정지 후 치료"
+  },
+  "52": {
+   "lecture": "39",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "심정지 후 예후 평가·자발순환회복 후 관상동맥조영술 → ACLS, 심정지 후 치료"
+  },
+  "53": {
+   "lecture": "50",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "창상치유·욕창·미세혈관 문합·정맥이식 → 창상치유, 당뇨성족부궤양, 욕창, 미세수술"
+  },
+  "54": {
+   "lecture": "50",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "창상치유·욕창·미세혈관 문합·정맥이식 → 창상치유, 당뇨성족부궤양, 욕창, 미세수술"
+  },
+  "55": {
+   "lecture": "48",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "흉터 예방·치료 → 흉터교정술"
+  },
+  "56": {
+   "lecture": "50",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "창상치유·욕창·미세혈관 문합·정맥이식 → 창상치유, 당뇨성족부궤양, 욕창, 미세수술"
+  },
+  "57": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일일 수액량·Na 결핍량·재관류 후 전해질·수액 종류 → 수술 환자의 수분, 전해질 관리"
+  },
+  "58": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일일 수액량·Na 결핍량·재관류 후 전해질·수액 종류 → 수술 환자의 수분, 전해질 관리"
+  },
+  "59": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일일 수액량·Na 결핍량·재관류 후 전해질·수액 종류 → 수술 환자의 수분, 전해질 관리"
+  },
+  "60": {
+   "lecture": "05",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "일일 수액량·Na 결핍량·재관류 후 전해질·수액 종류 → 수술 환자의 수분, 전해질 관리"
+  },
+  "61": {
+   "lecture": "47",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "구순구개열·소이증·눈꺼풀·코 구조 → 선천기형, 두개안면, 미용수술"
+  },
+  "62": {
+   "lecture": "47",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "구순구개열·소이증·눈꺼풀·코 구조 → 선천기형, 두개안면, 미용수술"
+  },
+  "63": {
+   "lecture": "47",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "구순구개열·소이증·눈꺼풀·코 구조 → 선천기형, 두개안면, 미용수술"
+  },
+  "64": {
+   "lecture": "47",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "구순구개열·소이증·눈꺼풀·코 구조 → 선천기형, 두개안면, 미용수술"
+  },
+  "65": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 심정지·신생아 소생술·아동학대·소아 장중첩 → 소아응급"
+  },
+  "66": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 심정지·신생아 소생술·아동학대·소아 장중첩 → 소아응급"
+  },
+  "67": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 심정지·신생아 소생술·아동학대·소아 장중첩 → 소아응급"
+  },
+  "68": {
+   "lecture": "43",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "소아 심정지·신생아 소생술·아동학대·소아 장중첩 → 소아응급"
+  },
+  "69": {
+   "lecture": "19",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "근이완제·정맥마취제 재분포 → 정맥마취"
+  },
+  "70": {
+   "lecture": "19",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "근이완제·정맥마취제 재분포 → 정맥마취"
+  },
+  "71": {
+   "lecture": "17",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경추손상 기도유지·삽관 시 후두 압박·신생아 기도 → 기도관리"
+  },
+  "72": {
+   "lecture": "17",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경추손상 기도유지·삽관 시 후두 압박·신생아 기도 → 기도관리"
+  },
+  "73": {
+   "lecture": "31",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급환자 보고·구두지시 확인 → 응급의학 총론"
+  },
+  "74": {
+   "lecture": "31",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "응급환자 보고·구두지시 확인 → 응급의학 총론"
+  },
+  "75": {
+   "lecture": "25",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "위배출 지연 요인·수술 전 금식 → 마취전 환자평가/관리"
+  },
+  "76": {
+   "lecture": "25",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "위배출 지연 요인·수술 전 금식 → 마취전 환자평가/관리"
+  },
+  "77": {
+   "lecture": "50",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "창상치유·욕창·미세혈관 문합·정맥이식 → 창상치유, 당뇨성족부궤양, 욕창, 미세수술"
+  },
+  "78": {
+   "lecture": "50",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "창상치유·욕창·미세혈관 문합·정맥이식 → 창상치유, 당뇨성족부궤양, 욕창, 미세수술"
+  },
+  "79": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "노인 환자 수술·고령 생리 변화 → 노인 환자 수술"
+  },
+  "80": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "노인 환자 수술·고령 생리 변화 → 노인 환자 수술"
+  },
+  "81": {
+   "lecture": "15",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "장피누공·고령 환자 영양 공급 경로 → 외과 환자에서의 영양관리"
+  },
+  "82": {
+   "lecture": "15",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "장피누공·고령 환자 영양 공급 경로 → 외과 환자에서의 영양관리"
+  },
+  "83": {
+   "lecture": "29",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "수술 후 통증 치료 → 급성 통증관리"
+  },
+  "84": {
+   "lecture": "27",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "대상포진 통증 → 만성 통증관리"
+  },
+  "85": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "간이식 비적응증·면역억제제 → 면역과 이식"
+  },
+  "86": {
+   "lecture": "10",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "간이식 비적응증·면역억제제 → 면역과 이식"
+  },
+  "87": {
+   "lecture": "47",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "구순구개열·소이증·눈꺼풀·코 구조 → 선천기형, 두개안면, 미용수술"
+  },
+  "88": {
+   "lecture": "47",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "구순구개열·소이증·눈꺼풀·코 구조 → 선천기형, 두개안면, 미용수술"
+  },
+  "89": {
+   "lecture": "51",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피부이식 드레싱·생착 조건·천공지 피판·조직공학 → 피부이식 및 피판 이식, 조직공학"
+  },
+  "90": {
+   "lecture": "51",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피부이식 드레싱·생착 조건·천공지 피판·조직공학 → 피부이식 및 피판 이식, 조직공학"
+  },
+  "91": {
+   "lecture": "24",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "회복실 문제·수술 후 구역구토 → 회복시 환자관리"
+  },
+  "92": {
+   "lecture": "24",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "회복실 문제·수술 후 구역구토 → 회복시 환자관리"
+  },
+  "93": {
+   "lecture": "02",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "손상별 대사량·비경구 영양 → 외과적 대사"
+  },
+  "94": {
+   "lecture": "02",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "손상별 대사량·비경구 영양 → 외과적 대사"
+  },
+  "95": {
+   "lecture": "17",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경추손상 기도유지·삽관 시 후두 압박·신생아 기도 → 기도관리"
+  },
+  "96": {
+   "lecture": "07",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "노인 환자 수술·고령 생리 변화 → 노인 환자 수술"
+  },
+  "97": {
+   "lecture": "46",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "유방보형물 연관 림프종·확장기 유방재건 → 성형외과학 소개"
+  },
+  "98": {
+   "lecture": "46",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "유방보형물 연관 림프종·확장기 유방재건 → 성형외과학 소개"
+  },
+  "99": {
+   "lecture": "23",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "진정 단계·진정 약물(케타민) → 특수마취관리(외래/진정)"
+  },
+  "100": {
+   "lecture": "23",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "진정 단계·진정 약물(케타민) → 특수마취관리(외래/진정)"
+  },
+  "101": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "간질환·당뇨 환자 수술 전후 관리 → 수술 전 위험도 평가와 준비"
+  },
+  "102": {
+   "lecture": "06",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "간질환·당뇨 환자 수술 전후 관리 → 수술 전 위험도 평가와 준비"
+  },
+  "103": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "중심정맥관·고유량 산소요법(중환자실) → 외과 중환자 관리"
+  },
+  "104": {
+   "lecture": "12",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "중심정맥관·고유량 산소요법(중환자실) → 외과 중환자 관리"
+  },
+  "105": {
+   "lecture": "41",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "암페타민 중독·해독제 → 중독 응급"
+  },
+  "106": {
+   "lecture": "41",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "암페타민 중독·해독제 → 중독 응급"
+  },
+  "107": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제·수술 후 발열·수술부위 감염 예방 → 외과 감염과 항생제 선택"
+  },
+  "108": {
+   "lecture": "14",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "C. difficile 장염·예방적 항생제·수술 후 발열·수술부위 감염 예방 → 외과 감염과 항생제 선택"
+  },
+  "109": {
+   "lecture": "26",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "혈역학 감시·수술 중 관리(BIS·저체온)·혈압 커프·동맥압 파형 → 환자감시장치, 수술중 환자관리"
+  },
+  "110": {
+   "lecture": "26",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "혈역학 감시·수술 중 관리(BIS·저체온)·혈압 커프·동맥압 파형 → 환자감시장치, 수술중 환자관리"
+  },
+  "111": {
+   "lecture": "16",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복강경·로봇 수술 → 최소침습수술"
+  },
+  "112": {
+   "lecture": "16",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "복강경·로봇 수술 → 최소침습수술"
+  },
+  "113": {
+   "lecture": "51",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피부이식 드레싱·생착 조건·천공지 피판·조직공학 → 피부이식 및 피판 이식, 조직공학"
+  },
+  "114": {
+   "lecture": "51",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "피부이식 드레싱·생착 조건·천공지 피판·조직공학 → 피부이식 및 피판 이식, 조직공학"
+  },
+  "115": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경신경총·좌골신경 차단, 국소마취제 약리·전신독성 → 말초신경차단, 국소마취"
+  },
+  "116": {
+   "lecture": "30",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "중재적 통증치료와 부작용 → 침습적 통증치료"
+  },
+  "117": {
+   "lecture": "30",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "중재적 통증치료와 부작용 → 침습적 통증치료"
+  },
+  "118": {
+   "lecture": "21",
+   "by": "내용",
+   "author": null,
+   "candidates": [],
+   "note": "경신경총·좌골신경 차단, 국소마취제 약리·전신독성 → 말초신경차단, 국소마취"
+  }
+ }
+}

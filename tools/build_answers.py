@@ -137,6 +137,7 @@ def main():
                 sys.exit(f'!! 해설/{a.subject}/{ex["id"]}.json 에 {n}번이 없습니다. answer_key.py 를 다시 돌리세요.')
             groups.setdefault(lid, []).append((ex, parsed[n], e, ans[n])); total += 1
             no_ex += not ans[n].get('explanation')
+    BL.mark_exam_labels([ex for ex, _, _ in exams])
     for lid in groups:
         groups[lid].sort(key=lambda t: (-t[0]['year'], -(int(re.sub(r'\D', '', t[0].get('date') or '0') or 0)),
                                         t[0]['id'], t[1]['n']))
@@ -162,7 +163,8 @@ def main():
                 out.append(f'<h2 class="yr">{cur_year}년 <span>{html.escape("담당 " + profs if profs else "")}</span></h2>')
             k += 1; nums.append(k)
             B.load(ex['_work'])
-            by = f"{ex['year']}년 시험 {q['n']}번" + (f" · 출제자 {e['author']}" if e.get('author') else '')
+            by = (f"{ex.get('_label') or str(ex['year']) + '년 시험'} {q['n']}번"
+                  + (f" · 출제자 {e['author']}" if e.get('author') else ''))
             qh = B.build_q(q, disp=k, byline_text=by)
             if new_year and qh.startswith('<div class="q flow'):
                 qh = qh.replace('">', '" style="page-break-before:auto">', 1)
@@ -232,13 +234,17 @@ def main():
         fn = BL.lect_file(inf, L[lid], '_정답해설')
         lines.append(f"| [{lid}. {BL.lname(L[lid])}]({urllib.parse.quote(fn)}) | "
                      + ' | '.join(str(cnt.get(y, '')) for y in years) + f' | {sum(cnt.values())} |')
-    doubt = [(ex['year'], q['n'], lid, an) for lid in order for ex, q, e, an in groups.get(lid, [])
+    # label: "2025년", or "2023년 9월 18일" when a year has several exams
+    doubt = [(ex['year'], ex.get('date') or '', q['n'], lid, an,
+              (ex.get('_label') or f"{ex['year']}년 시험").removesuffix(' 시험'))
+             for lid in order for ex, q, e, an in groups.get(lid, [])
              if '확인 필요' in (an.get('explanation') or '') or not (an.get('answer') or an.get('answer_text'))]
     if doubt:
         lines += ['', '## 확인이 필요한 문항', '']
-        for y, n, lid, an in sorted(doubt, key=lambda t: (-t[0], t[1])):
+        doubt.sort(key=lambda t: t[2])
+        for y, d, n, lid, an, label in sorted(doubt, key=lambda t: (t[0], t[1]), reverse=True):
             why = '원본에 정답 표시 없음' if not (an.get('answer') or an.get('answer_text')) else '원본 정답·문제에 의문'
-            lines.append(f"- {y}년 {n}번 ({lid}. {BL.lname(L[lid])}) — {why}")
+            lines.append(f"- {label} {n}번 ({lid}. {BL.lname(L[lid])}) — {why}")
     open(os.path.join(outdir, 'README.md'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
 
     print(f"\n[{'OK' if ok else 'FAIL'}] 모든 정답·해설 PDF 검증 (폰트·문항번호·정답 상자)")
