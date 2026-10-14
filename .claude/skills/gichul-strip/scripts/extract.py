@@ -55,18 +55,44 @@ for pno, page in enumerate(doc):
             t = ''.join(s['text'] for s in l['spans'])
             if not t.strip():
                 continue
+            # 3-digit numbers can share ONE span with the stem ("102. 다음은 …"); split
+            # them like the multi-span case (the text's x is set to main_x after profiling)
+            m = re.match(r'^\s*(\d{1,3}\.)\s+(\S.*)$', t)
+            if m and l['bbox'][0] < 0.12 * page.rect.width:
+                lines.append({'page': pno, 'x': round(l['bbox'][0], 1), 'y': l['bbox'][1],
+                              'y1': l['bbox'][3], 'x1': l['bbox'][2], 't': m.group(1),
+                              'sz': round(max(s['size'] for s in l['spans']), 1),
+                              'col': sorted({s['color'] for s in l['spans']})})
+                lines.append({'page': pno, 'x': None, 'y': l['bbox'][1] + 0.01,
+                              'y1': l['bbox'][3], 'x1': l['bbox'][2], 't': m.group(2),
+                              'sz': round(max(s['size'] for s in l['spans']), 1),
+                              'col': sorted({s['color'] for s in l['spans']})})
+                continue
             lines.append({'page': pno, 'x': round(l['bbox'][0], 1), 'y': l['bbox'][1],
                           'y1': l['bbox'][3], 'x1': l['bbox'][2], 't': t,
                           'sz': round(max(s['size'] for s in l['spans']), 1),
                           'col': sorted({s['color'] for s in l['spans']})})
+
+# a 3-digit number can also wrap its "." onto the next line ("101" / "."): rejoin them
+for l in lines:
+    if l['x'] is not None and l['x'] < 0.12 * doc[l['page']].rect.width and re.match(r'^\d{1,3}$', l['t'].strip()):
+        dot = next((d for d in lines if d is not l and d['page'] == l['page'] and d['t'].strip() == '.'
+                    and d['x'] is not None and abs(d['x'] - l['x']) < 2 and 0 < d['y'] - l['y'] < 30), None)
+        if dot is not None:
+            l['t'] = l['t'].strip() + '.'
+            dot['t'] = ''
+lines = [l for l in lines if l['t'].strip()]
 
 # ------------------------------------------------------------------ profile
 qn = [l for l in lines if QRE.match(l['t'].strip())]
 cn = [l for l in lines if CRE.match(l['t'].strip())]
 marker_x = collections.Counter(l['x'] for l in qn + cn).most_common(1)[0][0]
 q_size = collections.Counter(l['sz'] for l in qn if l['x'] == marker_x).most_common(1)[0][0]
-body = [l for l in lines if l['x'] > marker_x + 5]
+body = [l for l in lines if l['x'] is not None and l['x'] > marker_x + 5]
 main_x = collections.Counter(l['x'] for l in body).most_common(1)[0][0]
+for l in lines:
+    if l['x'] is None:          # stem text split off a one-span "102. …" line
+        l['x'] = main_x
 page_w = doc[0].rect.width
 prof = {'marker_x': marker_x, 'main_x': main_x, 'q_size': q_size,
         'box_x_max': round(page_w * 0.3, 1)}
@@ -334,8 +360,15 @@ for q in qs:
         return tgt
 
     note = False
+    note_figs = []                       # images inside an ⓘ 오답노트/해설 box (e.g. a table)
     for s in items:
         if before(s, s['y1'] if s['k'] == 'fig' else s['y']):
+            continue
+        if s['k'] == 'fig' and note:
+            # after the choices, an ⓘ note runs to the end of the question: its images
+            # are part of the note (an answer leak if attached to the last choice)
+            note_figs.append(s['t'])
+            print(f'  !! Q{q["n"]}: figure inside ⓘ note dropped: {s["t"]}')
             continue
         if s['k'] == 'fig':
             o = owner(s['page'], s['y1'])
@@ -370,6 +403,8 @@ for q in qs:
     out.append({'n': q['n'], 'blocks': blocks, 'notes': notes, 'answer_text': answer_text,
                 'choices': [{k: c[k] for k in ('n', 'lines', 'figs', 'label', 'mk', 'mk_num', 'mk_lines')}
                             for c in choices]})
+    if note_figs:
+        out[-1]['note_figs'] = note_figs
 
 json.dump(out, open(os.path.join(WORK, 'parsed.json'), 'w'), ensure_ascii=False, indent=1)
 json.dump({'title': title, 'date': date, 'profile': prof, 'source': SRC, 'authors': authors},
@@ -436,7 +471,8 @@ p_stem = sum(len(b['lines']) for q in out for b in q['blocks'] if b['t'] == 'tex
 p_ch = sum(len(c['lines']) for q in out for c in q['choices'])
 p_box = sum(len(b['lines']) for q in out for b in q['blocks'] if b['t'] == 'box')
 p_lab = sum(1 for q in out for c in q['choices'] if c['label'])
-p_fig = sum(1 for q in out for b in q['blocks'] if b['t'] == 'fig') + sum(len(c['figs']) for q in out for c in q['choices'])
+p_fig = (sum(1 for q in out for b in q['blocks'] if b['t'] == 'fig') + sum(len(c['figs']) for q in out for c in q['choices'])
+         + sum(len(q.get('note_figs', [])) for q in out))
 nums = [q['n'] for q in out]
 checks = [
     ('question numbers 1..N contiguous', nums == list(range(1, len(nums) + 1)), f'{len(nums)} questions'),
@@ -445,7 +481,7 @@ checks = [
     ('box/aside lines = kept + labels + dropped notes',
      src_cnt['box'] + src_cnt['aside'] == p_box + p_lab + dropped_total,
      f"{src_cnt['box'] + src_cnt['aside']} = {p_box} + {p_lab} + {dropped_total}"),
-    ('figures placed', len(figs) == p_fig, f'{len(figs)} -> {p_fig}'),
+    ('figures placed (incl. dropped ⓘ-note images)', len(figs) == p_fig, f'{len(figs)} -> {p_fig}'),
     ('every question has choices or is flagged subjective', True,
      'subjective/no-choice: ' + str([q['n'] for q in out if not q['choices']])),
 ]

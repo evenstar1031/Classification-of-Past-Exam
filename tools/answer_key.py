@@ -25,10 +25,18 @@ NOTE_HEAD = re.compile(r'^\s*ⓘ\s*(오답노트|해설)\s*$')
 def final_answers(q, regroup):
     """정답 보기 번호 목록 (regroup 반영). 보기 글자가 색/크기로 표시됐거나 번호 자체가 표시된 보기."""
     cs = q['choices']
-    marked_lines = {l for c in cs for l in c.get('mk_lines', [])}
     rg = regroup.get(str(q['n']), {})
     final = [rg.get(str(i + 1), c['lines']) for i, c in enumerate(cs)]
-    by_line = {i + 1 for i, ls in enumerate(final) if any(l in marked_lines for l in ls)}
+    # a marked line counts for the choice it still sits in after regroup; a short line that
+    # also appears in other choices ("다", "한다.") is only trusted if it stayed in place
+    by_line = set()
+    for i, c in enumerate(cs):
+        for l in c.get('mk_lines', []):
+            where = [j for j, ls in enumerate(final) if l in ls]
+            if i in where:
+                by_line.add(i + 1)
+            elif len(where) == 1:
+                by_line.add(where[0] + 1)
     by_num = {i + 1 for i, c in enumerate(cs) if c.get('mk_num')}
     return sorted(by_line | by_num)
 

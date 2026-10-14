@@ -1,0 +1,792 @@
+{
+ "exam": {
+  "id": "230911_본1_치료의_기본",
+  "subject": "치료의기본",
+  "title": "230911 본1 치료의 기본",
+  "date": "2023-09-11",
+  "year": 2023,
+  "source": "원본/치료의기본/230911_본1_치료의_기본.pdf"
+ },
+ "questions": {
+  "1": {
+   "lecture": "18",
+   "by": "출제자",
+   "author": "김현지",
+   "candidates": [
+    "18"
+   ],
+   "note": ""
+  },
+  "2": {
+   "lecture": "18",
+   "by": "출제자",
+   "author": "김현지",
+   "candidates": [
+    "18"
+   ],
+   "note": ""
+  },
+  "3": {
+   "lecture": "18",
+   "by": "출제자",
+   "author": "김현지",
+   "candidates": [
+    "18"
+   ],
+   "note": ""
+  },
+  "4": {
+   "lecture": "21",
+   "by": "출제자",
+   "author": "김세영",
+   "candidates": [
+    "21"
+   ],
+   "note": ""
+  },
+  "5": {
+   "lecture": "12",
+   "by": "출제자",
+   "author": "유병혁",
+   "candidates": [
+    "12"
+   ],
+   "note": ""
+  },
+  "6": {
+   "lecture": "25",
+   "by": "출제자",
+   "author": "김시오",
+   "candidates": [
+    "25"
+   ],
+   "note": ""
+  },
+  "7": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "조성훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "8": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "조성훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "9": {
+   "lecture": "29",
+   "by": "출제자",
+   "author": "전영훈",
+   "candidates": [
+    "29"
+   ],
+   "note": ""
+  },
+  "10": {
+   "lecture": "22",
+   "by": "내용",
+   "author": "오진영",
+   "candidates": [
+    "22",
+    "27"
+   ],
+   "note": "척추·경막외 마취(저혈압·경막천자후두통·저항소실법) → 척추 마취, 경막외 마취"
+  },
+  "11": {
+   "lecture": "17",
+   "by": "출제자",
+   "author": "임동건",
+   "candidates": [
+    "17"
+   ],
+   "note": ""
+  },
+  "12": {
+   "lecture": "21",
+   "by": "출제자",
+   "author": "김세영",
+   "candidates": [
+    "21"
+   ],
+   "note": ""
+  },
+  "13": {
+   "lecture": "25",
+   "by": "출제자",
+   "author": "김시오",
+   "candidates": [
+    "25"
+   ],
+   "note": ""
+  },
+  "14": {
+   "lecture": "17",
+   "by": "출제자",
+   "author": "임동건",
+   "candidates": [
+    "17"
+   ],
+   "note": ""
+  },
+  "15": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "윤우성",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "16": {
+   "lecture": "17",
+   "by": "출제자",
+   "author": "임동건",
+   "candidates": [
+    "17"
+   ],
+   "note": ""
+  },
+  "17": {
+   "lecture": "03",
+   "by": "출제자",
+   "author": "조성훈",
+   "candidates": [
+    "03"
+   ],
+   "note": ""
+  },
+  "18": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "윤우성",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "19": {
+   "lecture": "25",
+   "by": "출제자",
+   "author": "김시오",
+   "candidates": [
+    "25"
+   ],
+   "note": ""
+  },
+  "20": {
+   "lecture": "21",
+   "by": "출제자",
+   "author": "김세영",
+   "candidates": [
+    "21"
+   ],
+   "note": ""
+  },
+  "21": {
+   "lecture": "07",
+   "by": "내용",
+   "author": "강병주",
+   "candidates": [
+    "07",
+    "13"
+   ],
+   "note": "강병주 교수 강의(노인 환자 수술): 고령 환자 폐합병증·영양평가·고식적 수술"
+  },
+  "22": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "김형기",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "23": {
+   "lecture": "26",
+   "by": "출제자",
+   "author": "변성혜",
+   "candidates": [
+    "26"
+   ],
+   "note": ""
+  },
+  "24": {
+   "lecture": "12",
+   "by": "출제자",
+   "author": "유병혁",
+   "candidates": [
+    "12"
+   ],
+   "note": ""
+  },
+  "25": {
+   "lecture": "19",
+   "by": "출제자",
+   "author": "박성식",
+   "candidates": [
+    "19"
+   ],
+   "note": ""
+  },
+  "26": {
+   "lecture": "29",
+   "by": "출제자",
+   "author": "전영훈",
+   "candidates": [
+    "29"
+   ],
+   "note": ""
+  },
+  "27": {
+   "lecture": "04",
+   "by": "내용",
+   "author": "권형준",
+   "candidates": [
+    "04",
+    "14"
+   ],
+   "note": "수술 후 무기폐·유착성 장폐쇄·근막 열개 → 수술합병증"
+  },
+  "28": {
+   "lecture": "22",
+   "by": "내용",
+   "author": "오진영",
+   "candidates": [
+    "22",
+    "27"
+   ],
+   "note": "척추·경막외 마취(저혈압·경막천자후두통·저항소실법) → 척추 마취, 경막외 마취"
+  },
+  "29": {
+   "lecture": "15",
+   "by": "출제자",
+   "author": "이승수",
+   "candidates": [
+    "15"
+   ],
+   "note": ""
+  },
+  "30": {
+   "lecture": "08",
+   "by": "내용",
+   "author": "박진영",
+   "candidates": [
+    "08",
+    "09"
+   ],
+   "note": "탈장·배벽 덩이(음낭수종/요추탈장/복직근초 혈종) → 배벽과 서혜부 덩이, 탈장 (CP 09와 같은 범위)"
+  },
+  "31": {
+   "lecture": "26",
+   "by": "출제자",
+   "author": "이현수",
+   "candidates": [
+    "26"
+   ],
+   "note": ""
+  },
+  "32": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "임경훈",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "33": {
+   "lecture": "27",
+   "by": "내용",
+   "author": "오진영",
+   "candidates": [
+    "22",
+    "27"
+   ],
+   "note": "IASP 통증 정의(오진영 교수) → 만성 통증관리"
+  },
+  "34": {
+   "lecture": "24",
+   "by": "출제자",
+   "author": "곽경화",
+   "candidates": [
+    "24"
+   ],
+   "note": ""
+  },
+  "35": {
+   "lecture": "02",
+   "by": "내용",
+   "author": "박기범",
+   "candidates": [
+    "02",
+    "13"
+   ],
+   "note": "박기범 교수 강의(외과적 대사): 영양 공급 경로·영양 평가"
+  },
+  "36": {
+   "lecture": "16",
+   "by": "출제자",
+   "author": "박준석",
+   "candidates": [
+    "16"
+   ],
+   "note": ""
+  },
+  "37": {
+   "lecture": "07",
+   "by": "내용",
+   "author": "강병주",
+   "candidates": [
+    "07",
+    "13"
+   ],
+   "note": "강병주 교수 강의(노인 환자 수술): 고령 환자 폐합병증·영양평가·고식적 수술"
+  },
+  "38": {
+   "lecture": "23",
+   "by": "출제자",
+   "author": "홍성욱",
+   "candidates": [
+    "23"
+   ],
+   "note": ""
+  },
+  "39": {
+   "lecture": "30",
+   "by": "출제자",
+   "author": "박준모",
+   "candidates": [
+    "30"
+   ],
+   "note": ""
+  },
+  "40": {
+   "lecture": "06",
+   "by": "내용",
+   "author": "송승호",
+   "candidates": [
+    "06",
+    "13"
+   ],
+   "note": "항혈전제·스테로이드 복용 환자의 수술 전 준비 → 수술 전 위험도 평가와 준비"
+  },
+  "41": {
+   "lecture": "14",
+   "by": "내용",
+   "author": "권형준",
+   "candidates": [
+    "04",
+    "14"
+   ],
+   "note": "C. difficile·중심정맥관 감염·창상 분류 → 외과 감염과 항생제 선택"
+  },
+  "42": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "김형기",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "43": {
+   "lecture": "26",
+   "by": "출제자",
+   "author": "변성혜",
+   "candidates": [
+    "26"
+   ],
+   "note": ""
+  },
+  "44": {
+   "lecture": "15",
+   "by": "출제자",
+   "author": "이승수",
+   "candidates": [
+    "15"
+   ],
+   "note": ""
+  },
+  "45": {
+   "lecture": "12",
+   "by": "출제자",
+   "author": "유병혁",
+   "candidates": [
+    "12"
+   ],
+   "note": ""
+  },
+  "46": {
+   "lecture": "06",
+   "by": "내용",
+   "author": "송승호",
+   "candidates": [
+    "06",
+    "13"
+   ],
+   "note": "항혈전제·스테로이드 복용 환자의 수술 전 준비 → 수술 전 위험도 평가와 준비"
+  },
+  "47": {
+   "lecture": "26",
+   "by": "출제자",
+   "author": "이현수",
+   "candidates": [
+    "26"
+   ],
+   "note": ""
+  },
+  "48": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "임경훈",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "49": {
+   "lecture": "02",
+   "by": "내용",
+   "author": "박기범",
+   "candidates": [
+    "02",
+    "13"
+   ],
+   "note": "박기범 교수 강의(외과적 대사): 영양 공급 경로·영양 평가"
+  },
+  "50": {
+   "lecture": "24",
+   "by": "출제자",
+   "author": "곽경화",
+   "candidates": [
+    "24"
+   ],
+   "note": ""
+  },
+  "51": {
+   "lecture": "07",
+   "by": "내용",
+   "author": "강병주",
+   "candidates": [
+    "07",
+    "13"
+   ],
+   "note": "강병주 교수 강의(노인 환자 수술): 고령 환자 폐합병증·영양평가·고식적 수술"
+  },
+  "52": {
+   "lecture": "16",
+   "by": "출제자",
+   "author": "박준석",
+   "candidates": [
+    "16"
+   ],
+   "note": ""
+  },
+  "53": {
+   "lecture": "23",
+   "by": "출제자",
+   "author": "홍성욱",
+   "candidates": [
+    "23"
+   ],
+   "note": ""
+  },
+  "54": {
+   "lecture": "27",
+   "by": "내용",
+   "author": "오진영",
+   "candidates": [
+    "22",
+    "27"
+   ],
+   "note": "대상포진후신경통·복합부위통증증후군 → 만성 통증관리"
+  },
+  "55": {
+   "lecture": "30",
+   "by": "출제자",
+   "author": "박준모",
+   "candidates": [
+    "30"
+   ],
+   "note": ""
+  },
+  "56": {
+   "lecture": "08",
+   "by": "내용",
+   "author": "박진영",
+   "candidates": [
+    "08",
+    "09"
+   ],
+   "note": "탈장·배벽 덩이(음낭수종/요추탈장/복직근초 혈종) → 배벽과 서혜부 덩이, 탈장 (CP 09와 같은 범위)"
+  },
+  "57": {
+   "lecture": "19",
+   "by": "출제자",
+   "author": "박성식",
+   "candidates": [
+    "19"
+   ],
+   "note": ""
+  },
+  "58": {
+   "lecture": "10",
+   "by": "출제자",
+   "author": "윤우성",
+   "candidates": [
+    "10"
+   ],
+   "note": ""
+  },
+  "59": {
+   "lecture": "30",
+   "by": "출제자",
+   "author": "박준모",
+   "candidates": [
+    "30"
+   ],
+   "note": ""
+  },
+  "60": {
+   "lecture": "06",
+   "by": "내용",
+   "author": "송승호",
+   "candidates": [
+    "06",
+    "13"
+   ],
+   "note": "항혈전제·스테로이드 복용 환자의 수술 전 준비 → 수술 전 위험도 평가와 준비"
+  },
+  "61": {
+   "lecture": "26",
+   "by": "출제자",
+   "author": "변성혜",
+   "candidates": [
+    "26"
+   ],
+   "note": ""
+  },
+  "62": {
+   "lecture": "26",
+   "by": "출제자",
+   "author": "이현수",
+   "candidates": [
+    "26"
+   ],
+   "note": ""
+  },
+  "63": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "김형기",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "64": {
+   "lecture": "08",
+   "by": "내용",
+   "author": "박진영",
+   "candidates": [
+    "08",
+    "09"
+   ],
+   "note": "탈장·배벽 덩이(음낭수종/요추탈장/복직근초 혈종) → 배벽과 서혜부 덩이, 탈장 (CP 09와 같은 범위)"
+  },
+  "65": {
+   "lecture": "29",
+   "by": "출제자",
+   "author": "전영훈",
+   "candidates": [
+    "29"
+   ],
+   "note": ""
+  },
+  "66": {
+   "lecture": "19",
+   "by": "출제자",
+   "author": "박성식",
+   "candidates": [
+    "19"
+   ],
+   "note": ""
+  },
+  "67": {
+   "lecture": "24",
+   "by": "출제자",
+   "author": "곽경화",
+   "candidates": [
+    "24"
+   ],
+   "note": ""
+  },
+  "68": {
+   "lecture": "22",
+   "by": "내용",
+   "author": "오진영",
+   "candidates": [
+    "22",
+    "27"
+   ],
+   "note": "척추·경막외 마취(저혈압·경막천자후두통·저항소실법) → 척추 마취, 경막외 마취"
+  },
+  "69": {
+   "lecture": "23",
+   "by": "출제자",
+   "author": "홍성욱",
+   "candidates": [
+    "23"
+   ],
+   "note": ""
+  },
+  "70": {
+   "lecture": "16",
+   "by": "출제자",
+   "author": "박준석",
+   "candidates": [
+    "16"
+   ],
+   "note": ""
+  },
+  "71": {
+   "lecture": "04",
+   "by": "내용",
+   "author": "권형준",
+   "candidates": [
+    "04",
+    "14"
+   ],
+   "note": "수술 후 무기폐·유착성 장폐쇄·근막 열개 → 수술합병증"
+  },
+  "72": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "임경훈",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "73": {
+   "lecture": "27",
+   "by": "내용",
+   "author": "오진영",
+   "candidates": [
+    "22",
+    "27"
+   ],
+   "note": "대상포진후신경통·복합부위통증증후군 → 만성 통증관리"
+  },
+  "74": {
+   "lecture": "15",
+   "by": "출제자",
+   "author": "이승수",
+   "candidates": [
+    "15"
+   ],
+   "note": ""
+  },
+  "75": {
+   "lecture": "02",
+   "by": "내용",
+   "author": "박기범",
+   "candidates": [
+    "02",
+    "13"
+   ],
+   "note": "박기범 교수 강의(외과적 대사): 영양 공급 경로·영양 평가"
+  },
+  "76": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "김형기",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "77": {
+   "lecture": "14",
+   "by": "내용",
+   "author": "권형준",
+   "candidates": [
+    "04",
+    "14"
+   ],
+   "note": "C. difficile·중심정맥관 감염·창상 분류 → 외과 감염과 항생제 선택"
+  },
+  "78": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "임경훈",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "79": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "임경훈",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "80": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "김형기",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "81": {
+   "lecture": "04",
+   "by": "내용",
+   "author": "권형준",
+   "candidates": [
+    "04",
+    "14"
+   ],
+   "note": "수술 후 무기폐·유착성 장폐쇄·근막 열개 → 수술합병증"
+  },
+  "82": {
+   "lecture": "05",
+   "by": "출제자",
+   "author": "김형기",
+   "candidates": [
+    "05"
+   ],
+   "note": ""
+  },
+  "83": {
+   "lecture": "11",
+   "by": "출제자",
+   "author": "임경훈",
+   "candidates": [
+    "11"
+   ],
+   "note": ""
+  },
+  "84": {
+   "lecture": "14",
+   "by": "내용",
+   "author": "권형준",
+   "candidates": [
+    "04",
+    "14"
+   ],
+   "note": "C. difficile·중심정맥관 감염·창상 분류 → 외과 감염과 항생제 선택"
+  }
+ }
+}
