@@ -80,10 +80,44 @@ def collect(subj, inf, lid):
         ans = json.load(open(ap, encoding='utf-8'))['questions'] if os.path.exists(ap) else {}
         for n in mine:
             items.append((ex, parsed[n], d['questions'][n], ans.get(n, {})))
+    for ex, q, e, an in extra_items(subj, inf, lid):
+        exams.append(ex); items.append((ex, q, e, an))
     BL.mark_exam_labels(exams)
     items.sort(key=lambda t: (-t[0]['year'], -(int(re.sub(r'\D', '', t[0].get('date') or '0') or 0)),
                               t[0]['id'], t[1]['n']))
     return items
+
+
+def extra_items(subj, inf, lid):
+    """학습자료/<과목>/<id>_<수업명>/2_추가기출.json — 저장소에 원본 시험이 없어 필기본 등에서 옮겨 적은 기출.
+    {"exam": {id, year, date, title}, "questions": [{n, author, stem, box?, choices, answer, explanation}]}
+    문제지와 같은 코드(build_q)로 그리도록 work/_study/<과목>/_extra/<id>/ 에 parsed/meta/fixes 를 만든다."""
+    L = {x['id']: x for x in inf['lectures']}.get(lid)
+    p = L and os.path.join(folder(subj, L), '2_추가기출.json')
+    if not p or not os.path.exists(p):
+        return []
+    d = json.load(open(p, encoding='utf-8'))
+    ex = dict(d['exam']); ex['_extra'] = True
+    work = os.path.join(ROOT, 'work', '_study', subj, '_extra', ex['id'])
+    os.makedirs(os.path.join(work, 'fig'), exist_ok=True)
+    parsed, out = [], []
+    for q in d['questions']:
+        blocks = [{'t': 'text', 'lines': [q['stem']]}]
+        if q.get('box'):
+            blocks.append({'t': 'box', 'lines': q['box'] if isinstance(q['box'], list) else [q['box']]})
+        parsed.append({'n': q['n'], 'blocks': blocks, 'notes': [], 'answer_text': [],
+                       'choices': [{'n': f'{i + 1})', 'lines': [c], 'figs': [], 'label': None, 'mk': False,
+                                    'mk_num': False, 'mk_lines': []} for i, c in enumerate(q['choices'])]})
+    meta = {'title': ex.get('title', ex['id']), 'date': ex.get('date', ''), 'source': p,
+            'authors': {str(q['n']): q.get('author') for q in d['questions'] if q.get('author')}}
+    for f_, v in (('parsed.json', parsed), ('meta.json', meta), ('fixes.json', {'authors': None})):
+        json.dump(v, open(os.path.join(work, f_), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    ex['_work'] = work
+    for q, pq in zip(d['questions'], parsed):
+        e = {'lecture': lid, 'author': q.get('author', '')}
+        an = {'answer': q.get('answer'), 'explanation': q.get('explanation', '')}
+        out.append((ex, pq, e, an))
+    return out
 
 
 def counts(subj):
@@ -101,7 +135,8 @@ def folder(subj, L):
 
 def byline(ex, q, e):
     return (f"{ex.get('_label') or str(ex['year']) + '년 시험'} {q['n']}번"
-            + (f" · 출제자 {e['author']}" if e.get('author') else ''))
+            + (f" · 출제자 {e['author']}" if e.get('author') else '')
+            + (' · 필기본 수록' if ex.get('_extra') else ''))
 
 
 def ans_label(an):
