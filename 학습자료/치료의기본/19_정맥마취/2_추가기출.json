@@ -1,0 +1,17 @@
+{
+ "_설명": "저장소 분류/ 에 원본 시험이 없어 필기본(필기본_2026.pdf 3쪽)에 실린 2022년 기출을 옮겨 적은 것. 원본 PDF가 들어와 분류되면 이 파일은 지운다.",
+ "exam": {"id": "220921_본1_치료의_기본_필기본수록", "year": 2022, "date": "2022-09-21",
+          "title": "220921 본1 치료의 기본 (필기본 수록)"},
+ "questions": [
+  {"n": 37,
+   "stem": "다음 중 심혈관계에 미치는 영향이 다른 약은?",
+   "choices": ["diazepam", "ketamine", "midazolam", "propofol", "thiopental"],
+   "answer": [2],
+   "explanation": "ketamine은 중추신경계를 자극해 혈압과 심박수를 올린다. 나머지 진정제(diazepam, midazolam, propofol, thiopental)는 혈압을 유지하거나 떨어뜨리는 쪽이며, 특히 propofol과 thiopental은 저혈압을 일으킨다.\n원본 오답노트: ketamine은 다른 약제와 달리 혈압과 맥박수를 올리며 호흡을 잘 유지할 수 있는 약제로서 마취 후 저혈압이 예상되는 환자에게 사용할 수 있다."},
+  {"n": 38,
+   "stem": "다음 중 신경근차단제의 역전을 위해 투여되는 약제 중 cholinergic side effect를 차단하기 위하여 사용하는 약제는?",
+   "choices": ["glycopyrrolate", "pyridostigmine", "rocuronium", "succinylcholine", "sugammadex"],
+   "answer": [1],
+   "explanation": "역전에는 anticholinesterase(pyridostigmine 등)로 acetylcholine 농도를 높이는데, 이때 전신에 나타나는 cholinergic side effect를 막으려고 anticholinergic인 glycopyrrolate를 함께 준다. pyridostigmine은 부작용을 '만드는' 쪽이고, rocuronium·succinylcholine은 신경근차단제 자체, sugammadex는 rocuronium을 감싸 없애는 다른 기전의 역전제다.\n원본 오답노트: 신경근차단제의 역전을 위하여 acetylcholine의 농도를 높이기 위하여 anticholinesterase를 사용하게 되며 anticholinesterase의 부작용인 cholinergic side effect를 차단하기 위하여 anticholinergic drug인 atropine, scopolamine, glycopyrrolate를 사용하게 된다. Succinylcholine은 depolarizing neuromuscular blocking agent이고 Sugammadex는 새로 개발된 신경근차단제의 역전제로 신경근차단제 자체를 cage 안에 가둠으로써 작동을 하지 않도록 한다."}
+ ]
+}
