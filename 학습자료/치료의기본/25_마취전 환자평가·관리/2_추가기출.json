@@ -1,0 +1,31 @@
+{
+ "_설명": "저장소 분류/ 에 원본 시험이 없어 필기본(필기본_2026.pdf 3쪽)에 실린 2022년 기출을 옮겨 적은 것. 24 회복시 환자관리와 같은 2022년 시험(분류/ 에 없는 두 번째 시험)으로 보고 같은 id를 썼다. 원본 PDF가 들어와 분류되면 이 파일은 지운다.",
+ "exam": {"id": "220921_본1_치료의_기본_필기본수록", "year": 2022, "date": "2022-09-21",
+          "title": "220921 본1 치료의 기본 (필기본 수록)"},
+ "questions": [
+  {"n": 1,
+   "stem": "모유 수유 중인 영아가 정규 수술을 받을 때, 적절한 수술 전 금식 시간은?",
+   "choices": ["1시간", "2시간", "4시간", "8시간", "12시간"],
+   "answer": [3],
+   "explanation": "미국마취과학회 금식 지침에서 모유는 4시간이다. 맑은 유동식은 2시간, 조제분유·우유·가벼운 식사는 6시간, 기름지거나 고기가 든 든든한 식사는 8시간이다.\n모유는 맑은 물(2시간)보다 위에 오래 남지만 분유(6시간)보다는 빨리 비워진다는 점을 기억하면 헷갈리지 않는다."},
+  {"n": 2,
+   "stem": "미국마취과학회 마취환자 분류 중 ASA Class 2 에 해당하는 경우는?",
+   "choices": ["A patient with mild systemic disease",
+               "A patient with severe systemic disease",
+               "A patient with severe systemic disease that is a constant threat to life",
+               "A moribund patient who is not expected to survive without the operation",
+               "A declared brain-dead patient whose organs are being removed for donor purposes"],
+   "answer": [1],
+   "explanation": "ASA 2는 기능 장애가 없는 경한 전신질환(mild systemic disease)이다 — 흡연, 사교적 음주, 비만, 임신, 잘 조절되는 당뇨·고혈압 등.\n②는 ASA 3(기능 제한이 있는 중증 전신질환), ③은 ASA 4(지속적으로 생명을 위협), ④는 ASA 5(수술하지 않으면 생존할 수 없음), ⑤는 ASA 6(장기 적출 예정인 뇌사자)이다."},
+  {"n": 33,
+   "stem": "미국마취과학회에서 수술 중 기본 표준 환자감시의 지침에서 Standard I으로 지정하여 가장 중요한 항목은 무엇인가?",
+   "box": "가장 적합한 답 하나만 고르시오.",
+   "choices": ["자격을 갖춘 마취과 인력이 반드시 존재하여야 한다.",
+               "환자의 산소화가 적절한지 확인한다.",
+               "환자의 호흡의 적절성을 평가한다",
+               "환자의 순환의 적절성을 감시한다",
+               "체온을 지속적으로 감시한다"],
+   "answer": [1],
+   "explanation": "ASA 기본 마취 감시 표준(Standards for Basic Anesthetic Monitoring)의 Standard I은 '전신마취·부위마취·감시마취관리 동안 자격을 갖춘 마취 인력이 수술방에 계속 있어야 한다'는 것이다.\n산소화(oxygenation), 환기(ventilation), 순환(circulation), 체온(temperature)을 지속적으로 평가하라는 내용은 모두 Standard II에 속한다. 어떤 기계보다 사람이 먼저라는 뜻이다."}
+ ]
+}
