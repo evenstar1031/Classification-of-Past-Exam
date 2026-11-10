@@ -5,6 +5,8 @@ usage (저장소 맨 위 폴더에서):
   python3 .claude/skills/pilgi-study/scripts/study.py find   <과목> [검색어]   수업 id 찾기 + 기출 문항 수
   python3 .claude/skills/pilgi-study/scripts/study.py gichul <과목> <수업>     그 수업 기출을 글로 출력 (정답·해설 포함)
   python3 .claude/skills/pilgi-study/scripts/study.py build  <과목> <수업>     PDF 만들기
+  python3 .claude/skills/pilgi-study/scripts/study.py fig    <과목> <수업> <쪽> <이름> [--box x0 y0 x1 y1]
+                                                              필기본의 표·도식을 그림/<이름>.png 로 잘라 저장
 
 <수업> = 수업 id(예: 32) 또는 이름 일부(예: 응급기도). 다른 수업에 합쳐진 수업이면 합쳐진 쪽으로 간다.
 
@@ -247,6 +249,17 @@ h2.yr {{ font-family:{GOTHIC}; }}
 .ak p {{ margin:{mm(1.2)} 0 0 {mm(7.6)}; text-align:justify; font-size:{pt(10.3)}; line-height:1.58; }}
 .ak p.pt2 {{ color:#55606b; font-size:{pt(9.5)}; }}
 .ak p.chk {{ color:#b5542c; }}
+.kt {{ page-break-inside:avoid; }}
+.notes > .kt:first-child > h1:first-child {{ margin-top:0; }}
+.fig {{ page-break-inside:avoid; text-align:center; margin:{mm(2)} 0 {mm(4)} 0; }}
+.fig img {{ max-width:100%; max-height:{mm(150)}; border:0.5pt solid #d5dbe1; }}
+.fig .cap {{ font-family:{GOTHIC}; font-size:{pt(8.8)}; color:#6b7a89; margin-top:{mm(1.2)}; }}
+.akt {{ border-collapse:collapse; width:100%; margin:0 0 {mm(6)} 0; page-break-inside:avoid; }}
+.akt th, .akt td {{ font-family:{GOTHIC}; text-align:center; padding:{mm(1.4)} 0; font-size:{pt(10.5)};
+                   border:0.5pt solid #c9d3dc; }}
+.akt th {{ background:#e4ecf4; color:{INK}; font-weight:bold; }}
+.akt td {{ color:{OK}; font-weight:bold; font-size:{pt(12)}; }}
+.akt .rh {{ background:#e4ecf4; color:{INK}; font-size:{pt(9.5)}; width:{mm(14)}; }}
 """
 
 
@@ -313,6 +326,72 @@ def practice_q(k, p):
     return ''.join(parts)
 
 
+def figures(body, fd):
+    """1부 그림: ![설명](그림/xx.png) → 가운데 정렬 그림 + 설명 줄. 경로는 수업 폴더 기준(절대경로로 바꿔 넣음).
+    크기 조절은 attr_list 로: ![설명](그림/xx.png){: style="width:70%"}"""
+    missing = []
+
+    def one(m):
+        tag = m.group(1)
+        src = re.search(r'src="([^"]+)"', tag).group(1)
+        alt = (re.search(r'alt="([^"]*)"', tag) or [None, ''])[1]
+        p = src if os.path.isabs(src) else os.path.join(fd, src)
+        if not os.path.exists(p):
+            missing.append(src)
+        tag = tag.replace(f'src="{src}"', f'src="{os.path.abspath(p)}"')
+        cap = f'<div class="cap">{alt}</div>' if alt else ''
+        return f'<div class="fig">{tag}{cap}</div>'
+    body = re.sub(r'<p>\s*(<img[^>]*>)\s*</p>', one, body)
+    if missing:
+        sys.exit(f'!! 1_설명.md 의 그림 파일이 없습니다: {missing}')
+    return body
+
+
+_NEXT = (r'<div class="fig">(?:(?!</div>).)*?(?:<div class="cap">.*?</div>)?</div>'
+         r'|<p>.*?</p>|<table>.*?</table>|<blockquote>.*?</blockquote>'
+         r'|<div class="admonition[^"]*">.*?</div>'
+         r'|<(?P<lt>ul|ol)>(?:(?!<(?:ul|ol)>).)*?</(?P=lt)>')
+
+
+def keep_headings(body):
+    """wkhtmltopdf 는 page-break-after:avoid 를 무시해 제목만 쪽 끝에 남는다. 제목(연속된 제목 포함)을
+    바로 다음 덩어리(그림·문단·표·상자·짧은 목록)와 한 묶음으로 만들어 같이 넘어가게 한다."""
+    return re.sub(r'((?:<h[123][^>]*>.*?</h[123]>\s*)+)(' + _NEXT + ')',
+                  lambda m: f'<div class="kt">{m.group(1)}{m.group(2)}</div>', body, flags=re.S)
+
+
+def answer_table(labels, per_row=10):
+    """연습문제 해설 맨 앞 정답표: 문항 번호 줄 + 정답 줄, 한 줄에 per_row 문항."""
+    rows = []
+    for s in range(0, len(labels), per_row):
+        chunk = labels[s:s + per_row]
+        pad = per_row - len(chunk)
+        rows.append('<tr><th class="rh">문항</th>' + ''.join(f'<th>{s + i + 1}</th>' for i in range(len(chunk)))
+                    + '<th></th>' * pad + '</tr>')
+        rows.append('<tr><td class="rh">정답</td>' + ''.join(f'<td>{ptext(l)}</td>' for l in chunk)
+                    + '<td></td>' * pad + '</tr>')
+    return f'<table class="akt">{"".join(rows)}</table>'
+
+
+def cmd_fig(a):
+    """필기본 PDF 한 쪽(또는 그 일부)을 그림 파일로 잘라 수업 폴더 그림/ 에 저장."""
+    import pymupdf
+    inf = load_info(a.subject); L = find_lecture(inf, a.lecture)
+    fd = folder(a.subject, L)
+    src = a.pdf or sorted(glob.glob(os.path.join(fd, '필기본', '*.pdf')))[-1]
+    d = pymupdf.open(src)
+    pg = d[a.page - 1]
+    r = pg.rect
+    clip = None
+    if a.box:
+        x0, y0, x1, y1 = a.box
+        clip = pymupdf.Rect(r.x0 + r.width * x0, r.y0 + r.height * y0, r.x0 + r.width * x1, r.y0 + r.height * y1)
+    os.makedirs(os.path.join(fd, '그림'), exist_ok=True)
+    out = os.path.join(fd, '그림', f'{a.name}.png')
+    pg.get_pixmap(dpi=a.dpi, clip=clip).save(out)
+    print(f'saved: {os.path.relpath(out, fd)}   → 1_설명.md 에  ![설명]({os.path.relpath(out, fd)})')
+
+
 def part_head(n, title, sub, brk=True):
     return (f'<div class="part{" pb" if brk else ""}"><div class="pn">PART {n}</div>'
             f'<div class="pt">{html.escape(title)}</div><div class="ps">{html.escape(sub)}</div></div>')
@@ -343,6 +422,7 @@ def cmd_build(a):
 
     # 1부
     body_md = markdown.markdown(notes_md, extensions=['tables', 'admonition', 'sane_lists', 'attr_list'])
+    body_md = keep_headings(figures(body_md, fd))
     p1 = part_head(1, '개념 설명', f'필기본 {src_years} 정리' if src_years else '필기본 정리') + f'<div class="notes">{body_md}</div>'
 
     # 2부 기출 (문제지와 같은 모양) + 정답·해설 모음
@@ -372,13 +452,14 @@ def cmd_build(a):
     # 3부 연습문제 + 해설 모음
     p3 = part_head(3, '연습문제', f'{len(practice)}문항 · 해설은 3부 끝에')
     p3 += ''.join(practice_q(k, p) for k, p in enumerate(practice, 1))
-    aks = []
+    aks, labs = [], []
     for k, p in enumerate(practice, 1):
         lab = (', '.join(CIRCLE[x - 1] for x in p['answer']) if p.get('choices') else str(p.get('answer', '')))
+        labs.append(lab if p.get('choices') else '단답')
         extra = f'<p class="pt2">관련 개념 · {ptext(p["point"])}</p>' if p.get('point') else ''
         aks.append(f'<div class="ak"><div class="h"><span class="an">{k}번</span><span class="lab">정답 {ptext(lab)}</span></div>'
                    + ''.join(f'<p>{ptext(l)}</p>' for l in p['explanation'].split('\n') if l.strip()) + extra + '</div>')
-    p3 += part_head(3, '연습문제 해설', f'{len(practice)}문항') + ''.join(aks)
+    p3 += part_head(3, '연습문제 정답·해설', f'{len(practice)}문항 · 정답표 먼저') + answer_table(labs) + ''.join(aks)
 
     cover = (f'<div class="cover"><div class="subj">{html.escape(inf["name"])} · {L["id"]}강</div>'
              f'<div class="title">{html.escape(name)}</div><div class="rule"></div>'
@@ -430,8 +511,13 @@ def main():
     f = sp.add_parser('find'); f.add_argument('subject'); f.add_argument('key', nargs='?', default='')
     g = sp.add_parser('gichul'); g.add_argument('subject'); g.add_argument('lecture')
     b = sp.add_parser('build'); b.add_argument('subject'); b.add_argument('lecture')
+    fg = sp.add_parser('fig'); fg.add_argument('subject'); fg.add_argument('lecture')
+    fg.add_argument('page', type=int, help='필기본 PDF 쪽 번호(1부터)'); fg.add_argument('name', help='저장 이름(확장자 없이)')
+    fg.add_argument('--box', type=float, nargs=4, metavar=('X0', 'Y0', 'X1', 'Y1'), help='잘라낼 영역, 쪽 크기 대비 0~1')
+    fg.add_argument('--pdf', help='필기본 PDF (기본: 수업 폴더 필기본/ 의 마지막 PDF)')
+    fg.add_argument('--dpi', type=int, default=170)
     a = ap.parse_args()
-    {'find': cmd_find, 'gichul': cmd_gichul, 'build': cmd_build}[a.cmd](a)
+    {'find': cmd_find, 'gichul': cmd_gichul, 'build': cmd_build, 'fig': cmd_fig}[a.cmd](a)
 
 
 if __name__ == '__main__':
