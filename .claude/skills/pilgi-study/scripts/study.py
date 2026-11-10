@@ -115,7 +115,10 @@ def extra_items(subj, inf, lid):
     ex['_work'] = work
     for q, pq in zip(d['questions'], parsed):
         e = {'lecture': lid, 'author': q.get('author', '')}
-        an = {'answer': q.get('answer'), 'explanation': q.get('explanation', '')}
+        a_ = q.get('answer')
+        an = {'answer': a_ if isinstance(a_, list) else [],          # 단답형: answer 에 글로 쓰면 answer_text 로
+              'answer_text': q.get('answer_text') or (a_ if isinstance(a_, str) else ''),
+              'explanation': q.get('explanation', '')}
         out.append((ex, pq, e, an))
     return out
 
