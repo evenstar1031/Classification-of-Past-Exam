@@ -1,0 +1,19 @@
+{
+ "_설명": "저장소 분류/ 에 원본 시험이 없어 필기본(필기본_2026.pdf 2쪽)에 실린 2022년 9월 21일 기출(김세영 pf)을 옮겨 적은 것. 10번은 필기본 캡처에서 문장 끝이 잘려 보이는 데까지만 옮겼다. 원본 PDF가 들어와 분류되면 이 파일은 지운다.",
+ "exam": {"id": "220921_본1_치료의_기본_필기본수록", "year": 2022, "date": "2022-09-21",
+          "title": "220921 본1 치료의 기본 (필기본 수록)"},
+ "questions": [
+  {"n": 9,
+   "author": "김세영",
+   "stem": "다음 중 국소마취제가 주로 작용하는 부위를 고르시오.",
+   "choices": ["Voltage gated Ca channel", "K channel", "Voltage gated Na channel", "Na-K pump", "Ligand gated Na channel"],
+   "answer": [3],
+   "explanation": "국소마취제는 신경세포 안쪽에서 전압개폐 Na⁺ 통로(voltage gated Na channel)에 결합해 Na⁺ 유입을 막고, 탈분극과 활동전위 전도를 차단한다. 열린 상태와 불활성화 상태의 통로에 더 잘 결합한다.\nCa 통로, K 통로, Na-K 펌프, 리간드개폐 통로는 국소마취제의 주된 작용 부위가 아니다."},
+  {"n": 10,
+   "author": "김세영",
+   "stem": "amide형 국소마취제 중의 하나로, 중간 정도의 역가와 작용시간을 가지고 있으며, 국소마취와 … (필기본 캡처에서 문장 뒷부분이 잘림)",
+   "choices": ["Lidocaine", "Prilocaine", "Ropivacaine", "Bupivacaine", "Mepivacaine"],
+   "answer": [1],
+   "explanation": "lidocaine은 amide형으로 발현이 빠르고 역가·작용시간이 중간이며, 가장 널리 쓰이는 국소마취제다. 표면마취도 되고 정맥으로 주면 Class IB 항부정맥제로도 쓰인다는 점이 다른 보기와 구별된다.\nprilocaine·mepivacaine도 중간 작용이지만 prilocaine은 주로 EMLA 크림으로, mepivacaine은 표면마취 효과가 약하다. ropivacaine·bupivacaine은 긴 작용 약이다."}
+ ]
+}
