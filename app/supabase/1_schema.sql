@@ -59,6 +59,12 @@ create policy "docs shared" on public.docs for all to authenticated    -- 평가
   using      (scope = '' and public.my_role() in ('owner','editor'))
   with check (scope = '' and public.my_role() in ('owner','editor'));
 
+-- 로그인 없이 둘러보기(손님): 평가·후기·총평 읽기만. 메모(scope 가 있는 것)와 회원 목록은 못 본다. (2026-11-13 결정)
+grant select on public.docs to anon;
+drop policy if exists "docs guest read" on public.docs;
+create policy "docs guest read" on public.docs for select to anon
+  using (scope = '');
+
 -- 4) 관리자 -------------------------------------------------------------------
 insert into public.members (login, role) values ('evenstar1031', 'owner')
 on conflict (login) do update set role = 'owner';
