@@ -22,7 +22,7 @@
 4. 검증 단계(reconciliation, leak scan, 분류 check, 수업별 PDF 검증, 페이지 눈으로 보기)를 건너뛰지 않는다.
 
 ## GitHub 이슈에서 `@claude` 로 불렸을 때 (`.github/workflows/claude.yml`)
-사용자는 아티팩트나 휴대폰 GitHub 앱에서 이슈를 열어 일을 맡긴다. 대화 상대는 이슈 댓글뿐이다.
+저장소 주인이 아티팩트(「바로 만들기」)나 휴대폰 GitHub 앱에서 이슈를 열어 일을 맡긴다. 대화 상대는 이슈 댓글뿐이다.
 - **준비는 워크플로가 이미 해 둠**: 패키지, wkhtmltopdf, 두 스킬의 글씨체. `tools/setup.sh` 는 건너뛰어도 된다(돌려도 무해).
 - **첨부 파일**: 이슈 본문·댓글의 `https://github.com/user-attachments/...` 링크를 받는다.
   `curl -sSfL -o <경로> "<링크>"` (실패하면 `-H "Authorization: Bearer $GITHUB_TOKEN"` 붙여 다시).
@@ -37,6 +37,13 @@
 - **마지막 댓글**(짧게, 한국어): 만든 파일 링크 — `https://github.com/evenstar1031/Classification-of-Past-Exam/blob/main/<경로>`
   (경로는 한 칸씩 URL 인코딩), 그리고 스킬이 정한 보고 한두 줄. 고칠 점은 이 이슈에 `@claude ...` 로 다시 말하면 된다고 덧붙인다.
 - 일이 끝났으면 이슈를 닫지 않는다(사용자가 확인 후 닫는다).
+
+## 여러 사람이 각자 Claude Code 로 쓸 때
+동기·후배는 아티팩트의 「내 Claude로 만들기」 링크로 자기 Claude Code 세션을 열어 이 저장소에서 일한다(각자 구독).
+요청 문장에 과목·수업이 들어 있고 필기본·기출은 대화에 첨부된다. 평소대로 스킬을 따르되:
+- 커밋 전에 `git pull --rebase origin main` — 다른 사람이 먼저 올렸을 수 있다. 남이 만든 수업 폴더는 건드리지 않는다.
+- 같은 수업 학습자료가 이미 있으면 덮어쓰기 전에 사용자에게 묻는다(다시 만들기를 원한 경우만 덮어쓴다).
+- 푸시 권한이 없다는 오류가 나면 저장소 주인에게 Write 권한 초대를 받아야 한다고 알린다.
 
 ## 폴더
 | 폴더 | 내용 |
