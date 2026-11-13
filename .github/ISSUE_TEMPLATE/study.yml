@@ -1,0 +1,40 @@
+name: 학습자료 만들기
+description: 필기본으로 수업 하나의 학습자료 PDF(1부 설명 · 2부 기출 · 3부 연습문제)를 만듭니다
+title: "@claude 학습자료: "
+labels: ["학습자료"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        제목의 `@claude` 는 지우지 마세요. 제출하면 Claude 가 바로 시작하고, 끝나면 이 이슈에 PDF 링크를 답니다(보통 20–60분).
+  - type: input
+    id: subject
+    attributes:
+      label: 과목
+      description: "진단의기본 · 치료의기본 · 인체감염학 · 정신건강의학 · 신경학 · 호흡기·알레르기병학 · 사례바탕의료인문1"
+      placeholder: 치료의기본
+    validations:
+      required: true
+  - type: input
+    id: lecture
+    attributes:
+      label: 수업
+      description: 수업 번호나 이름 (예 "32 응급기도관리", "기도관리")
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: 올해 필기본
+      description: PDF를 여기로 끌어다 놓으세요(파일당 25MB까지). 너무 크면 저장소 학습자료/<과목>/<번호>_<수업명>/필기본/ 에 올리고 "올렸음" 이라고 적으세요.
+    validations:
+      required: true
+  - type: textarea
+    id: last_year
+    attributes:
+      label: 작년 필기본 (있으면)
+  - type: textarea
+    id: request
+    attributes:
+      label: 따로 바라는 점 (선택)
+      placeholder: 예) 연습문제 15개, 약물 표 크게

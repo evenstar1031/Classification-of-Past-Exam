@@ -3,13 +3,27 @@
 기출 PDF를 올리면 Claude가 **정답 표시를 지우고, 문항마다 어느 수업에서 나왔는지 분류해서,
 수업별 문제지 PDF**로 만들어 줍니다. 해마다 새 기출을 올리면 같은 수업 파일에 이어서 쌓입니다.
 
-> ⚠️ **저장소는 반드시 비공개(Private)로 두세요.** 공개로 바뀌면 기출이 누구에게나 보입니다.
-> 비공개가 아니면 Claude가 기출 파일을 저장(커밋)하지 않도록 막혀 있습니다.
-> (바꾸는 곳: 저장소 `Settings` → 맨 아래 **Danger Zone** → `Change visibility`)
+> ℹ️ 이 저장소는 동기·후배와 같이 쓰려고 **공개(Public)** 로 둡니다. 올린 파일은 누구나 볼 수 있습니다.
+> 다시 비공개로 바꾸려면 저장소 `Settings` → 맨 아래 **Danger Zone** → `Change visibility`,
+> 그리고 `tools/check_private.py` 의 `ALLOW_PUBLIC` 을 `False` 로.
+
+## 휴대폰·아티팩트에서 맡기기 (GitHub 이슈 + `@claude`)
+`Issues` → `New issue` → **학습자료 만들기** 또는 **기출 정리** 양식을 고르고, 필기본·기출 PDF를 끌어다 놓고 `Submit`.
+제목에 `@claude` 가 들어 있어서 GitHub Actions 에서 Claude 가 바로 일을 시작하고, 끝나면 이슈에 PDF 링크를 댓글로 답니다
+(보통 20–60분). 고칠 점은 같은 이슈에 `@claude 연습문제 5개 더` 처럼 댓글로.
+- 이 저장소에 쓰기 권한이 있는 사람만 Claude 를 부를 수 있습니다(다른 사람이 연 이슈는 무시됨).
+- 첨부는 파일당 25MB 까지. 더 크면 `학습자료/<과목>/<번호>_<수업명>/필기본/` 에 직접 올리고 이슈에는 수업만 적으세요.
+- 처음 한 번 설정이 필요합니다 → 아래 "Claude 자동 실행 설정".
+
+### Claude 자동 실행 설정 (한 번만)
+1. https://github.com/apps/claude 에서 **Install** → 이 저장소 선택
+2. 노트북에 Claude Code 를 설치하고(설치 안내: https://code.claude.com/docs) 터미널에서 `claude setup-token` → 나온 `sk-ant-oat01-…` 복사
+3. 저장소 `Settings` → `Secrets and variables` → `Actions` → `New repository secret`
+   이름 `CLAUDE_CODE_OAUTH_TOKEN`, 값은 2에서 복사한 것 → `Add secret`
+4. `Issues` 탭에서 아무 이슈에 `@claude 안녕` 이라고 써서 답이 오는지 확인
 
 ## 처음 한 번만
-1. 저장소가 **Private**인지 확인 (지금은 Private입니다)
-2. `fonts` 폴더에 `AppleSDGothicNeo-Medium.ttf`, `AppleSDGothicNeo-SemiBold.ttf` 두 파일 올리기
+1. `fonts` 폴더에 `AppleSDGothicNeo-Medium.ttf`, `AppleSDGothicNeo-SemiBold.ttf` 두 파일 올리기
    (다른 폰트로 바꾸고 싶으면 `fonts/README.md` 참고)
 
 ## 매번 할 일

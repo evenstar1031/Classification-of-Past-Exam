@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""이 저장소가 GitHub에서 비공개(Private)인지 확인. 비공개가 아니면 종료코드 1.
+"""이 저장소가 GitHub에서 비공개(Private)인지 확인. 비공개가 아니면 종료코드 1 (ALLOW_PUBLIC 이면 알리고 통과).
 
 기출 PDF·문제지는 학교 자료라서 공개 저장소에 올리면 안 된다.
 Claude는 기출 파일을 커밋하기 전에 반드시 이걸 돌리고, OK가 아니면 커밋하지 않는다.
@@ -15,8 +15,13 @@ try:
     d = json.load(urllib.request.urlopen(api, timeout=20))
 except Exception as e:
     sys.exit(f'!! 공개 여부를 확인하지 못함 ({e}) — 사용자에게 저장소가 Private인지 확인받을 것')
+# 2026-11-13 사용자 결정: 동기·후배와 함께 쓰려고 공개(Public)로 둔다. 공개여도 막지 않는다.
+ALLOW_PUBLIC = True
 if d.get('private'):
     print(f'[OK] {m.group(1)}/{m.group(2)} 는 비공개 저장소입니다.')
+elif ALLOW_PUBLIC:
+    print(f'[OK] {m.group(1)}/{m.group(2)} 는 공개(Public) 저장소입니다 — 사용자가 공개를 허용했습니다(2026-11-13). '
+          '올리는 파일은 누구나 볼 수 있습니다.')
 else:
     print(f'[STOP] {m.group(1)}/{m.group(2)} 는 공개(Public) 저장소입니다. 기출 파일을 커밋하지 마세요.\n'
           '       사용자에게: GitHub 저장소 → Settings → 맨 아래 Danger Zone → Change visibility → Make private')

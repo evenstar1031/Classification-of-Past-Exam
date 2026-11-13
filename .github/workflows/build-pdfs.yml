@@ -4,9 +4,9 @@
 #   - main 에 분류/해설/원본/작업기록/과목정보/폰트/만드는 프로그램이 바뀌어 올라오면 자동으로
 #   - 저장소 → Actions → "문제지·해설지 PDF 만들기" → Run workflow 를 누르면 언제든지
 # 하는 일
-#   1) 저장소가 비공개(Private)인지 확인 (공개면 멈춤)
-#   2) 과목마다 문제지/ 와 해설지/ 의 PDF를 새로 만들고 검증 (하나라도 실패하면 아무것도 저장하지 않음)
-#   3) 바뀐 PDF만 커밋해서 같은 브랜치에 올림 (내용이 같으면 파일도 똑같이 나와서 커밋 없음)
+#   (저장소는 사용자 결정으로 공개 — 2026-11-13부터 공개 여부로 멈추지 않음)
+#   1) 과목마다 문제지/ 와 해설지/ 의 PDF를 새로 만들고 검증 (하나라도 실패하면 아무것도 저장하지 않음)
+#   2) 바뀐 PDF만 커밋해서 같은 브랜치에 올림 (내용이 같으면 파일도 똑같이 나와서 커밋 없음)
 # 해설 문장을 고치고 싶으면 해설/<과목>/<시험id>.json 의 "explanation" 을 GitHub 웹에서 고치면 된다.
 name: 문제지·해설지 PDF 만들기
 
@@ -44,13 +44,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 150
     steps:
-      - name: 비공개 저장소인지 확인
-        if: ${{ !github.event.repository.private }}
-        run: |
-          echo "이 저장소는 공개(Public)입니다. 기출 자료라서 PDF를 만들지 않습니다."
-          echo "Settings → 맨 아래 Danger Zone → Change visibility → Make private 로 바꾼 뒤 다시 돌리세요."
-          exit 1
-
       - uses: actions/checkout@v5
 
       - uses: actions/setup-python@v6
