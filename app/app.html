@@ -3220,8 +3220,16 @@ window.APPX=(function(){
     };
     load();
   }
+  function openGuest(){
+    const w=sheet('둘러보기', `<p class="ax-msg">로그인 없이 보고 있습니다. 시간표·강의계획서·평가·후기·기출 PDF는 볼 수 있고, 날짜별 메모는 이 기기에만 저장됩니다.</p>
+      <p class="ax-msg">후기 쓰기, 필기본 올리기, 학습자료 만들기는 초대받은 회원이 GitHub로 로그인해야 합니다.</p>
+      <p class="ax-msg">홈 화면에 추가하면 앱처럼 쓸 수 있습니다. 아이폰: Safari 공유 버튼 → 「홈 화면에 추가」.</p>`,
+      `<button type="button" class="ax-btn" data-x>닫기</button><button type="button" class="ax-btn pri" id="ax-in">GitHub로 로그인</button>`);
+    w.acts.querySelector('[data-x]').onclick=w.close;
+    w.acts.querySelector('#ax-in').onclick=()=>APP.signIn();
+  }
   const top=document.querySelector('header.top .today');
-  if(top){ const b=document.createElement('button'); b.type='button'; b.className='ax-acct'; b.textContent=APP.login; b.setAttribute('aria-label','계정'); b.onclick=openAccount; top.after(b); }
+  if(top){ const b=document.createElement('button'); b.type='button'; b.className='ax-acct'; b.textContent=APP.guest?'로그인':APP.login; b.setAttribute('aria-label',APP.guest?'로그인':'계정'); b.onclick=APP.guest?openGuest:openAccount; top.after(b); }
 
   return {openPdf, openUpload, renderRequests, openAccount, _reqEl:null};
 })();
@@ -3264,6 +3272,7 @@ window.S3=(function(){
   const gichulPrompt=s=>`${s.subject} 기출 정리해줘. 기출 PDF는 첨부했어.`;
   const a=(href,label,cls,path)=>`<a class="${cls||'g-link'}" href="${h(href)}" target="_blank" rel="noopener"${path?` data-path="${h(path)}"`:''}>${label}</a>`;
   const APPM=!!window.APP;                  // 브라우저 앱으로 열렸을 때
+  const GUEST=APPM&&!!window.APP.guest;     // 로그인 없이 둘러보기: 보기·내려받기만
   const OWNER=()=>APPM?window.APP.isOwner:CAN;
   const upBtn=(kind,mode,s,l,label,cls)=>`<button type="button" class="${cls}" data-up="${kind}" data-mode="${mode}" data-subj="${h(s.subject)}"${l?` data-lid="${h(l.id)}"`:''}>${label}</button>`;
 
@@ -3290,7 +3299,7 @@ window.S3=(function(){
       l.one&&a(blob(l.one),'한장정리',0,l.one),
     ].filter(Boolean);
     const again=l.s?' again':'';
-    const make=APPM
+    const make=GUEST?'':APPM
       ? (OWNER()?upBtn('study','now',s,l,l.s?'바로 다시 만들기':'바로 만들기','g-make g-now'+again):'')+
         upBtn('study','mine',s,l,l.s?'내 Claude로 다시':'내 Claude로 만들기','g-make'+again)
       : (CAN?a(studyURL(s,l), l.s?'바로 다시 만들기':'바로 만들기', 'g-make g-now'+again):'')+
@@ -3313,13 +3322,13 @@ window.S3=(function(){
           s.whole_a&&a(blob(s.whole_a),'전체 정답·해설',0,s.whole_a),
           s.exams.length&&a(tree('문제지/'+s.subject),'문제지 폴더'),
           (s.lectures.some(l=>l.s))&&a(tree('학습자료/'+s.subject),'학습자료 폴더'),
-          APPM?(OWNER()&&upBtn('gichul','now',s,null,'기출 정리 바로 맡기기','g-make g-now')):(CAN&&a(gichulURL(s),'기출 정리 바로 맡기기','g-make g-now')),
-          APPM?upBtn('gichul','mine',s,null,'내 Claude로 기출 정리','g-make'):a(codeURL(gichulPrompt(s)),'내 Claude로 기출 정리','g-make'),
+          GUEST?'':APPM?(OWNER()&&upBtn('gichul','now',s,null,'기출 정리 바로 맡기기','g-make g-now')):(CAN&&a(gichulURL(s),'기출 정리 바로 맡기기','g-make g-now')),
+          GUEST?'':APPM?upBtn('gichul','mine',s,null,'내 Claude로 기출 정리','g-make'):a(codeURL(gichulPrompt(s)),'내 Claude로 기출 정리','g-make'),
         ].filter(Boolean).join('')}</p>
       </div>`;
     const todo=!s.exams.length&&!query?`<div class="todo"><strong>아직 정리된 기출이 없습니다.</strong>
-        「내 Claude로 기출 정리」를 누르고 기출 PDF를 첨부하면 정답을 지우고 수업별 문제지·해설지로 나눕니다.</div>`:'';
-    const restHtml=rest.length?`<details class="g-rest"${query?' open':''}><summary>${shown.length?'기출 없는 수업':'수업 목록'} ${rest.length}개 · 학습자료 만들기</summary>${rest.map(l=>lecture(s,l)).join('')}</details>`:'';
+        ${GUEST?'정리된 기출이 올라오면 여기에 나옵니다.':'「내 Claude로 기출 정리」를 누르고 기출 PDF를 첨부하면 정답을 지우고 수업별 문제지·해설지로 나눕니다.'}</div>`:'';
+    const restHtml=rest.length?`<details class="g-rest"${query?' open':''}><summary>${shown.length?'기출 없는 수업':'수업 목록'} ${rest.length}개${GUEST?'':' · 학습자료 만들기'}</summary>${rest.map(l=>lecture(s,l)).join('')}</details>`:'';
     return `<section class="subject" id="g-${s.cid}">${head}${todo}${shown.map(l=>lecture(s,l)).join('')}${restHtml}</section>`;
   }
   function visible(){ return SUBJ.filter(s=>(subj==='all'||subj===s.cid)&&(!query||s.lectures.some(l=>lecHit(s,l)))); }
@@ -3400,8 +3409,8 @@ window.S3=(function(){
       }
     });
     const how=panel.querySelector('.g-how'); if(how) how.hidden=true;
-    const sub=panel.querySelector('.s1-head .subtitle'); if(sub) sub.textContent='수업별로 정리한 기출 문제지, 정답·해설, 필기본으로 만든 학습자료를 모았습니다. 누르면 앱 안에서 바로 열립니다. 「내 Claude로 만들기」는 필기본을 올린 뒤 내 Claude Code를 열고, 「바로 만들기」(관리자)는 GitHub에서 자동으로 만듭니다.';
-    const rq=document.getElementById('g-reqs'); if(rq&&window.APPX){ rq.hidden=false; APPX.renderRequests(rq); }
+    const sub=panel.querySelector('.s1-head .subtitle'); if(sub) sub.textContent='수업별로 정리한 기출 문제지, 정답·해설, 필기본으로 만든 학습자료를 모았습니다. 누르면 앱 안에서 바로 열리고, 저장·공유로 내려받을 수 있습니다.'+(GUEST?' 학습자료 만들기는 회원이 로그인하면 쓸 수 있습니다.':' 「내 Claude로 만들기」는 필기본을 올린 뒤 내 Claude Code를 열고, 「바로 만들기」(관리자)는 GitHub에서 자동으로 만듭니다.');
+    const rq=document.getElementById('g-reqs'); if(rq&&window.APPX&&!GUEST){ rq.hidden=false; APPX.renderRequests(rq); }
   }
   render(); measure();
   (async()=>{
