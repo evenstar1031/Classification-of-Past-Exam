@@ -59,6 +59,7 @@
 | `학습자료/<과목>/` | 수업별 학습자료 PDF(설명·기출·연습문제) + `<id>_<수업명>/` 에 필기본·`1_설명.md`·`3_연습문제.json` |
 | `원본/<과목>/` | 처리 끝난 원본 |
 | `fonts/` | 문제지 폰트 2개 (현재 Apple SD 산돌고딕 Neo Medium / SemiBold). `setup_fonts.py`가 파일명으로 보통/굵은체를 구분 |
+| `app/` | 웹앱 본체(`app.html`), 기출 현황(`gichul_index.json`, 자동 생성 — 손으로 고치지 말 것), Supabase SQL |
 | `work/` | 임시, 커밋 금지 |
 
 ## 여러 파일

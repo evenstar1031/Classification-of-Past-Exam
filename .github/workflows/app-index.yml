@@ -1,0 +1,47 @@
+# 앱·아티팩트의 「기출·학습자료」 탭이 읽는 현황(app/gichul_index.json)을 main 에 올라올 때마다 다시 만든다.
+name: 앱 현황 갱신
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '분류/**'
+      - '문제지/**'
+      - '해설지/**'
+      - '학습자료/**'
+      - '과목정보/**'
+      - 'tools/make_app_index.py'
+      - '.github/workflows/app-index.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: app-index
+  cancel-in-progress: true
+
+jobs:
+  index:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: 현황 만들기
+        run: |
+          pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 numpy==2.4.6 pillow==12.3.0
+          python3 tools/make_app_index.py
+      - name: 바뀌었으면 저장
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/gichul_index.json
+          if git diff --cached --quiet; then echo "바뀐 것 없음"; exit 0; fi
+          git commit -q -m "앱 현황 갱신"
+          git pull -q --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
