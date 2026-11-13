@@ -1,0 +1,27 @@
+name: 기출 정리
+description: 기출 PDF를 올리면 정답을 지우고 수업별 문제지·해설지로 나눕니다
+title: "@claude 기출 정리: "
+labels: ["기출"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        제목의 `@claude` 는 지우지 마세요. 파일 이름에 시험 날짜를 넣어 주세요(예 `250828_진단의기본.pdf`, 연도 판단에 씁니다).
+  - type: input
+    id: subject
+    attributes:
+      label: 과목
+      description: "진단의기본 · 치료의기본 · 인체감염학 · 정신건강의학 · 신경학 · 호흡기·알레르기병학 · 사례바탕의료인문1"
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: 기출 PDF
+      description: 여기로 끌어다 놓으세요(여러 개 가능, 파일당 25MB까지). 저장소 올리기/<과목>/ 에 이미 올렸으면 "올렸음" 이라고 적으세요.
+    validations:
+      required: true
+  - type: textarea
+    id: request
+    attributes:
+      label: 따로 바라는 점 (선택)

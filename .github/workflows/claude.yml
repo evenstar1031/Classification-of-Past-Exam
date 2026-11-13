@@ -1,0 +1,59 @@
+# 이슈나 댓글에 @claude 라고 쓰면 GitHub 에서 Claude 가 일을 한다.
+#   - "학습자료 만들기" 양식: 필기본 → 학습자료 PDF (pilgi-study 스킬)
+#   - "기출 정리" 양식: 기출 PDF → 수업별 문제지·해설지 (gichul-classify 스킬)
+#   - 그 밖에 이슈 댓글로 "@claude 연습문제 5개 더" 처럼 고쳐 달라고 하기
+# 처음 한 번: Claude GitHub App 설치 + 저장소 Secret CLAUDE_CODE_OAUTH_TOKEN (README "Claude 자동 실행 설정")
+# 쓰기 권한이 있는 사람이 쓴 이슈·댓글에만 반응한다(그 밖의 사람은 action 이 거절).
+name: Claude (@claude)
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: claude-issue-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  claude:
+    if: >-
+      (github.event_name == 'issues' &&
+        (contains(github.event.issue.title, '@claude') || contains(github.event.issue.body, '@claude'))) ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      # tools/setup.sh · build-pdfs.yml 과 같은 버전 (같은 내용이면 PDF도 똑같이 나오도록)
+      - name: 프로그램·글씨체 설치
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei
+          pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 \
+                         numpy==2.4.6 pillow==12.3.0 cffi==2.1.1 markdown
+          python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
+          python3 .claude/skills/pilgi-study/scripts/setup_fonts.py
+          git config --global core.quotepath false
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: |
+            --max-turns 300
+            --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
+            --append-system-prompt "이 저장소의 CLAUDE.md, 특히 'GitHub 이슈에서 @claude 로 불렸을 때' 절을 따른다. 사용자에게는 이슈 댓글로 한국어로 짧게 보고한다."
