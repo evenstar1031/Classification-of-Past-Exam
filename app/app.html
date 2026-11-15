@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 <style>
-/* Layout: 본과 1학년 수첩 한 권. 위에 붙는 네 갈래 탭(시간표 · 강의계획서 · 교수 평가 · 1학기 후기), 아래 내용이 탭마다 바뀜.
+/* Layout: 본과 1학년 수첩 한 권. 위에 붙는 탭(시간표 · 강의계획서 · 수업 후기 · 기출·학습자료 · 1학기 후기), 아래 내용이 탭마다 바뀜.
    앞의 세 탭은 2학기, 마지막 탭은 1학기 수업 후기. 글꼴은 모든 탭이 같음(본문 IBM Plex Sans KR, 제목 Noto Serif KR) */
 :root{
   --paper:#F5F6F4; --sheet:#FFFFFF; --ink:#1C2433; --muted:#5B6473; --faint:#8A919C; --rule:#D9DDE3; --soft:#EEF0F2;
@@ -306,7 +306,7 @@ dialog.pd[open]{display:flex; flex-direction:column}
 .err{color:var(--crimson); font-size:14px; margin:8px 0 0}
 
 
-/* ---- 수업 후기 (1학기 후기 · 2학기 교수 평가 공용) ---- */
+/* ---- 수업 후기 (1학기 후기 · 2학기 수업 후기 공용) ---- */
 .rvw{
   --ink-2:var(--muted); --ink-3:var(--faint); --rule-soft:var(--soft);
   --red:var(--crimson); --red-soft:var(--crimson-bg); --hl:var(--amber-bg);
@@ -496,6 +496,20 @@ dialog.pd[open]{display:flex; flex-direction:column}
 .rvw .g-make.g-now.again{background:var(--sheet); color:var(--muted); border-color:var(--rule)}
 .g-badge{font:inherit; font-size:12px; font-weight:600; color:var(--teal); background:var(--teal-bg); border:0; border-radius:999px; padding:1px 9px; margin-left:8px; cursor:pointer; vertical-align:2px; white-space:nowrap}
 .g-badge:hover{text-decoration:underline; text-underline-offset:2px}
+/* ---- 수업 후기: 왼쪽 과목 → 교수님 가나다 ---- */
+.rvw .rl-subj{display:flex; justify-content:space-between; align-items:baseline; gap:8px; width:100%; font:inherit; font-size:14.5px; font-weight:700; color:var(--ink); background:none; border:0; border-top:1px solid var(--rule); padding:10px 4px 10px 0; cursor:pointer; text-align:left}
+.rvw .jump li:first-child .rl-subj{border-top:0; padding-top:2px}
+.rvw .rl-subj .n{font-weight:400; font-size:12.5px; color:var(--faint); margin:0}
+.rvw .rl-subj.on{color:var(--theory)}
+.rvw .rl-subj:hover{color:var(--theory)}
+.rvw .rl-profs{display:grid; grid-template-columns:1fr 1fr; gap:0 6px; padding:0 0 10px}
+.rvw .rl-p{display:flex !important; align-items:center; gap:5px; margin:0 !important; padding:4px 6px !important; border:0 !important; border-radius:6px; font-size:14px; color:var(--ink-2); text-decoration:none; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.rvw .rl-p:hover{background:var(--soft); color:var(--ink)}
+.rvw .rl-dot{flex:none; width:6px; height:6px; border-radius:50%; background:var(--teal)}
+.rvw .rl-none{grid-column:1/-1; margin:4px 0; font-size:13px; color:var(--faint)}
+.rvw .s2-jump{margin-top:8px}
+.rvw .s2-jump .rl-chip{display:inline-flex; align-items:center; gap:5px; text-decoration:none; font-weight:500; font-size:13.5px; min-height:32px; padding:4px 11px}
+@media (min-width:901px){ .rvw .s2-jump{display:none !important} }
 
 @media (max-width:640px){
   body{font-size:16px}
@@ -525,7 +539,7 @@ dialog.pd[open]{display:flex; flex-direction:column}
     <div class="ptabs" role="tablist" id="ptabs">
       <button type="button" role="tab" id="ptab-tt" data-g="tt" aria-selected="false" tabindex="-1">시간표</button>
       <button type="button" role="tab" id="ptab-syl" data-g="syl" aria-selected="false" tabindex="-1">강의계획서</button>
-      <button type="button" role="tab" id="ptab-prof" data-g="prof" aria-selected="false" tabindex="-1">교수 평가</button>
+      <button type="button" role="tab" id="ptab-prof" data-g="prof" aria-selected="false" tabindex="-1">수업 후기</button>
       <button type="button" role="tab" id="ptab-gichul" data-g="gichul" aria-controls="panel-gichul" aria-selected="false" tabindex="-1">기출·학습자료</button>
       <button type="button" role="tab" id="ptab-tools" data-g="tools" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 도구</button>
       <span class="psep" aria-hidden="true"></span>
@@ -551,11 +565,11 @@ dialog.pd[open]{display:flex; flex-direction:column}
   <section class="rvw" id="panel-prof" role="tabpanel" aria-labelledby="ptab-prof" hidden>
     <div class="s1-head">
       <p class="crumb">KNU MED &nbsp;›&nbsp; <span>26 본1 2학기</span></p>
-      <h2 class="s1-title">2학기 교수 평가</h2>
+      <h2 class="s1-title">2학기 수업 후기</h2>
       <p class="subtitle">교수님별로 어떻게 가르치시고 어떻게 내시는지 정리하는 곳입니다. 교수님 성함을 누르면 시간표상 수업 날짜와 담당 수업이 열립니다.</p>
     </div>
     <div class="s1-grid">
-      <nav class="rail" aria-label="2학기 교수 평가 바로가기">
+      <nav class="rail" aria-label="2학기 수업 후기 바로가기">
         <h3>바로가기</h3>
         <ul class="jump" id="s2-rail"></ul>
       </nav>
@@ -563,12 +577,13 @@ dialog.pd[open]{display:flex; flex-direction:column}
         <div class="tools">
           <div class="tools-row">
             <div class="s1-search">
-              <label for="s2-q" class="sr">2학기 교수 평가 검색</label>
+              <label for="s2-q" class="sr">2학기 수업 후기 검색</label>
               <input id="s2-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="교수님 성함, 수업, 키워드 검색">
               <button class="clear" id="s2-clear" type="button" aria-label="검색어 지우기" hidden>×</button>
             </div>
           </div>
           <div class="chips" id="s2-chips" role="group" aria-label="과목 선택"></div>
+          <div class="chips s2-jump" id="s2-jump" aria-label="교수님 바로가기" hidden></div>
           <div class="editbar" id="s2-editbar" hidden>
             <button class="s1-btn" id="s2-editToggle" type="button" aria-pressed="false">후기 쓰기</button>
             <button class="s1-btn save" id="s2-save" type="button" disabled>저장</button>
@@ -1509,7 +1524,7 @@ window.addEventListener("hashchange",()=>{ const h=(location.hash||"").slice(1);
     if(window.claude && window.claude.use){ [db,user]=await Promise.all([window.claude.use("db"), window.claude.use("user")]); }
   }catch(err){ db=null; }
   startMemos(db);
-  if(!db){ NOTE_STATE="off"; renderAllNotes(); DB_STATE="off"; note.textContent="이 화면에서는 저장된 평가를 불러올 수 없습니다. claude.ai에서 로그인한 상태로 열어 주세요."; if(OPEN_PROF) renderDialog(); return; }
+  if(!db){ NOTE_STATE="off"; renderAllNotes(); DB_STATE="off"; note.textContent="이 화면에서는 저장된 후기를 불러올 수 없습니다. claude.ai에서 로그인한 상태로 열어 주세요."; if(OPEN_PROF) renderDialog(); return; }
   DB=db;
   try{ CAN_WRITE = user ? !!(await user.canEdit()) : false; }catch(err){ CAN_WRITE=false; }
   db.collection("courseNotes").onSnapshot(snap=>{
@@ -1523,7 +1538,7 @@ window.addEventListener("hashchange",()=>{ const h=(location.hash||"").slice(1);
     REVIEWS=m; DB_STATE="ready";
         renderProfList(); updateCounts();
     if(OPEN_PROF && dlg.open){ renderDialog(!!dlg.querySelector("#rf-text")); }
-  }, err=>{ DB_STATE="off"; note.textContent="평가를 불러오지 못했습니다. 페이지를 새로 고쳐 주세요."; if(OPEN_PROF) renderDialog(); });
+  }, err=>{ DB_STATE="off"; note.textContent="후기를 불러오지 못했습니다. 페이지를 새로 고쳐 주세요."; if(OPEN_PROF) renderDialog(); });
 })();
 </script>
 
@@ -2524,7 +2539,7 @@ const SEM1 = {
 </script>
 
 <script>
-/* 교수님 창: 시간표 날짜, 담당 수업은 그대로, 평가는 교수 평가 탭과 같은 내용을 보여줌 */
+/* 교수님 창: 시간표 날짜, 담당 수업은 그대로, 후기는 수업 후기 탭과 같은 내용을 보여줌 */
 function renderDialog(){
   const nm=OPEN_PROF; if(!nm) return;
   const lecs=PROF[nm];
@@ -2541,7 +2556,7 @@ function renderDialog(){
   dlg.innerHTML=`
     <div class="pd-head"><div><h2 id="pd-title">${esc(nm)}</h2><div class="sub">2026 · ${courses.map(esc).join(", ")}</div></div><button type="button" class="pd-close" aria-label="닫기">✕</button></div>
     <div class="pd-body">
-      <h3>평가</h3>
+      <h3>수업 후기</h3>
       ${revHtml}
       ${ttHtml}
       <h3>2026 담당 수업</h3>
@@ -2556,7 +2571,7 @@ dlg.addEventListener("click",e=>{
   if(go){ dlg.close(); if(window.S2) S2.goto(go, !!t.dataset.s2write); }
 });
 
-/* ================= 2학기 교수 평가 (1학기 후기와 같은 모양) ================= */
+/* ================= 2학기 수업 후기 (1학기 후기와 같은 모양) ================= */
 window.S2=(function(){
   const $ = s => document.querySelector(s);
   const panel = document.getElementById('panel-prof');
@@ -2787,7 +2802,7 @@ window.S2=(function(){
     const subjects=SUBJ.filter(subjectVisible);
     let count=0;
     const html=subjects.map(s=>{
-      const profs=visibleProfs(s); count+=profs.length;
+      const profs=visibleProfs(s).slice().sort((x,y)=>x.name.localeCompare(y.name,'ko')); count+=profs.length;
       const cid=cidOf(s.id);
       const done=profs.filter(p=>profFilled(rkey(p.name,cid))).length;
       const showExtras=!query||subjectTextMatches(s);
@@ -2801,18 +2816,33 @@ window.S2=(function(){
         ${profs.map((p,i)=>renderProf(p,`s2-p-${s.id}-${s.profs.indexOf(p)}`,rkey(p.name,cid))).join('')}
       </section>`;
     }).join('');
-    $('#s2-results').innerHTML=html||`<div class="s1-empty"><strong>“${h(query)}”에 해당하는 평가가 없어요</strong>교수님 성함이나 수업 이름으로 다시 찾아보세요.</div>`;
+    $('#s2-results').innerHTML=html||`<div class="s1-empty"><strong>“${h(query)}”에 해당하는 후기가 없어요</strong>교수님 성함이나 수업 이름으로 다시 찾아보세요.</div>`;
     $('#s2-clear').hidden=!query;
     const hc=$('#s2-hitcount'); hc.hidden=!query;
     if(query) hc.textContent=`${subjects.length}개 과목 · 교수님 ${count}명`;
-    renderRail(subjects);
+    renderRail();
   }
-  function renderRail(subjects){
-    $('#s2-rail').innerHTML=subjects.map(s=>{
-      const profs=visibleProfs(s), cid=cidOf(s.id);
-      return `<li><div class="grp"><a href="#s2-c-${s.id}" style="display:inline;border:none;padding:0;margin:0;color:inherit">${h(s.tab)}</a>${profs.length?`<span class="n">${profs.length}</span>`:''}</div></li>`+
-        profs.map(p=>`<li><a href="#s2-p-${s.id}-${s.profs.indexOf(p)}">${h(p.name)}${profFilled(rkey(p.name,cid))?' <span class="n">후기</span>':''}</a></li>`).join('');
-    }).join('');
+  /* 왼쪽 바로가기: 과목 목록 → 고른 과목의 교수님을 가나다 순으로 (휴대폰은 과목 버튼 아래 한 줄) */
+  const byName=(a,b)=>a.name.localeCompare(b.name,'ko');
+  function profLinks(s, cls){
+    const cid=cidOf(s.id);
+    return visibleProfs(s).slice().sort(byName).map(p=>{
+      const done=profFilled(rkey(p.name,cid));
+      return `<a class="${cls}" href="#s2-p-${s.id}-${s.profs.indexOf(p)}">${hl(p.name)}${done?'<span class="rl-dot" title="후기 있음" aria-label="후기 있음"></span>':''}</a>`;
+    });
+  }
+  function renderRail(){
+    $('#s2-rail').innerHTML=`<li><button type="button" class="rl-subj${subj==='all'?' on':''}" data-rs="all">전체 과목</button></li>`+
+      SUBJ.map(s=>{
+        const open=subj===s.id, cid=cidOf(s.id);
+        const done=s.profs.filter(p=>profFilled(rkey(p.name,cid))).length;
+        return `<li><button type="button" class="rl-subj${open?' on':''}" data-rs="${s.id}" aria-expanded="${open}">
+            <span>${h(s.tab)}</span><span class="n">${ready()?`${done}/`:''}${s.profs.length}</span></button>
+          ${open?`<div class="rl-profs">${profLinks(s,'rl-p').join('')||'<p class="rl-none">해당하는 교수님이 없어요</p>'}</div>`:''}</li>`;
+      }).join('');
+    const j=$('#s2-jump'), cur=SUBJ.find(s=>s.id===subj);
+    j.hidden=!cur;
+    j.innerHTML=cur?profLinks(cur,'s1-chip rl-chip').join(''):'';
   }
 
   /* ── 상태 표시와 저장 ── */
@@ -2921,10 +2951,14 @@ window.S2=(function(){
     if(e.key==='/' && document.activeElement!==$('#s2-q') && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !dlg.open){ e.preventDefault(); $('#s2-q').focus(); }
     if(e.key==='Escape' && document.activeElement===$('#s2-q')) $('#s2-clear').click();
   });
-  $('#s2-rail').addEventListener('click',e=>{
+  function railClick(e){
+    const b=e.target.closest('[data-rs]');
+    if(b){ setSubj(b.dataset.rs===subj&&subj!=='all'?'all':b.dataset.rs); scrollToEl(document.getElementById('s2-results')); return; }
     const a=e.target.closest('a[href^="#"]'); if(!a) return;
     e.preventDefault(); scrollToEl(document.getElementById(a.getAttribute('href').slice(1)));
-  });
+  }
+  $('#s2-rail').addEventListener('click',railClick);
+  $('#s2-jump').addEventListener('click',railClick);
   panel.addEventListener('click',e=>{
     const b=e.target.closest('[data-s2syl]'); if(b){ select(b.dataset.s2syl,true); }
   });
@@ -2962,13 +2996,13 @@ window.S2=(function(){
     });
   }
   function dialogReviews(nm){
-    if(DB_STATE==='loading') return `<p class="empty" style="padding:12px 0;text-align:left">평가를 불러오는 중입니다…</p>`;
+    if(DB_STATE==='loading') return `<p class="empty" style="padding:12px 0;text-align:left">후기를 불러오는 중입니다…</p>`;
     const cids=[...new Set(PROF[nm].map(l=>l.cid))];
     const blocks=cids.map(cid=>{
       const k=rkey(nm,cid), e=OV[k];
       const cname=(COURSES.find(c=>c.id===cid)||{}).name||'';
-      const btns=`<div class="rv-act"><button type="button" class="btn" data-s2goto="${h(k)}">교수 평가 탭에서 보기</button>${CAN_WRITE&&DB?`<button type="button" class="btn${e?'':' pri'}" data-s2write="${h(k)}">${e?'후기 고치기':'후기 쓰기'}</button>`:''}</div>`;
-      if(!e) return `<div class="rv"><div class="rv-top">${cname?`<span class="tag">${h(cname)}</span>`:''}<span>${ready()?'아직 쓴 후기가 없습니다':'이 화면에서는 평가를 불러올 수 없습니다'}</span></div>${btns}</div>`;
+      const btns=`<div class="rv-act"><button type="button" class="btn" data-s2goto="${h(k)}">수업 후기 탭에서 보기</button>${CAN_WRITE&&DB?`<button type="button" class="btn${e?'':' pri'}" data-s2write="${h(k)}">${e?'후기 고치기':'후기 쓰기'}</button>`:''}</div>`;
+      if(!e) return `<div class="rv"><div class="rv-top">${cname?`<span class="tag">${h(cname)}</span>`:''}<span>${ready()?'아직 쓴 후기가 없습니다':'이 화면에서는 후기를 불러올 수 없습니다'}</span></div>${btns}</div>`;
       const parts=Object.entries(e.parts||{}).map(([t,v])=>`<p><b>${h(t)}</b><br>${h(v)}</p>`).join('');
       return `<div class="rv"><div class="rv-top">${cname?`<span class="tag">${h(cname)}</span>`:''}${UPD[k]?`<span>${h(fmtShort(UPD[k]))}</span>`:''}</div>
         ${e.tagline?`<p><b>${h(e.tagline)}</b></p>`:''}${e.text?`<p>${h(e.text)}</p>`:''}${e.ps?`<p class="note" style="margin-top:8px">${h(e.ps)}</p>`:''}${parts}${btns}</div>`;
@@ -3224,7 +3258,7 @@ window.APPX=(function(){
     load();
   }
   function openGuest(){
-    const w=sheet('둘러보기', `<p class="ax-msg">로그인 없이 보고 있습니다. 시간표·강의계획서·평가·후기·기출 PDF는 볼 수 있고, 날짜별 메모는 이 기기에만 저장됩니다.</p>
+    const w=sheet('둘러보기', `<p class="ax-msg">로그인 없이 보고 있습니다. 시간표·강의계획서·수업 후기·기출 PDF는 볼 수 있고, 날짜별 메모는 이 기기에만 저장됩니다.</p>
       <p class="ax-msg">후기 쓰기, 필기본 올리기, 학습자료 만들기는 초대받은 회원이 GitHub로 로그인해야 합니다.</p>
       <p class="ax-msg">홈 화면에 추가하면 앱처럼 쓸 수 있습니다. 아이폰: Safari 공유 버튼 → 「홈 화면에 추가」.</p>`,
       `<button type="button" class="ax-btn" data-x>닫기</button><button type="button" class="ax-btn pri" id="ax-in">GitHub로 로그인</button>`);
