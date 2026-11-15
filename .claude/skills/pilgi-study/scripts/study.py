@@ -95,11 +95,17 @@ def extra_items(subj, inf, lid):
     {"exam": {id, year, date, title}, "questions": [{n, author, stem, box?, choices, answer, explanation}]}
     문제지와 같은 코드(build_q)로 그리도록 work/_study/<과목>/_extra/<id>/ 에 parsed/meta/fixes 를 만든다."""
     L = {x['id']: x for x in inf['lectures']}.get(lid)
-    p = L and os.path.join(folder(subj, L), '2_추가기출.json')
-    if not p or not os.path.exists(p):
+    if not L:
         return []
+    out = []
+    for p in sorted(glob.glob(os.path.join(folder(subj, L), '2_추가기출*.json'))):
+        out += _extra_one(subj, lid, p)
+    return out
+
+
+def _extra_one(subj, lid, p):
     d = json.load(open(p, encoding='utf-8'))
-    ex = dict(d['exam']); ex['_extra'] = True
+    ex = dict(d['exam']); ex['_extra'] = d.get('source_label', '필기본 수록')
     work = os.path.join(ROOT, 'work', '_study', subj, '_extra', ex['id'])
     os.makedirs(os.path.join(work, 'fig'), exist_ok=True)
     parsed, out = [], []
@@ -141,7 +147,7 @@ def folder(subj, L):
 def byline(ex, q, e):
     return (f"{ex.get('_label') or str(ex['year']) + '년 시험'} {q['n']}번"
             + (f" · 출제자 {e['author']}" if e.get('author') else '')
-            + (' · 필기본 수록' if ex.get('_extra') else ''))
+            + (f" · {ex['_extra'] if isinstance(ex.get('_extra'), str) else '필기본 수록'}" if ex.get('_extra') else ''))
 
 
 def ans_label(an):
@@ -443,18 +449,26 @@ def cmd_build(a):
         sec, nums = BL.section_html(L, [(ex, q, e) for ex, q, e, _ in items], inf['name'], title_tag='h2')
         sec = sec[sec.index('<h2 class="yr">'):]          # 수업 제목 줄은 빼고 연도별부터
         p2 = part_head(2, '기출문제', f"{', '.join(map(str, years))}년 · {len(items)}문항 · 정답·해설은 2부 끝에") + sec
-        aks, missing = [], []
+        aks, missing, pending = [], [], []
         for k, (ex, q, e, an) in enumerate(items, 1):
             exp = an.get('explanation') or ''
+            if not exp and not an.get('answer') and not an.get('answer_text'):
+                pending.append(k)            # 정답·해설을 나중에 채울 문항 (수업 전판에서 사용량 아끼기)
+                continue
             if not exp:
                 missing.append(f"{ex['id']} {q['n']}번")
             ps = ''.join(f'<p class="{"chk" if l.startswith("※") else ""}">{B.text(l)}</p>'
                          for l in (exp or '(해설 없음)').split('\n') if l.strip())
             aks.append(f'<div class="ak"><div class="h"><span class="an">{k}번</span><span class="lab">정답 '
                        f'{html.escape(ans_label(an))}</span><span class="src">{html.escape(byline(ex, q, e))}</span></div>{ps}</div>')
-        p2 += part_head(2, '기출문제 정답·해설', f'{len(items)}문항') + ''.join(aks)
+        if pending:
+            note = (f'<p class="empty">{len(pending)}문항({", ".join(map(str, pending))}번)의 정답·해설은 아직 넣지 않았습니다. '
+                    '기출 분류가 끝나면 다시 만들어 채웁니다.</p>')
+            p2 += part_head(2, '기출문제 정답·해설', f'{len(aks)}문항 · {len(pending)}문항은 나중에') + ''.join(aks) + note
+        else:
+            p2 += part_head(2, '기출문제 정답·해설', f'{len(items)}문항') + ''.join(aks)
     else:
-        nums, missing = [], []
+        nums, missing, pending = [], [], []
         p2 = (part_head(2, '기출문제', '분류된 기출 없음') +
               f'<p class="empty">저장소 분류/{html.escape(a.subject)}/ 에 이 수업으로 분류된 기출이 없습니다.</p>')
 
@@ -488,14 +502,16 @@ def cmd_build(a):
     work = os.path.join(ROOT, 'work', '_study', a.subject, L['id']); os.makedirs(work, exist_ok=True)
     print(f'== {os.path.relpath(out, ROOT)}  (기출 {len(items)} · 연습 {len(practice)})')
     total = B.render_pdf(doc, work, out, f"{inf['name']} {name} 학습자료")
-    ok = verify(out, work, total, len(items), len(practice))
+    ok = verify(out, work, total, len(items), len(practice), len(pending))
+    if pending:
+        print(f'[CHECK] 정답·해설을 아직 안 넣은 기출 {len(pending)}문항 — 나중에 채워 다시 build')
     if missing:
         print(f'[FAIL] 해설이 비어 있는 기출 {len(missing)}개: {missing} — 해설/{a.subject}/<시험id>.json 에 채운 뒤 다시 build')
         ok = False
     sys.exit(0 if ok else 1)
 
 
-def verify(out, work, total, n_g, n_p):
+def verify(out, work, total, n_g, n_p, n_pending=0):
     import pymupdf
     d = pymupdf.open(out)
     pv = os.path.join(work, 'pv'); os.makedirs(pv, exist_ok=True)
@@ -514,7 +530,8 @@ def verify(out, work, total, n_g, n_p):
     print(f"[{'OK' if not lack else 'FAIL'}] 글씨체: {fonts}" + (f'  !! 빠짐 {lack}' if lack else '')
           + (f'  (대체 글꼴 {stray} — 해당 글자가 두 글씨체에 없음)' if stray else ''))
     print(f"[{'OK' if len(q_nums) >= n_g + n_p else 'FAIL'}] 문항 번호 {len(q_nums)}개 (기출 {n_g} + 연습 {n_p})")
-    print(f"[{'OK' if aks == n_g + n_p else 'CHECK'}] 정답·해설 항목 {aks}개 (기출 {n_g} + 연습 {n_p})")
+    print(f"[{'OK' if aks == n_g - n_pending + n_p else 'CHECK'}] 정답·해설 항목 {aks}개 (기출 {n_g - n_pending}"
+          + (f" (+ 나중에 {n_pending})" if n_pending else '') + f" + 연습 {n_p})")
     print(f'previews: {pv}/NN.png  -> 페이지를 눈으로 확인할 것')
     return not lack and len(q_nums) >= n_g + n_p
 

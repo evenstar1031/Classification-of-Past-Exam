@@ -1,0 +1,36 @@
+{
+ "_설명": "기출 분류 전에 수업 전 자료를 만들려고, 출제자와 내용으로 이 수업 문항만 원본 시험에서 옮겨 적은 임시 파일. 정답·해설은 아직 없음. 이 시험이 분류/ 에 들어오면 지운다.",
+ "source_label": "분류 전 임시",
+ "exam": {
+  "id": "231018_본1_인체감염학_임시",
+  "year": 2023,
+  "date": "2023-10-18",
+  "title": "231018 본1 인체감염학"
+ },
+ "questions": [
+  {
+   "n": 8,
+   "author": "김신우",
+   "stem": "노인에서의 발열의 임상상에 대한 설명으로 적절하지 않은 것은?",
+   "choices": [
+    "섬망이 있을 수 있고 이 경우 낙상에 주의하여야 한다",
+    "발열이 없는 경우도 있다",
+    "보행장애가 있을 수 있다",
+    "배뇨장애가 있을 수 있다",
+    "고체온증이 흔하게 발생한다"
+   ]
+  },
+  {
+   "n": 15,
+   "author": "김신우",
+   "stem": "Tropism에 대한 설명으로 “fimbriae attach to genital epithelial cells”에 해당하는 미생물은?",
+   "choices": [
+    "Neisseria gonorrhoeae",
+    "Escherichia coli",
+    "Streptococcus pyogenes",
+    "Streptococcus mutans",
+    "HIV"
+   ]
+  }
+ ]
+}
