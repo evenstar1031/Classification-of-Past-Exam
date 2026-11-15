@@ -523,6 +523,11 @@ dialog.pd[open]{display:flex; flex-direction:column}
 .rvw .g-nn{color:var(--faint); font-size:12.5px}
 tr.g-flash > *{background:var(--amber-bg) !important; transition:background .4s}
 .session-subject .g-badge{vertical-align:1px}
+.tt-docs{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.tt-doc{display:inline-flex; align-items:center; min-height:32px; padding:3px 11px; font-size:13px; font-weight:600; border:1px solid var(--rule); border-radius:999px; background:var(--sheet); color:var(--ink); text-decoration:none; line-height:1.3}
+.tt-doc:hover{border-color:var(--faint)}
+.tt-doc.tt-study{border-color:var(--teal); background:var(--teal-bg); color:var(--teal)}
+.tt-doc.tt-mine{border-color:var(--amber); background:var(--amber-bg)}
 th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
 .rvw .s2-jump .rl-chip{display:inline-flex; align-items:center; gap:5px; text-decoration:none; font-weight:500; font-size:13.5px; min-height:32px; padding:4px 11px}
 @media (min-width:901px){ .rvw .s2-jump{display:none !important} }
@@ -1332,6 +1337,7 @@ function buildSessionCard(row,day){
   let html='<div class="session-card">';
   html+='<div class="session-top"><span class="session-time">'+esc(timeLabel(p1,p2))+'</span>'+tagPill(t,TAG_META[t])+'</div>';
   html+='<div class="session-subject">'+esc(subject)+(window.S3?S3.badge(sessionCid(day,subject),subject):'')+'</div>';
+  if(window.S3) html+=S3.sessDocs(sessionCid(day,subject),subject);
   if(prof) html+='<div class="session-prof">'+linkTtProf(prof, sessionCid(day,subject))+'</div>';
   if(duty) html+='<div class="session-duty">필야 '+esc(duty)+'</div>';
   return html+'</div>';
@@ -3595,6 +3601,24 @@ window.S3=(function(){
     const sub=panel.querySelector('.s1-head .subtitle'); if(sub) sub.textContent='수업별로 정리한 기출 문제지, 정답·해설, 필기본으로 만든 학습자료를 모았습니다. 누르면 앱 안에서 바로 열리고, 저장·공유로 내려받을 수 있습니다.'+(GUEST?' 학습자료 만들기는 회원이 로그인하면 쓸 수 있습니다.':' 「내 Claude로 만들기」는 필기본을 올린 뒤 내 Claude Code를 열고, 「바로 만들기」(관리자)는 GitHub에서 자동으로 만듭니다.');
     const rq=document.getElementById('g-reqs'); if(rq&&window.APPX&&!GUEST){ rq.hidden=false; APPX.renderRequests(rq); }
   }
+  /* 시간표 수업 칸: 그 수업의 학습자료·문제지·정답해설·내 자료를 바로 열기·받기 */
+  function sessDocs(cid,name){
+    const l=findLec(cid,name); if(!l) return '';
+    const items=[
+      l.s&&['학습자료',l.s,'tt-doc tt-study'],
+      l.one&&['한장정리',l.one,'tt-doc'],
+      ...(l.mine||[]).map(p=>['내 자료 · '+mineLabel(p),p,'tt-doc tt-mine']),
+      l.q&&['문제지',l.q,'tt-doc'],
+      l.a&&['정답·해설',l.a,'tt-doc'],
+    ].filter(Boolean);
+    if(!items.length) return '';
+    return `<div class="tt-docs">${items.map(([t,p,c])=>`<a class="${c}" href="${h(blob(p))}" target="_blank" rel="noopener" data-path="${h(p)}">${h(t)}</a>`).join('')}</div>`;
+  }
+  if(APPM) document.addEventListener('click',e=>{
+    const d=e.target.closest('a.tt-doc[data-path]'); if(!d||!window.APPX) return;
+    e.preventDefault(); APPX.openPdf(d.dataset.path, d.textContent);
+  });
+
   /* 강의계획서 수업 줄에 「기출 n · 자료」 */
   function decorateSyllabus(){
     COURSES.forEach(c=>{
@@ -3616,7 +3640,7 @@ window.S3=(function(){
     $('#g-editnote').hidden=!CAN;
     if(CAN) render();
   })();
-  return {goto, badge, render, subjects:SUBJ, codeURL};
+  return {goto, badge, sessDocs, render, subjects:SUBJ, codeURL};
 })();
 
 if(window.S2) S2.sync();
