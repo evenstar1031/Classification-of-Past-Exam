@@ -11,6 +11,7 @@ on:
       - '해설지/**'
       - '학습자료/**'
       - '과목정보/**'
+      - '자료실/**'
       - 'tools/make_app_index.py'
       - '.github/workflows/app-index.yml'
 
