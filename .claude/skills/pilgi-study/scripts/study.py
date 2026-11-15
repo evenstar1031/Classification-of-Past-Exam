@@ -239,6 +239,8 @@ h2.yr {{ font-family:{GOTHIC}; }}
 .admonition.exam {{ border-color:#b5542c; background:#fbf1ec; }} .admonition.exam .admonition-title {{ color:#b5542c; }}
 .admonition.diff {{ border-color:#7a5aa6; background:#f4f0fa; }} .admonition.diff .admonition-title {{ color:#7a5aa6; }}
 .admonition.memo {{ border-color:{OK}; background:#eef6f2; }}   .admonition.memo .admonition-title {{ color:{OK}; }}
+.admonition.new {{ border-color:#b8860b; background:#fbf5e3; }} .admonition.new .admonition-title {{ color:#8a6408; }}
+.stage {{ font-family:{GOTHIC}; font-size:{pt(10)}; color:#8a6408; margin-top:{mm(3)}; }}
 .pb {{ page-break-before:always; }}
 .empty {{ color:#8a96a3; font-size:{pt(10.5)}; margin:{mm(4)} 0; }}
 .ak {{ page-break-inside:avoid; margin:0 0 {mm(3.6)} 0; padding:0 0 {mm(3)} 0; border-bottom:0.4pt solid #e1e6eb; }}
@@ -402,12 +404,19 @@ def cmd_build(a):
     inf = load_info(a.subject); L = find_lecture(inf, a.lecture)
     fd = folder(a.subject, L)
     md_p, pr_p = os.path.join(fd, '1_설명.md'), os.path.join(fd, '3_연습문제.json')
-    for p in (md_p, pr_p):
-        if not os.path.exists(p):
-            sys.exit(f'!! {os.path.relpath(p, ROOT)} 가 없습니다.')
+    if not os.path.exists(md_p):
+        sys.exit(f'!! {os.path.relpath(md_p, ROOT)} 가 없습니다.')
     notes_md = open(md_p, encoding='utf-8').read()
-    practice = json.load(open(pr_p, encoding='utf-8'))
-    practice = practice.get('questions', practice) if isinstance(practice, dict) else practice
+    # 단계: <!-- 단계: 수업 전 --> 이면 1부(작년 필기) + 2부(기출)만. 수업 후/표시 없음 → 3부까지
+    sm = re.search(r'<!--\s*단계\s*:\s*([^>]*?)\s*-->', notes_md)
+    pre = bool(sm and '전' in sm.group(1))
+    if pre:
+        practice = []
+    else:
+        if not os.path.exists(pr_p):
+            sys.exit(f'!! {os.path.relpath(pr_p, ROOT)} 가 없습니다. (수업 전 자료면 1_설명.md 맨 위에 <!-- 단계: 수업 전 -->)')
+        practice = json.load(open(pr_p, encoding='utf-8'))
+        practice = practice.get('questions', practice) if isinstance(practice, dict) else practice
     bad = [i + 1 for i, p in enumerate(practice)
            if not p.get('stem') or not p.get('explanation') or (p.get('choices') and not p.get('answer'))]
     if bad:
@@ -449,7 +458,7 @@ def cmd_build(a):
         p2 = (part_head(2, '기출문제', '분류된 기출 없음') +
               f'<p class="empty">저장소 분류/{html.escape(a.subject)}/ 에 이 수업으로 분류된 기출이 없습니다.</p>')
 
-    # 3부 연습문제 + 해설 모음
+    # 3부 연습문제 + 해설 모음 (수업 전 자료에는 없음)
     p3 = part_head(3, '연습문제', f'{len(practice)}문항 · 해설은 3부 끝에')
     p3 += ''.join(practice_q(k, p) for k, p in enumerate(practice, 1))
     aks, labs = [], []
@@ -460,13 +469,18 @@ def cmd_build(a):
         aks.append(f'<div class="ak"><div class="h"><span class="an">{k}번</span><span class="lab">정답 {ptext(lab)}</span></div>'
                    + ''.join(f'<p>{ptext(l)}</p>' for l in p['explanation'].split('\n') if l.strip()) + extra + '</div>')
     p3 += part_head(3, '연습문제 정답·해설', f'{len(practice)}문항 · 정답표 먼저') + answer_table(labs) + ''.join(aks)
+    if pre:
+        p3 = ''
 
     cover = (f'<div class="cover"><div class="subj">{html.escape(inf["name"])} · {L["id"]}강</div>'
              f'<div class="title">{html.escape(name)}</div><div class="rule"></div>'
              f'<div class="meta">학습자료{(" · 필기본 " + html.escape(src_years)) if src_years else ""}</div>'
-             f'<div class="toc"><div><b>1부</b>개념 설명</div>'
+             + ('<div class="stage">수업 전 자료 — 작년 필기 + 기출. 수업 후 올해 필기로 보충하고 연습문제를 붙입니다.</div>' if pre else '')
+             + f'<div class="toc"><div><b>1부</b>개념 설명</div>'
              f'<div><b>2부</b>기출문제<span>{len(items)}문항 + 정답·해설</span></div>'
-             f'<div><b>3부</b>연습문제<span>{len(practice)}문항 + 해설</span></div></div></div>')
+             + (f'<div><b>3부</b>연습문제<span>수업 후에 추가</span></div>' if pre else
+                f'<div><b>3부</b>연습문제<span>{len(practice)}문항 + 해설</span></div>')
+             + '</div></div>')
 
     doc = (f'<!doctype html><html><head><meta charset="utf-8"><style>{B.CSS}{BL.EXTRA_CSS}{CSS}</style></head>'
            f'<body>{cover}{p1}{p2}{p3}</body></html>')

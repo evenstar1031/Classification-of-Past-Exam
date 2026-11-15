@@ -14,6 +14,20 @@ date = subprocess.run(['git', 'log', '-1', '--format=%cs'], capture_output=True,
 def ls(d):
     return sorted(os.listdir(d)) if os.path.isdir(d) else []
 
+
+def stage_of(d):
+    """학습자료 단계: 1_설명.md 맨 위 <!-- 단계: 수업 전 --> → 'pre', 그 밖에 → 'post'"""
+    p = f'{d}/1_설명.md'
+    if not os.path.exists(p):
+        return 'post'
+    m = re.search(r'<!--\s*단계\s*:\s*([^>]*?)\s*-->', open(p, encoding='utf-8').read(2000))
+    return 'pre' if m and '전' in m.group(1) else 'post'
+
+
+def note_years(d):
+    """올라와 있는 필기본 연도 (필기본/필기본_<연도>.*)"""
+    return sorted({m.group(1) for x in ls(f'{d}/필기본') for m in [re.match(r'필기본_(\d{4})', x)] if m}, reverse=True)
+
 out = []
 for f in sorted(glob.glob('과목정보/*.json')):
     info = json.load(open(f, encoding='utf8'))
@@ -67,6 +81,8 @@ for f in sorted(glob.glob('과목정보/*.json')):
             'folder': f"학습자료/{subj}/{lid}_{BL.safe(BL.lname(L))}",
             'show': BL.lname(L),
             'mine': mine.get(lid, []),
+            'stage': stage_of(f'학습자료/{subj}/{sdir}') if sdir and s else None,
+            'notes': note_years(f'학습자료/{subj}/{sdir}') if sdir else [],
         })
     extra = counts.get('99', {})
     whole_q = next((x for x in q_files if x.startswith('00_전체') and x.endswith('.pdf')), None)
