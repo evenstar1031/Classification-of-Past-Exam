@@ -1,5 +1,5 @@
 name: 학습자료 만들기
-description: 필기본으로 수업 하나의 학습자료 PDF(1부 설명 · 2부 기출 · 3부 연습문제)를 만듭니다
+description: 수업 전에는 작년 필기 + 기출로, 수업 후에는 올해 필기로 보충 + 연습문제까지 학습자료 PDF를 만듭니다
 title: "@claude 학습자료: "
 labels: ["학습자료"]
 body:
@@ -22,17 +22,26 @@ body:
       description: 수업 번호나 이름 (예 "32 응급기도관리", "기도관리")
     validations:
       required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 단계
+      options:
+        - 수업 전 — 작년 필기 + 기출 (1부 설명 · 2부 기출)
+        - 수업 후 — 올해 필기로 보충 + 3부 연습문제
+    validations:
+      required: true
   - type: textarea
     id: notes
     attributes:
-      label: 올해 필기본
+      label: 필기본 (수업 전이면 작년 것, 수업 후면 올해 것)
       description: PDF를 여기로 끌어다 놓으세요(파일당 25MB까지). 너무 크면 저장소 학습자료/<과목>/<번호>_<수업명>/필기본/ 에 올리고 "올렸음" 이라고 적으세요.
     validations:
       required: true
   - type: textarea
     id: last_year
     attributes:
-      label: 작년 필기본 (있으면)
+      label: 다른 해 필기본 (있으면)
   - type: textarea
     id: request
     attributes:
