@@ -528,6 +528,7 @@ tr.g-flash > *{background:var(--amber-bg) !important; transition:background .4s}
 .tt-doc:hover{border-color:var(--faint)}
 .tt-doc.tt-study{border-color:var(--teal); background:var(--teal-bg); color:var(--teal)}
 .tt-doc.tt-mine{border-color:var(--amber); background:var(--amber-bg)}
+.tt-lec{flex-basis:100%; font-size:12px; color:var(--muted); font-weight:600}
 th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
 .rvw .s2-jump .rl-chip{display:inline-flex; align-items:center; gap:5px; text-decoration:none; font-weight:500; font-size:13.5px; min-height:32px; padding:4px 11px}
 @media (min-width:901px){ .rvw .s2-jump{display:none !important} }
@@ -3398,13 +3399,60 @@ window.S3=(function(){
     const course=COURSES.find(c=>c.id===cid);
     return {...s, cid, tab:course?course.tab:s.name, lectures, years, total:lectures.reduce((a,l)=>a+l.total,0)};
   }).sort((a,b)=>order.indexOf(a.cid)-order.indexOf(b.cid));
-  const norm=t=>String(t||'').replace(/[\s·.,\/()（）\-–—:]+/g,'').toLowerCase();
-  const BY={}, BYN={}; SUBJ.forEach(s=>{ BY[s.cid]={}; BYN[s.cid]={}; s.lectures.forEach(l=>{ BY[s.cid][l.name]=l; BYN[s.cid][norm(l.name)]=l; }); });
-  const findLec=(cid,name)=>(BY[cid]&&BY[cid][name])||(BYN[cid]&&BYN[cid][norm(name)])||null;
-  /* 시간표에서 그 수업이 있는 날 (과목·수업 이름이 맞는 것) */
+  const norm=t=>String(t||'').replace(/Ⅰ/g,'I').replace(/Ⅱ/g,'II').replace(/[\s·.,\/()（）\-–—:]+/g,'').toLowerCase();
+  const BY={}, BYN={}; SUBJ.forEach(s=>{ BY[s.cid]={}; BYN[s.cid]={}; s.lectures.forEach(l=>{ l.cid=s.cid; BY[s.cid][l.name]=l; BYN[s.cid][norm(l.name)]=l; }); });
+  /* 시간표 제목이 기출 수업 이름과 다르게 적힌 경우 (과목id, 수업번호) */
+  const ALIAS=[
+    [/임상수기.*뇌신경기능검사/, 'jindan','40'], [/임상수기.*동맥혈/, 'jindan','42'],
+    [/임상수기.*채혈, 혈액배양/, 'jindan','41'], [/임상수기.*폐진찰/, 'jindan','43'],
+    [/^신경영상진단 입문/, 'jindan','25'],
+    [/^OSCE 심장전기충격요법/, 'chiryo','36'],
+    [/^파괴적, 충동조절/, 'psych','38'],
+    [/^폐암, 종격동, 흉벽질환의 영상소견/, 'resp','33'],
+  ];
+  const lecById=(cid,id)=>{ const s=SUBJ.find(x=>x.cid===cid); return s&&s.lectures.find(l=>l.id===id)||null; };
+  /* 제목 한 조각 → 수업: 이름 같음 → 앞부분 같음 → 한쪽이 다른 쪽을 품음 (가장 가까운 것) */
+  function matchPart(pool,part){
+    const p=norm(part); if(p.length<2) return null;
+    let best=null, bd=1e9;
+    for(const l of pool){ const n=norm(l.name);
+      if(n===p) return l;
+      let d=null;
+      if(n.startsWith(p)) d=n.length-p.length;
+      else if(p.length>=4 && n.includes(p)) d=n.length-p.length+50;
+      else if(n.length>=4 && p.includes(n)) d=p.length-n.length+50;
+      if(d!==null && d<bd){ bd=d; best=l; }
+    }
+    return best;
+  }
+  const LCACHE={};
+  function findLecs(cid,name){
+    const key=cid+'|'+name; if(key in LCACHE) return LCACHE[key];
+    let out=[];
+    const a=ALIAS.find(([re])=>re.test(name));
+    if(a){ const l=lecById(a[1],a[2]); if(l) out=[l]; }
+    if(!out.length){
+      const exact=(BY[cid]&&BY[cid][name])||(BYN[cid]&&BYN[cid][norm(name)]);
+      if(exact) out=[exact];
+    }
+    if(!out.length){
+      const pool=cid&&BY[cid]?SUBJ.find(s=>s.cid===cid).lectures:SUBJ.flatMap(s=>s.lectures);
+      let t=String(name)
+        .replace(/^사례바탕의료인문1\s*-\s*/,'').replace(/\s*-\s*$/,'')
+        .replace(/^TBL\((.*)\)$/,'$1')
+        .replace(/\(\d{1,2}:\d{2}\s*~\s*\d{1,2}:\d{2}\)/g,'')
+        .replace(/\((그룹\s*)?[A-D]\)/g,'')
+        .replace(/\((CP|OSCE)\).*$/,'')
+        .replace(/\s+(I{1,3}|Ⅰ|Ⅱ)\s*$/,'').trim();
+      for(const part of t.split(/\s*\+\s*/)){ const l=matchPart(pool,part); if(l && !out.includes(l)) out.push(l); }
+    }
+    return LCACHE[key]=out;
+  }
+  const findLec=(cid,name)=>findLecs(cid,name)[0]||null;
+  /* 시간표에서 그 수업이 있는 날 */
   const DATES={};
-  DATA.forEach(d=>(d.s||[]).forEach(r=>{ const cid=sessionCid(d,r[2]); const l=findLec(cid,r[2]); if(!l) return;
-    const k=cid+'|'+l.id; (DATES[k]=DATES[k]||[]).push({iso:d.d, w:d.w, p1:r[0], p2:r[1]}); }));
+  DATA.forEach(d=>(d.s||[]).forEach(r=>{ findLecs(sessionCid(d,r[2]),r[2]).forEach(l=>{
+    const k=l.cid+'|'+l.id; (DATES[k]=DATES[k]||[]).push({iso:d.d, w:d.w, p1:r[0], p2:r[1]}); }); }));
   const WD=['일','월','화','수','목','금','토'];
   let query='', subj='all', CAN=false;
 
@@ -3568,16 +3616,16 @@ window.S3=(function(){
 
   /* 다른 탭에서 넘어오기 */
   function goto(cid,name){
-    const l=findLec(cid,name); if(!l) return;
+    const l=findLec(cid,name); if(!l) return; cid=l.cid;
     select('gichul',true);
     query=''; $('#g-q').value=''; setSubj(cid);
     requestAnimationFrame(()=>{ measure(); scrollToEl(document.getElementById(`g-${cid}-${l.id}`)); });
   }
   function badge(cid,name){
-    const l=findLec(cid,name);
-    const hasMine=!!(l&&l.mine&&l.mine.length);
-    if(!l||!(l.total||l.s||hasMine)) return '';
-    const parts=[l.total?`기출 ${l.total}`:'', (l.s||hasMine)?'자료':''].filter(Boolean);
+    const ls=findLecs(cid,name); if(!ls.length) return '';
+    const tot=ls.reduce((a,l)=>a+(l.total||0),0), docs=ls.some(l=>l.s||(l.mine&&l.mine.length));
+    if(!(tot||docs)) return '';
+    const parts=[tot?`기출 ${tot}`:'', docs?'자료':''].filter(Boolean);
     return `<button type="button" class="g-badge" data-gcid="${h(cid)}" data-gname="${h(name)}">${parts.join(' · ')}</button>`;
   }
   document.addEventListener('click',e=>{
@@ -3603,17 +3651,22 @@ window.S3=(function(){
   }
   /* 시간표 수업 칸: 그 수업의 학습자료·문제지·정답해설·내 자료를 바로 열기·받기 */
   function sessDocs(cid,name){
-    const l=findLec(cid,name); if(!l) return '';
-    const items=[
-      l.s&&['학습자료',l.s,'tt-doc tt-study'],
-      l.one&&['한장정리',l.one,'tt-doc'],
-      ...(l.mine||[]).map(p=>['내 자료 · '+mineLabel(p),p,'tt-doc tt-mine']),
-      l.q&&['문제지',l.q,'tt-doc'],
-      l.a&&['정답·해설',l.a,'tt-doc'],
-    ].filter(Boolean);
-    if(!items.length) return '';
-    return `<div class="tt-docs">${items.map(([t,p,c])=>`<a class="${c}" href="${h(blob(p))}" target="_blank" rel="noopener" data-path="${h(p)}">${h(t)}</a>`).join('')}</div>`;
+    const ls=findLecs(cid,name); if(!ls.length) return '';
+    const many=ls.length>1;
+    const html=ls.map(l=>{
+      const items=[
+        l.s&&['학습자료',l.s,'tt-doc tt-study'],
+        l.one&&['한장정리',l.one,'tt-doc'],
+        ...(l.mine||[]).map(p=>['내 자료 · '+mineLabel(p),p,'tt-doc tt-mine']),
+        l.q&&['문제지',l.q,'tt-doc'],
+        l.a&&['정답·해설',l.a,'tt-doc'],
+      ].filter(Boolean);
+      if(!items.length) return '';
+      return `<div class="tt-docs">${many?`<span class="tt-lec">${h(l.name)}</span>`:''}${items.map(([t,p,c])=>`<a class="${c}" href="${h(blob(p))}" target="_blank" rel="noopener" data-path="${h(p)}">${h(t)}</a>`).join('')}</div>`;
+    }).join('');
+    return html;
   }
+
   if(APPM) document.addEventListener('click',e=>{
     const d=e.target.closest('a.tt-doc[data-path]'); if(!d||!window.APPX) return;
     e.preventDefault(); APPX.openPdf(d.dataset.path, d.textContent);
@@ -3640,7 +3693,7 @@ window.S3=(function(){
     $('#g-editnote').hidden=!CAN;
     if(CAN) render();
   })();
-  return {goto, badge, sessDocs, render, subjects:SUBJ, codeURL};
+  return {goto, badge, sessDocs, findLecs, render, subjects:SUBJ, codeURL};
 })();
 
 if(window.S2) S2.sync();
