@@ -1,0 +1,84 @@
+{
+ "_설명": "기출 분류 전에 수업 전 자료를 만들려고, 출제자와 내용으로 이 수업 문항만 원본 시험에서 옮겨 적은 임시 파일. 정답·해설은 아직 없음. 이 시험이 분류/ 에 들어오면 지운다.",
+ "source_label": "분류 전 임시",
+ "exam": {
+  "id": "251021_본1_인체감염학_임시",
+  "year": 2025,
+  "date": "2025-10-21",
+  "title": "251021 본1 인체감염학"
+ },
+ "questions": [
+  {
+   "n": 74,
+   "author": "배소현",
+   "stem": "수술 부위 감염(Surgical Site Infection, SSI) 예방을 위한 항생제 사용에 대한 설명으로 옳은 것은?",
+   "choices": [
+    "수술 후 72시간까지 항생제를 유지하는 것이 권장된다.",
+    "β-lactam 알레르기가 있는 경우 clindamycin을 사용할 수 있다.",
+    "예방적 항생제는 수술 절개 후 투여해도 충분한 효과를 기대할 수 있다.",
+    "오염되지 않은(clean) 수술에서는 무조건 예방적 항생제를 투여해야 한다.",
+    "항생제는 복합 요법을 사용하여 광범위하게 커버하는 것이 원칙이다."
+   ]
+  },
+  {
+   "n": 77,
+   "author": "배소현",
+   "stem": "Enterococcus spp.가 내인성 내성을 보이는 항생제는?",
+   "choices": [
+    "Aminoglycosides",
+    "Linezolid",
+    "Cephalosporins",
+    "Ampicillin",
+    "Vancomycin"
+   ]
+  },
+  {
+   "n": 81,
+   "author": "배소현",
+   "stem": "다음 중 T>MIC가 주요 약효 지표로 작용하는 항생제는?",
+   "choices": [
+    "Gentamicin",
+    "Ciprofloxacin",
+    "Tigecycline",
+    "Ceftriaxone",
+    "Amikacin"
+   ]
+  },
+  {
+   "n": 87,
+   "author": "배소현",
+   "stem": "다음 중 정균 작용(bacteriostatic) 을 주로 나타내는 항생제는?",
+   "choices": [
+    "Penicillin",
+    "Cephalosporin",
+    "Aminoglycoside",
+    "Clindamycin",
+    "Fluoroquinolone"
+   ]
+  },
+  {
+   "n": 90,
+   "author": "배소현",
+   "stem": "60세 남자가 패혈증으로 항생제를 투여받고 있다. 1주일 후 갑작스러운 청력 저하가 발생하였다. 이 부작용의 원인일 가능성이 가장 높은 항생제 계열은?",
+   "choices": [
+    "Carbapenem",
+    "Cephalosporin",
+    "Linezolid",
+    "Fluoroquinolone",
+    "Aminoglycoside"
+   ]
+  },
+  {
+   "n": 93,
+   "author": "배소현",
+   "stem": "다음 중 Pseudomonas aeruginosa 감염에 효과적인 3세대 cephalosporin은?",
+   "choices": [
+    "Ceftriaxone",
+    "Cefotaxime",
+    "Ceftazidime",
+    "Cefepime",
+    "Cefazolin"
+   ]
+  }
+ ]
+}
