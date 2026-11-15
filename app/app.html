@@ -510,6 +510,20 @@ dialog.pd[open]{display:flex; flex-direction:column}
 .rvw .rl-dot{flex:none; width:6px; height:6px; border-radius:50%; background:var(--teal)}
 .rvw .rl-none{grid-column:1/-1; margin:4px 0; font-size:13px; color:var(--faint)}
 .rvw .s2-jump{margin-top:8px}
+.rvw .rl-lecs{display:flex; flex-direction:column; padding:0 0 10px}
+.rvw .rl-l{display:flex !important; align-items:baseline; gap:6px; margin:0 !important; padding:4px 6px !important; border:0 !important; border-radius:6px; font-size:13.5px; color:var(--ink-2); text-decoration:none}
+.rvw .rl-l:hover{background:var(--soft); color:var(--ink)}
+.rvw .g-lid{flex:none; color:var(--faint); font-variant-numeric:tabular-nums; min-width:1.4em}
+.rvw .g-lnm{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.rvw .g-lct{flex:none; font-size:12px; color:var(--crimson); font-weight:600}
+.rvw .rl-l .rl-dot{align-self:center}
+.rvw .s2-jump .rl-chip .g-lnm{max-width:12em}
+.rvw .g-nav{display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; margin:6px 0 0; font-size:13.5px}
+.rvw .g-nav .clink{font-size:13.5px}
+.rvw .g-nn{color:var(--faint); font-size:12.5px}
+tr.g-flash > *{background:var(--amber-bg) !important; transition:background .4s}
+.session-subject .g-badge{vertical-align:1px}
+th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
 .rvw .s2-jump .rl-chip{display:inline-flex; align-items:center; gap:5px; text-decoration:none; font-weight:500; font-size:13.5px; min-height:32px; padding:4px 11px}
 @media (min-width:901px){ .rvw .s2-jump{display:none !important} }
 
@@ -630,6 +644,7 @@ dialog.pd[open]{display:flex; flex-direction:column}
             </div>
           </div>
           <div class="chips" id="g-chips" role="group" aria-label="과목 선택"></div>
+          <div class="chips s2-jump" id="g-jump" aria-label="수업 바로가기" hidden></div>
           <div class="hitcount" id="g-hitcount" hidden></div>
         </div>
         <div class="inner"><div id="g-results"></div></div>
@@ -1316,7 +1331,7 @@ function buildSessionCard(row,day){
   const t=tagOf(subject);
   let html='<div class="session-card">';
   html+='<div class="session-top"><span class="session-time">'+esc(timeLabel(p1,p2))+'</span>'+tagPill(t,TAG_META[t])+'</div>';
-  html+='<div class="session-subject">'+esc(subject)+'</div>';
+  html+='<div class="session-subject">'+esc(subject)+(window.S3?S3.badge(sessionCid(day,subject),subject):'')+'</div>';
   if(prof) html+='<div class="session-prof">'+linkTtProf(prof, sessionCid(day,subject))+'</div>';
   if(duty) html+='<div class="session-duty">필야 '+esc(duty)+'</div>';
   return html+'</div>';
@@ -3166,10 +3181,10 @@ window.APPX=(function(){
       <div class="ax-f"><label for="ax-f2">작년(${YEAR-1}) 필기본 (있으면)</label><input id="ax-f2" type="file" accept=".pdf,.png,.jpg,.jpeg,.md,.docx,.pptx"></div>
       <div class="ax-f"><label for="ax-req">따로 바라는 점 (선택)</label><textarea id="ax-req" placeholder="예) 연습문제 15개, 약물 표 크게"></textarea></div>`
     :`
-      <p class="ax-msg">${now?'올린 기출로 GitHub에서 Claude가 바로 정답을 지우고 수업별 문제지·해설지를 만듭니다.':'기출을 저장소에 올린 뒤 내 Claude Code를 엽니다. 거기서 보내기를 누르면 내 Claude 구독으로 정리합니다.'} 파일 이름에 시험 날짜를 넣어 주세요(예: 250828_${h(s.subject)}.pdf).</p>
+      <p class="ax-msg">${now?'올리기만 하면 GitHub에서 Claude가 자동으로 정답을 지우고 수업별 문제지·해설지를 만들어 이 탭에 넣습니다.':'기출을 저장소에 올린 뒤 내 Claude Code를 엽니다. 거기서 보내기를 누르면 내 Claude 구독으로 정리합니다.'} 파일 이름에 시험 날짜를 넣어 주세요(예: 250828_${h(s.subject)}.pdf).</p>
       <div class="ax-f"><label for="ax-f1">기출 PDF (여러 개 가능)</label><input id="ax-f1" type="file" accept=".pdf" multiple></div>
       <div class="ax-f"><label for="ax-req">따로 바라는 점 (선택)</label><textarea id="ax-req"></textarea></div>`;
-    const w=sheet(title, body+`<div id="ax-st"></div>`, `<button type="button" class="ax-btn" data-x>취소</button><button type="button" class="ax-btn pri" id="ax-go">${now?'올리고 바로 만들기':'올리고 Claude 열기'}</button>`);
+    const w=sheet(title, body+`<div id="ax-st"></div>`, `<button type="button" class="ax-btn" data-x>취소</button><button type="button" class="ax-btn pri" id="ax-go">${now?(isStudy?'올리고 바로 만들기':'올리기'):'올리고 Claude 열기'}</button>`);
     w.acts.querySelector('[data-x]').onclick=w.close;
     const stEl=w.body.querySelector('#ax-st');
     w.acts.querySelector('#ax-go').onclick=async()=>{
@@ -3193,6 +3208,10 @@ window.APPX=(function(){
         bar.style.width='100%';
         const paths=files.map(f=>f.path);
         const where=paths.length?paths.map(p=>'`'+p+'`').join(', '):`\`${folder}/필기본/\` (이미 올라와 있음)`;
+        if(now&&!isStudy){                                  // 기출: 올리면 「기출 자동 정리」 워크플로가 바로 시작
+          stEl.innerHTML=`<div class="ax-ok">올렸습니다. GitHub에서 자동 정리가 바로 시작됩니다(보통 30–90분). 끝나면 「최근 요청」에 결과가 올라오고, 이 탭에 새 문항이 들어갑니다.</div>`;
+          go.textContent='닫기'; go.disabled=false; go.onclick=w.close; return;
+        }
         if(now){
           const issue=await APP.gh(`repos/${APP.repo}/issues`,{method:'POST', body:{
             title:isStudy?`@claude 학습자료: ${s.subject} ${l.id} ${l.show||l.name}`:`@claude 기출 정리: ${s.subject}`,
@@ -3224,7 +3243,7 @@ window.APPX=(function(){
   async function renderRequests(el){
     APPX._reqEl=el;
     try{
-      const list=(await APP.gh(`repos/${APP.repo}/issues?state=all&per_page=8&sort=updated`)).filter(i=>!i.pull_request&&/@claude/.test(i.title));
+      const list=(await APP.gh(`repos/${APP.repo}/issues?state=all&per_page=8&sort=updated`)).filter(i=>!i.pull_request&&/@claude|기출 자동 정리/.test(i.title));
       el.innerHTML=`<h3>최근 요청</h3>`+(list.length?list.map(i=>{
         return `<div class="g-req"><span class="st ${i.state==='open'?'run':'done'}">${i.state==='open'?'열림':'닫힘'}</span><a href="${h(i.html_url)}" target="_blank" rel="noopener">#${i.number} ${h(i.title.replace(/^@claude\s*/,''))}</a><span class="tm">${ago(i.updated_at)}</span></div>`;
       }).join(''):`<p class="ax-msg" style="margin:0">아직 요청이 없습니다.</p>`)+
@@ -3373,7 +3392,14 @@ window.S3=(function(){
     const course=COURSES.find(c=>c.id===cid);
     return {...s, cid, tab:course?course.tab:s.name, lectures, years, total:lectures.reduce((a,l)=>a+l.total,0)};
   }).sort((a,b)=>order.indexOf(a.cid)-order.indexOf(b.cid));
-  const BY={}; SUBJ.forEach(s=>{ BY[s.cid]={}; s.lectures.forEach(l=>BY[s.cid][l.name]=l); });
+  const norm=t=>String(t||'').replace(/[\s·.,\/()（）\-–—:]+/g,'').toLowerCase();
+  const BY={}, BYN={}; SUBJ.forEach(s=>{ BY[s.cid]={}; BYN[s.cid]={}; s.lectures.forEach(l=>{ BY[s.cid][l.name]=l; BYN[s.cid][norm(l.name)]=l; }); });
+  const findLec=(cid,name)=>(BY[cid]&&BY[cid][name])||(BYN[cid]&&BYN[cid][norm(name)])||null;
+  /* 시간표에서 그 수업이 있는 날 (과목·수업 이름이 맞는 것) */
+  const DATES={};
+  DATA.forEach(d=>(d.s||[]).forEach(r=>{ const cid=sessionCid(d,r[2]); const l=findLec(cid,r[2]); if(!l) return;
+    const k=cid+'|'+l.id; (DATES[k]=DATES[k]||[]).push({iso:d.d, w:d.w, p1:r[0], p2:r[1]}); }));
+  const WD=['일','월','화','수','목','금','토'];
   let query='', subj='all', CAN=false;
 
   const issueURL=(tpl,title,fields)=>GH+'/issues/new?template='+tpl+'&title='+encodeURIComponent(title)+
@@ -3421,16 +3447,22 @@ window.S3=(function(){
         upBtn('study','mine',s,l,l.s?'내 Claude로 다시':'내 Claude로 만들기','g-make'+again)
       : (CAN?a(studyURL(s,l), l.s?'바로 다시 만들기':'바로 만들기', 'g-make g-now'+again):'')+
         a(codeURL(studyPrompt(s,l)), l.s?'내 Claude로 다시':'내 Claude로 만들기', 'g-make'+again);
+    const ds=DATES[s.cid+'|'+l.id]||[], today=todayISO();
+    const nx=ds.find(x=>x.iso>=today)||ds[ds.length-1];
+    const syl=COURSES.some(c=>c.id===s.cid)&&COURSES.find(c=>c.id===s.cid).rows.some(r=>r.n===l.name);
+    const nav=(syl||nx)?`<p class="g-nav">${syl?`<button type="button" class="clink" data-syl="${s.cid}" data-row="${h(l.name)}">강의계획서</button>`:''}${nx?`<button type="button" class="clink" data-tt="${nx.iso}">시간표 ${h(monthDay(nx.iso))} (${h(nx.w)})${nx.iso===today?' · 오늘':nx.iso>today?'':' · 지난 수업'}</button>`:''}${ds.length>1?`<span class="g-nn">수업 ${ds.length}번</span>`:''}</p>`:'';
     return `<article class="prof g-lec" id="g-${s.cid}-${h(l.id)}">
       <div class="part-head"><h5><span class="g-id">${hl(l.id)}</span>${hl(l.name)}${l.exam===false?' <span class="pending">실습</span>':''}</h5>
         <div class="hours">${w?`<span class="bar" style="width:${w}px"></span>`:''}<span class="n">${l.total?`기출 ${l.total}문항`:'기출 없음'}</span></div></div>
       ${yearsLine(s,l)}
+      ${nav}
       ${(links.length||make)?`<p class="g-links">${links.join('')}${make}</p>`:''}
     </article>`;
   }
   function subject(s){
     const lec=s.lectures.filter(l=>lecHit(s,l));
-    const shown=lec.filter(main), rest=lec.filter(l=>!main(l));
+    const single=subj===s.cid;                       // 왼쪽에서 과목을 고르면 그 과목 수업 전부
+    const shown=single?lec:lec.filter(main), rest=single?[]:lec.filter(l=>!main(l));
     const head=`<div class="subject-head">
         <h2>${hl(s.name)}</h2>
         <p class="sdesc">${h(s.code||'')}${s.exams.length?` · 기출 시험 ${s.exams.length}개 (${s.years[s.years.length-1]}–${s.years[0]}) · ${s.total}문항`:''}</p>
@@ -3457,11 +3489,21 @@ window.S3=(function(){
     $('#g-clear').hidden=!query;
     const hc=$('#g-hitcount'); hc.hidden=!query;
     if(query) hc.textContent=`${list.length}개 과목 · 수업 ${list.reduce((n,s)=>n+s.lectures.filter(l=>lecHit(s,l)).length,0)}개`;
-    $('#g-rail').innerHTML=list.map(s=>{
-      const ls=s.lectures.filter(l=>lecHit(s,l)&&main(l));
-      return `<li><div class="grp"><a href="#g-${s.cid}" style="display:inline;border:none;padding:0;margin:0;color:inherit">${h(s.tab)}</a>${s.total?`<span class="n">${s.total}</span>`:''}</div></li>`+
-        ls.map(l=>`<li><a href="#g-${s.cid}-${h(l.id)}">${h(l.id)} ${h(l.name)}${(l.s||(l.mine&&l.mine.length))?' <span class="n">자료</span>':''}</a></li>`).join('');
-    }).join('');
+    renderRail();
+  }
+  const hasDoc=l=>!!(l.s||l.one||(l.mine&&l.mine.length));
+  function lecLinks(s, cls){
+    return s.lectures.filter(l=>lecHit(s,l)).map(l=>`<a class="${cls}" href="#g-${s.cid}-${h(l.id)}"><span class="g-lid">${h(l.id)}</span><span class="g-lnm">${hl(l.name)}</span>${l.total?`<span class="g-lct">${l.total}</span>`:''}${hasDoc(l)?'<span class="rl-dot" title="자료 있음" aria-label="자료 있음"></span>':''}</a>`);
+  }
+  function renderRail(){
+    $('#g-rail').innerHTML=`<li><button type="button" class="rl-subj${subj==='all'?' on':''}" data-rs="all">전체 과목</button></li>`+
+      SUBJ.map(s=>{
+        const open=subj===s.cid;
+        return `<li><button type="button" class="rl-subj${open?' on':''}" data-rs="${s.cid}" aria-expanded="${open}"><span>${h(s.tab)}</span><span class="n">${s.total?`기출 ${s.total}`:`수업 ${s.lectures.length}`}</span></button>
+          ${open?`<div class="rl-lecs">${lecLinks(s,'rl-l').join('')||'<p class="rl-none">해당하는 수업이 없어요</p>'}</div>`:''}</li>`;
+      }).join('');
+    const j=$('#g-jump'), cur=SUBJ.find(s=>s.cid===subj);
+    j.hidden=!cur; j.innerHTML=cur?lecLinks(cur,'s1-chip rl-chip').join(''):'';
   }
 
   /* 화면 위에 붙는 막대 */
@@ -3491,22 +3533,42 @@ window.S3=(function(){
     if(e.key==='/' && document.activeElement!==$('#g-q') && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !dlg.open){ e.preventDefault(); $('#g-q').focus(); }
     if(e.key==='Escape' && document.activeElement===$('#g-q')) $('#g-clear').click();
   });
-  $('#g-rail').addEventListener('click',e=>{
+  function railClick(e){
+    const b=e.target.closest('[data-rs]');
+    if(b){ setSubj(b.dataset.rs===subj&&subj!=='all'?'all':b.dataset.rs); scrollToEl(document.getElementById('g-results')); return; }
     const x=e.target.closest('a[href^="#"]'); if(!x) return;
     e.preventDefault(); scrollToEl(document.getElementById(x.getAttribute('href').slice(1)));
+  }
+  $('#g-rail').addEventListener('click',railClick);
+  $('#g-jump').addEventListener('click',railClick);
+  /* 기출 탭 → 강의계획서 줄 / 시간표 날짜 */
+  panel.addEventListener('click',e=>{
+    const sy=e.target.closest('[data-syl]');
+    if(sy){ gotoSyllabus(sy.dataset.syl, sy.dataset.row); return; }
+    const tt=e.target.closest('button[data-tt]');
+    if(tt){ jumpTo(tt.dataset.tt); select('timetable',true); window.scrollTo(0,0); }
   });
+  function gotoSyllabus(cid,name){
+    select(cid,true);
+    requestAnimationFrame(()=>{
+      const p=document.getElementById('panel-'+cid); if(!p) return;
+      const th=[...p.querySelectorAll('th[scope=row]')].find(t=>(t.dataset.n||t.firstChild&&t.firstChild.textContent||'').trim()===name);
+      if(!th) return;
+      const row=th.closest('tr'); scrollToEl(row); row.classList.add('g-flash'); setTimeout(()=>row.classList.remove('g-flash'),2200);
+    });
+  }
   $('#g-foot').textContent=`${IDX.date} 기준 저장소 내용입니다 (${IDX.sha}). 그 뒤에 만든 파일은 위의 폴더 링크에서 바로 볼 수 있습니다.`;
   $('#g-issues').href=GH+'/issues';
 
   /* 다른 탭에서 넘어오기 */
   function goto(cid,name){
-    const l=BY[cid]&&BY[cid][name]; if(!l) return;
+    const l=findLec(cid,name); if(!l) return;
     select('gichul',true);
     query=''; $('#g-q').value=''; setSubj(cid);
     requestAnimationFrame(()=>{ measure(); scrollToEl(document.getElementById(`g-${cid}-${l.id}`)); });
   }
   function badge(cid,name){
-    const l=BY[cid]&&BY[cid][name];
+    const l=findLec(cid,name);
     const hasMine=!!(l&&l.mine&&l.mine.length);
     if(!l||!(l.total||l.s||hasMine)) return '';
     const parts=[l.total?`기출 ${l.total}`:'', (l.s||hasMine)?'자료':''].filter(Boolean);
@@ -3533,7 +3595,19 @@ window.S3=(function(){
     const sub=panel.querySelector('.s1-head .subtitle'); if(sub) sub.textContent='수업별로 정리한 기출 문제지, 정답·해설, 필기본으로 만든 학습자료를 모았습니다. 누르면 앱 안에서 바로 열리고, 저장·공유로 내려받을 수 있습니다.'+(GUEST?' 학습자료 만들기는 회원이 로그인하면 쓸 수 있습니다.':' 「내 Claude로 만들기」는 필기본을 올린 뒤 내 Claude Code를 열고, 「바로 만들기」(관리자)는 GitHub에서 자동으로 만듭니다.');
     const rq=document.getElementById('g-reqs'); if(rq&&window.APPX&&!GUEST){ rq.hidden=false; APPX.renderRequests(rq); }
   }
-  render(); measure();
+  /* 강의계획서 수업 줄에 「기출 n · 자료」 */
+  function decorateSyllabus(){
+    COURSES.forEach(c=>{
+      const p=document.getElementById('panel-'+c.id); if(!p) return;
+      p.querySelectorAll('th[scope=row]').forEach(th=>{
+        if(th.dataset.n) return;
+        const name=th.textContent.trim(); th.dataset.n=name;
+        const b=badge(c.id,name); if(b) th.insertAdjacentHTML('beforeend',b);
+      });
+    });
+  }
+  render(); measure(); decorateSyllabus();
+  if(typeof renderMain==='function') try{ renderMain(); }catch(e){}
   (async()=>{
     try{
       const u=window.claude&&window.claude.use?await window.claude.use('user'):null;

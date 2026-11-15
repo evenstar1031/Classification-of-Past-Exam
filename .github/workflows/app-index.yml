@@ -2,6 +2,10 @@
 name: 앱 현황 갱신
 
 on:
+  # Claude 가 정리를 끝내면 이어서 (Claude 의 푸시는 다른 워크플로를 깨우지 않으므로)
+  workflow_run:
+    workflows: ["기출 자동 정리", "Claude (@claude)"]
+    types: [completed]
   workflow_dispatch:
   push:
     branches: [main]
