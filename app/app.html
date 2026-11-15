@@ -527,6 +527,7 @@ dialog.pd[open]{display:flex; flex-direction:column}
       <button type="button" role="tab" id="ptab-syl" data-g="syl" aria-selected="false" tabindex="-1">강의계획서</button>
       <button type="button" role="tab" id="ptab-prof" data-g="prof" aria-selected="false" tabindex="-1">교수 평가</button>
       <button type="button" role="tab" id="ptab-gichul" data-g="gichul" aria-controls="panel-gichul" aria-selected="false" tabindex="-1">기출·학습자료</button>
+      <button type="button" role="tab" id="ptab-tools" data-g="tools" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 도구</button>
       <span class="psep" aria-hidden="true"></span>
       <button type="button" role="tab" id="ptab-sem1" data-g="sem1" aria-controls="panel-sem1" aria-selected="false" tabindex="-1">1학기 후기</button>
     </div>
@@ -622,6 +623,7 @@ dialog.pd[open]{display:flex; flex-direction:column}
       <p>문항 수는 수업별로 분류된 기출 기준입니다. 학습자료에는 정답·해설이 들어 있습니다.</p>
     </div>
   </section>
+  <section id="panel-tools" role="tabpanel" aria-labelledby="ptab-tools" hidden></section>
 
   <section class="s1 rvw" id="panel-sem1" role="tabpanel" aria-labelledby="ptab-sem1" hidden>
     <div class="s1-head">
@@ -1429,9 +1431,9 @@ function initTimetable(){
 }
 
 /* ================= 탭 전환 ================= */
-const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul","sem1"];
+const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul",...(window.APP?["tools"]:[]),"sem1"];
 let lastCourse="jindan";
-function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="gichul"?"gichul":"syl"; }
+function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="gichul"?"gichul":id==="tools"?"tools":"syl"; }
 function select(id,push){
   if(!VIEWS.includes(id)) id="timetable";
   const g=groupOf(id);
@@ -1445,7 +1447,7 @@ function select(id,push){
   const hdr=document.querySelector("header.top"), top=hdr.offsetTop+hdr.offsetHeight;
   if(window.scrollY>top) window.scrollTo(0,top);
 }
-ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="gichul"?"gichul":lastCourse,true); }));
+ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="gichul"?"gichul":g==="tools"?"tools":lastCourse,true); }));
 function tabKeys(list){
   list.addEventListener("keydown",e=>{
     const btns=[...list.querySelectorAll("[role=tab]")], cur=btns.indexOf(document.activeElement);
@@ -3060,12 +3062,13 @@ window.APPX=(function(){
   async function openPdf(path, label){
     const name=path.split('/').pop();
     const w=sheet(name.replace(/\.pdf$/,''), `<p class="ax-msg">불러오는 중…</p>`,
-      `<a class="ax-btn" id="ax-dl" aria-disabled="true">저장·공유</a><a class="ax-btn" href="https://github.com/${APP.repo}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}" target="_blank" rel="noopener">GitHub에서 열기</a>`, 'ax-pdf');
+      `<button type="button" class="ax-btn" data-tool="compress" disabled>압축</button><button type="button" class="ax-btn" data-tool="font" disabled>글꼴 바꾸기</button><a class="ax-btn" id="ax-dl" aria-disabled="true">저장·공유</a><a class="ax-btn" href="https://github.com/${APP.repo}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}" target="_blank" rel="noopener">GitHub에서 열기</a>`, 'ax-pdf');
     let url=null; w.ov.addEventListener('closed',()=>{ if(url) URL.revokeObjectURL(url); });
     try{
       const blob=await APP.raw(path,'blob');
       url=URL.createObjectURL(blob);
       const dl=w.ov.querySelector('#ax-dl'); dl.href=url; dl.download=name; dl.removeAttribute('aria-disabled');
+      w.ov.querySelectorAll('[data-tool]').forEach(btn=>{ btn.disabled=false; btn.onclick=()=>{ w.close(); sendToTool(btn.dataset.tool, blob, name); }; });
       const lib=await pdfjs();
       const doc=await lib.getDocument({data:new Uint8Array(await blob.arrayBuffer())}).promise;
       w.body.innerHTML='';
@@ -3231,7 +3234,82 @@ window.APPX=(function(){
   const top=document.querySelector('header.top .today');
   if(top){ const b=document.createElement('button'); b.type='button'; b.className='ax-acct'; b.textContent=APP.guest?'로그인':APP.login; b.setAttribute('aria-label',APP.guest?'로그인':'계정'); b.onclick=APP.guest?openGuest:openAccount; top.after(b); }
 
-  return {openPdf, openUpload, renderRequests, openAccount, _reqEl:null};
+  /* ── PDF 도구: 같은 사이트의 PDF 압축 · 강의자료 글꼴 바꾸기를 앱 안에 ── */
+  const TOOL_HOST='https://evenstar1031.github.io';
+  const TOOLS=[
+    {id:'compress', name:'PDF 압축', src:TOOL_HOST+'/pdf-compress/', input:'#picker',
+     desc:'용량을 줄입니다. 글자는 그대로라 검색·복사가 계속 됩니다. 파일은 내 기기 안에서만 처리돼요.'},
+    {id:'font', name:'글꼴 바꾸기', src:TOOL_HOST+'/lectrue-font-swap/', input:'#fileInput',
+     desc:'PDF·PPTX·DOCX 강의자료의 글꼴을 KoPub 바탕·산돌고딕으로 바꾸고, 그림 속 글자도 검색되게 합니다. 처음 한 번 글꼴(약 23MB)을 받아요.'},
+  ];
+  const toolsPanel=document.getElementById('panel-tools'), toolsTab=document.getElementById('ptab-tools');
+  let curTool='compress';
+  if(toolsPanel&&toolsTab){
+    toolsTab.hidden=false;
+    const tcss=document.createElement('style'); tcss.textContent=`
+    #panel-tools{padding:14px 0 0}
+    .tl-bar{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; margin:0 0 10px}
+    .tl-seg{display:inline-flex; background:var(--soft); border-radius:999px; padding:3px}
+    .tl-seg button{font:inherit; font-size:15px; font-weight:600; border:0; background:transparent; color:var(--muted); border-radius:999px; padding:7px 16px; min-height:40px; cursor:pointer}
+    .tl-seg button[aria-pressed=true]{background:var(--sheet); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.12)}
+    .tl-desc{flex:1 1 260px; margin:0; font-size:13.5px; color:var(--muted); line-height:1.55}
+    .tl-open{font-size:13px; color:var(--muted); white-space:nowrap}
+    .tl-frame{display:block; width:100%; border:1px solid var(--rule); border-radius:14px; background:var(--paper); min-height:420px}
+    @media (max-width:640px){ .tl-frame{border-left:0; border-right:0; border-radius:0; margin-inline:-16px; width:calc(100% + 32px)} }`;
+    document.head.appendChild(tcss);
+    toolsPanel.innerHTML=`<div class="tl-bar">
+        <div class="tl-seg" role="group" aria-label="도구 고르기">${TOOLS.map(t=>`<button type="button" data-t="${t.id}" aria-pressed="${t.id===curTool}">${t.name}</button>`).join('')}</div>
+        <p class="tl-desc" id="tl-desc"></p>
+        <a class="tl-open" id="tl-open" target="_blank" rel="noopener">새 창으로 열기 ↗</a>
+      </div><div id="tl-frames"></div>`;
+    toolsPanel.querySelector('.tl-seg').addEventListener('click',e=>{ const b=e.target.closest('[data-t]'); if(b) showTool(b.dataset.t); });
+    new MutationObserver(()=>{ if(!toolsPanel.hidden) showTool(curTool); }).observe(toolsPanel,{attributes:true, attributeFilter:['hidden']});
+    window.addEventListener('resize',()=>{ if(!toolsPanel.hidden) sizeFrames(); });
+  }
+  function frameOf(id, create){
+    let f=document.getElementById('tl-f-'+id);
+    if(!f&&create){
+      const t=TOOLS.find(x=>x.id===id);
+      f=document.createElement('iframe'); f.id='tl-f-'+id; f.className='tl-frame'; f.title=t.name; f.src=t.src;
+      f.setAttribute('allow','web-share; clipboard-write; fullscreen');
+      document.getElementById('tl-frames').appendChild(f);
+    }
+    return f;
+  }
+  function sizeFrames(){
+    const tabs=document.querySelector('nav.tabs'), bar=toolsPanel.querySelector('.tl-bar');
+    const h=Math.max(420, window.innerHeight-(tabs?tabs.offsetHeight:0)-(bar?bar.offsetHeight:0)-28);
+    toolsPanel.querySelectorAll('.tl-frame').forEach(f=>f.style.height=h+'px');
+  }
+  function showTool(id){
+    curTool=id; const t=TOOLS.find(x=>x.id===id);
+    toolsPanel.querySelectorAll('.tl-seg [data-t]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.t===id)));
+    document.getElementById('tl-desc').textContent=t.desc;
+    document.getElementById('tl-open').href=t.src;
+    TOOLS.forEach(x=>{ const f=frameOf(x.id, x.id===id); if(f) f.hidden=x.id!==id; });
+    sizeFrames();
+  }
+  /* 앱에서 연 PDF를 도구로 바로 넘기기 (같은 사이트일 때) */
+  async function sendToTool(id, blob, name){
+    select('tools',true); showTool(id);
+    const t=TOOLS.find(x=>x.id===id), f=frameOf(id,true);
+    const file=new File([blob], name, {type:blob.type||'application/pdf'});
+    for(let i=0;i<120;i++){                       // 도구가 뜰 때까지 최대 30초
+      try{
+        const doc=f.contentDocument, inp=doc&&doc.querySelector(t.input);
+        if(inp&&doc.readyState==='complete'){
+          const dt=new (f.contentWindow.DataTransfer||DataTransfer)(); dt.items.add(file);
+          inp.files=dt.files; inp.dispatchEvent(new Event('change',{bubbles:true})); return true;
+        }
+      }catch(e){ break; }                          // 다른 사이트(도메인 바꾼 뒤) → 넘기기 불가
+      await new Promise(r=>setTimeout(r,250));
+    }
+    const w=sheet(t.name, `<p class="ax-msg">파일을 자동으로 넘기지 못했습니다. 아래 「저장」으로 받은 뒤 도구에서 직접 골라 주세요.</p>`,
+      `<a class="ax-btn pri" href="${URL.createObjectURL(blob)}" download="${h(name)}">저장</a>`);
+    return false;
+  }
+
+  return {openPdf, openUpload, renderRequests, openAccount, sendToTool, _reqEl:null};
 })();
 
 </script>
