@@ -35,6 +35,19 @@ for f in sorted(glob.glob('과목정보/*.json')):
             if x.startswith(lid + '_') and x.endswith(suffix):
                 return x
         return None
+    # 자료실/<과목>/ — 사용자가 직접 올린 자료. 파일 이름 앞 번호(예 "33·34_")로 수업에 붙이고, 번호가 없으면 과목 전체 자료
+    mine, mine_all = {}, []
+    jdir = f'자료실/{subj}'
+    for x in ls(jdir):
+        if x.startswith('.') or x.lower() == 'readme.md' or os.path.isdir(f'{jdir}/{x}'):
+            continue
+        mm = re.match(r'^(\d{1,2}(?:\s*[·,~-]\s*\d{1,2})*)_', x)
+        ids = [i.zfill(2) for i in re.findall(r'\d{1,2}', mm.group(1))] if mm else []
+        if ids:
+            for i in ids:
+                mine.setdefault(i, []).append(f'{jdir}/{x}')
+        else:
+            mine_all.append(f'{jdir}/{x}')
     lectures = []
     for L in info['lectures']:
         lid = L['id']
@@ -53,6 +66,7 @@ for f in sorted(glob.glob('과목정보/*.json')):
             'dir': f'학습자료/{subj}/{sdir}' if sdir else None,
             'folder': f"학습자료/{subj}/{lid}_{BL.safe(BL.lname(L))}",
             'show': BL.lname(L),
+            'mine': mine.get(lid, []),
         })
     extra = counts.get('99', {})
     whole_q = next((x for x in q_files if x.startswith('00_전체') and x.endswith('.pdf')), None)
@@ -60,6 +74,7 @@ for f in sorted(glob.glob('과목정보/*.json')):
     out.append({
         'subject': subj, 'name': info['name'], 'code': info.get('code'),
         'exams': exams, 'etc': extra, 'lectures': lectures,
+        'mine_all': mine_all,
         'whole_q': f'문제지/{subj}/{whole_q}' if whole_q else None,
         'whole_a': f'해설지/{subj}/{whole_a}' if whole_a else None,
     })
