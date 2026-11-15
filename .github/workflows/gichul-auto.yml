@@ -1,0 +1,76 @@
+# 올리기/<과목>/ 에 기출 PDF가 올라오면 Claude 가 바로 정리한다 (gichul-classify 스킬).
+#   앱의 「기출 정리 바로 맡기기」, GitHub 웹 업로드 모두 여기로 온다.
+#   저장소 주인이 올린 것만 (주인의 Claude 구독·Actions 시간을 씀). 다른 사람은 「내 Claude로 기출 정리」.
+#   끝나면 결과를 이슈(라벨 「기출」)로 남기고, 아래 두 워크플로가 이어서 돈다:
+#     문제지·해설지 PDF 만들기(build-pdfs.yml) → 앱 현황 갱신(app-index.yml)
+name: 기출 자동 정리
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '올리기/**'
+
+concurrency:
+  group: gichul-auto
+  cancel-in-progress: false
+
+jobs:
+  classify:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: 새 기출이 있나
+        id: check
+        run: |
+          shopt -s nullglob nocaseglob
+          files=(올리기/*/*.pdf)
+          echo "count=${#files[@]}" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "${files[@]}"
+
+      - uses: actions/setup-python@v6
+        if: steps.check.outputs.count != '0'
+        with:
+          python-version: '3.11'
+
+      - name: 프로그램·글씨체 설치
+        if: steps.check.outputs.count != '0'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei
+          pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 \
+                         numpy==2.4.6 pillow==12.3.0 cffi==2.1.1 markdown
+          python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
+          git config --global core.quotepath false
+
+      - uses: anthropics/claude-code-action@v1
+        if: steps.check.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            저장소 주인이 `올리기/` 에 새 기출 PDF를 올렸다(이 커밋: ${{ github.sha }}).
+            CLAUDE.md 와 `.claude/skills/gichul-classify` 스킬을 그대로 따라 `올리기/<과목>/` 의 PDF를 모두 처리하라
+            (답 제거 → 수업 분류 → 수업별 문제지·해설지). 검증 단계를 건너뛰지 않는다. 사용자와 대화할 수 없으니
+            애매한 문항은 스킬이 정한 기본값으로 처리하고 보고에 적는다. 한 파일에서 막히면 그 파일은 `올리기/` 에 두고 다음 파일을 계속한다.
+            끝나면 만든 결과만 커밋해서 `git push origin HEAD:main` (밀리면 `git pull --rebase origin main` 후 다시).
+            마지막으로 결과를 이슈 하나로 남긴다:
+            `gh issue create --label 기출 --title "기출 자동 정리: <과목> <시험>" --body "<보고>"`
+            보고(한국어, 짧게): 처리한 시험, 수업별로 늘어난 문항 수, 확인이 필요한 문항, 못 한 파일과 이유,
+            문제지 폴더 링크 https://github.com/evenstar1031/Classification-of-Past-Exam/tree/main/문제지/<과목> (경로는 URL 인코딩).
+          claude_args: |
+            --max-turns 400
+            --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
