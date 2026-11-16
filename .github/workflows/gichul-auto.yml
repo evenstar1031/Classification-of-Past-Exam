@@ -17,9 +17,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # claude-code-action 은 push 이벤트에서 돌지 않는다("Unsupported event type: push").
+  # 그래서 올리기 push 는 여기서 workflow_dispatch 로 다시 불러 주기만 하고, 실제 정리는 dispatch 로 돈다.
+  relay:
+    if: github.event_name == 'push' && github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: write
+    steps:
+      - name: 기출 자동 정리 시작
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gichul-auto.yml -R "$GITHUB_REPOSITORY" --ref main
+
   classify:
-    # 주인이 올렸거나, 저장소 안의 다른 워크플로(1학기 자료 정리, 이 워크플로의 이어 돌리기)가 부른 경우
-    if: github.actor == github.repository_owner || github.actor == 'github-actions[bot]'
+    # 주인이 직접 돌렸거나, 저장소 안의 워크플로(위 relay, 1학기 자료 정리, 이어 돌리기)가 부른 경우
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      (github.actor == github.repository_owner || github.actor == 'github-actions[bot]')
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     permissions:
