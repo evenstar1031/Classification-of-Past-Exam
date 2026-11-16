@@ -99,7 +99,14 @@ python3 tools/answer_key.py <과목>        # 해설/<과목>/<시험id>.json: �
   is right, why the main distractors are wrong; for figure questions look at `work/<id>/fig/`).
   Identical questions repeated across years get the same text (check that the choice order and
   answer really match first). If the marked answer looks wrong or the question is broken, still
-  explain the marked answer and add a line starting `※ 확인 필요:` — README lists these.
+  explain the marked answer and add a line starting `※ 확인 필요(<이유>):` — README lists these
+  with the reason. 이유는 짧은 꼬리표로: `원본 정답 오류`, `원본 정답 오류 의심`, `복수 정답 가능`,
+  `원본 문제 결함`, `문제 수치 불일치`, `원본 정답 의심 — 강의 내용과 어긋남` 등. 뒤 문장에 무엇이 왜
+  의심스러운지와 그래도 시험에서 어떻게 할지를 쓴다. 답은 맞는데 교과서·지침에 따라 갈리는 점은
+  확인 필요가 아니라 `참고: …` 로 덧붙인다(사용자 요청 2026-11-17: 확인 필요는 정말 의문인 것만).
+  Figure questions: always open the figure (`work/<id>/fig/`; re-run `extract.py` from `원본/` if
+  `work/` is gone) — never write "그림을 확인할 것" without having looked. Check doubtful answers
+  against the 필기본 (`tools/notes_lookup.py`) and cite the lecture/page when it settles the point.
   `answer_key.py` never overwrites an explanation, so re-running it is safe.
 ```bash
 python3 tools/build_answers.py <과목>     # 해설지/<과목>/: lecture PDFs, 00_전체, 시험별/, README

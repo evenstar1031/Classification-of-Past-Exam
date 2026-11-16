@@ -551,6 +551,9 @@ def verify(doc, work, out, total, numbers, report_fixes=True):
     leaks = [txt[max(0, m.start() - 25):m.end() + 10].replace('\n', ' ')
              for m in re.finditer(r'정답|해설|오답노트|복수정답', txt)]
     leaks = [l for l in leaks if '정답 표시 없음' not in l]
+    # 원본 시험의 채점 안내문(어느 보기가 답인지 알려 주지 않음)은 문제의 일부라 그대로 둔다
+    OK_PHRASES = ('정답을 지시하는 수만큼', '모두 맞아야 정답', '정답 1점 인정')
+    leaks = [l for l in leaks if not any(p in l.replace(' ', '') or p in l for p in OK_PHRASES)]
     found = {int(x) for x in re.findall(r'^(\d{1,3})\.\s', txt, re.M)}
     missing = sorted(set(numbers) - found)
     html_leak = re.findall(r'ⓘ|오답노트|해설', re.sub(r'<div class="sub">.*?</div>', '', doc))
