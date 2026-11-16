@@ -222,7 +222,8 @@ def main():
              '- 정답: 원본 기출에 표시된 정답 그대로 (정답 보기는 초록색으로 표시)',
              '- 해설: Claude가 작성 · 원본에 오답노트가 있던 문항은 "원본 오답노트"를 함께 실음',
              '- 해설은 공부를 돕기 위한 것이라 틀릴 수 있습니다. 이상한 해설은 알려 주세요.',
-             '- 해설에 "※ 확인 필요"가 붙은 문항은 원본 정답이나 문제 자체에 의문이 있는 문항입니다 (아래 목록).',
+             '- 해설에 "※ 확인 필요(이유)"가 붙은 문항은 원본 정답이나 문제 자체에 의문이 있는 문항입니다 (아래 목록, 이유는 해설 끝에).',
+             '- "참고:"는 답은 맞지만 교과서·지침에 따라 다르게 볼 수 있는 점을 덧붙인 것입니다.',
              '- 문제만 있는 PDF는 `문제지/` 폴더에 그대로 있습니다.', '',
              '| 수업 | ' + ' | '.join(str(y) for y in years) + ' | 합계 |', '|---|' + '---:|' * (len(years) + 1)]
     for lid in order:
@@ -243,7 +244,9 @@ def main():
         lines += ['', '## 확인이 필요한 문항', '']
         doubt.sort(key=lambda t: t[2])
         for y, d, n, lid, an, label in sorted(doubt, key=lambda t: (t[0], t[1]), reverse=True):
-            why = '원본에 정답 표시 없음' if not (an.get('answer') or an.get('answer_text')) else '원본 정답·문제에 의문'
+            m = re.search(r'※ ?확인 필요\(([^)]+)\)', an.get('explanation') or '')   # 「※ 확인 필요(이유): …」
+            why = ('원본에 정답 표시 없음' if not (an.get('answer') or an.get('answer_text'))
+                   else m.group(1) if m else '원본 정답·문제에 의문')
             lines.append(f"- {label} {n}번 ({lid}. {BL.lname(L[lid])}) — {why}")
     open(os.path.join(outdir, 'README.md'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
 

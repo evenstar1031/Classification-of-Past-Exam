@@ -14,7 +14,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": "볶음밥 섭취 후 수 시간 만에 구토·설사 → 독소형 식중독이다. 출제 정답은 'S. aureus – neurotoxin'으로, 포도알균 장독소가 미주신경을 통해 뇌의 구토중추를 자극하는 신경독성 작용을 한다는 의미로 보인다. ※ 확인 필요: 볶음밥은 전형적으로 Bacillus cereus 구토형(내열성 cereulide, 세포독성 펩타이드)과 연결되고, S. aureus 독소는 보통 '장독소(enterotoxin)'로 부르므로 출제 의도와 정답을 확인할 필요가 있다."
+   "explanation": "볶음밥 섭취 후 수 시간 만에 구토·설사 → 독소형 식중독이다. 출제 정답은 'S. aureus – neurotoxin'으로, 포도알균 장독소가 미주신경을 통해 뇌의 구토중추를 자극하는 신경독성 작용을 한다는 의미로 보인다. ※ 확인 필요(원본 정답 의심 — 강의 내용과 어긋남): 2025 강의(33 성인 위장관 감염 p.21)는 「구토형 B. cereus의 원인식품은 볶음밥·쌀밥」이라고 해서, 볶음밥 + 수 시간 내 구토는 B. cereus 구토형이 가장 전형적이다. 다만 같은 강의(p.19)는 S. aureus·B. cereus의 독소를 「neurotoxin(이미 만들어진 독소, 잠복기 매우 짧음)」으로 분류하고, 보기의 B. cereus는 cytotoxin·enterotoxin(설사형, 8~16시간)뿐이라 「neurotoxin」 조합은 S. aureus만 남는다. 원본 정답 ⑤는 이 분류를 따른 것으로 보이며, 시험에서는 원본 정답을 따르되 볶음밥=B. cereus 구토형은 따로 기억할 것."
   },
   "2": {
    "answer": [
@@ -50,7 +50,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": "건강한 30세 외래 환자의 지역사회 폐렴으로, CRB-65(의식·호흡수 ≥30·혈압·65세 이상) 0점이므로 외래(집)에서 치료한다. 동반질환 없는 외래 환자의 경험적 치료는 amoxicillin 또는 doxycycline(국내는 macrolide 내성이 높아 macrolide 단독은 권장되지 않음)이며, 녹농균 고려는 불필요하다. ※ 확인 필요: 미국 지침은 건강한 외래 환자에서 doxycycline 단독도 허용하므로 ②도 논란이 될 수 있다."
+   "explanation": "건강한 30세 외래 환자의 지역사회 폐렴으로, CRB-65(의식·호흡수 ≥30·혈압·65세 이상) 0점이므로 외래(집)에서 치료한다. 동반질환 없는 외래 환자의 경험적 치료는 amoxicillin 또는 doxycycline(국내는 macrolide 내성이 높아 macrolide 단독은 권장되지 않음)이며, 녹농균 고려는 불필요하다. 참고: 미국 지침은 건강한 외래 환자에서 doxycycline 단독도 허용하지만, 국내는 doxycycline·마크로라이드 내성률이 높아 단독요법을 권하지 않는다. CRB-65 0점 외래 치료(④)가 가장 확실한 정답이다."
   },
   "6": {
    "answer": [
@@ -95,7 +95,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": "고령, 의식 혼탁, 호흡수 35회, 혈압 80/40 → CRB-65 4점으로 사망 위험이 높은(약 10% 이상) 중증 지역사회 폐렴이다. 보기 ①이 이를 말한다. 가장 흔한 원인은 폐렴구균이고, 중증이므로 경구 amoxicillin 단독이나 ciprofloxacin 단독(폐렴구균에 약함)은 부적절하며 ICU 수준의 병합 정맥 항생제가 필요하다. ※ 확인 필요: CRB-65 4점의 예측 사망률은 문헌에 따라 약 30% 이상으로 제시되기도 한다."
+   "explanation": "고령(≥65), 의식 혼탁, 호흡수 35회(≥30), 혈압 80/40(수축기 <90)으로 CRB-65 4점의 중증 지역사회 폐렴이다. CRB-65 3~4점의 사망률은 약 30%로 「약 10%」는 틀렸다(①). 이 시험이 치러진 2022년에는 COVID-19 유행 중이었으므로 중증 폐렴에서 SARS-CoV-2를 원인으로 꼭 고려해야 한다(②, 정답). 가장 흔한 원인균은 폐렴사슬알균이며(③ 틀림), 중증이라 경구 amoxicillin 단독(④)이나 폐렴사슬알균에 약한 ciprofloxacin 단독(⑤)은 부적절하고, 정맥 베타락탐 + 마크로라이드(또는 호흡기 퀴놀론) 병합이 필요하다."
   },
   "11": {
    "answer": [
@@ -140,7 +140,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": "단락술(shunt) 후 신경외과 입원 중 생긴 의료관련 수막염(뇌실염)이다. 원인은 CoNS·S. aureus(MRSA 포함)와 녹농균 등 그람음성 간균이므로 vancomycin + 항녹농균 β-lactam(ceftazidime, cefepime, meropenem)이 경험적 치료다. 정답에 포함된 ampicillin은 Listeria를 고려한 것으로 보인다. ※ 확인 필요: 지침상 의료관련 수막염의 표준 경험적 치료는 vancomycin + cefepime/ceftazidime/meropenem이며 ampicillin 추가는 필수가 아니다."
+   "explanation": "단락술(shunt) 후 신경외과 입원 중 생긴 의료관련 수막염(뇌실염)이다. 원인은 CoNS·S. aureus(MRSA 포함)와 녹농균 등 그람음성 간균이므로 vancomycin + 항녹농균 β-lactam(ceftazidime, cefepime, meropenem)이 경험적 치료다. 정답에 포함된 ampicillin은 Listeria를 고려한 것으로 보인다. 참고: 의료관련 수막염의 표준 경험적 치료는 vancomycin + 항녹농균 베타락탐(cefepime·ceftazidime·meropenem)이며 ampicillin 추가는 필수가 아니지만, 녹농균을 덮는 보기는 ⑤뿐이다."
   },
   "16": {
    "answer": [
@@ -347,7 +347,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "수술 예방적 항생제의 투여는 수술 시 피부 절개 30분 안에 해야한다",
-   "explanation": "수술 예방적 항생제는 조직에 충분한 농도가 있을 때 절개가 이루어지도록 피부 절개 전(60분 이내, 출제 의도는 30분 이내)에 투여한다(vancomycin·fluoroquinolone은 120분 이내). 수술 하루 전이나 병동에서 미리 주는 것은 너무 이르다. ※ 확인 필요: 국내외 지침은 '절개 전 60분 이내'로 제시하므로 시간 기준은 강의 내용을 따를 것."
+   "explanation": "수술 예방적 항생제는 조직에 충분한 농도가 있을 때 절개가 이루어지도록 피부 절개 전(60분 이내, 출제 의도는 30분 이내)에 투여한다(vancomycin·fluoroquinolone은 120분 이내). 수술 하루 전이나 병동에서 미리 주는 것은 너무 이르다. 참고: 2025 강의(01·13·14)는 「피부 절개 전 60분(1시간) 이내」로 설명한다. 「절개 30분 안」도 그 범위 안이므로 정답이 바뀌지는 않는다."
   },
   "39": {
    "answer": [

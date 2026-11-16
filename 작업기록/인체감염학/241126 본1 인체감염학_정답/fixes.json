@@ -189,11 +189,21 @@
    "'정답' 단어가 유출 검사에 걸려 '답'으로 바꿈(채점 안내문)"
   ]
  ],
- "regroup": {},
+ "regroup": {
+  "5": {
+   "1": [
+    "Micrococcus luteus"
+   ]
+  }
+ },
  "prose_boxes": [],
  "split_box": {},
  "para_starts": {},
- "drop_lines": {},
+ "drop_lines": {
+  "5/s1": [
+   0
+  ]
+ },
  "extra_figs": {},
  "media": {}
 }
