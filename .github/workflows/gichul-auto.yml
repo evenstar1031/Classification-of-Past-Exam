@@ -18,7 +18,8 @@ concurrency:
 
 jobs:
   classify:
-    if: github.actor == github.repository_owner
+    # 주인이 올렸거나, 저장소 안의 다른 워크플로(1학기 자료 정리, 이 워크플로의 이어 돌리기)가 부른 경우
+    if: github.actor == github.repository_owner || github.actor == 'github-actions[bot]'
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     permissions:
@@ -26,7 +27,7 @@ jobs:
       issues: write
       pull-requests: write
       id-token: write
-      actions: read
+      actions: write
     steps:
       - uses: actions/checkout@v5
         with:
@@ -65,7 +66,8 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
             저장소 주인이 `올리기/` 에 새 기출 PDF를 올렸다(이 커밋: ${{ github.sha }}).
-            CLAUDE.md 와 `.claude/skills/gichul-classify` 스킬의 **1~3단계만** 따라 `올리기/<과목>/` 의 PDF를 모두 처리하라
+            CLAUDE.md 와 `.claude/skills/gichul-classify` 스킬의 **1~3단계만** 따라 `올리기/<과목>/` 의 PDF를 처리하라.
+            PDF가 6개를 넘으면 과목별로 모아 앞에서부터 **6개까지만** 하고 나머지는 그대로 둔다(이 워크플로가 다시 돌며 이어서 한다)
             (답 제거 → 수업 분류 → 수업별 문제지). **정답·해설판(스킬 3b)은 만들지 않는다** — 다음 단계(Opus)가 한다.
             검증 단계를 건너뛰지 않는다. 사용자와 대화할 수 없으니 애매한 문항은 스킬이 정한 기본값으로 처리하고,
             그 문항 목록(시험·번호·고민한 수업)을 `work/review_notes.md` 에 적어 둔다(커밋하지 않음).
@@ -102,3 +104,17 @@ jobs:
             --model claude-opus-5-5
             --max-turns 300
             --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
+
+      # 올리기에 아직 남은 기출이 있고, 이번에 하나라도 줄었으면 한 번 더 (1학기 자료처럼 한꺼번에 많이 올라온 경우)
+      - name: 남은 기출 이어서
+        if: steps.check.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git pull -q --rebase origin main || true
+          shopt -s nullglob nocaseglob
+          left=(올리기/*/*.pdf)
+          echo "처음 ${{ steps.check.outputs.count }}개 → 남은 것 ${#left[@]}개"
+          if [ "${#left[@]}" -gt 0 ] && [ "${#left[@]}" -lt "${{ steps.check.outputs.count }}" ]; then
+            gh workflow run gichul-auto.yml -R "$GITHUB_REPOSITORY" --ref main
+          fi

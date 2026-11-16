@@ -567,6 +567,7 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
       <button type="button" role="tab" id="ptab-tools" data-g="tools" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 도구</button>
       <span class="psep" aria-hidden="true"></span>
       <button type="button" role="tab" id="ptab-sem1" data-g="sem1" aria-controls="panel-sem1" aria-selected="false" tabindex="-1">1학기 후기</button>
+      <button type="button" role="tab" id="ptab-sem1d" data-g="sem1d" aria-controls="panel-sem1d" aria-selected="false" tabindex="-1">1학기 자료</button>
     </div>
     <div class="ctabs" role="tablist" id="ctabs" aria-label="과목" hidden></div>
   </nav>
@@ -698,6 +699,40 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
     <div class="s1-foot">
       <p id="s1-foot"></p>
       <p>후배들 보라고 만든 페이지입니다. 학교 밖으로는 공유하지 말아주세요.</p>
+    </div>
+  </section>
+
+  <section class="rvw d1" id="panel-sem1d" role="tabpanel" aria-labelledby="ptab-sem1d" hidden>
+    <div class="s1-head">
+      <p class="crumb">KNU MED &nbsp;›&nbsp; <span>본1 1학기 · 자료 정리</span></p>
+      <h2 class="s1-title">1학기 자료</h2>
+      <p class="subtitle">1학기 압축을 과목별로 풀어 정리한 결과입니다. 확인할 것과 지워도 될 것을 먼저 보여 드려요.</p>
+      <div class="d1-up" id="d1-up" hidden></div>
+      <div class="d1-stats" id="d1-stats"></div>
+    </div>
+    <div class="s1-grid">
+      <nav class="rail" aria-label="1학기 자료 바로가기">
+        <h3>과목</h3>
+        <ul class="jump" id="d1-rail"></ul>
+      </nav>
+      <div class="sheet">
+        <div class="tools">
+          <div class="tools-row">
+            <div class="s1-search">
+              <label for="d1-q" class="sr">파일 이름 검색</label>
+              <input id="d1-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="파일 이름 검색 (예: 상지, 2024 중간)">
+              <button class="clear" id="d1-clear" type="button" aria-label="검색어 지우기" hidden>×</button>
+            </div>
+          </div>
+          <div class="chips" id="d1-chips" role="group" aria-label="보기"></div>
+          <div class="chips" id="d1-subj" role="group" aria-label="과목 선택"></div>
+        </div>
+        <div class="inner"><div id="d1-results"><div class="s1-empty"><strong>불러오는 중…</strong></div></div></div>
+      </div>
+    </div>
+    <div class="s1-foot">
+      <p id="d1-foot"></p>
+      <p>압축을 올리면 GitHub에서 자동으로 풀어 정리합니다(Claude 사용량은 들지 않아요). 수업 목록이 있는 과목의 기출은 이어서 「기출 자동 정리」가 수업별 문제지로 나눕니다.</p>
     </div>
   </section>
 
@@ -1473,9 +1508,9 @@ function initTimetable(){
 }
 
 /* ================= 탭 전환 ================= */
-const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul",...(window.APP?["tools"]:[]),"sem1"];
+const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul",...(window.APP?["tools"]:[]),"sem1","sem1d"];
 let lastCourse="jindan";
-function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="gichul"?"gichul":id==="tools"?"tools":"syl"; }
+function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="sem1d"?"sem1d":id==="gichul"?"gichul":id==="tools"?"tools":"syl"; }
 function select(id,push){
   if(!VIEWS.includes(id)) id="timetable";
   const g=groupOf(id);
@@ -1489,7 +1524,7 @@ function select(id,push){
   const hdr=document.querySelector("header.top"), top=hdr.offsetTop+hdr.offsetHeight;
   if(window.scrollY>top) window.scrollTo(0,top);
 }
-ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="gichul"?"gichul":g==="tools"?"tools":lastCourse,true); }));
+ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="sem1d"?"sem1d":g==="gichul"?"gichul":g==="tools"?"tools":lastCourse,true); }));
 function tabKeys(list){
   list.addEventListener("keydown",e=>{
     const btns=[...list.querySelectorAll("[role=tab]")], cur=btns.indexOf(document.activeElement);
@@ -3276,7 +3311,7 @@ window.APPX=(function(){
   async function renderRequests(el){
     APPX._reqEl=el;
     try{
-      const list=(await APP.gh(`repos/${APP.repo}/issues?state=all&per_page=8&sort=updated`)).filter(i=>!i.pull_request&&/@claude|기출 자동 정리/.test(i.title));
+      const list=(await APP.gh(`repos/${APP.repo}/issues?state=all&per_page=8&sort=updated`)).filter(i=>!i.pull_request&&/@claude|기출 자동 정리|1학기 자료 정리/.test(i.title));
       el.innerHTML=`<h3>최근 요청</h3>`+(list.length?list.map(i=>{
         return `<div class="g-req"><span class="st ${i.state==='open'?'run':'done'}">${i.state==='open'?'열림':'닫힘'}</span><a href="${h(i.html_url)}" target="_blank" rel="noopener">#${i.number} ${h(i.title.replace(/^@claude\s*/,''))}</a><span class="tm">${ago(i.updated_at)}</span></div>`;
       }).join(''):`<p class="ax-msg" style="margin:0">아직 요청이 없습니다.</p>`)+
@@ -3744,6 +3779,342 @@ window.S3=(function(){
 
 if(window.S2) S2.sync();
 
+</script>
+
+<style>
+/* ---- 1학기 자료 ---- */
+.d1 .d1-stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:18px; max-width:760px}
+.d1 .d1-stat{font:inherit; text-align:left; background:var(--sheet); border:1px solid var(--rule); border-radius:12px; padding:12px 14px; cursor:pointer; color:var(--ink); min-height:44px}
+.d1 .d1-stat:hover{border-color:var(--faint)}
+.d1 .d1-stat[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
+.d1 .d1-stat b{display:block; font-size:24px; font-weight:700; letter-spacing:-.02em; line-height:1.25; font-variant-numeric:tabular-nums}
+.d1 .d1-stat span{font-size:13px; color:var(--muted)}
+.d1 .d1-stat.del b{color:var(--crimson)} .d1 .d1-stat.chk b{color:var(--amber)} .d1 .d1-stat.new b{color:var(--teal)}
+.d1 .d1-stat.zero b{color:var(--faint)}
+.d1 .d1-up{margin-top:14px; max-width:760px; background:var(--sheet); border:1px solid var(--rule); border-radius:12px; padding:14px 16px}
+.d1 .d1-up h3{margin:0 0 6px; font-family:var(--sans); font-size:15px; font-weight:700}
+.d1 .d1-up ol{margin:0 0 10px; padding-left:20px; font-size:15px; line-height:1.7; color:var(--muted)}
+.d1 .d1-up ol b{color:var(--ink)}
+.d1 .d1-rel{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; padding:9px 0; border-top:1px solid var(--soft); font-size:14px}
+.d1 .d1-rel .nm{flex:1 1 200px; min-width:0; overflow-wrap:anywhere}
+.d1 .d1-rel .sz{color:var(--faint); font-size:13px}
+.d1 .st{font-size:12px; font-weight:600; border-radius:999px; padding:1px 9px; white-space:nowrap}
+.d1 .st.run{background:var(--amber-bg); color:var(--amber)} .d1 .st.ok{background:var(--teal-bg); color:var(--teal)}
+.d1 .st.bad{background:var(--crimson-bg); color:var(--crimson)} .d1 .st.wait{background:var(--soft); color:var(--muted)}
+.d1 .d1-btn{font:inherit; font-size:14px; font-weight:600; min-height:36px; padding:4px 13px; border:1px solid var(--rule); border-radius:999px; background:var(--sheet); color:var(--ink); cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; white-space:nowrap; line-height:1.3}
+.d1 .d1-btn:hover:not(:disabled){border-color:var(--faint)}
+.d1 .d1-btn:disabled{opacity:.5; cursor:default}
+.d1 .d1-btn.pri{background:var(--theory); border-color:var(--theory); color:var(--sheet)}
+.d1 .d1-btn.del{color:var(--crimson); border-color:var(--crimson)}
+.d1 .d1-btn.del.armed{background:var(--crimson); color:var(--sheet)}
+.d1 .d1-btn.keep{color:var(--teal); border-color:var(--teal)}
+.d1 .d1-btn.sm{min-height:32px; font-size:13px; padding:2px 11px}
+
+.d1 .d1-block{margin-top:22px; border-radius:12px; border:1px solid var(--rule); overflow:hidden}
+.d1 .d1-block>header{display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; padding:10px 14px; background:var(--paper); border-bottom:1px solid var(--rule)}
+.d1 .d1-block>header h3{margin:0; flex:1 1 auto; font-family:var(--sans); font-size:15px; font-weight:700}
+.d1 .d1-block>header h3 small{font-weight:500; color:var(--muted); font-size:13px; margin-left:6px}
+.d1 .d1-block>header p{flex-basis:100%; margin:0; font-size:13px; color:var(--muted); line-height:1.55}
+.d1 .d1-block.chk{border-color:var(--amber)} .d1 .d1-block.chk>header{background:var(--amber-bg)} .d1 .d1-block.chk>header h3{color:var(--amber)}
+.d1 .d1-block.del{border-color:var(--crimson)} .d1 .d1-block.del>header{background:var(--crimson-bg)} .d1 .d1-block.del>header h3{color:var(--crimson)}
+.d1 .d1-row{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 14px; align-items:center; padding:11px 14px; border-top:1px solid var(--soft); background:var(--sheet)}
+.d1 .d1-block>header+.d1-row,.d1 details>summary+.d1-row{border-top:0}
+.d1 .d1-row.busy{opacity:.5; pointer-events:none}
+.d1 .d1-nm{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; min-width:0}
+.d1 .d1-nm a{color:var(--ink); font-weight:600; font-size:15px; text-decoration:none; overflow-wrap:anywhere; line-height:1.45}
+.d1 .d1-nm a:hover{text-decoration:underline; text-underline-offset:2px}
+.d1 .kind{font-size:11.5px; font-weight:700; border-radius:5px; padding:0 6px; line-height:1.7; white-space:nowrap; background:var(--soft); color:var(--muted)}
+.d1 .kind.k-기출{background:var(--tag-exam-bg); color:var(--tag-exam-c)} .d1 .kind.k-강의자료{background:var(--tag-tbl-bg); color:var(--tag-tbl-c)}
+.d1 .kind.k-필기{background:var(--tag-cp-bg); color:var(--tag-cp-c)} .d1 .kind.k-정리본{background:var(--tag-caseh-bg); color:var(--tag-caseh-c)}
+.d1 .newb{font-size:11px; font-weight:700; color:var(--teal); letter-spacing:.02em}
+.d1 .d1-meta{grid-column:1; margin:0; font-size:13px; color:var(--faint); line-height:1.5; overflow-wrap:anywhere}
+.d1 .d1-why{grid-column:1; margin:2px 0 0; font-size:14px; color:var(--muted); line-height:1.55}
+.d1 .d1-why button{font:inherit; color:var(--theory); background:none; border:0; padding:0; cursor:pointer; text-decoration:underline; text-underline-offset:2px; overflow-wrap:anywhere; text-align:left}
+.d1 .d1-acts{grid-column:2; grid-row:1 / span 3; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end}
+.d1 .d1-kinds details{border-top:1px solid var(--rule)}
+.d1 .d1-kinds details:first-child{border-top:0}
+.d1 .d1-kinds summary{cursor:pointer; padding:11px 14px; min-height:44px; display:flex; align-items:center; gap:8px; font-size:15px; font-weight:600; background:var(--sheet)}
+.d1 .d1-kinds summary .n{font-weight:400; color:var(--muted); font-size:13px}
+.d1 .d1-kinds summary .newb{margin-left:auto}
+.d1 .d1-skip{margin-top:14px}
+.d1 .d1-skip summary{cursor:pointer; font-size:14px; color:var(--muted); padding:10px 0; min-height:44px}
+.d1 .d1-skip ul{margin:0 0 8px; padding-left:18px; font-size:13.5px; color:var(--muted); line-height:1.6}
+.d1 .d1-skip li{overflow-wrap:anywhere}
+.d1 .d1-skip li b{color:var(--ink); font-weight:500}
+.d1 .d1-note{margin:16px 0 0; padding:12px 16px; border-left:3px solid var(--theory); background:var(--blue-bg); border-radius:0 10px 10px 0; font-size:15px; line-height:1.65}
+.d1 .d1-note p{margin:0 0 8px} .d1 .d1-note p:last-child{margin:0}
+.d1 .d1-flash{animation:d1f 2s ease}
+@keyframes d1f{0%,40%{background:var(--amber-bg)}100%{background:var(--sheet)}}
+.d1 .jump .rl-cnt{float:right; display:flex; gap:4px}
+.d1 .jump .dot{font-size:11px; font-weight:700; border-radius:999px; padding:0 6px; line-height:1.6}
+.d1 .jump .dot.c{background:var(--amber-bg); color:var(--amber)} .d1 .jump .dot.d{background:var(--crimson-bg); color:var(--crimson)}
+.d1 .jump button{font:inherit; color:var(--ink-2); background:none; border:0; border-left:2px solid transparent; cursor:pointer; width:calc(100% + 12px); text-align:left; padding:3px 0 3px 10px; margin-left:-12px}
+.d1 .jump button:hover,.d1 .jump button.on{color:var(--ink); border-left-color:var(--ink)}
+.d1 .d1-toast{position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 20px); transform:translateX(-50%); z-index:60; background:var(--ink); color:var(--paper); padding:10px 16px; border-radius:10px; font-size:14px; box-shadow:0 8px 24px rgba(0,0,0,.25); max-width:calc(100vw - 32px)}
+@media (max-width:640px){
+  .d1 .d1-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .d1 .d1-row{grid-template-columns:minmax(0,1fr)}
+  .d1 .d1-acts{grid-column:1; grid-row:auto; justify-content:flex-start; margin-top:4px}
+}
+</style>
+<script>
+/* ================= 1학기 자료: 1학기/목록.json (tools/sem1_import.py 가 만듦) =================
+   상태: ok 넣음 · check 확인 필요 · del 지워도 될 것 같음 · wait 수업 목록이 없어 기출 정리 대기 · queued 기출 정리 중 · done 문제지로 정리됨
+   관리자(저장소 주인)는 지우기·남기기·기출 정리 맡기기·원본 압축 지우기를 할 수 있다. 바꿀 때마다 한 커밋으로 파일과 목록을 같이 고친다. */
+window.D1=(function(){
+  const panel=document.getElementById('panel-sem1d'); if(!panel) return null;
+  const $=s=>panel.querySelector(s);
+  const h=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const APP=window.APP, REPO=(APP&&APP.repo)||'evenstar1031/Classification-of-Past-Exam', GH='https://github.com/'+REPO;
+  const OWNER=!!(APP&&APP.isOwner);
+  const LIST='1학기/목록.json';
+  const enc=p=>p.split('/').map(encodeURIComponent).join('/');
+  const blobURL=p=>GH+'/blob/main/'+enc(p), treeURL=p=>GH+'/tree/main/'+enc(p);
+  const mb=n=>n>=1073741824?(n/1073741824).toFixed(1)+'GB':n>=1048576?(n/1048576).toFixed(1)+'MB':Math.max(1,Math.round(n/1024))+'KB';
+  const KINDS=['기출','강의자료','필기','정리본','기타'];
+  let M=null, view='todo', subj='all', query='', loaded=false, rels=null;
+
+  /* ── 읽기 ── */
+  async function readList(ref){
+    if(APP&&!APP.guest) return JSON.parse(await APP.gh(`repos/${REPO}/contents/${enc(LIST)}?ref=${ref||'main'}`,{accept:'application/vnd.github.raw+json', as:'text'}));
+    const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/${enc(LIST)}?t=${Date.now()}`);
+    if(!r.ok){ const e=new Error('GitHub '+r.status); e.status=r.status; throw e; }
+    return r.json();
+  }
+  async function load(){
+    try{ M=await readList(); }
+    catch(e){ M=e.status===404?{imports:[],subjects:{}}:null; if(!M){ $('#d1-results').innerHTML=`<div class="s1-empty"><strong>목록을 불러오지 못했어요</strong>${h(e.message)}</div>`; return; } }
+    loaded=true;
+    const n=counts(); if(!n.check&&!n.del&&!(OWNER&&Object.values(M.subjects).some(sd=>sd.info&&sd.items.some(x=>x.state==='wait')))) view='all';
+    render();
+    if(OWNER) loadReleases();
+  }
+
+  /* ── 세기 ── */
+  const latest=()=>M.imports.length?M.imports[M.imports.length-1].id:null;
+  const isNew=it=>it.imp===latest();
+  const todo=it=>it.state==='check'||it.state==='del';
+  function counts(list){
+    const c={items:0, bytes:0, check:0, del:0, fresh:0, subjects:0};
+    Object.entries(M.subjects).forEach(([s,sd])=>{ if(list&&!list.includes(s)) return; c.subjects++;
+      sd.items.forEach(it=>{ c.items++; c.bytes+=it.size||0; if(it.state==='check') c.check++; if(it.state==='del') c.del++; if(isNew(it)) c.fresh++; }); });
+    return c;
+  }
+  const hit=it=>!query||(it.name+' '+it.path).toLowerCase().includes(query.toLowerCase());
+  const pass=it=>hit(it)&&(view==='all'||(view==='todo'&&todo(it))||(view==='check'&&it.state==='check')||(view==='del'&&it.state==='del')||(view==='new'&&isNew(it)));
+
+  /* ── 그리기 ── */
+  function row(s,it){
+    const pdf=/\.pdf$/i.test(it.path);
+    const dir=it.path.split('/').slice(it.path.startsWith('1학기/')?2:1,-1).join('/');
+    const meta=[dir&&('📁 '+dir), it.pages&&it.pages+'쪽', it.size&&mb(it.size), it.note].filter(Boolean).join(' · ');
+    const pairName=it.pair?it.pair.split('/').pop():'';
+    let why=it.why?h(it.why):'';
+    if(it.state==='del'&&it.pair) why+=` 남길 것: <button type="button" data-goto="${h(it.pair)}">${h(pairName)}</button>`;
+    if(it.state==='queued') why='기출 자동 정리가 수업별 문제지로 나누는 중이에요.';
+    if(it.state==='wait'&&M.subjects[s].info) why='이제 수업 목록이 있어 수업별 문제지로 나눌 수 있어요.';
+    if(it.state==='done') why=`수업별 문제지로 정리됐어요.${M.subjects[s].gichul?` <button type="button" data-tab-gichul="1">기출·학습자료 탭에서 보기</button>`:''}`;
+    const sinfo=M.subjects[s].info;
+    const acts=[];
+    if(OWNER){
+      if(it.state==='del'){ acts.push(`<button type="button" class="d1-btn sm keep" data-act="keep">남기기</button>`, `<button type="button" class="d1-btn sm del" data-act="rm">지우기</button>`); }
+      else if(it.state==='check'){
+        if(it.kind==='기출'&&pdf&&sinfo) acts.push(`<button type="button" class="d1-btn sm pri" data-act="gichul">기출로 정리</button>`);
+        acts.push(`<button type="button" class="d1-btn sm keep" data-act="keep">남기기</button>`, `<button type="button" class="d1-btn sm del" data-act="rm">지우기</button>`);
+      }
+      else if(it.state==='ok'||it.state==='wait'){
+        if(it.state==='wait'&&sinfo) acts.push(`<button type="button" class="d1-btn sm pri" data-act="gichul">기출로 정리</button>`);
+        acts.push(`<button type="button" class="d1-btn sm" data-act="rm">지우기</button>`);
+      }
+    }
+    return `<div class="d1-row" data-s="${h(s)}" data-p="${h(it.path)}" id="d1-${h(it.sha)}">
+      <div class="d1-nm"><span class="kind k-${h(it.kind)}">${h(it.kind)}</span><a href="${h(blobURL(it.path))}" target="_blank" rel="noopener"${pdf?` data-path="${h(it.path)}"`:''}>${h(it.name)}</a>${isNew(it)?'<span class="newb">새로</span>':''}${it.state==='queued'?'<span class="st run">정리 중</span>':it.state==='done'?'<span class="st ok">문제지</span>':it.state==='wait'?'<span class="st wait">정리 대기</span>':''}</div>
+      ${meta?`<p class="d1-meta">${h(meta)}</p>`:''}
+      ${why?`<p class="d1-why">${why}</p>`:''}
+      ${acts.length?`<div class="d1-acts">${acts.join('')}</div>`:''}
+    </div>`;
+  }
+  function subject(s){
+    const sd=M.subjects[s], items=sd.items.filter(pass);
+    const chk=items.filter(it=>it.state==='check'), del=items.filter(it=>it.state==='del');
+    const rest=items.filter(it=>!todo(it));
+    const skipped=(sd.skipped||[]).filter(k=>!query||k.name.toLowerCase().includes(query.toLowerCase()));
+    const all=sd.items, total=all.reduce((n,it)=>n+(it.size||0),0);
+    const wait=all.filter(it=>it.state==='wait'), queued=all.filter(it=>it.state==='queued'), done=all.filter(it=>it.state==='done');
+    const ready=OWNER&&!query&&sd.info&&wait.length&&view==='todo';           // 할 일: 이제 정리 맡길 수 있는 기출
+    if(!items.length&&!ready&&!(view==='all'&&skipped.length)) return '';
+    const head=`<div class="subject-head"><h2>${h(s)}</h2>
+      <p class="sdesc">자료 ${all.length}개 · ${mb(total)}${done.length||queued.length?` · 기출 ${done.length}개 정리됨${queued.length?`, ${queued.length}개 정리 중`:''}`:''}</p>
+      <p class="g-links"><a class="g-link" href="${h(treeURL('1학기/'+s))}" target="_blank" rel="noopener">GitHub 폴더</a>${sd.gichul?`<button type="button" class="g-link" data-tab-gichul="1">기출·학습자료 탭</button>`:''}</p></div>`;
+    let note='';
+    if(wait.length&&(view==='all'||view==='new'||ready)){
+      note=sd.info
+        ?`<div class="d1-note"><p><b>기출 ${wait.length}개</b>를 수업별 문제지로 나눌 수 있어요. 이제 이 과목의 수업 목록이 있습니다.</p>${OWNER?`<p><button type="button" class="d1-btn pri" data-act="gichul-all" data-s="${h(s)}">기출 ${wait.length}개 정리 맡기기</button></p>`:''}</div>`
+        :`<div class="d1-note"><p><b>기출 ${wait.length}개</b>는 아직 수업별로 나누지 못했어요. 이 과목의 <b>수업 목록과 연도별 담당 교수님</b>(강의계획서나 3개년 비교 파일)이 있어야 문항마다 어느 수업인지 정할 수 있습니다.</p><p>Claude에게 「${h(s)} 과목정보 만들어줘」와 함께 강의계획서를 주시면, 그다음엔 여기서 버튼 하나로 정리돼요.</p></div>`;
+    }
+    const blk=(cls,title,sub,list,extra)=>list.length?`<section class="d1-block ${cls}"><header><h3>${title}<small>${list.length}개</small></h3>${extra||''}${sub?`<p>${sub}</p>`:''}</header>${list.map(it=>row(s,it)).join('')}</section>`:'';
+    const kinds=KINDS.map(k=>{
+      const l=rest.filter(it=>it.kind===k); if(!l.length) return '';
+      const nw=l.filter(isNew).length;
+      return `<details${(query||view==='new'||l.length<=6)?' open':''}><summary>${h(k)} <span class="n">${l.length}개</span>${nw&&nw<l.length?`<span class="newb">새로 ${nw}</span>`:''}</summary>${l.map(it=>row(s,it)).join('')}</details>`;
+    }).join('');
+    const skip=view==='all'&&skipped.length?`<details class="d1-skip"><summary>넣지 않은 것 ${skipped.length}개 — 똑같은 파일, 녹음·영상, 너무 큰 파일</summary><ul>${skipped.map(k=>`<li><b>${h(k.name.split('/').pop())}</b> — ${h(k.why)}</li>`).join('')}</ul>${OWNER?`<button type="button" class="d1-btn sm" data-act="clear-skip" data-s="${h(s)}">이 기록 비우기</button>`:''}</details>`:'';
+    return `<section class="subject" id="d1s-${h(s)}">${head}${note}
+      ${blk('chk','확인 필요','열어 보고 남길지 지울지 정해 주세요.',chk)}
+      ${blk('del','지워도 될 것 같은 것','같은 내용의 다른 판이나 옛 판이에요. 「남길 것」을 눌러 비교해 볼 수 있어요.',del, OWNER&&del.length>1?`<button type="button" class="d1-btn sm del" data-act="rm-all" data-s="${h(s)}">${del.length}개 모두 지우기</button>`:'')}
+      ${kinds?`<section class="d1-block d1-kinds"><header><h3>${view==='new'?'새로 들어온 자료':'자료'}<small>${rest.length}개</small></h3></header>${kinds}</section>`:''}
+      ${skip}</section>`;
+  }
+  function subjects(){ return Object.keys(M.subjects).sort((a,b)=>(a==='(과목 미정)')-(b==='(과목 미정)')||a.localeCompare(b,'ko')); }
+  function render(){
+    if(!M) return;
+    const S=subjects();
+    renderUp();
+    if(!S.length){
+      $('#d1-stats').innerHTML=''; $('#d1-chips').innerHTML=''; $('#d1-subj').innerHTML=''; $('#d1-rail').innerHTML='';
+      $('#d1-results').innerHTML=`<div class="s1-empty"><strong>아직 정리한 1학기 자료가 없어요</strong>${OWNER?'위의 「압축 올리기」로 1학기 압축을 올리면 여기에 과목별로 나옵니다.':'저장소 주인이 1학기 압축을 올리면 여기에 과목별로 나옵니다.'}</div>`;
+      $('#d1-foot').textContent=''; return;
+    }
+    const c=counts();
+    const stat=(v,cls,n,label)=>`<button type="button" class="d1-stat ${cls}${n?'':' zero'}" data-v="${v}" aria-pressed="${view===v}"><b>${n}</b><span>${label}</span></button>`;
+    $('#d1-stats').innerHTML=stat('check','chk',c.check,'확인 필요')+stat('del','del',c.del,'지워도 될 것')+stat('new','new',c.fresh,'최근에 들어옴')+stat('all','',c.items,`전체 자료 · ${mb(c.bytes)}`);
+    const ready=OWNER?Object.values(M.subjects).filter(sd=>sd.info&&sd.items.some(x=>x.state==='wait')).length:0;
+    const views=[['todo','할 일',c.check+c.del+ready],['all','전체',c.items],['new','최근에 들어옴',c.fresh]];
+    $('#d1-chips').innerHTML=views.map(([v,l,n])=>`<button type="button" class="s1-chip" data-v="${v}" aria-pressed="${view===v}">${l} <span class="g-cn">${n}</span></button>`).join('');
+    $('#d1-subj').innerHTML=`<button type="button" class="s1-chip" data-subj="all" aria-pressed="${subj==='all'}">모든 과목</button>`+S.map(s=>`<button type="button" class="s1-chip" data-subj="${h(s)}" aria-pressed="${subj===s}">${h(s)}</button>`).join('');
+    $('#d1-rail').innerHTML=S.map(s=>{ const it=M.subjects[s].items, ch=it.filter(x=>x.state==='check').length, dl=it.filter(x=>x.state==='del').length;
+      return `<li><button type="button" class="${subj===s?'on':''}" data-subj="${h(s)}">${h(s)}<span class="rl-cnt">${ch?`<span class="dot c" title="확인 필요">${ch}</span>`:''}${dl?`<span class="dot d" title="지워도 될 것">${dl}</span>`:''}</span></button></li>`; }).join('');
+    const html=S.filter(s=>subj==='all'||subj===s).map(subject).join('');
+    $('#d1-results').innerHTML=html||(view==='todo'&&!query
+      ?`<div class="s1-empty"><strong>할 일이 없어요 🎉</strong>확인할 것도, 지울 것도 남지 않았습니다. 「전체」에서 정리된 자료를 볼 수 있어요.</div>`
+      :`<div class="s1-empty"><strong>해당하는 파일이 없어요</strong>${query?`“${h(query)}” 검색어나 `:''}위의 보기를 바꿔 보세요.</div>`);
+    $('#d1-clear').hidden=!query;
+    const li=M.imports[M.imports.length-1];
+    $('#d1-foot').textContent=li?`마지막 정리 ${li.date} (${li.archives.join(', ')}) · 목록 갱신 ${M.updated||''}`:'';
+  }
+
+  /* ── 압축 올리기 (관리자) ── */
+  function renderUp(){
+    const box=$('#d1-up'); if(!OWNER){ box.hidden=true; return; }
+    box.hidden=false;
+    const d=new Date(), tag=`1학기-${String(d.getFullYear()).slice(2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+    const url=`${GH}/releases/new?tag=${encodeURIComponent(tag)}&title=${encodeURIComponent('1학기 자료')}&body=${encodeURIComponent('과목별 폴더로 나뉜 1학기 압축. 올리면 자동으로 정리됩니다.')}`;
+    const list=rels===null?`<p class="ax-msg" style="margin:6px 0 0;font-size:13px;color:var(--muted)">올린 압축 확인하는 중…</p>`
+      :rels.length?rels.map(r=>{
+        const size=r.assets.reduce((n,a)=>n+a.size,0), done=M&&M.imports.some(i=>i.tag===r.tag_name);
+        const st=done?'<span class="st ok">정리 끝</span>':r._run==='run'?'<span class="st run">정리 중</span>':r._run==='fail'?`<a class="st bad" href="${h(r._url)}" target="_blank" rel="noopener">멈춤 · 기록 보기</a>`:'<span class="st wait">기다리는 중</span>';
+        return `<div class="d1-rel"><span class="nm"><b>${h(r.tag_name)}</b> · ${r.assets.length}개 파일 <span class="sz">${mb(size)}</span></span>${st}
+          ${done?`<button type="button" class="d1-btn sm del" data-act="rm-rel" data-id="${r.id}" data-tag="${h(r.tag_name)}" title="정리가 끝나 저장소에 다 들어갔으므로 원본 압축은 지워도 됩니다">원본 압축 지우기</button>`:''}
+          ${r._run==='fail'?`<button type="button" class="d1-btn sm" data-act="rerun" data-tag="${h(r.tag_name)}">다시 정리</button>`:''}</div>`;
+      }).join(''):'';
+    box.innerHTML=`<details${M&&Object.keys(M.subjects).length?'':' open'}><summary style="cursor:pointer;font-weight:700;min-height:36px">압축 올리기${rels&&rels.some(r=>r._run==='run')?' · <span class="st run">정리 중</span>':''}</summary>
+      <ol><li>아래 버튼을 누르면 GitHub의 <b>Release 만들기</b> 화면이 열려요. 이름은 채워져 있어요.</li>
+      <li>압축 파일을 <b>Attach binaries</b> 칸에 끌어다 놓으세요. 파일 하나 <b>2GB까지</b> — 크면 과목별로 나눠 압축해도 돼요.</li>
+      <li>맨 아래 <b>Publish release</b>를 누르면 자동 정리가 시작돼요(몇 GB면 30분–1시간). 끝나면 이 탭에 과목별로 나옵니다.</li></ol>
+      <p style="margin:0 0 6px"><a class="d1-btn pri" href="${h(url)}" target="_blank" rel="noopener">GitHub에서 압축 올리기</a></p></details>${list}`;
+  }
+  async function loadReleases(){
+    try{
+      const all=await APP.gh(`repos/${REPO}/releases?per_page=30`);
+      rels=all.filter(r=>/^1학기/.test(r.tag_name));
+      if(rels.some(r=>!M.imports.some(i=>i.tag===r.tag_name))){
+        const runs=(await APP.gh(`repos/${REPO}/actions/workflows/sem1-import.yml/runs?per_page=10`)).workflow_runs||[];
+        rels.forEach(r=>{ const x=runs.find(u=>u.head_branch===r.tag_name||(u.display_title||'').includes(r.tag_name)); if(!x) return;
+          r._run=x.status!=='completed'?'run':x.conclusion==='success'?'':'fail'; r._url=x.html_url; });
+      }
+    }catch(e){ rels=[]; }
+    renderUp();
+    if(rels.some(r=>r._run==='run')) setTimeout(async()=>{ if(!panel.hidden){ try{ M=await readList(); }catch(e){} render(); loadReleases(); } }, 60000);
+  }
+
+  /* ── 고치기: 파일과 목록을 한 커밋으로 ── */
+  function toast(msg){ const t=document.createElement('div'); t.className='d1-toast'; t.setAttribute('role','status'); t.textContent=msg; panel.appendChild(t); setTimeout(()=>t.remove(),3200); }
+  async function edit(message, mutate){
+    const R=`repos/${REPO}`;
+    for(let attempt=0; attempt<3; attempt++){
+      const ref=await APP.gh(`${R}/git/ref/heads/main`), head=ref.object.sha;
+      const base=await APP.gh(`${R}/git/commits/${head}`);
+      const cur=await readList(head), tree=[];
+      mutate(cur, tree);
+      tree.push({path:LIST, mode:'100644', type:'blob', content:JSON.stringify(cur,null,1)+'\n'});
+      const t=await APP.gh(`${R}/git/trees`,{method:'POST', body:{base_tree:base.tree.sha, tree}});
+      const c=await APP.gh(`${R}/git/commits`,{method:'POST', body:{message:`${message} (앱, ${APP.login})`, tree:t.sha, parents:[head]}});
+      try{ await APP.gh(`${R}/git/refs/heads/main`,{method:'PATCH', body:{sha:c.sha}}); M=cur; render(); return; }
+      catch(e){ if(e.status!==422||attempt===2) throw e; }
+    }
+  }
+  const find=(cur,s,p)=>cur.subjects[s]&&cur.subjects[s].items.find(x=>x.path===p);
+  function removeItems(cur, tree, s, paths){
+    const sd=cur.subjects[s]; if(!sd) return 0;
+    let n=0;
+    sd.items=sd.items.filter(x=>{ if(!paths.includes(x.path)) return true; tree.push({path:x.path, mode:'100644', type:'blob', sha:null}); n++; return false; });
+    sd.items.forEach(x=>{ if(x.pair&&paths.includes(x.pair)){ x.state='check'; x.why='짝이던 파일을 지웠어요. 이 파일은 남길까요?'; delete x.pair; } });
+    return n;
+  }
+  function toGichul(cur, tree, s, paths){
+    const sd=cur.subjects[s], info=sd&&sd.info; if(!info) return 0;
+    let n=0;
+    sd.items.forEach(x=>{ if(!paths.includes(x.path)) return;
+      const to=`올리기/${info}/${x.name}`;
+      tree.push({path:to, mode:'100644', type:'blob', sha:x.sha}, {path:x.path, mode:'100644', type:'blob', sha:null});
+      x.path=to; x.kind='기출'; x.state='queued'; delete x.why; delete x.pair; n++; });
+    return n;
+  }
+  async function act(btn){
+    const r=btn.closest('.d1-row'), s=(r&&r.dataset.s)||btn.dataset.s, p=r&&r.dataset.p, a=btn.dataset.act;
+    const danger=/^rm/.test(a);
+    if(danger&&btn.dataset.armed!=='1'){ btn.dataset.armed='1'; btn.classList.add('armed'); const t0=btn.textContent; btn.textContent='한 번 더 누르면 지워요'; setTimeout(()=>{ if(btn.isConnected){ btn.dataset.armed=''; btn.classList.remove('armed'); btn.textContent=t0; } },4000); return; }
+    if(r) r.classList.add('busy'); btn.disabled=true;
+    try{
+      if(a==='rm'){ await edit(`1학기 자료: ${s} ${p.split('/').pop()} 지움`, (c,t)=>removeItems(c,t,s,[p])); toast('지웠어요'); }
+      else if(a==='keep'){ await edit(`1학기 자료: ${s} ${p.split('/').pop()} 남김`, c=>{ const x=find(c,s,p); if(x){ x.state='ok'; x.kept=true; delete x.why; delete x.pair; } }); toast('남겼어요'); }
+      else if(a==='gichul'){ await edit(`1학기 자료: ${s} 기출 정리 맡김`, (c,t)=>toGichul(c,t,s,[p])); toast('기출 자동 정리를 시작했어요 (보통 30–90분)'); }
+      else if(a==='gichul-all'){ const ps=M.subjects[s].items.filter(x=>x.state==='wait').map(x=>x.path);
+        await edit(`1학기 자료: ${s} 기출 ${ps.length}개 정리 맡김`, (c,t)=>toGichul(c,t,s,ps)); toast(`기출 ${ps.length}개 정리를 시작했어요`); }
+      else if(a==='rm-all'){ const ps=M.subjects[s].items.filter(x=>x.state==='del').map(x=>x.path);
+        await edit(`1학기 자료: ${s} 옛 판 ${ps.length}개 지움`, (c,t)=>removeItems(c,t,s,ps)); toast(`${ps.length}개를 지웠어요`); }
+      else if(a==='clear-skip'){ await edit(`1학기 자료: ${s} 넣지 않은 것 기록 비움`, c=>{ if(c.subjects[s]) c.subjects[s].skipped=[]; }); toast('기록을 비웠어요'); }
+      else if(a==='rm-rel'){
+        await APP.gh(`repos/${REPO}/releases/${btn.dataset.id}`,{method:'DELETE'});
+        try{ await APP.gh(`repos/${REPO}/git/refs/tags/${enc(btn.dataset.tag)}`,{method:'DELETE'}); }catch(e){}
+        rels=rels.filter(x=>String(x.id)!==btn.dataset.id); renderUp(); toast('원본 압축을 지웠어요');
+      }
+      else if(a==='rerun'){ await APP.gh(`repos/${REPO}/actions/workflows/sem1-import.yml/dispatches`,{method:'POST', body:{ref:'main', inputs:{tag:btn.dataset.tag}}}); toast('다시 정리를 시작했어요'); setTimeout(loadReleases,4000); }
+    }catch(e){
+      if(r) r.classList.remove('busy'); btn.disabled=false;
+      toast(e.status===404||e.status===403?'권한이 없어요. 저장소 주인 계정으로 로그인했는지 확인해 주세요.':e.status===401?'GitHub 로그인이 만료됐어요. 다시 로그인해 주세요.':'하지 못했어요: '+(e.message||''));
+    }
+  }
+
+  /* ── 손으로 ── */
+  function scrollTo(el){
+    if(!el) return;
+    const d=el.closest('details'); if(d) d.open=true;
+    const tabs=document.querySelector('nav.tabs'), tools=$('.tools');
+    window.scrollTo(0, window.scrollY+el.getBoundingClientRect().top-(tabs.offsetHeight+tools.offsetHeight+12));
+  }
+  panel.addEventListener('click',e=>{
+    const v=e.target.closest('[data-v]'); if(v){ view=v.dataset.v; render(); return; }
+    const sb=e.target.closest('[data-subj]'); if(sb){ subj=subj===sb.dataset.subj&&sb.closest('#d1-rail')?'all':sb.dataset.subj; render(); scrollTo($('#d1-results')); return; }
+    const g=e.target.closest('[data-goto]');
+    if(g){ const p=g.dataset.goto; let el=[...panel.querySelectorAll('.d1-row')].find(x=>x.dataset.p===p);
+      if(!el){ view='all'; render(); el=[...panel.querySelectorAll('.d1-row')].find(x=>x.dataset.p===p); }
+      if(el){ scrollTo(el); el.classList.add('d1-flash'); setTimeout(()=>el.classList.remove('d1-flash'),2100); } return; }
+    if(e.target.closest('[data-tab-gichul]')){ select('gichul',true); window.scrollTo(0,0); return; }
+    const b=e.target.closest('[data-act]'); if(b&&OWNER){ act(b); return; }
+    const pdf=e.target.closest('a[data-path]');
+    if(pdf&&window.APPX){ e.preventDefault(); APPX.openPdf(pdf.dataset.path, pdf.textContent); }
+  });
+  let t;
+  $('#d1-q').addEventListener('input',e=>{ clearTimeout(t); t=setTimeout(()=>{ query=e.target.value.trim(); if(query&&view==='todo') view='all'; render(); },120); });
+  $('#d1-clear').addEventListener('click',()=>{ $('#d1-q').value=''; query=''; render(); $('#d1-q').focus(); });
+
+  /* 탭을 처음 열 때 불러온다 */
+  const start=()=>{ if(!loaded&&!panel.hidden) load(); };
+  new MutationObserver(start).observe(panel,{attributes:true, attributeFilter:['hidden']});
+  start();
+  return {reload:load};
+})();
 </script>
 
 </body></html>
