@@ -1,0 +1,814 @@
+{
+ "exam": {
+  "id": "220225 본2 감염학_정답포함",
+  "subject": "인체감염학",
+  "title": "220225 본2 감염학",
+  "date": "2022-02-25",
+  "year": 2022
+ },
+ "questions": {
+  "1": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "2": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "3": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "4": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "5": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "6": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "7": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "8": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "9": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "10": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "11": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "12": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "13": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "14": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "15": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "16": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "17": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "18": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "19": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "edema toxin 부종독소 & lethal toxin 치명 독소 (각 0.5점)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "20": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "균이 mediastinal LN 에서 증식하므로 / False",
+   "source_note": "",
+   "explanation": ""
+  },
+  "21": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "22": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "23": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "24": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "False ) non treponemal serologic test 로 치료효과를 판단 할 수 있다. / ( 2기",
+   "source_note": "",
+   "explanation": ""
+  },
+  "25": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "26": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "27": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "28": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "c poxvirus",
+   "source_note": "",
+   "explanation": ""
+  },
+  "29": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "F bunyavirus",
+   "source_note": "",
+   "explanation": ""
+  },
+  "30": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "episome",
+   "source_note": "",
+   "explanation": ""
+  },
+  "31": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "32": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "33": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Roseola infantum (영아장미진, 돌발진, exanthem subitum) 은 HHV-6 에 의한 것\n임",
+   "explanation": ""
+  },
+  "34": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "정답: 1 가나다, 에볼라는 Filovirus",
+   "explanation": ""
+  },
+  "35": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "- 인수공통 감염병이다 >\n사람의 병이다\n- 3가지 혈청형이 있다. >\n1가지 혈청형\n- 태아의 세포를 용해하여 선천성 기형을 유발한다. >\n세포용해하지 않음\n- 풍진바이러스는 Togaviridae과 >\nAlphavirus 속의 바이러스이다. >\nRubivirus 속이다.",
+   "explanation": ""
+  },
+  "36": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "전형적인 신증후군출혈열의 질병은 5병기를 나타낸다: 발열기>\n저혈압기 >\n핍뇨기(빈뇨기) >\n이뇨기(다뇨기) >\n회복",
+   "explanation": ""
+  },
+  "37": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "38": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Tdap는 백신 항원의 종류는 동일하나 항원의 용량이 다름. / 소문자 표시는 백신 항원량의 차이를 의미하며 / 알파넷 대문자",
+   "source_note": "",
+   "explanation": ""
+  },
+  "39": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "40": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "41": {
+   "answer": [
+    1,
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "42": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "포도알균이 배지에 들어 있는 적혈구를 용혈시키면 헤모필루스의 성장에 필 / 요한 V인자와 X인자가 배지로 유리되어 H. influenzae균이 성장하는 현상을 / 말한다.",
+   "source_note": "",
+   "explanation": ""
+  },
+  "43": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "ACE2(Angiotensin-converting enzyme 2)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "44": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "45": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "46": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "47": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "metronidazole(메트로니다졸)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "48": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "49": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "50": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Cutibacterium acnes (C. acnes)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "51": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "52": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "CD4 / gp120",
+   "source_note": "",
+   "explanation": ""
+  },
+  "53": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "A-B 독소의 형태를 가지고 있는 tetani는 세균이 가지고 있는 단백분해효소 / 에 의해 각각의 사슬로 분해되어 B 서브유닛이 신경세포 표면에 있는 수용체 / 와 결합하면 A 서브유닛이 세포 내부로 들어가 말초신경말단부위로부터 중추 / 신경계로 이동하게된다. A 서브유닛의 zinc endopeptidase 가 신경전달물 / 질의 이동에 관련된 단백 (synaptobrevin)을 분해하기 때문에 억제성 신경전 / 달물질의 분비를 차단하여 운동신경의 과도한 흥분을 유발하여 경직마비를 / 일으킨다",
+   "source_note": "",
+   "explanation": ""
+  },
+  "54": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "55": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "56": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "57": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "58": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "59": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "60": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Klebsiella pneumoniae / E. coli",
+   "source_note": "",
+   "explanation": ""
+  },
+  "61": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "62": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "63": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "64": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "65": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": ".",
+   "source_note": "",
+   "explanation": ""
+  },
+  "66": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "67": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Mycoplasma pneumoniae",
+   "source_note": "",
+   "explanation": ""
+  },
+  "68": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "69": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "70": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "여름철에 산란한 좀진드기알이 초가을부터 부화할 때 동물의 혈액을 섭취하 / 며 성장하기 때문에 좀진드기 유충이 활동하는 가을에 가장 많이 발생",
+   "source_note": "",
+   "explanation": ""
+  },
+  "71": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "72": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "73": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "74": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "75": {
+   "answer": [
+    1,
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "76": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "77": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "78": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "79": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "80": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "81": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "82": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "83": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "1\n섭씨 37도 일반 배지에서 배양이 잘 되지 않으며 특수배지가 필요하다.\n2\n내시경에서 염증성 장질환과 유사한 소견을 보이지만, 대장 생검에서 granuloma가\n보이지 않음\n3\npolyneuritis, hemolytic-uremic syndrome, arthritis 등이 합병될 수 있다.\n4\ncephalospiorin이 듣지 않음.\n5\n합병증이 없는 장염은\n저절로 낫는 경우가 흔함",
+   "explanation": ""
+  },
+  "84": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Dysentery는 bloody mucoid stool을 보인다. 나머지 답가지는 watery diarrhea를\n일으키는 pathogen임.",
+   "explanation": ""
+  },
+  "85": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "86": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "87": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "PAGE 719\nAntipyretic\ndrugs can be grouped into three general categories on the basis of their\nmechanisms of action. These include corticosteroids, aspirin and the other\nNSAIDs, and\nacetaminophen. Mandell, Douglas, and Bennett'\ns Principles and Practice of Infectious Diseases\n8thh\nEd",
+   "explanation": ""
+  },
+  "88": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "PAGE 1371\nSevere Illness Classic descriptions of the features of enteric\nfever\nare drawn from observations of series of hospitalized ... More severe\nencephalopathy, manifesting with\ndelirium, stupor, and coma Mandell, Douglas, and Bennett'\ns Principles and Practice of Infectious Diseases\n9th Ed",
+   "explanation": ""
+  },
+  "89": {
+   "answer": [
+    7
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "90": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "91": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "92": {
+   "answer": [
+    6
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "93": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "2",
+   "source_note": "",
+   "explanation": ""
+  }
+ }
+}

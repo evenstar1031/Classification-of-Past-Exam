@@ -1,0 +1,825 @@
+{
+ "exam": {
+  "id": "210312 본2 감염학_정답포함",
+  "subject": "인체감염학",
+  "title": "210312 본2 감염학",
+  "date": "2021-03-12",
+  "year": 2021
+ },
+ "questions": {
+  "1": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "2": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "3": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "4": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "5": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "6": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "7": {
+   "answer": [
+    2,
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "8": {
+   "answer": [
+    1,
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "9": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "10": {
+   "answer": [
+    6
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "11": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "12": {
+   "answer": [
+    7
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "13": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "14": {
+   "answer": [
+    3,
+    4,
+    7
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "15": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "16": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "17": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "18": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "19": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "20": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "21": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "22": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "23": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "24": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "25": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "26": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "27": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "28": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "29": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "30": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "31": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "32": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "33": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "34": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "35": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "36": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "37": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "38": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "39": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "40": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "41": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "42": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "43": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "44": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "45": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "46": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "47": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "48": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "49": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "50": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "51": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "1 (원인균에 대한 추정이 가장 중요)",
+   "explanation": ""
+  },
+  "52": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(aminoglycoside의 경우 시간이 아닌 농도가 중요)",
+   "explanation": ""
+  },
+  "53": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "cepha계는 enterococcus에 자연내성이다",
+   "explanation": ""
+  },
+  "54": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(좌측 늑막에 농흉의 발생이 의심되고 지속되는 열의 경우 농의 배농을 우선 찾아야 한\n다)",
+   "explanation": ""
+  },
+  "55": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(장 수술의 경우 cefamycin 계가 적절하다)",
+   "explanation": ""
+  },
+  "56": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(특정 약제에 대한 병력 청취가 가장 중요)",
+   "explanation": ""
+  },
+  "57": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(독소형 식중독은 발열이 잘 나지 않는다)",
+   "explanation": ""
+  },
+  "58": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(Vibrio 괴저가 가장 의심)",
+   "explanation": ""
+  },
+  "59": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(콜레라에 대한 기술이다)",
+   "explanation": ""
+  },
+  "60": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(장티푸스 검사가 보건증 발급에 포함된다)",
+   "explanation": ""
+  },
+  "61": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(염증성 설사질환은 보기 중 시겔라증이다)",
+   "explanation": ""
+  },
+  "62": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(당과 소금이 같이 들어가야 한다)",
+   "explanation": ""
+  },
+  "63": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(Janeway 병변애 가깝다)",
+   "explanation": ""
+  },
+  "64": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(급성 심내막염의 양상이다. 이 경우 황색포도알균이 가장 많다)",
+   "explanation": ""
+  },
+  "65": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(ASO는 포함되지 않는다)",
+   "explanation": ""
+  },
+  "66": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(폐렴구균이 부비동염의 가장 흔한 세균원인임)",
+   "explanation": ""
+  },
+  "67": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(연조직염의 가장 흔한 원인은 S pyogenes이다)",
+   "explanation": ""
+  },
+  "68": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(급성관절감염의 가장 흔한 원인은 황색포도알균이다)",
+   "explanation": ""
+  },
+  "69": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(perforated appendicitis로 장내균의 mixed infection을 고려한다)",
+   "explanation": ""
+  },
+  "70": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "71": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "바이러스 억제 목표가 3번째 90이다)",
+   "explanation": ""
+  },
+  "72": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(PML은 만성 감염에 해당한다)",
+   "explanation": ""
+  },
+  "73": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(PCP 치료제로 Trimethoprim/sulfamethoxazole이 선택약이다)",
+   "explanation": ""
+  },
+  "74": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(CD4+ 에 무관하게 치료한다)",
+   "explanation": ""
+  },
+  "75": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "76": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "77": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "78": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "mite 유충 chigger가 직접적 매개체이다",
+   "explanation": ""
+  },
+  "79": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "80": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "81": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(좁쌀 결핵 모양이다)",
+   "explanation": ""
+  },
+  "82": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "83": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(SFTS 이다)",
+   "explanation": ""
+  },
+  "84": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(체중이 눌리는 부위에 발생하는 욕창이다)",
+   "explanation": ""
+  },
+  "85": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(CMV이다)",
+   "explanation": ""
+  },
+  "86": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(뇌농양 의 경험적 치료는 ceftriaxone + metronidazole 이다)",
+   "explanation": ""
+  },
+  "87": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(metronidazole)",
+   "explanation": ""
+  },
+  "88": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(superantigen 병이다)",
+   "explanation": ""
+  },
+  "89": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(식도 천공이 가장 흔하다)",
+   "explanation": ""
+  },
+  "90": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(미생물 검사는 꼭 필요하다)",
+   "explanation": ""
+  }
+ }
+}

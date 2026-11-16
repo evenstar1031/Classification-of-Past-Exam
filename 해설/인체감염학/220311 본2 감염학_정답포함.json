@@ -1,0 +1,841 @@
+{
+ "exam": {
+  "id": "220311 본2 감염학_정답포함",
+  "subject": "인체감염학",
+  "title": "220311 본2 감염학",
+  "date": "2022-03-11",
+  "year": 2022
+ },
+ "questions": {
+  "1": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "2": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "3": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "4": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "5": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "6": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "7": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(Cefa계는 장알균에 무효)",
+   "explanation": ""
+  },
+  "8": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "9": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "10": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "11": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "12": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "13": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(AG계의 신독성 주의)",
+   "explanation": ""
+  },
+  "14": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "15": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "16": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "17": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "18": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(anaphylaxis 예측은 병력이 중요)",
+   "explanation": ""
+  },
+  "19": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "20": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "21": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "22": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(원인체에 대한 추측이 중요)",
+   "explanation": ""
+  },
+  "23": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "24": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "25": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "26": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "27": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "28": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "29": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "30": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "31": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "32": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "33": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "34": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "수술 시 피부 절개 30분 내 투여",
+   "explanation": ""
+  },
+  "35": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "36": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "37": {
+   "answer": [
+    6
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "38": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "39": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "40": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "(하루 한번 OPAT 가능한 항생제)",
+   "explanation": ""
+  },
+  "41": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "42": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "43": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "44": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "45": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "ABE에 해당하는 임상이며 S. aureus 가 가장 흔하다",
+   "explanation": ""
+  },
+  "46": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "47": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "48": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "49": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "50": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "51": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Coagulase negative Staphylococcus 이 CRBSI에 가장 흔한 원인",
+   "explanation": ""
+  },
+  "52": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "53": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "54": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "55": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Modified Centor score를 인두편도염에 적용하는 것이 필요하다",
+   "explanation": ""
+  },
+  "56": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "57": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "58": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "59": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "60": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "61": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "62": {
+   "answer": [
+    6
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "63": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "감기에 항생제는 도움되지 않는다",
+   "explanation": ""
+  },
+  "64": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "65": {
+   "answer": [
+    3,
+    5,
+    6
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "66": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "SBP가 1차성 복막염의 대표이다",
+   "explanation": ""
+  },
+  "67": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "68": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Cryptogenic liver abscess는 Klebsiella pneumoniae가 가장 흔함",
+   "explanation": ""
+  },
+  "69": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "70": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "71": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "식도 칸디다증은 만성 감염",
+   "explanation": ""
+  },
+  "72": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "73": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "74": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "PCP 치료는 Trimethoprim/sulfamethoxazole이 우선 선택",
+   "explanation": ""
+  },
+  "75": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Tenofovir disoproxil fumarate (TDF)/emtricitabine + dolutegravir 또는 TDF +\nraltegravir 4주 필요",
+   "explanation": ""
+  },
+  "76": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "&ldquo\nU=U&rdquo\n는 HIV가 피에서 검출되지 않으면 전파하지 않는다의 의미",
+   "explanation": ""
+  },
+  "77": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Fournier Gangrene은 Mixed 감염이 주",
+   "explanation": ""
+  },
+  "78": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "의식장애는 파상풍에 없다",
+   "explanation": ""
+  },
+  "79": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "SJS의 후유증 중 각막 손상이 중요하다",
+   "explanation": ""
+  },
+  "80": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Aedes mosquito가 뎅기열의 매개체",
+   "explanation": ""
+  },
+  "81": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "속립성 결핵이다",
+   "explanation": ""
+  },
+  "82": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "수족구병은 Coxsackieviruses 감염",
+   "explanation": ""
+  },
+  "83": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "AVG, AVF 감염의 흔한 원인은 Staphylococcus가 가장 흔하다",
+   "explanation": ""
+  },
+  "84": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "중증 말라리아는 Artesunate 주사가 우선 필요하다",
+   "explanation": ""
+  },
+  "85": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Kikuchi 림프절염",
+   "explanation": ""
+  },
+  "86": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "매독균 Treponema pallidum",
+   "explanation": ""
+  },
+  "87": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "흡인성 폐렴",
+   "explanation": ""
+  },
+  "88": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Amoxicillin 등 페니실린계",
+   "explanation": ""
+  },
+  "89": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "경구약으로 Paxlovid가 권장",
+   "explanation": ""
+  },
+  "90": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "백혈구 증가증이 있다",
+   "explanation": ""
+  },
+  "91": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "종격동염",
+   "explanation": ""
+  },
+  "92": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "HZV가 Ramsey Hunt syndrome에 주로 관여된다)",
+   "explanation": ""
+  }
+ }
+}

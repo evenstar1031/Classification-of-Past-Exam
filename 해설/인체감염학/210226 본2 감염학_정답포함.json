@@ -1,0 +1,786 @@
+{
+ "exam": {
+  "id": "210226 본2 감염학_정답포함",
+  "subject": "인체감염학",
+  "title": "210226 본2 감염학",
+  "date": "2021-02-26",
+  "year": 2021
+ },
+ "questions": {
+  "1": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "2": {
+   "answer": [
+    6,
+    8
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "3": {
+   "answer": [
+    2,
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "4": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "5": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "(bronchopulmonary tree가 아닌 mediastinal LN에서 증식하므로) / mediastinal LN / 증식 각 0.5점",
+   "source_note": "",
+   "explanation": ""
+  },
+  "6": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "아메바성 장염은 fecal wet smear에서 WBC가 잘 보이지 않음\nETEC는 장점막의 integrity를 별로 손상시키지 않음\nCampylobacter, Yersinia 장염에서 ileitis가 심하면 ESR, CRP가 증가함\nClostridium difficile에 의한 위막성 대장염이 생길 경우 사용 중인 항생제를 중\n단하여야 함.\nRota 장염에 의한 유당 불내증에 의해 혈성점액변이 초래될 수 없음.",
+   "explanation": ""
+  },
+  "7": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "8": {
+   "answer": [
+    1,
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "9": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "A: LLO (vacuolar lysis를 용해) B: ActA (actin 재조합을 유도하여 이웃한 / 숙주세포로 이동)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "10": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "약열을 의심하며 이 경우 백혈구 감소증, 호산구 증가증, 원래 질환의 호전, 발진 등이\n나타날 수 있다",
+   "explanation": ""
+  },
+  "11": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "① 표피탈락독소 혹은 exfoliative toxin / ② bullous impetigo",
+   "source_note": "",
+   "explanation": ""
+  },
+  "12": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "13": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "spore (endospre) / A. ( 피부탄저 ) B. 아포",
+   "source_note": "",
+   "explanation": ""
+  },
+  "14": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "15": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Central fever의 경우\n뇌병변이 있고 hypothalamus에 영향을 주는 상황,\n땀이 없음,\n해열제에 잘 반응하지 않음,\n다른 감염병의 증거가 없음 및\n상대적으로 느린 심박수를 보일 수 있다",
+   "explanation": ""
+  },
+  "16": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "② IV / ① PBP2a 혹은 PBP-2A",
+   "source_note": "",
+   "explanation": ""
+  },
+  "17": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "18": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "19": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "20": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "내시경 소견으로 감별이 어려운 질환은 염증성 장질환(궤양성 대장염, 크론병) 중\nUC가 특히 어렵다.",
+   "explanation": ""
+  },
+  "21": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "22": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "국소감염 (0.4) 수막염균: 협막있음. anti-phagocytic 혈류를 통한 전파가능 / (0.6) / 임균 : 협막 없음",
+   "source_note": "",
+   "explanation": ""
+  },
+  "23": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "24": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "B: 단백질 합성 / A: elongation factor 2 (EF2)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "25": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "26": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "B. 자궁경부(cervix) (각 0.5) / A 요도(urethra)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "27": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "28": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "29": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "30": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "31": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "① macrophage, dendritic cell 혹은 탐식세포와 수지상세포 / CD4+ T cell 혹은 helper T 세포",
+   "source_note": "",
+   "explanation": ""
+  },
+  "32": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "33": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "B. hyaluronidase / A. 히알루론산",
+   "source_note": "",
+   "explanation": ""
+  },
+  "34": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "35": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "36": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "37": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Haemophilus influenzae",
+   "source_note": "",
+   "explanation": ""
+  },
+  "38": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Cardiolipin (diphosphatidyl glycerol)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "39": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "40": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "41": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "A: Type IV secretion system을 통해 분비되어 세포의 cytoskeleton 손상 / B: urease",
+   "source_note": "",
+   "explanation": ""
+  },
+  "42": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "43": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "44": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "45": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Borrelia 보렐리아",
+   "source_note": "",
+   "explanation": ""
+  },
+  "46": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "47": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "A / 말초혈액이나 뇌척수액 B 소변 (각 0.5)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "48": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "49": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "50": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "② 엔도좀 (endosome) / ① 세포질 (cytosol)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "51": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Amantadine, rimantadine - Penetration and uncoating",
+   "explanation": ""
+  },
+  "52": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "acetylcholine의 분비를 막아 근육 수축을 억제한다 (운동신경세포에 수용체 / 표면에 결합하여 독소를 세포내로 이동후 acetylcholin의 분비를 조절하는 / SNARE 단백질을 불활성시켜 이완성 마비를 유발) / A. tetanus toxin / glycine/GABA 신경전달 물질의 분비를 차단하여 강직마비 B. botulium / toxin",
+   "source_note": "",
+   "explanation": ""
+  },
+  "53": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "54": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "55": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "56": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "57": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "58": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "59": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "① 1형 / ② 척수전각세포",
+   "source_note": "",
+   "explanation": ""
+  },
+  "60": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "B: 호기성 / A: 협기성세균 / 원생생물",
+   "source_note": "",
+   "explanation": ""
+  },
+  "61": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "cytomegalovirus",
+   "source_note": "",
+   "explanation": ""
+  },
+  "62": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "63": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "두창의 병소: 반점>구진>소수포>농포>가피>반흔(곰보) - 수두의 병소는 각각 / 다른 단계에 있지만 두창의 병소는 모두 같은 단계 이다.",
+   "source_note": "",
+   "explanation": ""
+  },
+  "64": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "65": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "A / reticulate body / elementary body; B",
+   "source_note": "",
+   "explanation": ""
+  },
+  "66": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "67": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "68": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "69": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "A: ACE2 원인: Coronavirus는 RNA virus로 RdRp에 의해 spike protein의 / 돌출된 표면 아미노산의 돌연변이가 생기며 이는 RdRp의 proofreading 활 / 성이 없기 때문이다.",
+   "source_note": "",
+   "explanation": ""
+  },
+  "70": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "71": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "72": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "73": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "74": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "75": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "p53; B / pRB / A",
+   "source_note": "",
+   "explanation": ""
+  },
+  "76": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "77": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "78": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "79": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "block >\n>\nenhance 로",
+   "explanation": ""
+  },
+  "80": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "81": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "Norovirus / 담즙(bile acid)",
+   "source_note": "",
+   "explanation": ""
+  },
+  "82": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "가. ⓐ 혹은 42nm의 구형 입자 / 나. ⓑ와 ⓒ 혹은 22nm의 구형입자와 22nm의 실모양 입자",
+   "source_note": "",
+   "explanation": ""
+  },
+  "83": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "CD4 / gp120",
+   "source_note": "",
+   "explanation": ""
+  },
+  "84": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "85": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "86": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "87": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "88": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "89": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "90": {
+   "answer": [],
+   "answer_by": "원본",
+   "answer_text": "감염된 들쥐(등줄쥐)의 소변 / 타액을 통해 분비된 후 건조된 바이러스가 호흡기를 통해 감염 들쥐(0.3) / 호흡기 (0.3) / 소변 대변 타액 (0.2*2=0.4) / 대변",
+   "source_note": "",
+   "explanation": ""
+  },
+  "91": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "92": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  }
+ }
+}
