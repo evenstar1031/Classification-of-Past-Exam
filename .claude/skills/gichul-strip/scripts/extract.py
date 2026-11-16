@@ -246,7 +246,16 @@ for s in stream:
         pending = AUTH_RE.match(s['t'].strip()).group(1)
         continue
     if s['k'] == 'qnum':
-        cur = {'n': int(QRE.match(s['t'].strip()).group(1)), 'items': []}
+        # stem lines vertically centred on the number can sort ABOVE it (e.g. "20." beside a
+        # 3-line stem): they landed after the previous question's choices and were lost.
+        # Pull trailing same-page stem lines within 25pt above the number into this question.
+        pulled = []
+        if cur is not None:
+            while cur['items'] and cur['items'][-1]['k'] == 'stem' \
+                    and cur['items'][-1]['page'] == s['page'] and s['y'] - cur['items'][-1]['y'] < 25 \
+                    and any(i['k'] == 'cnum' for i in cur['items']):
+                pulled.insert(0, cur['items'].pop())
+        cur = {'n': int(QRE.match(s['t'].strip()).group(1)), 'items': pulled}
         qs.append(cur)
         if pending:
             authors[str(cur['n'])] = pending
