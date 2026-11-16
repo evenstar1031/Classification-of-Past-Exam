@@ -13,8 +13,8 @@
   5) 넣되 사용자가 볼 것
        del   지워도 될 것 같은 것 — 글이 똑같은 다른 판, 이름만 다른 옛 판((1)·복사본·최종·v2 …)
        check 확인 필요 — 종류가 애매, 과목 폴더 밖, 사진·한글 파일로 된 기출, 열리지 않는 PDF
-       wait  수업 목록(과목정보)이 없어 아직 수업별로 못 나누는 기출
-       queued 수업 목록이 있는 과목의 기출 → `올리기/<과목>/` 로 보내 「기출 자동 정리」가 이어서 한다
+       기출 PDF는 그대로 넣는다(이미 수업별로 정리된 경우가 많음). 자동으로 기출 분류를 돌리지 않는다.
+       queued/done: 앱에서 「수업별 문제지로 만들기」를 고른 기출 → `올리기/<과목>/` → 「기출 자동 정리」 → `원본/`
   6) --commit: 과목마다 커밋하고 바로 푸시(한 번에 2GB 넘게 밀지 않으려고), 마지막에 목록을 커밋.
 """
 import argparse, datetime as dt, hashlib, json, os, re, shutil, subprocess, sys, tempfile, unicodedata, zipfile
@@ -332,12 +332,8 @@ def do_import(src, tag, commit):
             elif kind == '기출' and ext != '.pdf':
                 it.update(state='check', why=('사진으로 된 기출이에요.' if ext in IMG_EXT else 'PDF가 아닌 기출이에요.')
                           + ' Claude에게 맡기면 문제지로 만들 수 있어요.')
-            elif kind == '기출':
-                real = info.get(norm(subj))
-                if real:
-                    rel = f'올리기/{real}/{st["rel"][-1]}'; it['state'] = 'queued'
-                else:
-                    it.update(state='wait', why='이 과목은 수업 목록(과목정보)이 아직 없어 수업별 문제지로 나누지 못했어요.')
+            # 기출 PDF는 그대로 넣는다 — 1학기 기출은 이미 수업별로 정리해 둔 경우가 많아서 자동으로 분류를 돌리지 않는다.
+            # 수업별 문제지로 다시 만들고 싶은 과목은 앱에서 골라 「올리기/」 로 보낸다(queued).
         rel = unique_dest(rel, taken)
         taken.add(rel); seen_sha[sha] = rel
         it['path'] = rel
@@ -349,16 +345,14 @@ def do_import(src, tag, commit):
     for st in sorted(new_items, key=lambda x: (has_tail(x['rel'][-1]), -x['item']['mtime'])):
         it = st['item']
         th = it.get('th')
-        if th and th in known_text and it['state'] in ('ok', 'wait', 'queued'):
+        if th and th in known_text and it['state'] == 'ok':
             it.update(state='del', why='글이 똑같은 다른 판이 이미 있어요.', pair=known_text[th])
-            if st['dest'].startswith('올리기/'):
-                st['dest'] = it['path'] = unique_dest('/'.join([BASE, st['subj']] + st['rel']), taken); taken.add(it['path'])
         elif th:
             known_text[th] = it['path']
     groups = {}
     for st in new_items:
         it = st['item']
-        if it['state'] not in ('ok', 'wait'): continue
+        if it['state'] != 'ok': continue
         p = Path(st['rel'][-1])
         key = (st['subj'], '/'.join(st['rel'][:-1]), it['kind'], p.suffix.lower(), norm(strip_tails(p.stem)))
         groups.setdefault(key, []).append(it)
@@ -394,10 +388,7 @@ def do_import(src, tag, commit):
         run('git', 'add', str(MANIFEST.relative_to(ROOT)))
         if run('git', 'status', '--porcelain', '--', str(MANIFEST.relative_to(ROOT))).strip():
             git_commit_push(f'1학기 자료 목록 ({tag})')
-    queued = sum(1 for st in new_items if st['item']['state'] == 'queued')
-    Path(ROOT / 'work').mkdir(exist_ok=True)
-    (ROOT / 'work' / 'sem1_queued').write_text(str(queued))
-    print(f'넣음 {len(new_items)}개 ({mb(total)}), 뺀 것 {sum(len(v) for v in skipped.values())}개, 기출 정리로 보냄 {queued}개')
+    print(f'넣음 {len(new_items)}개 ({mb(total)}), 뺀 것 {sum(len(v) for v in skipped.values())}개')
 
 
 def git_commit_push(msg):
@@ -433,12 +424,14 @@ def report(m, imp, new_items, skipped):
         c = cnt.setdefault(st['subj'], {})
         c[st['item']['state']] = c.get(st['item']['state'], 0) + 1
         c['n'] = c.get('n', 0) + 1
-    lines.append('| 과목 | 넣음 | 지워도 될 것 | 확인 필요 | 기출 정리 대기 | 기출 정리 시작 | 뺀 것 |')
-    lines.append('|---|---|---|---|---|---|---|')
+    lines.append('| 과목 | 넣음 | 기출 | 지워도 될 것 | 확인 필요 | 뺀 것 |')
+    lines.append('|---|---|---|---|---|---|')
     for s in sorted(set(cnt) | set(skipped)):
         c = cnt.get(s, {})
-        lines.append(f'| {s} | {c.get("n", 0)} | {c.get("del", 0)} | {c.get("check", 0)} | {c.get("wait", 0)} | {c.get("queued", 0)} | {len(skipped.get(s, []))} |')
-    lines += ['', '자세한 목록과 지우기·남기기는 앱의 **1학기 자료** 탭에서 할 수 있어요.']
+        g = sum(1 for st in new_items if st['subj'] == s and st['item']['kind'] == '기출')
+        lines.append(f'| {s} | {c.get("n", 0)} | {g} | {c.get("del", 0)} | {c.get("check", 0)} | {len(skipped.get(s, []))} |')
+    lines += ['', '기출은 올린 그대로 넣었고 자동 분류는 돌리지 않았어요. 수업별 문제지로 다시 만들고 싶은 과목은 앱에서 고르면 됩니다.',
+              '자세한 목록과 지우기·남기기는 앱의 **1학기 자료** 탭에서 할 수 있어요.']
     (ROOT / 'work').mkdir(exist_ok=True)
     (ROOT / 'work' / 'sem1_report.md').write_text('\n'.join(lines) + '\n', 'utf-8')
 

@@ -732,7 +732,7 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
     </div>
     <div class="s1-foot">
       <p id="d1-foot"></p>
-      <p>압축을 올리면 GitHub에서 자동으로 풀어 정리합니다(Claude 사용량은 들지 않아요). 수업 목록이 있는 과목의 기출은 이어서 「기출 자동 정리」가 수업별 문제지로 나눕니다.</p>
+      <p>압축을 올리면 GitHub에서 자동으로 풀어 정리합니다(Claude 사용량은 들지 않아요). 기출은 올린 그대로 넣고 자동으로 다시 분류하지 않습니다 — 수업별 문제지로 만들고 싶은 과목만 「수업별 문제지로도 만들기」를 누르세요.</p>
     </div>
   </section>
 
@@ -3836,6 +3836,8 @@ if(window.S2) S2.sync();
 .d1 .d1-kinds summary{cursor:pointer; padding:11px 14px; min-height:44px; display:flex; align-items:center; gap:8px; font-size:15px; font-weight:600; background:var(--sheet)}
 .d1 .d1-kinds summary .n{font-weight:400; color:var(--muted); font-size:13px}
 .d1 .d1-kinds summary .newb{margin-left:auto}
+.d1 .d1-remake{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; padding:0 14px 10px; background:var(--sheet)}
+.d1 .d1-remake span{font-size:13px; color:var(--muted)}
 .d1 .d1-skip{margin-top:14px}
 .d1 .d1-skip summary{cursor:pointer; font-size:14px; color:var(--muted); padding:10px 0; min-height:44px}
 .d1 .d1-skip ul{margin:0 0 8px; padding-left:18px; font-size:13.5px; color:var(--muted); line-height:1.6}
@@ -3859,7 +3861,7 @@ if(window.S2) S2.sync();
 </style>
 <script>
 /* ================= 1학기 자료: 1학기/목록.json (tools/sem1_import.py 가 만듦) =================
-   상태: ok 넣음 · check 확인 필요 · del 지워도 될 것 같음 · wait 수업 목록이 없어 기출 정리 대기 · queued 기출 정리 중 · done 문제지로 정리됨
+   상태: ok 넣음 · check 확인 필요 · del 지워도 될 것 같음 · queued 고른 기출을 수업별 문제지로 만드는 중 · done 문제지로 정리됨
    관리자(저장소 주인)는 지우기·남기기·기출 정리 맡기기·원본 압축 지우기를 할 수 있다. 바꿀 때마다 한 커밋으로 파일과 목록을 같이 고친다. */
 window.D1=(function(){
   const panel=document.getElementById('panel-sem1d'); if(!panel) return null;
@@ -3885,7 +3887,7 @@ window.D1=(function(){
     try{ M=await readList(); }
     catch(e){ M=e.status===404?{imports:[],subjects:{}}:null; if(!M){ $('#d1-results').innerHTML=`<div class="s1-empty"><strong>목록을 불러오지 못했어요</strong>${h(e.message)}</div>`; return; } }
     loaded=true;
-    const n=counts(); if(!n.check&&!n.del&&!(OWNER&&Object.values(M.subjects).some(sd=>sd.info&&sd.items.some(x=>x.state==='wait')))) view='all';
+    const n=counts(); if(!n.check&&!n.del) view='all';
     render();
     if(OWNER) loadReleases();
   }
@@ -3912,7 +3914,6 @@ window.D1=(function(){
     let why=it.why?h(it.why):'';
     if(it.state==='del'&&it.pair) why+=` 남길 것: <button type="button" data-goto="${h(it.pair)}">${h(pairName)}</button>`;
     if(it.state==='queued') why='기출 자동 정리가 수업별 문제지로 나누는 중이에요.';
-    if(it.state==='wait'&&M.subjects[s].info) why='이제 수업 목록이 있어 수업별 문제지로 나눌 수 있어요.';
     if(it.state==='done') why=`수업별 문제지로 정리됐어요.${M.subjects[s].gichul?` <button type="button" data-tab-gichul="1">기출·학습자료 탭에서 보기</button>`:''}`;
     const sinfo=M.subjects[s].info;
     const acts=[];
@@ -3922,10 +3923,7 @@ window.D1=(function(){
         if(it.kind==='기출'&&pdf&&sinfo) acts.push(`<button type="button" class="d1-btn sm pri" data-act="gichul">기출로 정리</button>`);
         acts.push(`<button type="button" class="d1-btn sm keep" data-act="keep">남기기</button>`, `<button type="button" class="d1-btn sm del" data-act="rm">지우기</button>`);
       }
-      else if(it.state==='ok'||it.state==='wait'){
-        if(it.state==='wait'&&sinfo) acts.push(`<button type="button" class="d1-btn sm pri" data-act="gichul">기출로 정리</button>`);
-        acts.push(`<button type="button" class="d1-btn sm" data-act="rm">지우기</button>`);
-      }
+      else if(it.state==='ok'||it.state==='wait') acts.push(`<button type="button" class="d1-btn sm" data-act="rm">지우기</button>`);
     }
     return `<div class="d1-row" data-s="${h(s)}" data-p="${h(it.path)}" id="d1-${h(it.sha)}">
       <div class="d1-nm"><span class="kind k-${h(it.kind)}">${h(it.kind)}</span><a href="${h(blobURL(it.path))}" target="_blank" rel="noopener"${pdf?` data-path="${h(it.path)}"`:''}>${h(it.name)}</a>${isNew(it)?'<span class="newb">새로</span>':''}${it.state==='queued'?'<span class="st run">정리 중</span>':it.state==='done'?'<span class="st ok">문제지</span>':it.state==='wait'?'<span class="st wait">정리 대기</span>':''}</div>
@@ -3940,23 +3938,20 @@ window.D1=(function(){
     const rest=items.filter(it=>!todo(it));
     const skipped=(sd.skipped||[]).filter(k=>!query||k.name.toLowerCase().includes(query.toLowerCase()));
     const all=sd.items, total=all.reduce((n,it)=>n+(it.size||0),0);
-    const wait=all.filter(it=>it.state==='wait'), queued=all.filter(it=>it.state==='queued'), done=all.filter(it=>it.state==='done');
-    const ready=OWNER&&!query&&sd.info&&wait.length&&view==='todo';           // 할 일: 이제 정리 맡길 수 있는 기출
-    if(!items.length&&!ready&&!(view==='all'&&skipped.length)) return '';
+    const queued=all.filter(it=>it.state==='queued'), done=all.filter(it=>it.state==='done');
+    if(!items.length&&!(view==='all'&&skipped.length)) return '';
     const head=`<div class="subject-head"><h2>${h(s)}</h2>
       <p class="sdesc">자료 ${all.length}개 · ${mb(total)}${done.length||queued.length?` · 기출 ${done.length}개 정리됨${queued.length?`, ${queued.length}개 정리 중`:''}`:''}</p>
       <p class="g-links"><a class="g-link" href="${h(treeURL('1학기/'+s))}" target="_blank" rel="noopener">GitHub 폴더</a>${sd.gichul?`<button type="button" class="g-link" data-tab-gichul="1">기출·학습자료 탭</button>`:''}</p></div>`;
-    let note='';
-    if(wait.length&&(view==='all'||view==='new'||ready)){
-      note=sd.info
-        ?`<div class="d1-note"><p><b>기출 ${wait.length}개</b>를 수업별 문제지로 나눌 수 있어요. 이제 이 과목의 수업 목록이 있습니다.</p>${OWNER?`<p><button type="button" class="d1-btn pri" data-act="gichul-all" data-s="${h(s)}">기출 ${wait.length}개 정리 맡기기</button></p>`:''}</div>`
-        :`<div class="d1-note"><p><b>기출 ${wait.length}개</b>는 아직 수업별로 나누지 못했어요. 이 과목의 <b>수업 목록과 연도별 담당 교수님</b>(강의계획서나 3개년 비교 파일)이 있어야 문항마다 어느 수업인지 정할 수 있습니다.</p><p>Claude에게 「${h(s)} 과목정보 만들어줘」와 함께 강의계획서를 주시면, 그다음엔 여기서 버튼 하나로 정리돼요.</p></div>`;
-    }
+    // 1학기 기출은 이미 수업별로 정리된 경우가 많아 자동으로 분류하지 않는다. 원하는 과목만 골라 수업별 문제지로 만든다.
+    const gpdf=all.filter(it=>it.kind==='기출'&&it.state==='ok'&&/\.pdf$/i.test(it.path));
+    const note='';
+    const remake=OWNER&&sd.info&&gpdf.length?`<button type="button" class="d1-btn sm" data-act="gichul-all" data-s="${h(s)}" title="이미 수업별로 정리돼 있으면 누르지 않아도 돼요">수업별 문제지로도 만들기 (${gpdf.length}개)</button>`:'';
     const blk=(cls,title,sub,list,extra)=>list.length?`<section class="d1-block ${cls}"><header><h3>${title}<small>${list.length}개</small></h3>${extra||''}${sub?`<p>${sub}</p>`:''}</header>${list.map(it=>row(s,it)).join('')}</section>`:'';
     const kinds=KINDS.map(k=>{
       const l=rest.filter(it=>it.kind===k); if(!l.length) return '';
       const nw=l.filter(isNew).length;
-      return `<details${(query||view==='new'||l.length<=6)?' open':''}><summary>${h(k)} <span class="n">${l.length}개</span>${nw&&nw<l.length?`<span class="newb">새로 ${nw}</span>`:''}</summary>${l.map(it=>row(s,it)).join('')}</details>`;
+      return `<details${(query||view==='new'||l.length<=6)?' open':''}><summary>${h(k)} <span class="n">${l.length}개</span>${nw&&nw<l.length?`<span class="newb">새로 ${nw}</span>`:''}</summary>${k==='기출'&&remake?`<div class="d1-remake">${remake}<span>이미 수업별로 정리된 기출이면 그대로 두면 돼요.</span></div>`:''}${l.map(it=>row(s,it)).join('')}</details>`;
     }).join('');
     const skip=view==='all'&&skipped.length?`<details class="d1-skip"><summary>넣지 않은 것 ${skipped.length}개 — 똑같은 파일, 녹음·영상, 너무 큰 파일</summary><ul>${skipped.map(k=>`<li><b>${h(k.name.split('/').pop())}</b> — ${h(k.why)}</li>`).join('')}</ul>${OWNER?`<button type="button" class="d1-btn sm" data-act="clear-skip" data-s="${h(s)}">이 기록 비우기</button>`:''}</details>`:'';
     return `<section class="subject" id="d1s-${h(s)}">${head}${note}
@@ -3978,8 +3973,7 @@ window.D1=(function(){
     const c=counts();
     const stat=(v,cls,n,label)=>`<button type="button" class="d1-stat ${cls}${n?'':' zero'}" data-v="${v}" aria-pressed="${view===v}"><b>${n}</b><span>${label}</span></button>`;
     $('#d1-stats').innerHTML=stat('check','chk',c.check,'확인 필요')+stat('del','del',c.del,'지워도 될 것')+stat('new','new',c.fresh,'최근에 들어옴')+stat('all','',c.items,`전체 자료 · ${mb(c.bytes)}`);
-    const ready=OWNER?Object.values(M.subjects).filter(sd=>sd.info&&sd.items.some(x=>x.state==='wait')).length:0;
-    const views=[['todo','할 일',c.check+c.del+ready],['all','전체',c.items],['new','최근에 들어옴',c.fresh]];
+    const views=[['todo','할 일',c.check+c.del],['all','전체',c.items],['new','최근에 들어옴',c.fresh]];
     $('#d1-chips').innerHTML=views.map(([v,l,n])=>`<button type="button" class="s1-chip" data-v="${v}" aria-pressed="${view===v}">${l} <span class="g-cn">${n}</span></button>`).join('');
     $('#d1-subj').innerHTML=`<button type="button" class="s1-chip" data-subj="all" aria-pressed="${subj==='all'}">모든 과목</button>`+S.map(s=>`<button type="button" class="s1-chip" data-subj="${h(s)}" aria-pressed="${subj===s}">${h(s)}</button>`).join('');
     $('#d1-rail').innerHTML=S.map(s=>{ const it=M.subjects[s].items, ch=it.filter(x=>x.state==='check').length, dl=it.filter(x=>x.state==='del').length;
@@ -4062,14 +4056,14 @@ window.D1=(function(){
   }
   async function act(btn){
     const r=btn.closest('.d1-row'), s=(r&&r.dataset.s)||btn.dataset.s, p=r&&r.dataset.p, a=btn.dataset.act;
-    const danger=/^rm/.test(a);
-    if(danger&&btn.dataset.armed!=='1'){ btn.dataset.armed='1'; btn.classList.add('armed'); const t0=btn.textContent; btn.textContent='한 번 더 누르면 지워요'; setTimeout(()=>{ if(btn.isConnected){ btn.dataset.armed=''; btn.classList.remove('armed'); btn.textContent=t0; } },4000); return; }
+    const danger=/^rm/.test(a)||a==='gichul-all';
+    if(danger&&btn.dataset.armed!=='1'){ btn.dataset.armed='1'; btn.classList.add('armed'); const t0=btn.textContent; btn.textContent=a==='gichul-all'?'한 번 더 누르면 시작해요':'한 번 더 누르면 지워요'; setTimeout(()=>{ if(btn.isConnected){ btn.dataset.armed=''; btn.classList.remove('armed'); btn.textContent=t0; } },4000); return; }
     if(r) r.classList.add('busy'); btn.disabled=true;
     try{
       if(a==='rm'){ await edit(`1학기 자료: ${s} ${p.split('/').pop()} 지움`, (c,t)=>removeItems(c,t,s,[p])); toast('지웠어요'); }
       else if(a==='keep'){ await edit(`1학기 자료: ${s} ${p.split('/').pop()} 남김`, c=>{ const x=find(c,s,p); if(x){ x.state='ok'; x.kept=true; delete x.why; delete x.pair; } }); toast('남겼어요'); }
       else if(a==='gichul'){ await edit(`1학기 자료: ${s} 기출 정리 맡김`, (c,t)=>toGichul(c,t,s,[p])); toast('기출 자동 정리를 시작했어요 (보통 30–90분)'); }
-      else if(a==='gichul-all'){ const ps=M.subjects[s].items.filter(x=>x.state==='wait').map(x=>x.path);
+      else if(a==='gichul-all'){ const ps=M.subjects[s].items.filter(x=>x.kind==='기출'&&(x.state==='ok'||x.state==='wait')&&/\.pdf$/i.test(x.path)).map(x=>x.path);
         await edit(`1학기 자료: ${s} 기출 ${ps.length}개 정리 맡김`, (c,t)=>toGichul(c,t,s,ps)); toast(`기출 ${ps.length}개 정리를 시작했어요`); }
       else if(a==='rm-all'){ const ps=M.subjects[s].items.filter(x=>x.state==='del').map(x=>x.path);
         await edit(`1학기 자료: ${s} 옛 판 ${ps.length}개 지움`, (c,t)=>removeItems(c,t,s,ps)); toast(`${ps.length}개를 지웠어요`); }
