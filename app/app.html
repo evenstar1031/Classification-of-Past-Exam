@@ -81,6 +81,9 @@ header.top .today{margin:0; font-size:15px; color:var(--muted); font-variant-num
 .ptabs button{flex:none; font:inherit; font-size:16px; font-weight:600; color:var(--muted); background:none; border:0; border-bottom:3px solid transparent; padding:12px 14px 9px; min-height:48px; cursor:pointer; white-space:nowrap; margin-bottom:-1px}
 .ptabs button:hover{color:var(--ink)}
 .ptabs button[aria-selected=true]{color:var(--ink); border-bottom-color:var(--theory)}
+.semsw{display:inline-flex;gap:0;margin:10px 0 2px;border:1px solid var(--rule);border-radius:999px;padding:3px;background:var(--soft)}
+.semsw button{font:inherit;font-size:14.5px;font-weight:600;color:var(--muted);background:none;border:0;border-radius:999px;padding:5px 18px;min-height:34px;cursor:pointer}
+.semsw button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 .ptabs .psep{flex:none; align-self:center; width:1px; height:20px; background:var(--rule); margin:0 6px}
 .ctabs{display:flex; gap:6px; padding-block:10px; overflow-x:auto; scrollbar-width:none; border-top:1px solid var(--rule); -webkit-overflow-scrolling:touch}
 .ctabs button{flex:none; font:inherit; font-size:15px; font-weight:500; color:var(--ink); background:transparent; border:1px solid var(--rule); border-radius:999px; padding:6px 15px; min-height:38px; cursor:pointer; white-space:nowrap}
@@ -559,16 +562,19 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
   </header>
 
   <nav class="tabs" aria-label="보기">
+    <div class="semsw" id="semsw" role="group" aria-label="학기 선택">
+      <button type="button" data-sem="1" aria-pressed="false">1학기</button>
+      <button type="button" data-sem="2" aria-pressed="true">2학기</button>
+    </div>
     <div class="ptabs" role="tablist" id="ptabs">
-      <button type="button" role="tab" id="ptab-tt" data-g="tt" aria-selected="false" tabindex="-1">시간표</button>
-      <button type="button" role="tab" id="ptab-syl" data-g="syl" aria-selected="false" tabindex="-1">강의계획서</button>
-      <button type="button" role="tab" id="ptab-prof" data-g="prof" aria-selected="false" tabindex="-1">수업 후기</button>
-      <button type="button" role="tab" id="ptab-gichul" data-g="gichul" aria-controls="panel-gichul" aria-selected="false" tabindex="-1">기출·학습자료</button>
-      <button type="button" role="tab" id="ptab-tools" data-g="tools" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 도구</button>
-      <span class="psep" aria-hidden="true"></span>
-      <button type="button" role="tab" id="ptab-sem1p" data-g="sem1p" aria-controls="panel-sem1p" aria-selected="false" tabindex="-1">1학기 계획서</button>
-      <button type="button" role="tab" id="ptab-sem1" data-g="sem1" aria-controls="panel-sem1" aria-selected="false" tabindex="-1">1학기 후기</button>
-      <button type="button" role="tab" id="ptab-sem1d" data-g="sem1d" aria-controls="panel-sem1d" aria-selected="false" tabindex="-1">1학기 자료</button>
+      <button type="button" role="tab" id="ptab-tt" data-g="tt" data-sem="2" aria-selected="false" tabindex="-1">시간표</button>
+      <button type="button" role="tab" id="ptab-syl" data-g="syl" data-sem="2" aria-selected="false" tabindex="-1">강의계획서</button>
+      <button type="button" role="tab" id="ptab-prof" data-g="prof" data-sem="2" aria-selected="false" tabindex="-1">수업 후기</button>
+      <button type="button" role="tab" id="ptab-sem1p" data-g="sem1p" data-sem="1" aria-controls="panel-sem1p" aria-selected="false" tabindex="-1" hidden>강의계획서</button>
+      <button type="button" role="tab" id="ptab-sem1" data-g="sem1" data-sem="1" aria-controls="panel-sem1" aria-selected="false" tabindex="-1" hidden>수업 후기</button>
+      <button type="button" role="tab" id="ptab-sem1d" data-g="sem1d" data-sem="1" aria-controls="panel-sem1d" aria-selected="false" tabindex="-1" hidden>자료 정리</button>
+      <button type="button" role="tab" id="ptab-gichul" data-g="gichul" data-sem="both" aria-controls="panel-gichul" aria-selected="false" tabindex="-1">기출·학습자료</button>
+      <button type="button" role="tab" id="ptab-tools" data-g="tools" data-sem="both" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 도구</button>
     </div>
     <div class="ctabs" role="tablist" id="ctabs" aria-label="과목" hidden></div>
   </nav>
@@ -1522,8 +1528,17 @@ function initTimetable(){
 const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul",...(window.APP?["tools"]:[]),"sem1","sem1d","sem1p"];
 let lastCourse="jindan";
 function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="sem1d"?"sem1d":id==="sem1p"?"sem1p":id==="gichul"?"gichul":id==="tools"?"tools":"syl"; }
+let SEM=(function(){ try{ return localStorage.getItem("knu1.sem")==="1"?1:2; }catch(e){ return 2; } })();
+const SEM1_VIEWS=["sem1p","sem1","sem1d"];
+function applySem(){
+  document.querySelectorAll("#semsw button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.sem===SEM)));
+  ptabs.querySelectorAll("[role=tab]").forEach(b=>{ const t=b.dataset.sem; const ok=t==="both"||+t===SEM; if(t==="both") return; b.hidden=!ok; });
+}
 function select(id,push){
   if(!VIEWS.includes(id)) id="timetable";
+  if(SEM1_VIEWS.includes(id)) SEM=1; else if(id==="timetable"||COURSES.some(c=>c.id===id)||id==="prof") SEM=2;
+  try{ localStorage.setItem("knu1.sem",String(SEM)); }catch(e){}
+  applySem();
   const g=groupOf(id);
   if(g==="syl") lastCourse=id;
   ptabs.querySelectorAll("[role=tab]").forEach(b=>{ const on=b.dataset.g===g; b.setAttribute("aria-selected",on?"true":"false"); b.tabIndex=on?0:-1; if(on) b.scrollIntoView({block:"nearest",inline:"nearest"}); });
@@ -1535,6 +1550,7 @@ function select(id,push){
   const hdr=document.querySelector("header.top"), top=hdr.offsetTop+hdr.offsetHeight;
   if(window.scrollY>top) window.scrollTo(0,top);
 }
+document.querySelectorAll("#semsw button").forEach(b=>b.addEventListener("click",()=>{ const n=+b.dataset.sem; if(n===SEM) return; const cur=(location.hash||"").slice(1); if(n===1) select(cur==="gichul"||cur==="tools"?cur:"sem1p",true); else select(cur==="gichul"||cur==="tools"?cur:"timetable",true); }));
 ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="sem1d"?"sem1d":g==="sem1p"?"sem1p":g==="gichul"?"gichul":g==="tools"?"tools":lastCourse,true); }));
 function tabKeys(list){
   list.addEventListener("keydown",e=>{
@@ -1586,7 +1602,7 @@ renderProfList();
 renderAllNotes();
 initTimetable();
 const start=(location.hash||"").slice(1);
-select(VIEWS.includes(start)?start:"timetable",false);
+select(VIEWS.includes(start)?start:(SEM===1?"sem1p":"timetable"),false);
 window.addEventListener("hashchange",()=>{ const h=(location.hash||"").slice(1); if(VIEWS.includes(h)) select(h,false); });
 
 /* 저장소 연결: 평가(reviews)와 날짜별 메모(memos) */
