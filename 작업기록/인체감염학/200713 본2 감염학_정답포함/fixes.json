@@ -129,10 +129,23 @@
    5,
    7,
    8
+  ],
+  "69/c1": [
+   0
   ]
  },
  "fixes": [],
- "regroup": {},
+ "regroup": {
+  "69": {
+   "1": [
+    "Hepatitis A Virus - Picornaviridae - 감염경로는 오염된 물, 음식, 손을 통해",
+    "분변-구강 전파이다."
+   ],
+   "2": [
+    "Hepatitis B Virus - Hepadnaviridae - 수혈 후 간염의 주요 원인이다."
+   ]
+  }
+ },
  "prose_boxes": [
   23,
   30
