@@ -242,7 +242,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Nirmatrelvir는 SARS-CoV-2의 main protease(3CL protease, Mpro)를 억제해 다단백질(polyprotein)이 기능 단백으로 잘리지 못하게 한다 — 바이러스 단백분해효소 억제제다. 함께 든 ritonavir는 항바이러스 작용이 아니라 CYP3A를 억제해 nirmatrelvir 농도를 올리는 부스터다. Nucleoside analog는 remdesivir·molnupiravir(RdRp 표적)이고, 숙주 단백분해효소(TMPRSS2) 억제제나 중화항체는 다른 기전이다."
   },
   "28": {
    "answer": [],
@@ -299,7 +299,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "정답: 1 가나다, 에볼라는 Filovirus",
-   "explanation": ""
+   "explanation": "Flaviviridae에는 뎅기 바이러스, 일본뇌염 바이러스, 지카 바이러스, 황열 바이러스, 웨스트나일 바이러스 등이 속한다(대부분 모기 매개 arbovirus). 에볼라 바이러스는 Filoviridae(마버그 바이러스와 같은 과)로, 플라비바이러스가 아니다. 따라서 가·나·다."
   },
   "35": {
    "answer": [
@@ -375,7 +375,7 @@
    "answer_by": "원본",
    "answer_text": "ACE2(Angiotensin-converting enzyme 2)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "SARS-CoV-2의 spike(S) 단백질 수용체결합영역(RBD)은 사람 세포의 ACE2(angiotensin-converting enzyme 2)에 결합해 들어간다(이후 TMPRSS2가 spike를 잘라 막 융합). 변이주(알파·베타·델타·오미크론)의 RBD 변이(N501Y 등)는 ACE2 결합력을 높이거나 중화항체를 회피해 전파력 증가와 백신 효능 저하로 이어졌다."
   },
   "44": {
    "answer": [
@@ -402,7 +402,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "허가 당시 플랫폼: 아스트라제네카·얀센 = 아데노바이러스 벡터(바이러스벡터) 백신, 화이자·모더나 = mRNA 백신, 노바백스(국내 SK바이오사이언스 생산) = 재조합 단백질(합성항원) 백신. 따라서 '얀센 – 재조합 백신'(라)은 틀렸다. 원본 정답은 ①(가·나·다)인데 '녹십자 백신 – mRNA'(나)는 일반적으로 알려진 플랫폼과 맞지 않는다. ※ 확인 필요: 당시 식약처 허가 품목(녹십자는 모더나 백신의 국내 유통을 맡았다)을 기준으로 출제된 것으로 보이며, 원본 정답을 그대로 둔다."
   },
   "47": {
    "answer": [],
@@ -484,7 +484,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "에볼라 바이러스(Filoviridae)는 외피를 가진 음성 단일가닥 RNA 바이러스이며, 감염자의 혈액·체액 직접 접촉으로 사람 간 전파된다. 단핵구·대식세포·내피세포를 감염시켜 사이토카인 폭풍과 광범위한 조직 괴사·혈관 손상, 파종성 혈관내응고를 일으켜 출혈열이 된다. 자이르형 에볼라에 대한 백신(rVSV-ZEBOV, Ervebo)이 개발되어 있다. 네 가지 모두 맞다."
   },
   "57": {
    "answer": [
@@ -774,7 +774,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "COVID-19 사망의 가장 강력한 위험인자는 나이다. 18–29세를 기준으로 하면 연령이 올라갈수록 사망 위험비가 수십~수백 배로 커지고, 기저질환(심장·폐·신장·간질환, 당뇨, 비만, 암)은 개수가 늘수록 위험을 더한다(1개 1.5배 … 10개 초과 3.8배). 필기에서도 '나이가 가장 중요한 factor, 기저질환이 많으면 곱해진다'고 했고, 그래서 65세 이상이 백신·치료제의 기준이 된다."
   },
   "90": {
    "answer": [
@@ -783,7 +783,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "중증도별 치료: 경증(상기도 감염)·중등증(폐렴, SpO2 ≥94%)은 바이러스 증식기이므로 항바이러스제(고위험 경증 – Paxlovid·molnupiravir·remdesivir 3일, 입원 폐렴 – remdesivir)를 쓴다. 중증(SpO2 <94%, 산소 필요)부터는 과염증기이므로 dexamethasone(+필요 시 tocilizumab·baricitinib)이 사망률을 낮춘다. 경증에 tocilizumab·스테로이드는 오히려 바이러스 제거를 늦추고, regdanvimab(렉키로나)은 고위험 경증용 단클론항체였다. 따라서 '중증 – Dexamethasone'."
   },
   "91": {
    "answer": [
