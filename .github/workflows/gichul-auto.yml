@@ -71,6 +71,8 @@ jobs:
             `gh issue create --label 기출 --title "기출 자동 정리: <과목> <시험>" --body "<보고>"`
             보고(한국어, 짧게): 처리한 시험, 수업별로 늘어난 문항 수, 확인이 필요한 문항, 못 한 파일과 이유,
             문제지 폴더 링크 https://github.com/evenstar1031/Classification-of-Past-Exam/tree/main/문제지/<과목> (경로는 URL 인코딩).
+          # 기출 분류는 Sonnet (사용량 절약). 검증 단계가 정확도를 지킨다
           claude_args: |
+            --model claude-sonnet-5-5
             --max-turns 400
             --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
