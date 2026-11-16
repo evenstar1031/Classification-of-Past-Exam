@@ -1,0 +1,447 @@
+{
+ "exam": {
+  "id": "221019 본1 인체감염학_정답포함2",
+  "subject": "인체감염학",
+  "title": "221019 본1 인체감염학",
+  "date": "2022-10-19",
+  "year": 2022
+ },
+ "questions": {
+  "1": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "2": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "그림은 class2 생물안전작업대로 제 4 위험군 미생물을 다룰 수 없다.",
+   "explanation": ""
+  },
+  "3": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "1. 세균성은 염증성 설사, 비염증설 설사를 모두 보일 수 있다.\n2. 고열, 복통, 혈변이 동반되면 염증성이다.\n3. 대변에서 백혈구가 보이지 않으면 비염증성이 많지만, 염증성 초기나 진균감염에서\n도 보이지 않을 수 있다.\n4. 염증성 설사가 반복 지속되면 염증성 장질환, 알레르기 장염 등을 감별해야 한다.\n5. 식중독은 비염증성 설사 중 일부에 속한다.",
+   "explanation": ""
+  },
+  "4": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "5": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "6": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "7": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Commensal\npathogen:\nA microorganism that is commonly found within the indigenous microbiota\nthat can cause disease in normal hosts with some regularity. Commensals do\nnot manifest as pathogens with equal frequency\nBacteroides fragilis and Streptococcus anginosus are occasional rather than\nregular pathogens, in contrast to the others on the list. Disease causation is\nnot required for the commensal&rsquo\ns survival and as such is an accident.",
+   "explanation": ""
+  },
+  "8": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Natural killer cell activity은 innate immunity의 하나로 본다",
+   "explanation": ""
+  },
+  "9": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "1. 유단백 알레르기 예방을 위해 무유당 설사분유나 소이분유를 권할 수는 있으나, 교\n차 알레르기 위험이 있음. 유당알레르기라는 말은 없음\n2. 설사가 지속되더라도 현재 먹이는 분유를 계속 먹이면 알레르기로 인해 만성설사로\n진행하는 경우가 많음.\n3. 부족한 수분과 전해질은 이온음료로 보충하는 것이 아니라 ORS를 사용해야 함.\n4. 분유 단계 변경은 의미 없음. 이유식은 진행 가능함.\n5. 완전가수분해분유나 아미노산 분유를 시도할 수 있습니다.",
+   "explanation": ""
+  },
+  "10": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "11": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Chocolate 배지는 Neisseria 동정을 위한 선택배지이다. Salmonella 선택배지가 반드\n시 포함되어야 한다.",
+   "explanation": ""
+  },
+  "12": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "13": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "14": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "15": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "16": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "17": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "그람양성은 탈색이 되지 않아 사프라닌 염색과 상관없이 보라색을 유지한다.",
+   "explanation": ""
+  },
+  "18": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "NSAID로 분류되는\nIbuprofen은\n위장장애 및 혈소판기능 감소로 사용에 주의가 필요하다",
+   "explanation": ""
+  },
+  "19": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "20": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "21": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "22": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "디스크확산법은 미생물의 배양억제대의 지름을 측정하여 감수성 판독을 한다.",
+   "explanation": ""
+  },
+  "23": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Bayesian theorem (베이시안 정리)는 사전 확율에 새 정보를 통해 사후 확율에 대한\n논리적 사고를 하는 것으로 표현 할 수 있고 임상적 의사결정에 가장 흔히 사용된다",
+   "explanation": ""
+  },
+  "24": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "25": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "26": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Tobramycin은 aminoglycoside 로 Peak/MIC에 주로 약력학이 관여한다",
+   "explanation": ""
+  },
+  "27": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "28": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "29": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "30": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "31": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Cefazolin은 BBB 통과를 거의 하지 못한다",
+   "explanation": ""
+  },
+  "32": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "33": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Vancomycin은 외벽의 pore를 통과하지 못하여 그람음성균에 무효하다",
+   "explanation": ""
+  },
+  "34": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "35": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "36": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "37": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "38": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "수술 예방적 항생제의 투여는 수술 시 피부 절개 30분 안에 해야한다",
+   "explanation": ""
+  },
+  "39": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "40": {
+   "answer": [
+    2,
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "41": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Gentamicin은 aminoglycoside로\n8번 뇌신경 장애 및 신독성 부작용으로 인해 주의가 필요하다",
+   "explanation": ""
+  },
+  "42": {
+   "answer": [
+    1,
+    3,
+    6,
+    8
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "43": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "44": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "45": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "다학제 접근이 필요하며 팀의 구성에 병원장이 포함되지는 않는다",
+   "explanation": ""
+  },
+  "46": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "47": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "심내막염의 흔한 원인균의 혈액배양 양성 및 심초음파의 심내막염 일치 소견이 2\nmajor\n요소이다",
+   "explanation": ""
+  },
+  "48": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "드레싱은 2% chlorhexidine를 가능한 사용한다",
+   "explanation": ""
+  }
+ }
+}

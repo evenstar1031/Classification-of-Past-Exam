@@ -1,0 +1,597 @@
+{
+ "exam": {
+  "id": "221104 본1 인체감염학_정답",
+  "subject": "인체감염학",
+  "title": "221104 본1 인체감염학",
+  "date": "2022-11-04",
+  "year": 2022
+ },
+ "questions": {
+  "1": {
+   "answer": [
+    1,
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "2": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "3": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Progressive multifocal leukoencephalopathy은 에이즈 지칭 질환이다",
+   "explanation": ""
+  },
+  "4": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "5": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "6": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Miliary TB 영상이며 HIV에서 잘 생긴다",
+   "explanation": ""
+  },
+  "7": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "8": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "9": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "보기 중 자연분만한 치료 받지 않은 HIV 감염 엄마로부터 질식분만으로 난 신생아가\n1/3 의 높은 감염 확율을 가짐",
+   "explanation": ""
+  },
+  "10": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "11": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "12": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "U=U는 HIV가 피에서 검출되지 않으면 전파하지 않는다를 의미한다",
+   "explanation": ""
+  },
+  "13": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "14": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "15": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "16": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "17": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "18": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "19": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Modified Centor score 기준이다",
+   "explanation": ""
+  },
+  "20": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "21": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "22": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "23": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "세균성 편도염에 대해 페니실린계 항생제 사용은 류마티스 열의 위험을 줄인다",
+   "explanation": ""
+  },
+  "24": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "양측성 Psoas abscess가 보인다",
+   "explanation": ""
+  },
+  "25": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "26": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "27": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "28": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "29": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "비장농양은 심내막염을 확인하여야 한다",
+   "explanation": ""
+  },
+  "30": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "31": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "32": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "VZV에 의한 수두이다",
+   "explanation": ""
+  },
+  "33": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "34": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "35": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "36": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "37": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "38": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Lobar 폐렴은 폐구균 가능성이 크다",
+   "explanation": ""
+  },
+  "39": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "40": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "41": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "42": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "메트로니다졸은 옴치료제가 아니다",
+   "explanation": ""
+  },
+  "43": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Ileal perforation은 장티푸스의 대표적 합병증이다",
+   "explanation": ""
+  },
+  "44": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "45": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "46": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "47": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Stevens Johnson Syndrome 에 해당한다",
+   "explanation": ""
+  },
+  "48": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "중증 말라리아는\nArtesunate 주사가 필요하다",
+   "explanation": ""
+  },
+  "49": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "50": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "51": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Actinomycosis에는 페니실린계 항생제가 선택약이다",
+   "explanation": ""
+  },
+  "52": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "53": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "A: 10, B: 90이다",
+   "explanation": ""
+  },
+  "54": {
+   "answer": [
+    3
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "급성 종격동염은 그람음성, 그람양성 및 혐기균에 대한 치료 약제 필요",
+   "explanation": ""
+  },
+  "55": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "56": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Staphylococcus aureus 폐렴이 인플루엔자 이후 온 것이다",
+   "explanation": ""
+  },
+  "57": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "58": {
+   "answer": [
+    4
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "간질증에는 Triclabendazole이 선택약이다",
+   "explanation": ""
+  },
+  "59": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "60": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "",
+   "explanation": ""
+  },
+  "61": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "수족구병의 드문 사망은 신경계 침범이다",
+   "explanation": ""
+  },
+  "62": {
+   "answer": [
+    1
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Histiocyte의 이상 질환인 HLH이다",
+   "explanation": ""
+  },
+  "63": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "Benzathine penicillin G이 매독 치료에는 필요하다. Penicillin G는 반감기가 짧다.",
+   "explanation": ""
+  },
+  "64": {
+   "answer": [
+    5
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "영상은 dependant portion에 침윤이 뚜렷하여 흡인성 폐렴이 가장 적절하다",
+   "explanation": ""
+  },
+  "65": {
+   "answer": [
+    2
+   ],
+   "answer_by": "원본",
+   "answer_text": "",
+   "source_note": "SARS CoV-2에 의한 COVID-19 이다",
+   "explanation": ""
+  }
+ }
+}
