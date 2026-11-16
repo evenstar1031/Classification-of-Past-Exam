@@ -52,6 +52,22 @@ What you decide (with `set`, by reading the stem and choices that `show` prints)
   in one `set` call.
 - Keep `--why` short and concrete ("CK-MB → 진단효소학"). The user may read it.
 
+**내용으로 정할 때는 작년 필기본이 기준이다** (사용자 요청, 2026-11-16). 위의 "pick by content"
+세 경우 모두(그리고 2단계 재검토에서도) 이 순서로 판단한다:
+1. 문항의 핵심어(질환·병원체·약·검사·소견 이름, 한글과 영어 둘 다)를 뽑아
+   `python3 tools/notes_lookup.py find <과목> 용어1 용어2 ...` (기본 = 작년 필기본, 없는 수업은 가까운 해).
+2. 결과는 **힌트일 뿐 순위대로 고르지 않는다.** 핵심어가 그 수업 필기의 *주제로 다뤄지는* 곳
+   (목차·제목·설명하는 쪽)을 고른다. 다른 수업에서 지나가듯 나온 것(약 이름만 나열 등)은 근거가 아니다.
+   예: 쯔쯔가무시는 34 인수공통감염병에서도 맞지만 35 가을철 열성질환 목차에 있으므로 35.
+   필요하면 맞은 쪽을 직접 열어 본다.
+3. 필기에서 정해지면 `--why "필기25 35 p.8: eschar → 쯔쯔가무시"` 처럼 수업·쪽을 적는다.
+   두 수업 필기가 똑같이 다루면 출제자·연도 정보를 우선하고, 그래도 비기면 더 자세히 다룬 쪽.
+4. 어느 필기에도 없거나(`[필기에 없음]`) 지나가는 언급뿐이면 **일반 의학 지식**으로 정하고
+   `--why "필기에 없음 · 일반지식: …"` 으로 표시한다.
+5. `list` 에서 "글자 적음"인 수업(슬라이드 그림 위주)은 글자 검색이 놓칠 수 있다. 후보가 그 수업이면
+   필기 PDF 쪽을 그림으로 봐서 확인한다.
+보고의 「내용으로 정한 것」에 필기 근거 몇 개 / 일반지식 몇 개를 나눠 적는다.
+
 `auto` never overwrites a `set` decision, so it is safe to re-run.
 
 If many questions of an exam share a professor who is not in the lecture list at all,
