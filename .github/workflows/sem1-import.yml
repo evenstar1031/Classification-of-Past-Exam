@@ -1,0 +1,90 @@
+# 1학기 자료 압축 → 1학기/<과목>/ 로 정리 (tools/sem1_import.py)
+#
+# 올리는 법: 저장소 → Releases → Draft a new release → 태그를 「1학기-」로 시작(예: 1학기-자료) →
+#            압축 파일들을 끌어다 놓고(파일 하나 2GB까지, 과목별로 나눠도 됨) → Publish release.
+#            앱 「1학기 자료」 탭의 「압축 올리기」 버튼이 이 화면을 열어 준다.
+# 하는 일:   압축을 풀어 과목·종류별로 넣고, 지워도 될 것·확인 필요를 1학기/목록.json 에 적는다(앱이 이걸 보여 줌).
+#            수업 목록(과목정보)이 있는 과목의 기출은 올리기/<과목>/ 로 보내 「기출 자동 정리」를 이어서 돌린다.
+#            끝나면 결과를 이슈(라벨 「1학기」)로 남긴다. 원본 압축은 Release 에 그대로 남는다(앱에서 지울 수 있음).
+# Claude 를 쓰지 않는 단순 정리라 구독 사용량이 들지 않는다.
+name: 1학기 자료 정리
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release 태그 (예: 1학기-자료)'
+        required: true
+
+concurrency:
+  group: sem1-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: >-
+      github.actor == github.repository_owner &&
+      (github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, '1학기'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    permissions:
+      contents: write
+      issues: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - name: 디스크 비우기 (압축이 몇 GB라서)
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost || true
+          df -h / | tail -1
+
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 프로그램 설치
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full p7zip-rar ghostscript || sudo apt-get install -y -qq p7zip-full ghostscript
+          pip install -q pymupdf==1.28.2
+          git config --global core.quotepath false
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 공개 여부 확인
+        run: python3 tools/check_private.py
+
+      - name: 압축 받기
+        run: |
+          mkdir -p work/sem1_dl
+          gh release download "$TAG" -R "$GITHUB_REPOSITORY" -D work/sem1_dl
+          ls -la work/sem1_dl
+          df -h / | tail -1
+
+      - name: 풀어서 정리하고 올리기
+        run: python3 tools/sem1_import.py import --src work/sem1_dl --tag "$TAG" --commit
+
+      - name: 기출 자동 정리 이어서 돌리기
+        run: |
+          n=$(cat work/sem1_queued 2>/dev/null || echo 0)
+          echo "기출 정리로 보낸 파일: $n"
+          if [ "$n" != "0" ]; then gh workflow run gichul-auto.yml -R "$GITHUB_REPOSITORY" --ref main; fi
+
+      - name: 결과 이슈
+        if: always()
+        run: |
+          gh label create 1학기 -R "$GITHUB_REPOSITORY" --color 0E8A16 --description "1학기 자료 정리" 2>/dev/null || true
+          if [ -f work/sem1_report.md ]; then
+            body="$(cat work/sem1_report.md)"
+          else
+            body="정리하다가 멈췄습니다. Actions 기록: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          fi
+          gh issue create -R "$GITHUB_REPOSITORY" --label 1학기 --title "1학기 자료 정리: ${TAG}" --body "$body"
