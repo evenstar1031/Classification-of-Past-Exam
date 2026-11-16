@@ -7,6 +7,9 @@ name: 기출 자동 정리
 
 on:
   workflow_dispatch:
+  # 사용량 한도(5시간) 등으로 실패해 멈췄으면 매시간 다시 시도한다. 할 일이 없거나 직전 실행이 실패가 아니면 바로 끝남(사용량 안 씀).
+  schedule:
+    - cron: '17 * * * *'
   push:
     branches: [main]
     paths:
@@ -33,7 +36,7 @@ jobs:
   classify:
     # 주인이 직접 돌렸거나, 저장소 안의 워크플로(위 relay, 1학기 자료 정리, 이어 돌리기)가 부른 경우
     if: >-
-      github.event_name == 'workflow_dispatch' &&
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule') &&
       (github.actor == github.repository_owner || github.actor == 'github-actions[bot]')
     runs-on: ubuntu-24.04
     timeout-minutes: 180
@@ -50,6 +53,8 @@ jobs:
 
       - name: 새 기출이 있나
         id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           shopt -s nullglob nocaseglob
           files=(올리기/*/*.pdf)
@@ -74,7 +79,19 @@ jobs:
           nohae=$(python3 /tmp/missing.py)
           echo "nohae=$nohae" >> "$GITHUB_OUTPUT"
           echo "해설 빈 문항: $nohae"
-          if [ "${#files[@]}" != 0 ] || [ "$nohae" != 0 ]; then echo "work=1" >> "$GITHUB_OUTPUT"; else echo "work=0" >> "$GITHUB_OUTPUT"; fi
+          work=0; { [ "${#files[@]}" != 0 ] || [ "$nohae" != 0 ]; } && work=1
+          # 매시간 자동 재시도: 직전 실행들이 '실패'로 끝났을 때만(한도 걸림 등). 연속 8번 실패하면 더 안 함(고장이면 사람이 봐야 함).
+          if [ "$work" = 1 ] && [ "${{ github.event_name }}" = schedule ]; then
+            concl=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/gichul-auto.yml/runs?per_page=30" \
+              -q '[.workflow_runs[] | select(.id != ${{ github.run_id }}) | select(.event=="workflow_dispatch" or .event=="schedule")
+                   | select(.conclusion=="success" or .conclusion=="failure")][0:10] | map(.conclusion) | join(" ")')
+            echo "직전 실행들: $concl"
+            first=${concl%% *}
+            fails=0; for c in $concl; do [ "$c" = failure ] && fails=$((fails+1)) || break; done   # 연속 실패 수
+            if [ "$first" != failure ]; then echo "직전 실행이 실패가 아님 → 자동 재시도 안 함"; work=0
+            elif [ "$fails" -ge 8 ]; then echo "연속 실패 8번 → 자동 재시도 멈춤"; work=0; fi
+          fi
+          echo "work=$work" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@v6
         if: steps.check.outputs.work == '1'
@@ -94,7 +111,7 @@ jobs:
       # 1단계 (Sonnet): 답 제거 → 수업 분류 → 수업별 문제지. 규칙대로 하는 일이라 Sonnet 으로 충분하고, 검증 단계가 지켜 준다.
       - name: "1단계 · 답 제거·분류·문제지 (Sonnet)"
         uses: anthropics/claude-code-action@v1
-        if: steps.check.outputs.count != '0'
+        if: steps.check.outputs.work == '1' && steps.check.outputs.count != '0'
         env:
           GH_TOKEN: ${{ github.token }}
         with:
