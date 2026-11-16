@@ -14,7 +14,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "세균 아포는 소독제에 가장 강한 형태로, 고압증기·건열 같은 멸균법이나 장시간(수 시간) 접촉하는 화학 멸균제만 제거할 수 있다. 출제 정답은 증기·고열 공기 30분이다. 페놀 세정제는 저·중수준 소독제, OPA·과산화수소/과초산·글루타르알데히드는 제시된 짧은 시간(10–30분)에는 고수준 '소독'만 되고 아포까지 제거하는 '멸균'에는 더 긴 시간이 필요하다."
   },
   "2": {
    "answer": [
@@ -23,7 +23,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "모체 IgG가 사라진 6개월 이후 반복되는 세균 감염, 외삼촌 사망(X-연관), 모든 면역글로불린 감소 → X-연관 무감마글로불린혈증 같은 체액면역결핍이다. 치료는 정기적인 정주 면역글로불린 보충이다. 비장·편도 절제는 해롭고, 수두·MMR 생백신은 금기이며, 수두 면역글로불린은 노출 후 예방용이다."
   },
   "3": {
    "answer": [
@@ -32,7 +32,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "젊은 여성의 급성 발열과 압통 있는 양측 경부의 작은 다발성 림프절은 감염성 단핵구증, 급성 HIV, 톡소포자충증, SLE, 기쿠치병 같은 염증성·감염성 원인을 시사한다. 전이성 암종은 고령에서 단단하고 고정된 무통성 림프절로 나타나므로 가능성이 가장 낮다."
   },
   "4": {
    "answer": [
@@ -41,7 +41,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "통증 없는 단단한 음경 궤양(경성하감) → 1기 매독(Treponema pallidum)이다. 통증성 수포·궤양이면 HSV-2, 사마귀양이면 HPV이다."
   },
   "5": {
    "answer": [
@@ -50,7 +50,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "불명열 초기 평가에는 CBC, ESR·CRP, ferritin, LDH, 간·신기능, ANA·RF, 혈액배양, HIV, 결핵 검사가 포함된다. Myoglobin은 근육 손상(횡문근융해) 검사로 불명열 기본 평가 항목이 아니다."
   },
   "6": {
    "answer": [
@@ -59,7 +59,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "볶음밥 섭취 3시간 후 오심·구토 → Bacillus cereus 구토형 식중독이다. 구토형 독소(cereulide)는 내열성 펩타이드로 미주신경(5-HT3 수용체)을 자극해 구토를 일으키므로 출제에서는 'neurotoxin'으로 표현했다. 설사형 B. cereus·C. perfringens는 열에 약한 장독소(enterotoxin)로 8–16시간 후 설사를 일으킨다. ※ 확인 필요: 교과서는 보통 '구토 독소(emetic toxin, cereulide)'로 부르며 'neurotoxin'이라는 표현은 일반적이지 않다."
   },
   "7": {
    "answer": [
@@ -68,7 +68,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "(Cefa계는 장알균에 무효)",
-   "explanation": ""
+   "explanation": "Enterococcus는 모든 cephalosporin에 내인성 내성이므로 ceftriaxone은 효과가 없다. E. faecalis는 ampicillin(β-lactamase 억제제 복합제 포함)에 감수성이고 vancomycin도 쓸 수 있으며, carbapenem(imipenem 위주)도 일부 효과가 있다. Aminoglycoside(amikacin)는 단독으로는 약하지만 세포벽 작용제와 병용하면 상승 효과가 있다."
   },
   "8": {
    "answer": [
@@ -77,7 +77,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "음경 귀두 통증·찌릿함과 요도 끝의 화농성 분비물(사진) → 임균성 요도염이다. 치료는 ceftriaxone 근주와 동반 클라미디아 치료(azithromycin 또는 doxycycline)이다. 파트너도 치료하고 HIV·매독 검사를 함께 한다."
   },
   "9": {
    "answer": [
@@ -86,7 +86,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "생후 초기 반복 감염, 외삼촌 사망, T세포가 거의 없고 B세포는 정상 → X-연관 T-B+ SCID다. 이식 전까지 IVIG 보충과 PCP 예방이 필요하다. 생백신(로타·BCG)은 금기이고, CMV 양성 엄마의 모유는 CMV 전파 위험이 있어 피해야 한다."
   },
   "10": {
    "answer": [
@@ -95,7 +95,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "왼쪽 쇄골위 림프절(Virchow 림프절) 종대는 위암 등 복강 내 악성종양의 전이를 시사한다. 겨드랑이 림프절은 유방암·상지 감염, 서혜부는 하지·생식기 감염(매독 등)·하지 종양, 종격동은 폐암·결핵·림프종과 관련된다."
   },
   "11": {
    "answer": [
@@ -104,7 +104,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "대변 메틸렌블루 염색에서 백혈구가 거의 보이지 않는(비염증성) 설사 소견이다. 보기 중 EHEC가 정답인 것은 EHEC가 혈변을 일으켜도 비침습성이라 대변 백혈구가 적기 때문으로 보인다. ※ 확인 필요: ETEC·콜레라·S. aureus도 대변 백혈구가 없는 비염증성 설사를 일으키므로, 그림 소견(혈액 유무)과 출제 의도를 확인할 것."
   },
   "12": {
    "answer": [
@@ -113,7 +113,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "대장균은 그람음성균이라 알코올 탈색 단계에서 crystal violet이 빠져나가 무색이 되고, 사프라닌 대조염색으로 분홍색이 된다. 사프라닌을 빼먹으면 무색으로 보인다."
   },
   "13": {
    "answer": [
@@ -122,7 +122,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "(AG계의 신독성 주의)",
-   "explanation": ""
+   "explanation": "2주간 정맥 항생제 후 신기능이 나빠졌다면 가장 의심되는 약은 aminoglycoside(근위세뇨관 손상, 대개 비핍뇨성·가역적)다. β-lactam은 드물게 급성 간질성 신염을 일으키지만 빈도가 낮다."
   },
   "14": {
    "answer": [
@@ -131,7 +131,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "6개월 이상 관찰해도 원인을 찾지 못한 불명열은 대부분 예후가 좋다. 불명열의 원인은 감염·종양·자가면역 등으로 지역·시기에 따라 다르며(최근엔 원인 미상이 많음), IGRA 음성으로 결핵을 배제할 수 없고, 상태가 안정적이면 경험적 항생제는 진단을 흐리므로 피한다."
   },
   "15": {
    "answer": [
@@ -140,7 +140,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "렙토스피라는 발병 1주(급성기)에는 혈액·뇌척수액에서, 2주 이후(면역기)에는 소변에서 분리된다. 발병 18일째이므로 소변 배양이 가장 가능성이 높다."
   },
   "16": {
    "answer": [
@@ -149,7 +149,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "건강한 30세 외래 환자의 지역사회 폐렴(대엽성 경화)이며 중증도 낮음 → 외래에서 경구 항생제로 치료한다. 폐렴구균·H. influenzae를 덮는 고용량 amoxicillin(또는 amoxicillin/clavulanate)이 적절하다. 1세대 cephalosporin은 H. influenzae·내성 폐렴구균에 약하고, pip/tazo는 불필요하며, 침대 머리 올리기는 VAP 예방법이다."
   },
   "17": {
    "answer": [
@@ -158,7 +158,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "호중구는 정상(1,300)인데 고용량 dexamethasone(하루 16 mg)을 2주 투여한 상태에서 CT 결절과 galactomannan 양성 → 침습성 아스페르길루스증이며, 직접적 위험인자는 고용량 스테로이드다. TMP/SMX 중단은 PCP 위험인자다."
   },
   "18": {
    "answer": [
@@ -167,7 +167,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "(anaphylaxis 예측은 병력이 중요)",
-   "explanation": ""
+   "explanation": "항생제 아나필락시스 위험을 예측하는 데 가장 중요한 것은 과거 즉시형(1형) 과민반응 병력이다. 피부반응검사는 penicillin 외 항생제에서는 표준화되지 않았고, 혈청 IgE·호산구·음식 알레르기 병력은 예측력이 낮다."
   },
   "19": {
    "answer": [
@@ -176,7 +176,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "발열·복통·혈변과 후중 → 세균성 이질이다. 출제 정답은 S. dysenteriae이며, 혈청형 1은 시가독소를 만들어 가장 심한 이질과 HUS를 일으킨다. ※ 확인 필요: 국내·선진국에서 실제 가장 흔한 이질균은 S. sonnei이므로 '배양될 가능성'으로 보면 ④도 논란이 될 수 있다."
   },
   "20": {
    "answer": [
@@ -185,7 +185,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "패혈증에서는 PAI-1 증가로 섬유소용해가 '감소'하여 미세혈전이 쌓인다. 내피 누출 증가, antithrombin·protein C 감소, lactate 증가, 간질 장벽 기능 감소는 옳은 기전이다."
   },
   "21": {
    "answer": [
@@ -194,7 +194,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "경도확산법(E-test)은 연속적 농도 기울기로 2배 희석 단계 사이의 MIC까지 읽을 수 있어, 출제 의도는 '가장 세밀한(정밀한) 값'을 주는 방법으로 경도확산법을 고른 것이다. ※ 확인 필요: 표준 참조법은 액체배지 미량희석법·한천희석법이므로 '정확도' 의미라면 다른 답도 가능하다."
   },
   "22": {
    "answer": [
@@ -203,7 +203,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "(원인체에 대한 추측이 중요)",
-   "explanation": ""
+   "explanation": "항생제 선택에서 가장 중요한 질문은 '감염 부위와 가장 가능성 높은 원인균이 무엇인가'이다. 원인균을 추정해야 그에 맞는 약을 고를 수 있고, 투여 경로·병용·기간은 그 다음 결정이다."
   },
   "23": {
    "answer": [
@@ -212,7 +212,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "햄버거 섭취 후 혈성 설사 → 장출혈성 대장균(EHEC, O157:H7)이다. 베로독소(시가독소)를 분비하고 HUS(용혈성 빈혈·혈소판감소·신부전)를 일으키며, 항생제는 HUS 위험을 높일 수 있어 피한다. EHEC는 제2급 법정감염병이므로 '제1급'은 틀렸다."
   },
   "24": {
    "answer": [
@@ -221,7 +221,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "폐렴의 중증도·예후 인자 중 보기에서 가장 큰 것은 75세(고령)다(CURB-65 항목이자 PSI에서도 나이가 점수의 기본). 호흡수 28회는 CURB-65 기준(≥30)에 못 미치고, 맥박 130은 PSI 점수 항목(≥125)이지만 가중치가 나이보다 작다. ※ 확인 필요: PSI로 보면 간암(종양, +30점)도 큰 점수를 차지하므로 기준에 따라 답이 달라질 수 있다."
   },
   "25": {
    "answer": [
@@ -230,7 +230,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "그람양성 알균이 포도송이 모양이고 catalase 양성이면 예비 동정은 Staphylococcus이다. S. aureus와 CoNS를 구분하려면 추가로 coagulase 검사가 필요하다. Catalase 음성이면 Streptococcus·Enterococcus이다."
   },
   "26": {
    "answer": [
@@ -239,7 +239,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "가을 밤따기 후 발열·전신 구진 발진과 가피 → 쯔쯔가무시병이며, 임신부(33주)이므로 doxycycline 대신 azithromycin을 쓴다."
   },
   "27": {
    "answer": [
@@ -248,7 +248,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "SOFA는 PaO₂/FiO₂, 혈소판, 빌리루빈, MAP·승압제, GCS, 크레아티닌·소변량으로 구성된다. 호흡수는 qSOFA 항목이다."
   },
   "28": {
    "answer": [
@@ -257,7 +257,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "고용량 스테로이드 중 TMP/SMX 예방을 끊은 환자의 빈호흡(청진 정상) → Pneumocystis 폐렴이다. 1차 치료는 치료 용량 TMP/SMX다. 흡입 pentamidine은 '예방' 용법이다."
   },
   "29": {
    "answer": [
@@ -266,7 +266,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "비장절제 후 성인 예방접종 상황을 그림(표)에서 고르는 문항이다. 비장절제 환자는 폐렴구균(PCV13 후 8주 뒤 PPSV23), 수막구균(MenACWY 2회 + MenB), Hib 1회, 매년 인플루엔자가 권장되며, 표에서 이에 해당하는 것이 '마'다. ※ 그림을 확인할 것."
   },
   "30": {
    "answer": [
@@ -275,7 +275,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "신증후군출혈열의 저혈압기에 쇼크 증상이 있으면 알부민·혈장 등 교질액과 승압제(dopamine, norepinephrine)로 적극 치료해야 하므로 ②가 옳지 않다. 발열기 후반·저혈압기의 출혈 위험 관리, 핍뇨기의 단백 제한·수분 조절과 필요시 투석, 이뇨기의 수분·전해질 보충은 옳은 설명이다."
   },
   "31": {
    "answer": [
@@ -284,7 +284,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "생후 6개월에는 B형 간염 3차(그리고 DTaP·IPV·Hib·PCV 3차)를 접종한다. BCG는 생후 4주 이내, A형 간염·MMR·일본뇌염은 12개월 이후에 시작한다."
   },
   "32": {
    "answer": [
@@ -293,7 +293,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "배양 결과가 나오면 가능한 빨리 좁은 범위 항생제로 바꾸는 de-escalation이 내성균 출현을 '줄이는' 방법이므로, de-escalation을 늦춘다는 ⑤가 틀렸다. 정맥 최대 용량, 지역 내성 현황 고려, 초기 적절한 항생제 선택(생존율 향상), 기저질환·면역상태 고려는 옳은 원칙이다."
   },
   "33": {
    "answer": [
@@ -302,7 +302,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "1주간 지속 고열·복통·설사와 장미진(rose spots) → 장티푸스다. 발병 첫 주에는 균혈증 시기여서 혈액배양의 검출률이 가장 높다(골수배양은 더 높음). 대변·소변 배양은 2–3주 이후 양성률이 올라간다."
   },
   "34": {
    "answer": [
@@ -311,7 +311,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "수술 시 피부 절개 30분 내 투여",
-   "explanation": ""
+   "explanation": "유방절제술(청결 수술)의 예방적 cefazolin은 피부 절개 전 60분 이내(출제 기준 30분 이내)에 투여해 절개 시점에 조직 농도가 최고가 되게 한다. 수술 후 투여나 병동에서 미리 투여하는 것은 시점이 맞지 않는다. ※ 확인 필요: 지침은 '절개 전 60분 이내'로 제시한다."
   },
   "35": {
    "answer": [
@@ -320,7 +320,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "발열과 양측 하지의 출혈성 수포·괴사 병변 → 비브리오 패혈증(Vibrio vulnificus)이다. 간질환·알코올 의존 환자가 해산물 섭취나 바닷물 상처 노출 후 생기며 치명률이 높다. 치료는 3세대 cephalosporin + doxycycline과 괴사 조직 변연절제다."
   },
   "36": {
    "answer": [
@@ -329,7 +329,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "진드기에 물린 경우 머리(구기)까지 포함해 제거하고, 1–3주간 발열·가피·발진 등 증상을 관찰하도록 교육한다. 증상 없는 진드기 교상 후 쯔쯔가무시 예방 목적의 doxycycline 투약은 권장되지 않으므로 ⑤가 틀렸다(미국에서는 고위험 라임병 지역에서 1회 투여를 고려하는 정도)."
   },
   "37": {
    "answer": [
@@ -338,7 +338,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "상황별 예방접종표에서 건강한 임신부에 해당하는 열을 고르는 문항이다. 임신부는 Tdap(27–36주)과 인플루엔자 사백신을 권장하고, MMR·수두·약독화 생백신은 금기다. 표에서 이에 해당하는 것이 '바'다. ※ 그림(표)을 확인할 것."
   },
   "38": {
    "answer": [
@@ -347,7 +347,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "고용량 IVIG 후에는 MMR·수두 생백신을 11개월 미루지만 사백신은 영향이 없다. 4세에 해당하는 DTaP-IPV 추가접종을 오늘 할 수 있다. 일본뇌염 불활성화백신은 이 시점 일정이 아니고, 폐렴구균은 이미 끝났으며, HPV는 12세다."
   },
   "39": {
    "answer": [
@@ -356,7 +356,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "신우신염·농양에 의한 패혈성 쇼크에서 30 mL/kg 수액 후에도 MAP 65 미만이면 norepinephrine을 1차 승압제로 쓴다. qSOFA(호흡수 ≥22, 의식변화, 수축기 ≤100)는 이 환자에서 3점이며 산소포화도는 항목이 아니다. 스테로이드는 hydrocortisone, 초기 수액은 30 mL/kg이다."
   },
   "40": {
    "answer": [
@@ -365,7 +365,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "(하루 한번 OPAT 가능한 항생제)",
-   "explanation": ""
+   "explanation": "외래 정맥 항생제 치료(OPAT)는 하루 1회 투여가 가능한 약이 편리하며, 사진의 봉와직염(연쇄구균·MSSA)에는 반감기가 긴 ceftriaxone 2 g 하루 1회가 가장 적절하다. Vancomycin은 하루 2회 이상·농도 감시가 필요하고, ciprofloxacin은 연쇄구균에 약하며, amikacin은 그람양성균에 부적절하다."
   },
   "41": {
    "answer": [
@@ -374,7 +374,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "봉와직염은 주로 S. pyogenes·S. aureus가 원인이고, 정상 면역자는 cefazolin·nafcillin으로 치료하며, 경계가 불분명하다는 점에서 경계가 분명하고 융기된 단독(erysipelas)과 구분된다. 괴사성 근막염과 구분이 어려울 때는 혈액배양이 아니라 응급 영상(CT/MRI)과 외과적 탐색이 필요하므로 ④가 옳지 않다. ※ 확인 필요: 혈액배양 자체는 중증일 때 시행하므로 출제 의도는 '감별은 배양이 아닌 수술적 탐색'으로 이해하자."
   },
   "42": {
    "answer": [
@@ -383,7 +383,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "알코올성 간경변(면역저하)·심한 알코올 의존 환자의 세균성 수막염은 폐렴구균 외에 Listeria도 고려해야 하므로 ceftriaxone + vancomycin + ampicillin이 경험적 치료다."
   },
   "43": {
    "answer": [
@@ -392,7 +392,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "면역저하자는 염증 반응이 약해 증상·징후·검사 소견이 뚜렷하지 않으므로, 면역정상인보다 CT·MRI 등 영상검사를 일찍 시행할 필요가 있다. 항생제 시작 시기는 예후에 더 중요하고, 환경(공기·물)에 더 민감하여 관리가 필요하며, 약제 부작용도 면밀히 관찰해야 한다."
   },
   "44": {
    "answer": [
@@ -401,7 +401,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "장중첩증 병력은 로타바이러스 백신의 절대 금기다. 계란 알레르기는 인플루엔자 사백신의 금기가 아니고, 홍역 유행지 6–11개월 MMR 조기 접종, 비장절제 예정 소아의 PPSV23, 유학생 수막구균 백신은 권장된다."
   },
   "45": {
    "answer": [
@@ -410,7 +410,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "ABE에 해당하는 임상이며 S. aureus 가 가장 흔하다",
-   "explanation": ""
+   "explanation": "1주간 발열·호흡곤란(급성 판막 파괴에 의한 심부전), 새로운 대동맥판 역류, 손발의 색전 병변(Janeway 병변 등) → 급성 세균성 심내막염이며 가장 흔한 원인은 S. aureus다. 아급성은 viridans 연쇄구균이 흔하다."
   },
   "46": {
    "answer": [
@@ -419,7 +419,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "2018–2019 국내 수술부위감염 감시 결과에서 감염률이 높은 수술은 결장 수술, 직장 수술, 위 수술, 충수절제술 등 소화기 수술이었고, 관절치환술은 낮은 편이었다. 보기 중 높은 순서가 맞는 것은 '결장수술 – 충수절제술 – 고관절치환술'이다."
   },
   "47": {
    "answer": [
@@ -428,7 +428,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "하지의 통증과 발적에 반상출혈·수포가 동반되면 괴사성 근막염을 의심한다. 경험적 치료는 광범위 항생제(그람양성·음성·혐기균) + 독소 생성 억제를 위한 clindamycin이며, 보기 중 ampicillin/sulbactam + clindamycin이 가장 적절하다(MRSA 위험 시 vancomycin 추가). 응급 외과적 변연절제가 가장 중요하다."
   },
   "48": {
    "answer": [
@@ -437,7 +437,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "도뇨관 관련 세균뇨·요로감염의 가장 흔한 원인은 대장균(E. coli)이며, 장기 도뇨에서는 Proteus, Pseudomonas, Klebsiella, Enterococcus, Candida 등 다균 감염이 늘어난다."
   },
   "49": {
    "answer": [
@@ -446,7 +446,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "항암치료 10일째 발열과 ANC 120/mm³(호중구 10%)의 호중구감소열이다. 기저질환·증상·활력징후·MASCC 점수로 위험도를 평가해 외래 또는 입원 치료를 결정한다(정답). 배양은 반드시 시행하되 항생제는 60분 이내 투여하고, 외래 경구 치료는 ciprofloxacin + amoxicillin/clavulanate이며, 상태가 안정적이면 1일째 해열되지 않았다고 항생제를 바꾸지 않는다. ※ 확인 필요: 원본에서 보기 ③~⑤의 문장이 한 덩어리로 붙어 있어(보기 ④⑤가 비어 있음) 원문 보기 구분을 확인해야 한다."
   },
   "50": {
    "answer": [
@@ -455,7 +455,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "생후 7주 영아의 발작성 기침·무호흡·청색증, 몇 달째 가벼운 기침을 하는 오빠 → 백일해다. 예방은 DTaP(영아 2·4·6개월)이고, 임신 중 Tdap과 가족 접종으로 영아를 보호한다."
   },
   "51": {
    "answer": [
@@ -464,7 +464,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Coagulase negative Staphylococcus 이 CRBSI에 가장 흔한 원인",
-   "explanation": ""
+   "explanation": "중심정맥관 관련 균혈증의 가장 흔한 원인은 응고효소음성 포도알균(CoNS)이며, S. aureus, 장알균, 그람음성균, Candida 순으로 이어진다."
   },
   "52": {
    "answer": [
@@ -473,7 +473,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "젊은 여성의 두통·오심, 그림의 성기 수포 병변, 림프구 100%·당 정상 무균성 수막염 → HSV-2 수막염이다. Acyclovir로 치료한다."
   },
   "53": {
    "answer": [
@@ -482,7 +482,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "강원도는 공수병 위험지역(야생동물 매개)이고 길고양이를 관찰할 수 없으므로 공수병 면역글로불린 + 백신 4회가 필요하다. 고양이 교상은 감염 위험이 높아 amoxicillin/clavulanate 예방 투약을 하고, 10년 넘게 접종력이 없으므로 파상풍 백신·면역글로불린도 투여한다. 따라서 가~라 모두."
   },
   "54": {
    "answer": [
@@ -491,7 +491,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "국내 11–12세 필수접종은 Tdap(또는 Td) 추가접종, 일본뇌염 사백신 5차(또는 생백신 2차는 6세에 끝남), 여아 HPV다. 보기 중 12세 남아가 할 것은 Tdap(디프테리아·파상풍·백일해)이다. HPV는 국가필수접종 대상이 여아이고, 수막알균·공수병은 고위험군 대상이다."
   },
   "55": {
    "answer": [
@@ -500,7 +500,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Modified Centor score를 인두편도염에 적용하는 것이 필요하다",
-   "explanation": ""
+   "explanation": "인두·편도 발적과 삼출물(그림) → 인두편도염이므로 A군 연쇄구균 가능성을 평가하는 Modified Centor 점수(발열, 기침 없음, 앞목 림프절, 편도 삼출물, 나이)를 적용한다."
   },
   "56": {
    "answer": [
@@ -509,7 +509,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "방광염 증상 후 발열·갈비척추각 압통 → 급성 신우신염이며 가장 흔한 원인은 대장균이다."
   },
   "57": {
    "answer": [
@@ -518,7 +518,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "국내에서 가장 많이 접종된 코로나19 백신은 화이자(코미나티) mRNA 백신이다. 그림에서 ②가 mRNA 백신에 해당한다. ※ 그림의 번호와 백신 종류를 확인할 것."
   },
   "58": {
    "answer": [
@@ -527,7 +527,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "뼈스캔은 민감도가 높아 조기 진단에 쓸 수 있지만 골절·종양·수술 후 변화에서도 양성이 되어 특이도가 낮으므로 ③이 옳지 않다. 임상 소견이 중요하고, X선은 만성 골수염(2주 이후 골 변화)에 유용하며, 항생제 전 배양, MRI가 조기진단에 가장 좋다는 것은 맞다."
   },
   "59": {
    "answer": [
@@ -536,7 +536,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "신경학적 결손 없는 고령자의 요통과 MRI상 척추·추간판 감염(화농성 척추염 추정) → 정답은 cefazolin으로, 원인균(MSSA)이 확인된 경우의 표준 치료로 출제된 것으로 보인다. 신경 결손·척수 압박이 없으면 수술 없이 6주 이상 항생제로 치료한다. ※ 확인 필요: 원인균이 밝혀지지 않았다면 경험적으로 vancomycin(+그람음성균 커버)을 쓰므로 그림·문제의 추가 정보를 확인할 것."
   },
   "60": {
    "answer": [
@@ -545,7 +545,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "지카 바이러스는 Aedes 모기가 매개하고 숙주는 영장류·사람이다. 파충류가 숙주라는 연결이 틀렸다. Q열(염소·소·양 에어로졸), 조류인플루엔자(가금류 흡입), 페스트(벼룩-설치류), 바베시아(Ixodes 진드기-작은 포유류)는 맞다."
   },
   "61": {
    "answer": [
@@ -554,7 +554,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "임신부의 급성 신우신염은 입원해 정맥 β-lactam(ceftriaxone)으로 치료한다. Fluoroquinolone·doxycycline은 임신 중 피하고, azithromycin은 대장균에 효과가 없으며, meropenem은 내성균 위험이 있을 때만 쓴다."
   },
   "62": {
    "answer": [
@@ -563,7 +563,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "혈소판감소성 혈전증(TTS/VITT)은 아데노바이러스 벡터 백신(아스트라제네카, 얀센)과 관련된다. 그림에서 ⑥이 바이러스 벡터 백신에 해당한다. ※ 그림의 번호를 확인할 것."
   },
   "63": {
    "answer": [
@@ -572,7 +572,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "감기에 항생제는 도움되지 않는다",
-   "explanation": ""
+   "explanation": "콧물·코막힘·기침·미열, 편도 부종 없음, 동생도 비슷 → 감기(바이러스성 상기도감염)다. 해열진통제, 1세대 항히스타민, 비충혈제거제(pseudoephedrine), 진해제(dextromethorphan)는 증상 완화에 도움이 되지만 항생제(cefaclor)는 효과가 없고 내성만 늘린다."
   },
   "64": {
    "answer": [
@@ -581,7 +581,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "정기적으로 IVIG를 맞는 범저감마글로불린혈증 환자는 생백신(수두·MMR) 금기이고, 수막구균·Hib 등은 IVIG 항체로 대체되어 의미가 적다. 매년 균주가 바뀌는 인플루엔자 불활성화 백신은 권장한다."
   },
   "65": {
    "answer": [
@@ -592,7 +592,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "그림은 유치도뇨관(요로 카테터)으로, 도뇨관 관련 요로감염 예방법은 삽입 시 무균술, 폐쇄배뇨시스템 유지, 매일 필요성 평가 후 불필요하면 조기 제거다. 상체 거상·구강 chlorhexidine은 VAP 예방법이고, 예방적 항생제는 권장되지 않는다. ※ 그림을 확인할 것."
   },
   "66": {
    "answer": [
@@ -601,7 +601,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "SBP가 1차성 복막염의 대표이다",
-   "explanation": ""
+   "explanation": "1차성(자발성) 복막염은 복강 내 장기 손상이나 감염원 없이 생기는 복막염으로, 간경변 복수 환자의 자발성 세균성 복막염(SBP)이 대표적이다. 충수돌기·게실·위궤양 천공에 의한 것은 2차성 복막염이고, 결핵성 복막염은 특수(비화농성) 복막염으로 분류한다."
   },
   "67": {
    "answer": [
@@ -610,7 +610,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "B형 간염 백신은 만성 B형 간염과 간세포암을 예방하는 암 예방 백신이다."
   },
   "68": {
    "answer": [
@@ -619,7 +619,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Cryptogenic liver abscess는 Klebsiella pneumoniae가 가장 흔함",
-   "explanation": ""
+   "explanation": "담도·장 질환 없이 생긴 원인 불명(cryptogenic) 화농성 간농양은 국내·아시아에서 Klebsiella pneumoniae(고병원성 K1/K2 혈청형)가 가장 흔하다. 안내염·수막염 같은 전이성 감염을 동반할 수 있다. 담도 원인이면 다균(대장균, 장알균, 혐기균)이 흔하다."
   },
   "69": {
    "answer": [
@@ -628,7 +628,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "염증·감염이 없고 호흡기·소화기·비뇨생식기를 열지 않는 수술의 창상은 청결 창상이다(예: 탈장 수술, 유방 수술, 갑상선 수술). 감염률이 가장 낮다."
   },
   "70": {
    "answer": [
@@ -637,7 +637,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "인공와우 이식 환자는 폐렴구균 수막염 위험이 높아 폐렴구균 단백결합 백신(PCV)을 완료하고, 2세 이상이 되면 PCV 마지막 접종 8주 후 폐렴구균 다당 백신(PPSV23)을 접종한다. 지연 접종이 없으므로 수두·Hib는 끝났고, 수막구균·HPV는 해당하지 않는다."
   },
   "71": {
    "answer": [
@@ -646,7 +646,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "식도 칸디다증은 만성 감염",
-   "explanation": ""
+   "explanation": "급성 HIV 증후군은 발열, 발진, 인두염, 림프절병증, 근육통 등 단핵구증 유사 증상이다. 식도 칸디다증은 CD4가 크게 떨어진 진행기 HIV(AIDS 정의 질환)에서 생긴다(급성기 일시적 CD4 감소로 드물게 생길 수는 있음)."
   },
   "72": {
    "answer": [
@@ -655,7 +655,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "두 그림은 손을 매개로 한 교차 감염 사례를 보여 주며, 이를 막는 가장 효과적인 방법은 손 위생이다. 손 위생은 환자 접촉 전·후, 무균 처치 전, 체액 노출 후, 환자 주변 기구 접촉 후에 반드시 수행한다(⑤는 틀림). 최대멸균 차단은 중심정맥관 삽입 시 원칙이다. ※ 그림을 확인할 것."
   },
   "73": {
    "answer": [
@@ -664,7 +664,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "음압격리병실은 공기 전파 질환(결핵, 홍역, 수두·파종성 대상포진, 에어로졸 생성 시술 중 COVID-19 등)에 필요하다. VRE·C. difficile은 접촉주의, 백일해·인플루엔자는 비말주의 1인실로 충분하다."
   },
   "74": {
    "answer": [
@@ -673,7 +673,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "PCP 치료는 Trimethoprim/sulfamethoxazole이 우선 선택",
-   "explanation": ""
+   "explanation": "젊은 남성의 1달간 서서히 진행하는 호흡곤란과 흉부 CT의 양측 미만성 간유리음영 → HIV 감염인의 Pneumocystis 폐렴(PCP)을 먼저 의심한다(HIV 검사 필요). 1차 경험적 치료는 TMP/SMX이며, 저산소증이 심하면 스테로이드를 함께 쓴다."
   },
   "75": {
    "answer": [
@@ -682,7 +682,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Tenofovir disoproxil fumarate (TDF)/emtricitabine + dolutegravir 또는 TDF +\nraltegravir 4주 필요",
-   "explanation": ""
+   "explanation": "바이러스량이 높은 HIV 환자의 혈액이 묻은(동맥혈) 바늘에 찔린 것은 감염 위험이 있는 노출이므로, 가능한 빨리(2시간 이내, 늦어도 72시간 이내) 3제 노출 후 예방(PEP)을 28일(4주)간 복용한다. 권장 조합은 TDF/emtricitabine + dolutegravir(또는 raltegravir)다. 단독요법은 권장되지 않고, cabotegravir 주사는 노출 전 예방(PrEP)용이다."
   },
   "76": {
    "answer": [
@@ -691,7 +691,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "&ldquo\nU=U&rdquo\n는 HIV가 피에서 검출되지 않으면 전파하지 않는다의 의미",
-   "explanation": ""
+   "explanation": "U=U는 ART로 혈중 HIV가 검출되지 않게 유지되면 성접촉으로 전파되지 않는다는 뜻이다."
   },
   "77": {
    "answer": [
@@ -700,7 +700,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Fournier Gangrene은 Mixed 감염이 주",
-   "explanation": ""
+   "explanation": "당뇨 환자의 엉덩이(회음부) 피부 병변이 빠르게 진행하며 발열·의식저하, CT에서 연부조직 내 가스 → 괴사성 근막염(Fournier 괴저)이다. 원인은 대부분 호기성(장내세균, 연쇄구균, 포도알균)과 혐기성(Bacteroides, Clostridium 등)의 혼합 감염(제1형)이다. 응급 변연절제와 광범위 항생제가 필요하다."
   },
   "78": {
    "answer": [
@@ -709,7 +709,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "의식장애는 파상풍에 없다",
-   "explanation": ""
+   "explanation": "파상풍(얼굴 근육 경직: 아관긴급, 경부 경직, 연하곤란, 근육 수축·경련)에서는 신경독소(tetanospasmin)가 억제성 신경전달을 막지만 의식은 보존된다. 그래서 의식이 명료한 상태에서 고통스러운 경련을 겪는 것이 특징이며, 의식장애는 기대되지 않는다."
   },
   "79": {
    "answer": [
@@ -718,7 +718,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "SJS의 후유증 중 각막 손상이 중요하다",
-   "explanation": ""
+   "explanation": "약물 복용 후 발열, 얼굴·몸통 발진, 구강 점막 침범, 간효소 상승 → Stevens-Johnson 증후군이다. 안구 점막 침범으로 각막 손상·반흔·시력 저하가 생길 수 있어 초기부터 안과 협진이 중요하다. 피부 장벽 손상에 따른 패혈증도 위험하지만 출제 의도는 SJS의 특징적·장기 후유증인 각막 손상이다."
   },
   "80": {
    "answer": [
@@ -727,7 +727,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Aedes mosquito가 뎅기열의 매개체",
-   "explanation": ""
+   "explanation": "필리핀 여행 후 다리의 점상출혈 발진('붉은 바다의 흰 섬' 모양으로 변화)과 저혈압 → 뎅기열이다. 매개체는 Aedes(이집트숲모기, 흰줄숲모기)다. Anopheles는 말라리아, Culex는 일본뇌염, 털진드기(chigger)는 쯔쯔가무시, 작은소참진드기는 SFTS를 옮긴다."
   },
   "81": {
    "answer": [
@@ -736,7 +736,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "속립성 결핵이다",
-   "explanation": ""
+   "explanation": "인도네시아(결핵 고유행 지역) 출장이 잦은 HIV 감염인의 발열·흉막성 통증과 영상의 미세결절(좁쌀) 소견 → 파종성(좁쌀) 결핵(M. tuberculosis)이다. HIV 감염인은 CD4 수와 무관하게 결핵 위험이 매우 높다. MAC은 CD4 <50에서 파종성 감염을 일으키지만 좁쌀 폐결절은 드물다. ※ 그림(영상)을 확인할 것."
   },
   "82": {
    "answer": [
@@ -745,7 +745,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "수족구병은 Coxsackieviruses 감염",
-   "explanation": ""
+   "explanation": "구강 궤양·발열과 같은 반 친구의 비슷한 증상 → 수족구병·포진성 구협염이며 흔한 원인은 콕사키바이러스(A16 등)와 엔테로바이러스 71이다."
   },
   "83": {
    "answer": [
@@ -754,7 +754,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "AVG, AVF 감염의 흔한 원인은 Staphylococcus가 가장 흔하다",
-   "explanation": ""
+   "explanation": "혈액투석 중 갑자기 생긴 고열 → 투석 혈관 통로(AVF·AVG·카테터) 관련 균혈증을 의심하며, 가장 흔한 원인균은 S. aureus(MRSA 포함)이다. 경험적 치료로 vancomycin을 쓴다."
   },
   "84": {
    "answer": [
@@ -763,7 +763,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "중증 말라리아는 Artesunate 주사가 우선 필요하다",
-   "explanation": ""
+   "explanation": "아프리카(카메룬) 체류 후 발열과 황달·급성신부전(Cr 5.24, 소변 감소)·혈소판감소 → 중증 열대열 말라리아다(현지 치료 후 재발 또는 재감염). 중증 말라리아의 1차 치료는 artesunate 정맥주사이며 이후 경구 ACT로 마무리한다."
   },
   "85": {
    "answer": [
@@ -772,7 +772,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Kikuchi 림프절염",
-   "explanation": ""
+   "explanation": "2개월 발열, 압통 있는 작은 경부 림프절, 백혈구 감소, 자가항체 음성, 림프절 조직에서 핵 파편을 동반한 괴사·조직구(호중구 없음) → 기쿠치 림프절염(조직구성 괴사성 림프절염)이다. 대개 1–4개월 안에 저절로 좋아진다. ※ 그림(조직 소견)을 확인할 것."
   },
   "86": {
    "answer": [
@@ -781,7 +781,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "매독균 Treponema pallidum",
-   "explanation": ""
+   "explanation": "몸통 발진과 손발바닥의 구리빛 반구진, 구강 점막 병변(점막반), 발열 없음 → 2기 매독(Treponema pallidum)이다. 치료는 benzathine penicillin G 1회 근주다. 수족구병은 소아에서 손발의 수포·구강 궤양이 특징이다."
   },
   "87": {
    "answer": [
@@ -790,7 +790,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "흡인성 폐렴",
-   "explanation": ""
+   "explanation": "의사소통이 거의 안 되는 진행된 치매 환자(연하장애)의 발열·저혈압 → 흡인성 폐렴이 가장 적절한 진단이다. 하부·후방 폐 분절에 잘 생기고 구강 혐기균과 그람음성균을 고려한다. 요양병원 거주자이므로 의료관련 폐렴 위험인자도 함께 고려한다."
   },
   "88": {
    "answer": [
@@ -799,7 +799,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Amoxicillin 등 페니실린계",
-   "explanation": ""
+   "explanation": "IUD를 오래 사용한 여성의 골반 종괴가 치료 후 줄어든 CT → 골반 방선균증이며, 치료는 penicillin 계열(penicillin G 정맥 후 장기 경구 amoxicillin)이다."
   },
   "89": {
    "answer": [
@@ -808,7 +808,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "경구약으로 Paxlovid가 권장",
-   "explanation": ""
+   "explanation": "고위험군(65세, 당뇨, 미접종)의 경증 COVID-19에서 중증 진행을 줄이는 것으로 인정되어 권고되는 경구 항바이러스제는 Paxlovid(nirmatrelvir/ritonavir)이다. Remdesivir는 주사제이고, hydroxychloroquine·lopinavir/ritonavir는 효과가 없으며, pyronaridine/artesunate는 말라리아 약이다."
   },
   "90": {
    "answer": [
@@ -817,7 +817,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "백혈구 증가증이 있다",
-   "explanation": ""
+   "explanation": "발열·저혈압·심한 혈소판감소·급성신부전과 신체 소견(점상출혈 등) → 신증후군출혈열이다. 단백뇨·혈뇨·크레아티닌 상승·혈소판감소가 특징이며, 백혈구는 대개 증가(반응성 림프구 포함)하므로 백혈구 감소는 기대되지 않는다(백혈구 감소는 SFTS·쯔쯔가무시 초기에서 본다)."
   },
   "91": {
    "answer": [
@@ -826,7 +826,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "종격동염",
-   "explanation": ""
+   "explanation": "닭고기(뼈) 섭취 후 흉통, 이어서 고열·호흡곤란·청색증·쇼크와 대사성 산증 → 식도 손상(천공)에 의한 급성 종격동염이다. 심잡음이 없어 대동맥 박리보다는 감염성 종격동염에 맞다. 광범위 항생제와 응급 외과적 배액이 필요하다."
   },
   "92": {
    "answer": [
@@ -835,7 +835,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "HZV가 Ramsey Hunt syndrome에 주로 관여된다)",
-   "explanation": ""
+   "explanation": "귀 통증, 외이도 수포, 같은 쪽 안면신경 마비 → Ramsay Hunt 증후군(슬신경절의 대상포진 재활성화)이며 원인은 수두대상포진바이러스(VZV)다. 항바이러스제(acyclovir·valacyclovir)와 스테로이드로 치료한다."
   }
  }
 }
