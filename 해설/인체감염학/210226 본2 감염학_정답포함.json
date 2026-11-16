@@ -14,7 +14,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "사진의 얼굴·코 주변 괴사 병변과 조직에서 보이는 폭이 넓고 격벽이 없는 리본 모양 균사는 모균증(mucormycosis)이다. 1차 치료는 광범위 괴사조직 제거와 함께 amphotericin B(특히 liposomal) 투여이며, fluconazole·itraconazole·echinocandin(caspofungin·micafungin)·voriconazole은 Mucorales에 효과가 없다."
   },
   "2": {
    "answer": [
@@ -24,7 +24,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "HIV 환자의 마른 기침·호흡곤란과 양측 간질성 음영, 기관지폐포세척액의 포자낭 소견 → 폐포자충 폐렴(PCP)이다. 1차 치료는 TMP/SMX이고, 동맥혈 산소분압이 70 mmHg 미만(여기서는 55 mmHg)이면 부신피질호르몬(glucocorticoid)을 함께 투여해 사망률과 호흡부전을 줄인다."
   },
   "3": {
    "answer": [
@@ -34,7 +34,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "산소가 필요한 중등증 이상 COVID-19 폐렴에는 항바이러스제 remdesivir와 스테로이드 dexamethasone을 함께 쓴다. Hydroxychloroquine·lopinavir/ritonavir·azithromycin은 효과가 입증되지 않아 권고되지 않고, regdanvimab 같은 단클론항체는 산소치료가 필요 없는 경증·중등증 고위험군에 쓴다."
   },
   "4": {
    "answer": [
@@ -43,14 +43,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "COVID-19 치료제 중 산소 또는 인공호흡이 필요한 환자에서 사망률(생존율) 개선이 입증된 약은 dexamethasone이다(RECOVERY 연구). Remdesivir는 회복 기간을 단축시켰지만 사망률 개선은 뚜렷하지 않았다."
   },
   "5": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "(bronchopulmonary tree가 아닌 mediastinal LN에서 증식하므로) / mediastinal LN / 증식 각 0.5점",
    "source_note": "",
-   "explanation": ""
+   "explanation": "흡입탄저에서 아포는 폐포에 들어간 뒤 대식세포에 실려 종격동 림프절로 옮겨져 그곳에서 증식하므로, 기관지·폐포 쪽에서 균이 증식해 배출되는 일이 없다. 따라서 내쉬는 숨으로는 사람 간 전파가 일어나지 않는다(피부탄저 병변 삼출물을 통한 접촉 전파만 드물게 보고된다)."
   },
   "6": {
    "answer": [
@@ -59,7 +59,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "아메바성 장염은 fecal wet smear에서 WBC가 잘 보이지 않음\nETEC는 장점막의 integrity를 별로 손상시키지 않음\nCampylobacter, Yersinia 장염에서 ileitis가 심하면 ESR, CRP가 증가함\nClostridium difficile에 의한 위막성 대장염이 생길 경우 사용 중인 항생제를 중\n단하여야 함.\nRota 장염에 의한 유당 불내증에 의해 혈성점액변이 초래될 수 없음.",
-   "explanation": ""
+   "explanation": "아메바성 장염은 아메바가 백혈구를 파괴해 대변 도말에서 백혈구가 잘 보이지 않는 것이 특징이다. ETEC는 독소만 분비하고 점막을 손상시키지 않으며, Campylobacter·Yersinia 장염에서 회장염이 심하면 ESR·CRP가 오른다. C. difficile 위막성 대장염에서는 원인 항생제를 중단해야 하고, 로타바이러스 후 유당 불내증은 혈성 점액변을 일으키지 않는다."
   },
   "7": {
    "answer": [
@@ -68,7 +68,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "젖산 발효, 운동성 없음, 두꺼운 협막을 가진 장내세균이면서 병원감염과 카바페넴 내성(CRE)의 대표 균종은 Klebsiella pneumoniae다. E. coli는 운동성이 있고 협막이 두껍지 않으며, 녹농균·Acinetobacter는 장내세균과가 아니고, Enterococcus는 그람양성 알균이다."
   },
   "8": {
    "answer": [
@@ -78,14 +78,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "생후 10일 신생아의 발열은 중증 세균감염으로 간주해 혈액·소변·뇌척수액 배양을 모두 시행한다. 또한 출산 직전 어머니에게 성기 포진 병변이 있었으므로 신생아 단순포진 감염 가능성을 고려해 검사 결과를 기다리지 말고 즉시 정주 acyclovir를 시작한다."
   },
   "9": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "A: LLO (vacuolar lysis를 용해) B: ActA (actin 재조합을 유도하여 이웃한 / 숙주세포로 이동)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "A는 listeriolysin O(LLO)로, 포식소체(vacuole) 막을 녹여 세균이 세포질로 탈출하게 한다. B는 ActA로, 숙주의 액틴 중합을 유도해 꼬리를 만들어 세균이 이웃 세포로 직접 이동하게 한다. 이 때문에 Listeria는 항체를 피하고 세포면역이 방어의 핵심이 된다."
   },
   "10": {
    "answer": [
@@ -94,14 +94,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "약열을 의심하며 이 경우 백혈구 감소증, 호산구 증가증, 원래 질환의 호전, 발진 등이\n나타날 수 있다",
-   "explanation": ""
+   "explanation": "항생제 7일째 폐렴 병변은 좋아지는데 발진과 발열이 새로 생기고 호산구가 증가한 것은 약열(drug fever)·약물 과민반응을 시사한다. 약열에서는 호산구 증가와 함께 백혈구 감소증, 발진, 원래 질환의 호전이 동반될 수 있다. 48시간 주기 발열은 말라리아, ferritin 급증은 혈구탐식증후군·성인 스틸병을 시사한다."
   },
   "11": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "① 표피탈락독소 혹은 exfoliative toxin / ② bullous impetigo",
    "source_note": "",
-   "explanation": ""
+   "explanation": "황색포도알균의 ① 표피탈락독소(exfoliative toxin)가 표피과립층의 desmoglein 1을 분해해 세포간 연결이 끊어지면서 표피가 벗겨진다. 전신형은 포도알균 열상피부증후군(4S)이고, 국소형인 ② 수포성 농가진(bullous impetigo)은 병변에 균이 많아 전염력이 높다."
   },
   "12": {
    "answer": [
@@ -110,14 +110,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "고열·구토가 있지만 의식이 비교적 명료하고 신경학적 국소 이상이 없으며, 뇌척수액이 림프구 우위에 당이 정상(80 mg/dL)이고 단백이 경미하게 오른 것은 바이러스성(무균성) 수막염이다. 수분·해열 등 대증치료로 호전되며, 항생제나 acyclovir는 필요하지 않다."
   },
   "13": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "spore (endospre) / A. ( 피부탄저 ) B. 아포",
    "source_note": "",
-   "explanation": ""
+   "explanation": "A. 탄저균 자연감염의 대부분(약 95%)은 피부탄저로, 무통성 궤양에 검은 가피를 만든다. B. 그람염색에서 균체 안의 염색되지 않는 타원형 구조는 아포(spore, endospore)다."
   },
   "14": {
    "answer": [
@@ -126,7 +126,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "기침·콧물 없이 고열·인후통·두통과 인두 발적·발진이 있는 7세 소아는 A군 사슬알균 인두염(성홍열)이 의심되므로, 즉시 결과가 나오는 편도 신속항원검사로 확인한다. ASO·anti-DNase B 항체는 지난 감염을 보는 검사라 급성기 진단에 늦고, 혈액배양은 양성률이 낮다."
   },
   "15": {
    "answer": [
@@ -135,14 +135,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Central fever의 경우\n뇌병변이 있고 hypothalamus에 영향을 주는 상황,\n땀이 없음,\n해열제에 잘 반응하지 않음,\n다른 감염병의 증거가 없음 및\n상대적으로 느린 심박수를 보일 수 있다",
-   "explanation": ""
+   "explanation": "중추성 발열은 시상하부를 침범한 뇌병변에서 생기며 땀이 없고 해열제에 반응하지 않으며 다른 감염 증거가 없다. 또 체온이 높은 것에 비해 심박수가 상대적으로 '느린' 것이 특징이므로, 빠른 심박수를 시사 소견으로 보는 5번이 관련이 적다."
   },
   "16": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "② IV / ① PBP2a 혹은 PBP-2A",
    "source_note": "",
-   "explanation": ""
+   "explanation": "MRSA의 내성 기전은 SCCmec가 운반하는 mecA 유전자가 베타락탐 친화성이 낮은 ① PBP2a를 만들어 세포벽 합성을 계속하는 것이다. 병원감염형은 SCCmec I~III형이 많고, 지역사회감염형 MRSA는 대부분 작고 이동성이 좋은 ② IV형이다."
   },
   "17": {
    "answer": [
@@ -151,7 +151,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "고열·경련·의식저하에 뇌척수액 림프구 우위 세포증가와 단백 상승, MRI의 측두엽 병변 → 단순헤르페스 뇌염이므로 즉시 정주 acyclovir를 투여한다. 세균성 수막염을 시사하는 중성구 우위·저혈당 소견이 없어 항생제 조합은 1차 치료가 아니다."
   },
   "18": {
    "answer": [
@@ -160,7 +160,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Nocardia는 산소성 그람양성 막대균으로 가지를 치는 실 모양을 이루고, 부분 항산성이라 변법 항산염색으로 객담에서 관찰된다. 토양 등 환경에서 들어오는 외인성 감염으로 폐·피부·중추신경계 질환을 일으킨다. 한편 cord factor는 결핵균의 독성인자이므로 '나'는 틀리고 '가, 다, 라'가 맞다. ※ 확인 필요: 원본 정답이 5번(가·나·다·라 모두)으로 표시되어 있으나, cord factor는 Mycobacterium의 성분이므로 '나'는 틀린 서술로 보인다."
   },
   "19": {
    "answer": [
@@ -169,7 +169,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "평판배지에서 물결 모양으로 퍼지는 유주현상(swarming)을 보이고, urease로 요소를 분해해 소변을 알칼리화하여 struvite 결석을 만드는 균은 Proteus mirabilis다. 나머지 장내세균은 유주현상과 결석 형성의 특징이 없다."
   },
   "20": {
    "answer": [
@@ -178,7 +178,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "내시경 소견으로 감별이 어려운 질환은 염증성 장질환(궤양성 대장염, 크론병) 중\nUC가 특히 어렵다.",
-   "explanation": ""
+   "explanation": "Campylobacter·Yersinia 장염 초기에 대장내시경을 하면 미만성 발적·과립상 점막과 미란이 보여 궤양성 대장염과 구별하기 어렵다. 위막성 대장염은 노란 위막, 과민성 장증후군·Giardia는 내시경이 정상이며, C. perfringens 식중독은 내시경 적응증이 아니다."
   },
   "21": {
    "answer": [
@@ -187,14 +187,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "A군 사슬알균(S. pyogenes)은 히알루론산 협막을 가지지만 사람 조직 성분과 같아 면역원성이 없고, 현재 상용화된 협막 백신이 없으므로 2번이 잘못된 설명이다. Lancefield A군 분류, ASO 항체 확인, 류마티즘열·급성사구체신염 합병, 용원성 파지가 만드는 발적독소에 의한 성홍열은 모두 맞다."
   },
   "22": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "국소감염 (0.4) 수막염균: 협막있음. anti-phagocytic 혈류를 통한 전파가능 / (0.6) / 임균 : 협막 없음",
    "source_note": "",
-   "explanation": ""
+   "explanation": "수막염균은 다당류 협막을 가져 탐식과 보체에 저항하므로 혈류를 타고 퍼져 균혈증·수막염 같은 전신 감염을 일으킨다. 반면 임균은 협막이 없어 주로 요도·자궁경부 등 점막에 국한된 국소 감염을 일으키고 전신 파종은 드물다."
   },
   "23": {
    "answer": [
@@ -203,14 +203,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "생후 6주 영아의 발작성 기침·기침 후 구토·무호흡과 한 달간 기침하는 10세 누나(가정 내 전파원) → 백일해(Bordetella pertussis)다. 어린 영아는 특유의 흡기음 없이 무호흡·청색증으로 나타날 수 있다."
   },
   "24": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "B: 단백질 합성 / A: elongation factor 2 (EF2)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "디프테리아 독소의 A 서브유닛은 세포질에 들어가 (A) 연장인자 2(elongation factor 2)를 ADP-ribosylation하여 불활성화시킨다. 그 결과 (B) 단백질 합성이 멈춰 숙주세포가 죽고 위막·심근염·신경병증이 생긴다."
   },
   "25": {
    "answer": [
@@ -219,14 +219,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Shigella는 대장 점막 상피세포에 국한되어 침입·증식하고 혈류로 잘 들어가지 않아 균혈증이 드물다. E. coli·Brucella·Francisella는 균혈증을 잘 일으키고, Mycoplasma pneumoniae도 드물게 균혈증이 보고되지만 출제 의도는 Shigella의 국소 침습성이다."
   },
   "26": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "B. 자궁경부(cervix) (각 0.5) / A 요도(urethra)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "남성의 임질은 주로 (A) 요도(urethra)에 국한되어 요도염으로 나타나고, 여성에서는 (B) 자궁경부(cervix)가 주된 감염 부위다. 여성은 무증상이 많아 상행 감염으로 골반염·불임이 생길 수 있다."
   },
   "27": {
    "answer": [
@@ -235,7 +235,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "폐렴사슬알균은 세균성 폐렴의 60~70%를 차지한다. Lancefield 분류로 군을 나누지 않고(알파용혈성), 건조·소독제·산소에 약하며, 백신 성분은 펩티도글리칸이 아니라 협막 다당류다. 알파용혈성이며 Quellung 반응으로 협막 혈청형을 확인한다."
   },
   "28": {
    "answer": [
@@ -244,7 +244,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "비장절제 환자에서 발열·두통과 점출혈성 발진, 뇌척수액 그람염색의 그람음성 알균 → 수막알균(N. meningitidis) 수막염이다. 비장이 없으면 협막세균 감염이 전격적으로 진행하므로 즉각 치료해야 한다."
   },
   "29": {
    "answer": [
@@ -253,7 +253,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Campylobacter는 그람음성 만곡 막대균으로 편모 운동성이 있고, 당을 이용하지 못하며, 국내 급성설사질환에서 살모넬라 다음으로 흔하고 발열·복통·설사를 일으킨다. 다만 길랭-바레 증후군은 C. jejuni, 균혈증·중추신경계 감염은 C. fetus가 일으키므로 '라'는 두 종이 뒤바뀐 틀린 서술이다."
   },
   "30": {
    "answer": [
@@ -262,14 +262,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "장티푸스의 만성·무증상 보균자는 담낭(특히 담석이 있는 경우)에 균이 자리 잡고 담즙을 통해 장으로 배출된다. 그래서 보균자 치료에는 장기 항생제나 담낭절제가 필요할 수 있다."
   },
   "31": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "① macrophage, dendritic cell 혹은 탐식세포와 수지상세포 / CD4+ T cell 혹은 helper T 세포",
    "source_note": "",
-   "explanation": ""
+   "explanation": "선천면역과 후천면역을 연결하는 대표 세포는 ① 대식세포(macrophage)와 수지상세포(dendritic cell)로, 병원체를 포식해 처리한 항원을 MHC II에 실어 ② CD4+ 보조 T세포에 제시한다."
   },
   "32": {
    "answer": [
@@ -278,14 +278,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "아버지의 대상포진은 병변을 덮으면 전파 위험이 낮고, 건강한 생후 6개월 아이는 모체 이행항체가 있으며 수두 백신 접종 연령(12개월)도 되지 않아 특별한 조치 없이 관찰한다. 수두면역글로불린은 면역저하자·신생아·임신부 등 고위험군에, 백신은 12개월 이상 감수성자에 쓴다."
   },
   "33": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "B. hyaluronidase / A. 히알루론산",
    "source_note": "",
-   "explanation": ""
+   "explanation": "매독균은 끝부분으로 (A) 히알루론산이 많은 기질을 통해 혈관 내피세포에 부착하고, 균이 만드는 (B) hyaluronidase가 기질을 분해해 혈관 주위 침윤과 조직 침투를 돕는다. 그 결과 매독의 특징인 혈관내막염과 혈관주위 염증이 생긴다."
   },
   "34": {
    "answer": [
@@ -294,7 +294,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "콜레라 독소 기전 설명은 가·나·다·라 모두 맞다. 즉 neuraminidase가 수용체를 GM1으로 바꾸고, 5개의 B 소단위가 GM1에 결합한 뒤, 유리된 A1이 adenylate cyclase를 활성화시켜 cAMP가 축적되고, 염소·중탄산·칼륨과 물이 장 내로 과다 분비되어 쌀뜨물 설사가 나타난다."
   },
   "35": {
    "answer": [
@@ -303,7 +303,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Francisella tularensis(토끼·진드기)와 Salmonella Enteritidis(가금·달걀)는 동물에서 사람으로 옮는 인수공통감염병의 원인체다. Mycoplasma pneumoniae와 Chlamydia trachomatis는 사람이 유일한 숙주이므로 '가, 다'가 정답이다."
   },
   "36": {
    "answer": [
@@ -312,21 +312,21 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "2주간의 발열·인후통, 경부 림프절 비대, 편도 삼출물, 비장비대와 혈액도말의 비정형 림프구 → EBV 감염성 단핵구증이다. 비장 파열 위험이 있어 접촉 운동은 피해야 하고, 암피실린을 주면 발진이 생길 수 있다."
   },
   "37": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "Haemophilus influenzae",
    "source_note": "",
-   "explanation": ""
+   "explanation": "S. epidermidis의 베타용혈대 주변에서만 자라는 위성현상을 보이고 초콜릿우무배지에서 자라는 균은 X(hemin)·V(NAD) 인자를 요구하는 Haemophilus influenzae다. 면역억제 환자에서 호흡기·요로에서 분리되었고 증상이 없어 치료 없이 소실되었다."
   },
   "38": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "Cardiolipin (diphosphatidyl glycerol)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "매독 선별검사(VDRL·RPR)에 쓰는 비트레포네마(비매독균) 항원은 cardiolipin(diphosphatidyl glycerol)에 lecithin·cholesterol을 섞은 것이다. 조직 손상으로 노출된 지질에 대한 항체(reagin)를 검출하므로 위양성이 있을 수 있어, 양성이면 TPHA·FTA-ABS 같은 트레포네마 검사로 확인한다."
   },
   "39": {
    "answer": [
@@ -335,7 +335,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Listeria monocytogenes와 결핵균은 세포 안에서 증식하므로 Th1·대식세포 활성화 같은 세포성 면역이 주된 방어기전이다. 황색포도알균과 폐렴사슬알균은 세포 밖 세균으로 항체·보체·탐식(체액면역)이 핵심이므로 정답은 '나, 라'다."
   },
   "40": {
    "answer": [
@@ -344,14 +344,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "오염된 생유·유제품 섭취로 감염되어 대식세포 안에서 증식하고 간·비장에 육아종과 농양을 만들며 오르내리는 파상열(undulant fever)을 보이는 균은 Brucella abortus다. 장티푸스는 지속열, 결핵은 만성 소모성 경과, Chlamydophila psittaci는 앵무새병을 일으킨다."
   },
   "41": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "A: Type IV secretion system을 통해 분비되어 세포의 cytoskeleton 손상 / B: urease",
    "source_note": "",
-   "explanation": ""
+   "explanation": "(A) CagA는 Type IV 분비계를 통해 숙주 상피세포 안으로 주입되어 인산화된 뒤 세포골격을 교란하고 세포 증식·염증 신호를 바꾸어 궤양·위암 위험을 높인다. (B)는 urease로, 요소를 암모니아로 분해해 주변 산을 중화함으로써 위산 환경에서 생존하게 한다."
   },
   "42": {
    "answer": [
@@ -360,7 +360,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "연충(helminth) 감염 방어는 Th2 반응이 주도하여 IL-4·IL-5·IL-13이 분비되고, 호산구·비만세포·호염기구와 IgE가 핵심 역할을 한다. 대식세포는 대체 활성화(M2)로 조직 복구에 관여한다. ※ 확인 필요: 보기 '가~라'의 세포 목록이 그림으로 되어 있어 본문에서 확인되지 않으므로, 원본 보기를 보고 해당 세포를 맞춰 읽을 것."
   },
   "43": {
    "answer": [
@@ -369,7 +369,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "WHO 2017년 우선순위 병원체 목록 1순위이면서 국내 요양병원 분리균주의 80% 이상이 카바페넴 내성인 균은 Acinetobacter baumannii다. 건조한 환경에서 오래 살아남아 병원 내 전파가 잘 된다."
   },
   "44": {
    "answer": [
@@ -378,14 +378,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "4일간의 발열·기침·콧물·결막충혈 뒤 귀 뒤에서 시작해 퍼지는 발진과 구강 점막의 Koplik 반점 → 홍역이다. 성홍열은 사포 모양 발진과 딸기혀, 돌발진은 해열 후 발진, 수족구는 손발·입안 병변을 보인다."
   },
   "45": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "Borrelia 보렐리아",
    "source_note": "",
-   "explanation": ""
+   "explanation": "발열기 혈액 도말의 김자·라이트 염색에서 보이는 굵고 느슨하게 꼬인 나선균은 Borrelia(재귀열)다. 다른 스피로헤타(Treponema·Leptospira)는 가늘어 일반 염색으로 보이지 않는다."
   },
   "46": {
    "answer": [
@@ -394,14 +394,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "전신화상 환자의 화상부위에서 갈색·녹색 농과 포도향 같은 방향족 냄새가 나고, 맥콩키 배지에서 유당 비분해(무색) 집락에 색소를 만드는 균은 Pseudomonas aeruginosa다. 녹농균은 pyocyanin·pyoverdine·pyomelanin 등 색소를 만든다."
   },
   "47": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "A / 말초혈액이나 뇌척수액 B 소변 (각 0.5)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "렙토스피라는 발병 1주 이내에는 혈류·뇌척수액에 균혈증 형태로 존재하므로 (A) 말초혈액 또는 뇌척수액을 배양하고, 1주 이후에는 신세뇨관에서 배출되므로 (B) 소변을 검체로 쓴다."
   },
   "48": {
    "answer": [
@@ -410,7 +410,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "C. perfringens는 연조직감염(봉와직염, 근막염, 화농근염, 근괴사)을 일으키고 급속히 증식하며 가스를 만들어 가스괴저를 일으키므로 '라'가 맞다. 생체 내에서는 아포를 거의 만들지 않아 그람염색으로 관찰하기 어렵고('가' 틀림), 혈액우무배지에서 이중대 베타용혈을 보이며('나' 틀림), 괴사성 장염을 일으키는 것은 beta 독소가 맞지만 보기 '다'는 다른 서술과 묶여 정답에서 빠졌다. ※ 확인 필요: '다'의 내용(4개 치사독소와 beta 독소에 의한 괴사성 장염)은 교과서적으로 옳으므로 출제 의도를 확인할 것."
   },
   "49": {
    "answer": [
@@ -419,14 +419,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "산전 뇌실비대와 출생일 뇌척수액에서 CMV DNA가 검출된 증상성 선천성 거대세포바이러스 감염이다. 중추신경 침범이 있으므로 경구 valganciclovir(또는 정주 ganciclovir)를 6개월 투여해 청력·신경발달 예후를 개선한다."
   },
   "50": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "② 엔도좀 (endosome) / ① 세포질 (cytosol)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "세포 안에서 만들어진 내인성 항원은 ① 세포질(cytosol)에서 프로테아좀으로 분해되어 MHC class I에 실려 CD8+ T세포에 제시된다. 밖에서 들어온 외인성 항원은 ② 엔도좀(endosome)에서 분해되어 MHC class II로 CD4+ T세포에 제시된다."
   },
   "51": {
    "answer": [
@@ -435,14 +435,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "Amantadine, rimantadine - Penetration and uncoating",
-   "explanation": ""
+   "explanation": "인터페론은 감염세포의 단백질 합성을 차단하고, heparan·dextran sulfate는 바이러스 부착을 막으며, 뉴클레오사이드 유사체는 DNA 중합효소를 억제하고, oseltamivir는 neuraminidase 억제제다. 따라서 가·나·다·라 모두 옳은 조합이다(참고로 amantadine은 침투·탈외피 단계를 막는다)."
   },
   "52": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "acetylcholine의 분비를 막아 근육 수축을 억제한다 (운동신경세포에 수용체 / 표면에 결합하여 독소를 세포내로 이동후 acetylcholin의 분비를 조절하는 / SNARE 단백질을 불활성시켜 이완성 마비를 유발) / A. tetanus toxin / glycine/GABA 신경전달 물질의 분비를 차단하여 강직마비 B. botulium / toxin",
    "source_note": "",
-   "explanation": ""
+   "explanation": "A는 파상풍 독소로 척수 억제성 뉴런의 glycine·GABA 방출을 막아 강직마비를 일으키고, B는 보툴리눔 독소로 신경근접합부에서 SNARE를 잘라 acetylcholine 방출을 막아 이완성 마비를 일으킨다. 둘 다 아연 의존성 단백분해효소이지만 작용 부위가 다르다. ※ 확인 필요: 원본 정답지에 A·B의 작용기전 설명이 서로 엇갈려 적혀 있으므로, '강직마비=파상풍, 이완성마비=보툴리눔'으로 읽어야 한다."
   },
   "53": {
    "answer": [
@@ -451,7 +451,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "결핵균에 노출된 사람의 대부분은 잠복결핵으로 남고 평생 발병 위험이 약 10%이며, 원발 결핵 병터는 환기가 좋은 폐 중하엽이지만 '대부분에서 2년 이내 활동성 결핵이 발생한다'는 서술은 틀리므로 3번이 정답이다. 세포벽의 mycolic acid, 폐포 대식세포 내 생존, 투베르쿨린 검사 판독, IGRA의 특이성 설명은 모두 맞다."
   },
   "54": {
    "answer": [
@@ -460,7 +460,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "엽상형 분생자(thallic conidium)는 이미 만들어진 균사가 분화·분절되어 생기는 포자로 소분생자·대분생자·비후막포자·분절분생자가 여기에 속한다. 효모의 출아(budding)는 모세포에서 싹이 돋는 아생형(blastic) 생식이므로 해당되지 않는다."
   },
   "55": {
    "answer": [
@@ -469,7 +469,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "2019년 ICTV 분류에서 Arenaviridae는 분절 음성가닥 RNA 바이러스 목인 Bunyavirales에 속한다. Articulavirales에는 Orthomyxoviridae, Mononegavirales에는 비분절 음성가닥 바이러스, Ortervirales에는 역전사 바이러스, Caudovirales에는 꼬리 파지가 속한다."
   },
   "56": {
    "answer": [
@@ -478,7 +478,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "한센균은 인공배지에서 전혀 배양되지 않으며 세대시간이 약 12~14일로 매우 길다. 따라서 '세대시간 24~48시간, 2개월 만에 집락 형성'이라는 1번이 옳지 않다. 말초신경 우선 침범, 나종나병의 다균성·고항체가, 결핵나병의 소수균·저전염력, armadillo 동물모델은 모두 맞다."
   },
   "57": {
    "answer": [
@@ -487,7 +487,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Veillonella는 그람음성 혐기성 알균으로 구강과 대장에 정상균무리로 존재하므로 '라'가 맞다. Actinomyces는 그람양성 막대균(구강), Bacteroides는 그람음성 막대균이지만 주 서식처는 대장이며, Peptostreptococcus는 그람양성 알균이므로 가·나·다는 틀리다."
   },
   "58": {
    "answer": [
@@ -496,28 +496,28 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "Amphotericin B는 진균 세포막의 에르고스테롤에 직접 결합해 구멍을 만들어 투과성을 깨뜨리는 다엔계 항진균제다. Ketoconazole·morpholine은 에르고스테롤 합성 억제, caspofungin은 세포벽 글루칸 합성 억제, 5-FC는 핵산 합성 억제다."
   },
   "59": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "① 1형 / ② 척수전각세포",
    "source_note": "",
-   "explanation": ""
+   "explanation": "폴리오바이러스 마비형의 85% 이상은 ① 1형에 의한 것이다. 마비성 소아마비는 바이러스가 중추신경계에 들어가 ② 척수 전각세포(운동뉴런)에서 복제해 이를 파괴할 때 생기며 급성 이완성마비로 나타난다."
   },
   "60": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "B: 호기성 / A: 협기성세균 / 원생생물",
    "source_note": "",
-   "explanation": ""
+   "explanation": "메트로니다졸은 세포 안에서 환원되어야 활성 대사물이 되는데, 이 환원은 낮은 산화환원 전위를 갖는 (A) 혐기성 세균과 일부 원생생물 안에서만 일어난다. 따라서 사람 세포나 (B) 호기성(산소성) 세균에는 거의 영향을 주지 않는 선택독성을 보인다."
   },
   "61": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "cytomegalovirus",
    "source_note": "",
-   "explanation": ""
+   "explanation": "소두증, 간비장비대, 발진, 두개내 석회화가 있고 어머니가 임신 말기에 단핵구증 비슷한 증상을 앓았다면 선천성 거대세포바이러스(CMV) 감염이다. 톡소플라즈마증도 비슷하지만 석회화가 뇌 전반에 흩어지고(CMV는 뇌실 주위), 모체의 단핵구증 양상은 CMV에 더 맞다."
   },
   "62": {
    "answer": [
@@ -526,14 +526,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "인공 무세포배지에서 배양되는 가장 작은 세균이며 세포벽이 없고 사람에게만 병원성을 보이며 비정형 폐렴을 일으키는 균은 Mycoplasma pneumoniae다. Rickettsia·Coxiella·Chlamydia는 세포배양이 필요하고, Ureaplasma는 비뇨생식기 감염을 일으킨다. ※ 확인 필요: M. pneumoniae는 통성 혐기성으로 보는 자료도 있어 '절대산소성'이라는 표현은 교과서에 따라 다르다."
   },
   "63": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "두창의 병소: 반점>구진>소수포>농포>가피>반흔(곰보) - 수두의 병소는 각각 / 다른 단계에 있지만 두창의 병소는 모두 같은 단계 이다.",
    "source_note": "",
-   "explanation": ""
+   "explanation": "수두는 반점·구진·수포·농포·가피가 한 부위에 동시에 섞여 보이는(여러 단계 공존) 반면, 두창은 모든 병소가 같은 단계로 함께 진행해 반점→구진→수포→농포→가피→흉터(곰보) 순서를 똑같이 밟는다. 이 '병소 단계의 동시성' 차이가 두 질환을 가르는 중요한 소견이다."
   },
   "64": {
    "answer": [
@@ -542,14 +542,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "폴리오바이러스와 콕사키바이러스는 모두 엔테로바이러스로 분변-구강 경로로 전파되고 사람이 유일한 숙주다. 그러나 일차 감염에서 무증상 비율은 폴리오가 90% 이상이고 콕사키는 증상(수족구·herpangina 등)이 흔하며, 백신은 폴리오에만 있으므로 '가, 다'가 공통점이다."
   },
   "65": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "A / reticulate body / elementary body; B",
    "source_note": "",
-   "explanation": ""
+   "explanation": "클라미디아는 감염력이 있는 (A) 기본체(elementary body)가 세포에 들어가 포식소체 안에서 대사 활성이 있는 (B) 망상체(reticulate body)로 바뀌어 이분법으로 증식한다. 망상체가 다시 기본체로 전환되고 세포가 파괴되면 기본체가 나와 다른 세포를 감염시킨다."
   },
   "66": {
    "answer": [
@@ -558,7 +558,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "면역증강제(adjuvant)는 함께 투여된 항원에 대한 면역반응을 높이는 물질로, 항원제시세포의 항원 흡수를 돕고 대식세포·림프구를 활성화하며 사이토카인 생성을 촉진한다. 그러나 adjuvant 자체에 대한 특이 면역반응을 유도하는 것이 목적이 아니므로 2번이 틀리다."
   },
   "67": {
    "answer": [
@@ -567,7 +567,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "수두의 전염력은 2차 바이러스 혈증이 시작되어 바이러스가 피부·호흡기 점막에 도달하는 시기부터 나타나며, 실제로 발진이 생기기 1~2일 전부터 호흡기로 전파된다. 전염력은 모든 병변이 가피로 덮일 때까지 지속된다."
   },
   "68": {
    "answer": [
@@ -576,14 +576,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "홍역바이러스와 볼거리바이러스는 모두 사람이 유일한 숙주이고, 단일 혈청형이어서 한 번 앓거나 접종하면 평생 면역이 생기므로 '나, 라'가 공통점이다. 볼거리는 약 3분의 1이 무증상이어서 '다'는 홍역에만 해당하고, 현행 법정감염병 분류에서 두 질환은 2급이다."
   },
   "69": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "A: ACE2 원인: Coronavirus는 RNA virus로 RdRp에 의해 spike protein의 / 돌출된 표면 아미노산의 돌연변이가 생기며 이는 RdRp의 proofreading 활 / 성이 없기 때문이다.",
    "source_note": "",
-   "explanation": ""
+   "explanation": "(A) 수용체는 ACE2이다. 코로나바이러스는 RNA 바이러스로 RdRp의 교정(proofreading) 능력이 제한적이어서 복제 중 점돌연변이가 생기고, 특히 표면에 노출된 spike 단백의 수용체결합영역에 변이가 축적된다. 이런 변이는 ACE2 결합력을 높이거나 중화항체 인식 부위를 바꿔 전파력 증가와 백신 효능 저하로 이어진다."
   },
   "70": {
    "answer": [
@@ -592,7 +592,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "쥐벼룩이 매개하는 질환은 발진열(murine typhus, Rickettsia typhi)이다. 발진티푸스는 몸니, 리케차 두창은 생쥐진드기, 쯔쯔가무시병은 털진드기 유충, Q열은 감염 동물의 분비물 에어로졸 흡입으로 전파된다."
   },
   "71": {
    "answer": [
@@ -601,7 +601,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "쯔쯔가무시병은 털진드기 유충이 활동하는 가을(9~11월)에 가장 많이 발생하고, Orientia는 펩티도글리칸이 거의 없어 베타락탐에 내성이며, 가피는 겨드랑이·사타구니·몸통 등 가려지고 습한 부위에서 잘 관찰된다. 국내에서 가장 많이 분리되는 혈청형은 Boryong형이므로 '라'는 틀리고 '가, 나, 다'가 정답이다."
   },
   "72": {
    "answer": [
@@ -610,7 +610,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "생후 6개월 미만 영아에서 세균이 분리되지 않는 세기관지염·폐렴의 가장 흔한 원인은 호흡기세포융합바이러스(RSV)다. 파라인플루엔자는 크룹, 아데노바이러스는 인두결막열, 인플루엔자는 계절유행, 콕사키바이러스는 수족구·herpangina가 주된 양상이다."
   },
   "73": {
    "answer": [
@@ -619,7 +619,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "로타바이러스는 소장 융모세포의 세포질에서 증식해 세포를 파괴·탈락시켜 물·나트륨·포도당 흡수장애로 설사를 일으키므로 '라'만 맞다. 유전체는 11분절 double strand RNA이고, 경구 생백신이 있으며, 사람 외 여러 동물에도 감염된다."
   },
   "74": {
    "answer": [
@@ -628,14 +628,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "단순포진바이러스는 외피를 가진 큰 정이십면체 캡시드의 이중가닥 DNA 바이러스이고, 잠복·재발 조절에는 세포성 면역이 필요하므로 '가, 다'가 맞다. 치료제는 acyclovir 계열이고 ganciclovir·foscarnet은 CMV용이며, 재발 시에도 병변이 없는 상태에서 무증상 바이러스 배출이 일어나므로 '나'와 '라'는 틀리다."
   },
   "75": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "p53; B / pRB / A",
    "source_note": "",
-   "explanation": ""
+   "explanation": "HPV의 E6 단백은 종양억제단백 (A) p53을 분해시키고, E7 단백은 (B) pRB에 결합해 E2F를 풀어놓는다. 그 결과 세포주기 조절과 세포자멸사가 무너져 세포가 계속 증식하고 암으로 진행한다."
   },
   "76": {
    "answer": [
@@ -644,7 +644,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "HIV 선별검사(ELISA)가 양성이면 확진을 위해 전통적으로 Western blot을 시행한다(최근에는 항원/항체 면역분석 + HIV-1/2 감별검사와 핵산검사 알고리즘을 쓴다). CD4·CD8 수와 viral load는 확진이 아니라 병기·치료 모니터링 검사다."
   },
   "77": {
    "answer": [
@@ -653,7 +653,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "E형 간염바이러스는 분변-구강 경로로 전파되고 오염된 물이 주요 감염원이므로 5번이 옳다. A형 간염은 만성화되지 않고, 수혈 후 간염의 주요 원인은 C형이며, C형은 백신이 없고, D형은 HBV 표면항원이 있어야 하는 결손바이러스로 HBV 감염자에서만 감염된다."
   },
   "78": {
    "answer": [
@@ -662,7 +662,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "모식도의 외피 안에 3분절 음성가닥 RNA와 나선형 뉴클레오캡시드를 가진 구조는 Bunyavirales에 속하는 한타바이러스(Hantaan orthohantavirus)다. 뎅기는 비분절 양성가닥 RNA, 에볼라는 필라멘트형, VZV는 DNA 바이러스, Arenavirus는 2분절이다. ※ 확인 필요: 모식도 그림을 원본에서 함께 확인해 분절 수·형태를 맞춰 읽을 것."
   },
   "79": {
    "answer": [
@@ -671,7 +671,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "block >\n>\nenhance 로",
-   "explanation": ""
+   "explanation": "Togavirus·Flavivirus는 풍진을 제외하면 세포융해성이고, 전신 감염과 바이러스 혈증을 일으키며, 인터페론을 잘 유도해 감기 비슷한 증상을 만든다. 반면 중화능이 없는 항체는 대식세포의 Fc 수용체를 통해 오히려 감염을 '증강'시키므로(ADE, 뎅기 중증화) '라'는 틀리고 '가, 나, 다'가 정답이다."
   },
   "80": {
    "answer": [
@@ -680,28 +680,28 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "아데노바이러스는 급성호흡기질환(인두결막열·폐렴), 유행성 각결막염, 출혈성 방광염, 그리고 면역저하자에서 간염까지 일으킬 수 있어 가·나·다·라 모두 해당한다. 소아 장염의 원인(40·41형)이기도 하다."
   },
   "81": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "Norovirus / 담즙(bile acid)",
    "source_note": "",
-   "explanation": ""
+   "explanation": "겨울철 식중독의 주원인이며 10개 정도의 비리온으로도 감염되고 열·건조에 강한 바이러스는 노로바이러스다. 오랫동안 배양이 안 되다가 (A) 담즙(bile acid)을 넣은 사람 장 줄기세포 유래 장오가노이드에서 배양이 가능해졌다."
   },
   "82": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "가. ⓐ 혹은 42nm의 구형 입자 / 나. ⓑ와 ⓒ 혹은 22nm의 구형입자와 22nm의 실모양 입자",
    "source_note": "",
-   "explanation": ""
+   "explanation": "전염성이 있는 완전한 바이러스 입자(Dane particle)는 (가) 42 nm 구형 입자이고, 백신의 주성분이 되는 것은 표면항원(HBsAg)만으로 이루어진 (나) 22 nm 구형 입자와 22 nm 실 모양 입자다. 후자는 유전체가 없어 감염성이 없다."
   },
   "83": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "CD4 / gp120",
    "source_note": "",
-   "explanation": ""
+   "explanation": "HIV의 부착 단백질은 외피 당단백 gp120이고 숙주세포의 1차 수용체는 CD4이다. 결합 후 CCR5 또는 CXCR4 공동수용체가 필요하며, gp41이 막융합을 일으킨다."
   },
   "84": {
    "answer": [
@@ -710,7 +710,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "뎅기열·황열은 숲모기(Aedes aegypti), 일본뇌염은 빨간집모기(Culex), 중증 열성 혈소판감소 증후군은 작은소피참진드기(Haemaphysalis longicornis)가 매개하므로 가·나·다·라 모두 옳게 연결되었다."
   },
   "85": {
    "answer": [
@@ -719,7 +719,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "신경아미니다제(neuraminidase)는 숙주세포 표면의 sialic acid를 잘라 새로 만들어진 비리온이 세포에서 떨어져 나오게 한다. 따라서 방출을 촉진하는 단백이며, 이를 막는 약이 oseltamivir·zanamivir다. HA는 부착, M2는 이온통로, M1은 기질 단백이다."
   },
   "86": {
    "answer": [
@@ -728,7 +728,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "HBV와 HCV는 수직감염·성접촉 전파가 가능하고, 면역 매개 간세포 손상이라는 발병기전을 공유하며, 간암으로 진행할 수 있다. 그러나 예방접종은 HBV에만 있으므로 3번이 공통점이 아니다."
   },
   "87": {
    "answer": [
@@ -737,7 +737,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "만성 간염으로 이행하는 비율은 C형 간염이 약 70~80%로 성인 B형 간염(5~10%)보다 훨씬 높으므로 5번이 옳다. 소아 A형 간염은 대부분 무증상·무황달이고, 증식 지표는 HBc 항원이 아니라 혈청의 HBe 항원이며, C형 급성기 증상은 오히려 가볍고, B형은 감염 연령이 낮을수록 만성 보유자가 되는 비율이 높다."
   },
   "88": {
    "answer": [
@@ -746,7 +746,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "아만타딘(과 리만타딘)은 M2 이온통로를 막아 탈외피를 억제하는 약으로, M2가 없는 B형에는 효과가 없고 A형 인플루엔자에만 작용한다(현재는 내성으로 거의 쓰지 않는다). 타미플루·리렌자는 A·B형 모두에, 아시클로비르는 헤르페스에, 알다라(imiquimod)는 사마귀 등에 쓴다."
   },
   "89": {
    "answer": [
@@ -755,14 +755,14 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "프리온병은 변형 단백(PrPsc)이 쌓여 신경세포가 공포화(spongiform)되는 질환으로, 핵산이 없어 항원성이 없고 면역·염증 반응이 일어나지 않으며 잠복기가 매우 길다. 혈관세포의 퇴행성 변화는 프리온병의 병인과 관계가 없다."
   },
   "90": {
    "answer": [],
    "answer_by": "원본",
    "answer_text": "감염된 들쥐(등줄쥐)의 소변 / 타액을 통해 분비된 후 건조된 바이러스가 호흡기를 통해 감염 들쥐(0.3) / 호흡기 (0.3) / 소변 대변 타액 (0.2*2=0.4) / 대변",
    "source_note": "",
-   "explanation": ""
+   "explanation": "한타바이러스 신증후군출혈열은 감염된 들쥐(등줄쥐)의 소변·대변·타액으로 배출된 바이러스가 건조되어 먼지와 함께 공기 중에 떠다니다가 사람의 호흡기로 흡입되어 감염된다. 사람 간 전파는 (국내 한탄바이러스에서는) 일어나지 않는다."
   },
   "91": {
    "answer": [
@@ -771,7 +771,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "네그리소체는 광견병바이러스에 감염된 신경세포의 세포질에서 보이는 호산성 봉입체로, 해마·소뇌 푸르키네세포 등 뇌 조직에서 가장 잘 관찰된다. 침샘은 바이러스 배출 부위지만 네그리소체 관찰에는 적합하지 않다."
   },
   "92": {
    "answer": [
@@ -780,7 +780,7 @@
    "answer_by": "원본",
    "answer_text": "",
    "source_note": "",
-   "explanation": ""
+   "explanation": "에볼라바이러스와 Orientia tsutsugamushi는 혈관 내피세포에 감염·손상을 일으켜 혈관 투과성 증가와 출혈·혈관염을 만든다. Anaplasma phagocytophilum은 과립구(호중구) 안에서 증식하고, Chlamydia trachomatis는 점막 상피세포를 침범하므로 '가, 다'가 정답이다."
   }
  }
 }
