@@ -192,6 +192,7 @@ def embedded_for(page, rect):
     try:
         base = doc.extract_image(xref)
         im = Image.open(io.BytesIO(base['image']))
+        im.load()          # 깨진(잘린) 원본 그림이면 여기서 실패 → 화면 렌더링 그림을 쓴다
     except Exception:
         return None, 0
     bg = Image.new('RGB', im.size, (255, 255, 255))
