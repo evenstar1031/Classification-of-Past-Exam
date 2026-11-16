@@ -56,9 +56,9 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          # 「기출」 라벨 이슈(기출 정리)는 Sonnet, 나머지(학습자료 등)는 Opus
+          # 「기출」 라벨 이슈(기출 정리)는 Sonnet, 제목에 「해설」이 있거나 학습자료 등 나머지는 Opus
           claude_args: |
-            --model ${{ contains(github.event.issue.labels.*.name, '기출') && 'claude-sonnet-5-5' || 'claude-opus-5-5' }}
+            --model ${{ (contains(github.event.issue.labels.*.name, '기출') && !contains(github.event.issue.title, '해설')) && 'claude-sonnet-5-5' || 'claude-opus-5-5' }}
             --max-turns 300
             --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
             --append-system-prompt "이 저장소의 CLAUDE.md, 특히 'GitHub 이슈에서 @claude 로 불렸을 때' 절을 따른다. 사용자에게는 이슈 댓글로 한국어로 짧게 보고한다."
