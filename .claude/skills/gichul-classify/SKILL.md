@@ -77,8 +77,11 @@ the same lecture for all of them.
 ## 3. Build the lecture PDFs (per subject, after all its exams are classified)
 ```bash
 python3 tools/classify.py check <과목>          # table of lecture × year; must be [OK]
-python3 tools/build_lectures.py <과목>          # all lecture PDFs + 00_전체 + README 목차
+python3 tools/build_lectures.py <과목>          # all lecture PDFs + 00_전체 + README 목차·분류 결과
 ```
+The README also gets a `## 수업별 분류 결과` section: for every lecture, which exam and which
+original question numbers went into it (e.g. `- 2025년 시험: 74, 77, 81번`). Keep it — the user asked
+for it (2026-11-17). README only (no PDFs): `python3 tools/build_lectures.py <과목> --readme-only`.
 It must end with both `[OK]` lines (question count reconciles; fonts / numbers /
 answer-leak scan pass for every PDF). Then look at pages: `work/_lectures/<과목>/<id>/pv/`
 — at least the lectures that received questions this session and the first pages of
@@ -137,6 +140,9 @@ and tell the user to press the green Merge button. Never commit `work/` or fonts
 ## 5. Report (short, per exam, in Korean)
 - 문항 수, 자동 분류 N / 내용으로 정한 것 M (각각 번호 → 수업, 근거 한 줄) / 기타(99)
 - gichul-strip report: (1) 고친 것 (2) 원문 그대로 두고 알려만 두는 것
+- **분류 결과 (항상 보여 준다, 사용자 요청 2026-11-17)**: 이번에 분류한 시험마다 수업별로 어느 문항이
+  들어갔는지 — `01 세균감염의 치료와 예방: 74, 77, 81번` 처럼 수업 순서대로 한 줄씩 (원래 시험지 번호).
+  Mention that `문제지/<과목>/README.md` 「수업별 분류 결과」 has the same list for every year.
 - 새로 문항이 들어간 수업 목록, and `문제지/<과목>/README.md` has the full table
 
 ## Other requests

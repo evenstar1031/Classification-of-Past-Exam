@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """분류 결과로 수업별 문제지 PDF 만들기.
 
-usage: python3 tools/build_lectures.py <과목> [--only 09 11] [--allow-missing]
+usage: python3 tools/build_lectures.py <과목> [--only 09 11] [--allow-missing] [--readme-only]
+       (--readme-only: PDF는 건드리지 않고 README 목차·분류 결과만 다시 씀)
 
 입력: 분류/<과목>/*.json, 과목정보/<과목>.json,
       work/<시험id>/ (없으면 원본 PDF에서 extract 를 다시 돌리고 작업기록의 fixes.json 을 씌움)
 출력: 문제지/<과목>/<수업id>_<수업명>.pdf   수업마다 한 파일, 최신 연도부터
       문제지/<과목>/00_전체_수업순.pdf        모든 수업을 한 파일로 (수업마다 새 페이지)
-      문제지/<과목>/README.md                수업 × 연도 문항 수 표 (GitHub 폴더 화면에 보임)
+      문제지/<과목>/README.md                수업 × 연도 문항 수 표 + 수업별 분류 결과
+                                             (어느 시험 몇 번이 그 수업인지; GitHub 폴더 화면에 보임)
 
 과목정보에서 읽는 표시용 설정 (없으면 무시):
   수업 "show_name"   파일·제목에 쓰는 이름 (학교 수업명 "name" 은 그대로 두어 make_subject_info 와 맞춤)
@@ -137,9 +139,54 @@ def page_doc(body):
             f'<body>{body}</body></html>')
 
 
+def write_readme(subj, inf, L, groups, order, n_exams, total, outdir):
+    """문제지/<과목>/README.md: 수업 × 연도 문항 수 표 + 수업별 분류 결과(시험·문항 번호)."""
+    years = sorted({t[0]['year'] for v in groups.values() for t in v}, reverse=True)
+    lines = [f"# {inf['name']} — 수업별 기출", '',
+             f"시험 {n_exams}개 · 총 {total}문항 · 한 권으로 보기: [{all_name(inf)}]({urllib.parse.quote(all_name(inf))})", '',
+             '| 수업 | ' + ' | '.join(f'{y}' for y in years) + ' | 합계 |',
+             '|---|' + '---:|' * (len(years) + 1)]
+    for lid in order:
+        if lid not in groups:
+            continue
+        cnt = {}
+        for ex, _, _ in groups[lid]:
+            cnt[ex['year']] = cnt.get(ex['year'], 0) + 1
+        fn = lect_file(inf, L[lid])
+        link = f"[{lid}. {lname(L[lid])}]({urllib.parse.quote(fn)})"
+        lines.append(f'| {link} | ' + ' | '.join(str(cnt.get(y, '')) for y in years) + f' | {sum(cnt.values())} |')
+    none = [x for x in inf['lectures'] if x['id'] not in groups and x.get('exam', True) and not x.get('merged_into')]
+    if none:
+        lines += ['', '아직 기출이 없는 수업: ' + ', '.join(f"{x['id']} {lname(x)}" for x in none)]
+    merged = [x for x in inf['lectures'] if x.get('merged_into')]
+    if merged:
+        lines += ['', '합친 수업: ' + ', '.join(f"{x['id']} {x['name']} → {x['merged_into']} {lname(L[x['merged_into']])}"
+                                            for x in merged)]
+
+    # 수업별 분류 결과: 어느 시험의 몇 번 문항이 이 수업으로 분류됐는지
+    lines += ['', '## 수업별 분류 결과', '',
+              '수업마다 어느 시험의 몇 번 문항을 넣었는지입니다. 번호는 **원래 시험지의 문항 번호**이고, '
+              '한 해에 시험이 둘 이상이면 날짜로 구분합니다. '
+              f'근거(출제자·내용)는 `분류/{subj}/` 의 JSON 에 있습니다.', '']
+    for lid in order:
+        if lid not in groups:
+            continue
+        per = {}   # exam id -> (exam, [n])
+        for ex, q, _ in groups[lid]:
+            per.setdefault(ex['id'], (ex, []))[1].append(int(q['n']))
+        lines.append(f"### {lid}. {lname(L[lid])} ({len(groups[lid])}문항)")
+        lines.append('')
+        for ex, ns in per.values():   # groups are already sorted newest first
+            lines.append(f"- {ex.get('_label') or str(ex['year']) + '년 시험'}: "
+                         + ', '.join(str(n) for n in sorted(ns)) + '번')
+        lines.append('')
+    open(os.path.join(outdir, 'README.md'), 'w', encoding='utf-8').write('\n'.join(lines).rstrip() + '\n')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('subject'); ap.add_argument('--only', nargs='*'); ap.add_argument('--allow-missing', action='store_true')
+    ap.add_argument('--readme-only', action='store_true')
     a = ap.parse_args()
     inf = json.load(open(os.path.join(ROOT, '과목정보', f'{a.subject}.json'), encoding='utf-8'))
     L = {x['id']: x for x in inf['lectures']}; L['99'] = OTHER
@@ -150,8 +197,12 @@ def main():
     groups, missing, total = {}, [], 0
     for f in files:
         d = json.load(open(f, encoding='utf-8'))
-        ex = d['exam']; ex['_work'] = ensure_work(a.subject, ex)
-        parsed = {str(q['n']): q for q in json.load(open(os.path.join(ex['_work'], 'parsed.json'), encoding='utf-8'))}
+        ex = d['exam']
+        if a.readme_only:
+            parsed = {n: {'n': int(n)} for n in d['questions']}
+        else:
+            ex['_work'] = ensure_work(a.subject, ex)
+            parsed = {str(q['n']): q for q in json.load(open(os.path.join(ex['_work'], 'parsed.json'), encoding='utf-8'))}
         for n, e in d['questions'].items():
             lid = e.get('lecture')
             if not lid or lid not in L:
@@ -171,8 +222,11 @@ def main():
                                         t[0]['id'], t[1]['n']))
     outdir = os.path.join(ROOT, '문제지', a.subject)
     os.makedirs(outdir, exist_ok=True)
-    B.IMG_ABS = True
     order = [x['id'] for x in inf['lectures']] + ['99']
+    if a.readme_only:
+        write_readme(a.subject, inf, L, groups, order, len(files), total, outdir)
+        print(f'목차·분류 결과: 문제지/{a.subject}/README.md'); return
+    B.IMG_ABS = True
     todo = [lid for lid in order if lid in groups and (not a.only or lid in a.only)]
     made, all_ok, sections = set(), True, []
     for lid in order:
@@ -208,29 +262,7 @@ def main():
             if b != all_name(inf) and b not in made:
                 os.remove(f); print(f'  옛 파일 삭제: {b}')
 
-    # README 목차
-    years = sorted({t[0]['year'] for v in groups.values() for t in v}, reverse=True)
-    lines = [f"# {inf['name']} — 수업별 기출", '',
-             f"시험 {len(files)}개 · 총 {total}문항 · 한 권으로 보기: [{all_name(inf)}]({urllib.parse.quote(all_name(inf))})", '',
-             '| 수업 | ' + ' | '.join(f'{y}' for y in years) + ' | 합계 |',
-             '|---|' + '---:|' * (len(years) + 1)]
-    for lid in order:
-        if lid not in groups:
-            continue
-        cnt = {}
-        for ex, _, _ in groups[lid]:
-            cnt[ex['year']] = cnt.get(ex['year'], 0) + 1
-        fn = lect_file(inf, L[lid])
-        link = f"[{lid}. {lname(L[lid])}]({urllib.parse.quote(fn)})"
-        lines.append(f'| {link} | ' + ' | '.join(str(cnt.get(y, '')) for y in years) + f' | {sum(cnt.values())} |')
-    none = [x for x in inf['lectures'] if x['id'] not in groups and x.get('exam', True) and not x.get('merged_into')]
-    if none:
-        lines += ['', '아직 기출이 없는 수업: ' + ', '.join(f"{x['id']} {lname(x)}" for x in none)]
-    merged = [x for x in inf['lectures'] if x.get('merged_into')]
-    if merged:
-        lines += ['', '합친 수업: ' + ', '.join(f"{x['id']} {x['name']} → {x['merged_into']} {lname(L[x['merged_into']])}"
-                                            for x in merged)]
-    open(os.path.join(outdir, 'README.md'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
+    write_readme(a.subject, inf, L, groups, order, len(files), total, outdir)
 
     counted = sum(len(n) for _, _, n in sections)
     print(f"\n[{'OK' if counted == total else 'FAIL'}] 분류된 문항 {total}개 = 수업별 PDF 문항 합계 {counted}개")
