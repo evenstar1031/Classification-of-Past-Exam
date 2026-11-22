@@ -574,7 +574,7 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
       <button type="button" role="tab" id="ptab-sem1" data-g="sem1" data-sem="1" aria-controls="panel-sem1" aria-selected="false" tabindex="-1" hidden>수업 후기</button>
       <button type="button" role="tab" id="ptab-sem1d" data-g="sem1d" data-sem="1" aria-controls="panel-sem1d" aria-selected="false" tabindex="-1" hidden>자료 정리</button>
       <button type="button" role="tab" id="ptab-gichul" data-g="gichul" data-sem="both" aria-controls="panel-gichul" aria-selected="false" tabindex="-1">기출·학습자료</button>
-      <button type="button" role="tab" id="ptab-tools" data-g="tools" data-sem="both" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 도구</button>
+      <button type="button" role="tab" id="ptab-tools" data-g="tools" data-sem="both" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 압축</button>
     </div>
     <div class="ctabs" role="tablist" id="ctabs" aria-label="과목" hidden></div>
   </nav>
@@ -3205,7 +3205,7 @@ window.APPX=(function(){
   async function openPdf(path, label){
     const name=path.split('/').pop();
     const w=sheet(name.replace(/\.pdf$/,''), `<p class="ax-msg">불러오는 중…</p>`,
-      `<button type="button" class="ax-btn" data-tool="compress" disabled>압축</button><button type="button" class="ax-btn" data-tool="font" disabled>글꼴 바꾸기</button><a class="ax-btn" id="ax-dl" aria-disabled="true">저장·공유</a><a class="ax-btn" href="https://github.com/${APP.repo}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}" target="_blank" rel="noopener">GitHub에서 열기</a>`, 'ax-pdf');
+      `<button type="button" class="ax-btn" data-tool="compress" disabled>압축</button><a class="ax-btn" id="ax-dl" aria-disabled="true">저장·공유</a><a class="ax-btn" href="https://github.com/${APP.repo}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}" target="_blank" rel="noopener">GitHub에서 열기</a>`, 'ax-pdf');
     let url=null; w.ov.addEventListener('closed',()=>{ if(url) URL.revokeObjectURL(url); });
     try{
       const blob=await APP.raw(path,'blob');
@@ -3421,13 +3421,11 @@ window.APPX=(function(){
   const top=document.querySelector('header.top .today');
   if(top){ const b=document.createElement('button'); b.type='button'; b.className='ax-acct'; b.textContent=APP.guest?'로그인':APP.login; b.setAttribute('aria-label',APP.guest?'로그인':'계정'); b.onclick=APP.guest?openGuest:openAccount; top.after(b); }
 
-  /* ── PDF 도구: 같은 사이트의 PDF 압축 · 강의자료 글꼴 바꾸기를 앱 안에 ── */
+  /* ── PDF 도구: 같은 사이트의 PDF 압축을 앱 안에 (도구가 하나뿐이면 고르는 버튼은 숨김) ── */
   const TOOL_HOST='https://evenstar1031.github.io';
   const TOOLS=[
     {id:'compress', name:'PDF 압축', src:TOOL_HOST+'/pdf-compress/', input:'#picker',
      desc:'용량을 줄입니다. 글자는 그대로라 검색·복사가 계속 됩니다. 파일은 내 기기 안에서만 처리돼요.'},
-    {id:'font', name:'글꼴 바꾸기', src:TOOL_HOST+'/lectrue-font-swap/', input:'#fileInput',
-     desc:'PDF·PPTX·DOCX 강의자료의 글꼴을 KoPub 바탕·산돌고딕으로 바꾸고, 그림 속 글자도 검색되게 합니다. 처음 한 번 글꼴(약 23MB)을 받아요.'},
   ];
   const toolsPanel=document.getElementById('panel-tools'), toolsTab=document.getElementById('ptab-tools');
   let curTool='compress';
@@ -3445,7 +3443,7 @@ window.APPX=(function(){
     @media (max-width:640px){ .tl-frame{border-left:0; border-right:0; border-radius:0; margin-inline:-16px; width:calc(100% + 32px)} }`;
     document.head.appendChild(tcss);
     toolsPanel.innerHTML=`<div class="tl-bar">
-        <div class="tl-seg" role="group" aria-label="도구 고르기">${TOOLS.map(t=>`<button type="button" data-t="${t.id}" aria-pressed="${t.id===curTool}">${t.name}</button>`).join('')}</div>
+        <div class="tl-seg" role="group" aria-label="도구 고르기"${TOOLS.length<2?' hidden':''}>${TOOLS.map(t=>`<button type="button" data-t="${t.id}" aria-pressed="${t.id===curTool}">${t.name}</button>`).join('')}</div>
         <p class="tl-desc" id="tl-desc"></p>
         <a class="tl-open" id="tl-open" target="_blank" rel="noopener">새 창으로 열기 ↗</a>
       </div><div id="tl-frames"></div>`;
@@ -4415,7 +4413,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     sem1d:'<path d="M3.5 7a2 2 0 0 1 2-2h4l2 2.2h7a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',
   };
   ICON.sem1p=ICON.syl; ICON.sem1=ICON.prof;
-  const SHORT={tt:'시간표',syl:'계획서',prof:'후기',gichul:'기출·자료',tools:'PDF 도구',sem1p:'계획서',sem1:'후기',sem1d:'자료 정리'};
+  const SHORT={tt:'시간표',syl:'계획서',prof:'후기',gichul:'기출·자료',tools:'PDF 압축',sem1p:'계획서',sem1:'후기',sem1d:'자료 정리'};
   const ptabs=document.getElementById('ptabs'), nav=document.querySelector('nav.tabs'), sem=document.getElementById('semsw'),
         header=document.querySelector('header.top'), ctabs=document.getElementById('ctabs');
   if(!ptabs||!nav||!header) return;
