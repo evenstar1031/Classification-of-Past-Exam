@@ -2,12 +2,12 @@
 <title>본과1 시간표·강의계획서·수업 후기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* Layout: 본과 1학년 수첩 한 권. 위에 붙는 탭(시간표 · 강의계획서 · 수업 후기 · 기출·학습자료 · 1학기 후기), 아래 내용이 탭마다 바뀜.
    앞의 세 탭은 2학기, 마지막 탭은 1학기 수업 후기. 글꼴은 모든 탭이 같음(본문 IBM Plex Sans KR, 제목 Noto Serif KR) */
 :root{
-  --paper:#F5F6F4; --sheet:#FFFFFF; --ink:#1C2433; --muted:#5B6473; --faint:#8A919C; --rule:#D9DDE3; --soft:#EEF0F2;
+  --paper:#F3F4F6; --sheet:#FFFFFF; --ink:#1A2231; --muted:#5A6372; --faint:#8A919C; --rule:#E0E3E8; --soft:#EDEFF2;
   --crimson:#A4122E; --crimson-bg:#F8E7EA; --teal:#1F6F6B; --teal-bg:#E3F0EE; --amber-bg:#FBF1D9; --amber:#8A5A00; --blue-bg:#E6EEF8; --blue:#2F5A8F;
   --theory:#34507A; --treat:#B9C0CA; --prac:#1F6F6B; --joint:#6FA8A3;
   --today:#B8710E; --today-bg:#F6DDAE; --today-ink:#4A2E00;
@@ -21,7 +21,7 @@
   --tag-lecture-c:#3B4453;  --tag-lecture-bg:#ECEEF1;
   --tag-jump-c:#34507A;     --tag-jump-bg:#E6EBF3;
   --lunch-c:#8A5A00; --lunch-bg:#FBF1D9; --lunch-bd:#EEDDB4;
-  --serif:"Noto Serif KR","AppleMyungjo",serif;
+  --serif:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;   /* 제목도 본문과 같은 글꼴(굵게) */
   --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   box-sizing:border-box;
 }
@@ -1387,9 +1387,9 @@ function tagPill(key,label){ return '<span class="session-tag" style="color:var(
 function linkTtProf(p,cid){ return esc(p).replace(/[가-힣]{2,4}/g, m=>{ const k=profKey(m,cid); return PROF[k] ? `<button type="button" class="pn" data-prof="${k}">${m}<span class="rc" data-rc="${k}"></span></button>` : m; }); }
 function buildSessionCard(row,day){
   const p1=row[0], p2=row[1], subject=row[2], prof=row[3]||'', duty=row[4]||'';
-  const t=tagOf(subject);
-  let html='<div class="session-card">';
-  html+='<div class="session-top"><span class="session-time">'+esc(timeLabel(p1,p2))+'</span>'+tagPill(t,TAG_META[t])+'</div>';
+  const t=tagOf(subject), cid=sessionCid(day,subject), co=cid&&COURSES.find(c=>c.id===cid);
+  let html='<div class="session-card"'+(cid?' data-cid="'+cid+'"':'')+'>';
+  html+='<div class="session-top"><span class="session-time">'+esc(timeLabel(p1,p2))+(co?'<span class="session-course">'+esc(co.tab)+'</span>':'')+'</span>'+tagPill(t,TAG_META[t])+'</div>';
   html+='<div class="session-subject">'+esc(subject)+(window.S3?S3.badge(sessionCid(day,subject),subject):'')+'</div>';
   if(window.S3) html+=S3.sessDocs(sessionCid(day,subject),subject);
   if(prof) html+='<div class="session-prof">'+linkTtProf(prof, sessionCid(day,subject))+'</div>';
@@ -4221,6 +4221,62 @@ window.D1=(function(){
   show(SEM1PLAN.courses[0].id);
 })();
 </script>
+<style>
+/* ===== 과목 색: 2학기 7과목마다 한 가지 색 — 시간표 카드 왼쪽 줄, 과목 버튼 점, 과목 제목 앞 막대 ===== */
+:root{
+  --c-jindan:#2563A8; --c-chiryo:#B83A2E; --c-infect:#2E7D4B; --c-psych:#6B4BAA; --c-neuro:#A36B00; --c-resp:#0E7A84; --c-hum:#9B4569;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --c-jindan:#7FB0E8; --c-chiryo:#F0897D; --c-infect:#7CCB96; --c-psych:#B9A2EA; --c-neuro:#E7B95E; --c-resp:#6CC8D0; --c-hum:#E59BBB;
+}}
+:root[data-theme="dark"]{ --c-jindan:#7FB0E8; --c-chiryo:#F0897D; --c-infect:#7CCB96; --c-psych:#B9A2EA; --c-neuro:#E7B95E; --c-resp:#6CC8D0; --c-hum:#E59BBB; }
+[data-cid="jindan"],[data-s="jindan"],#tab-jindan,#s2-c-jindan,#g-jindan{--sc:var(--c-jindan)}
+[data-cid="chiryo"],[data-s="chiryo"],#tab-chiryo,#s2-c-chiryo,#g-chiryo{--sc:var(--c-chiryo)}
+[data-cid="infect"],[data-s="infect"],#tab-infect,#s2-c-infect,#g-infect{--sc:var(--c-infect)}
+[data-cid="psych"],[data-s="psych"],#tab-psych,#s2-c-psych,#g-psych{--sc:var(--c-psych)}
+[data-cid="neuro"],[data-s="neuro"],#tab-neuro,#s2-c-neuro,#g-neuro{--sc:var(--c-neuro)}
+[data-cid="resp"],[data-s="resp"],#tab-resp,#s2-c-resp,#g-resp{--sc:var(--c-resp)}
+[data-cid="hum"],[data-s="hum"],#tab-hum,#s2-c-hum,#g-hum{--sc:var(--c-hum)}
+
+/* 시간표 카드: 왼쪽 색 줄 + 시간 옆 과목 이름 */
+.session-card{position:relative; padding-left:22px; border-color:var(--rule); box-shadow:0 1px 0 rgba(20,30,45,.03)}
+.session-card[data-cid]::before{content:""; position:absolute; left:9px; top:14px; bottom:14px; width:4px; border-radius:4px; background:var(--sc)}
+.session-course{margin-left:8px; padding-left:8px; border-left:1px solid var(--rule); color:var(--sc,var(--muted)); font-weight:600}
+.session-subject{font-size:16.5px; font-weight:700; letter-spacing:-.01em}
+.session-tag{font-weight:600}
+.tt-doc{border-color:var(--rule); background:var(--sheet)}
+.tt-doc.tt-up{border:0; background:none; color:var(--muted); padding-inline:6px; text-decoration:underline; text-decoration-color:var(--rule); text-underline-offset:3px}
+.tt-doc.tt-up::before{content:"+"; margin-right:4px; text-decoration:none; font-weight:700}
+.slot-free{border:0; background:transparent; padding-block:4px}
+
+/* 과목 버튼(칩)·과목 탭: 앞에 색 점, 고르면 그 과목 색으로 */
+.rvw .s1-chip[data-s="jindan"],.rvw .s1-chip[data-s="chiryo"],.rvw .s1-chip[data-s="infect"],.rvw .s1-chip[data-s="psych"],
+.rvw .s1-chip[data-s="neuro"],.rvw .s1-chip[data-s="resp"],.rvw .s1-chip[data-s="hum"],
+.ctabs button{display:inline-flex; align-items:center; gap:7px}
+.rvw .s1-chip[data-s="jindan"]::before,.rvw .s1-chip[data-s="chiryo"]::before,.rvw .s1-chip[data-s="infect"]::before,.rvw .s1-chip[data-s="psych"]::before,
+.rvw .s1-chip[data-s="neuro"]::before,.rvw .s1-chip[data-s="resp"]::before,.rvw .s1-chip[data-s="hum"]::before,
+.ctabs button[id^="tab-"]::before{content:""; flex:none; width:8px; height:8px; border-radius:50%; background:var(--sc,var(--faint))}
+.rvw .s1-chip[data-s][aria-pressed="true"]::before,.ctabs button[aria-selected=true]::before{background:currentColor; opacity:.9}
+.rvw .s1-chip[data-s="jindan"][aria-pressed="true"],.rvw .s1-chip[data-s="chiryo"][aria-pressed="true"],.rvw .s1-chip[data-s="infect"][aria-pressed="true"],
+.rvw .s1-chip[data-s="psych"][aria-pressed="true"],.rvw .s1-chip[data-s="neuro"][aria-pressed="true"],.rvw .s1-chip[data-s="resp"][aria-pressed="true"],
+.rvw .s1-chip[data-s="hum"][aria-pressed="true"],.ctabs button[id^="tab-"][aria-selected=true]{background:var(--sc); border-color:var(--sc); color:#fff}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .rvw .s1-chip[data-s][aria-pressed="true"],:root:not([data-theme="light"]) .ctabs button[id^="tab-"][aria-selected=true]{color:#15191F} }
+.ctabs button,.rvw .s1-chip{border-color:var(--rule)}
+
+/* 수업 후기·기출 목록의 시수·문항 막대도 과목 색 */
+#s2-results .bar,#g-results .bar{background:var(--sc,var(--red)); border-radius:3px}
+/* 기출 목록 버튼: 점선 대신 얇은 테두리, 주 버튼만 채움 */
+.rvw .g-make{border-style:solid; border-color:color-mix(in srgb,var(--theory) 45%,var(--rule)); background:var(--sheet)}
+.rvw .g-link,.rvw .g-make{font-weight:600}
+/* 과목 제목 앞 색 막대 (수업 후기·기출 목록) */
+#s2-results .subject-head h2::before,#g-results .subject-head h2::before{content:""; align-self:center; flex:none; width:5px; height:.95em; border-radius:3px; background:var(--sc,var(--ink))}
+.rvw .g-id{color:var(--sc,inherit)}
+
+/* 글꼴 정리: 제목은 본문과 같은 글꼴을 굵게 */
+header.top h1{font-weight:700; letter-spacing:-.03em}
+.rvw .s1-title{font-weight:700; letter-spacing:-.025em}
+.date-heading{font-weight:700; letter-spacing:-.01em}
+</style>
 <style>
 /* ===== 휴대폰 화면 (640px 이하): 아래 탭 막대 · 짧은 머리 · 접히는 소개 ===== */
 .ptabs .ti,.ptabs .ts{display:none}
