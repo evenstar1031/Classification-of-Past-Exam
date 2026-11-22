@@ -1,4 +1,4 @@
-# 올리기/<과목>/ 에 기출 PDF가 올라오면 Claude 가 바로 정리한다 (gichul-classify 스킬).
+# 올리기/<학기>/<과목>/ 에 기출 PDF가 올라오면 Claude 가 바로 정리한다 (gichul-classify 스킬).
 #   앱의 「기출 정리 바로 맡기기」, GitHub 웹 업로드 모두 여기로 온다.
 #   저장소 주인이 올린 것만 (주인의 Claude 구독·Actions 시간을 씀). 다른 사람은 「내 Claude로 기출 정리」.
 #   끝나면 결과를 이슈(라벨 「기출」)로 남기고, 아래 두 워크플로가 이어서 돈다:
@@ -13,7 +13,8 @@ on:
   push:
     branches: [main]
     paths:
-      - '올리기/**'
+      - '올리기/**/*.pdf'      # PDF 가 올라올 때만 (안내 README 만 바뀌면 돌지 않음)
+      - '올리기/**/*.PDF'
 
 concurrency:
   group: gichul-auto
@@ -57,7 +58,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           shopt -s nullglob nocaseglob
-          files=(올리기/*/*.pdf)
+          files=(올리기/*/*.pdf 올리기/*/*/*.pdf)      # 올리기/<학기>/<과목>/ (예전 올리기/<과목>/ 도)
           echo "count=${#files[@]}" >> "$GITHUB_OUTPUT"
           printf '%s\n' "${files[@]}"
           # 분류는 됐는데 해설이 빈 문항 수 (해설 작성이 중간에 끊긴 경우 이어서 하려고)
@@ -184,7 +185,7 @@ jobs:
         run: |
           git pull -q --rebase origin main || true
           shopt -s nullglob nocaseglob
-          left=(올리기/*/*.pdf)
+          left=(올리기/*/*.pdf 올리기/*/*/*.pdf)
           nohae=$(python3 /tmp/missing.py)
           echo "기출: 처음 ${{ steps.check.outputs.count }}개 → 남은 것 ${#left[@]}개 · 해설 빈 문항: 처음 ${{ steps.check.outputs.nohae }} → $nohae"
           # 남은 일이 있고, 이번 실행에서 하나라도 줄었으면(진전이 있었으면) 한 번 더 — 진전 없으면 멈춰서 무한 반복 방지

@@ -1,11 +1,11 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>본과1 시간표·강의계획서·수업 후기</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
 <style>
 /* Layout: 본과 1학년 수첩 한 권. 위에 붙는 탭(시간표 · 강의계획서 · 수업 후기 · 기출·학습자료 · 1학기 후기), 아래 내용이 탭마다 바뀜.
-   앞의 세 탭은 2학기, 마지막 탭은 1학기 수업 후기. 글꼴은 모든 탭이 같음(본문 IBM Plex Sans KR, 제목 Noto Serif KR) */
+   앞의 세 탭은 2학기, 마지막 탭은 1학기 수업 후기. 글꼴은 모든 탭이 같음(본문 Apple SD 산돌고딕 Neo, 제목 KoPubWorld 바탕 — 아래 「글씨체」) */
 :root{
   --paper:#F3F4F6; --sheet:#FFFFFF; --ink:#1A2231; --muted:#5A6372; --faint:#8A919C; --rule:#E0E3E8; --soft:#EDEFF2;
   --crimson:#A4122E; --crimson-bg:#F8E7EA; --teal:#1F6F6B; --teal-bg:#E3F0EE; --amber-bg:#FBF1D9; --amber:#8A5A00; --blue-bg:#E6EEF8; --blue:#2F5A8F;
@@ -21,8 +21,8 @@
   --tag-lecture-c:#3B4453;  --tag-lecture-bg:#ECEEF1;
   --tag-jump-c:#34507A;     --tag-jump-bg:#E6EBF3;
   --lunch-c:#8A5A00; --lunch-bg:#FBF1D9; --lunch-bd:#EEDDB4;
-  --serif:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;   /* 제목도 본문과 같은 글꼴(굵게) */
-  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --serif:"KNU Serif","KoPubWorld Batang","AppleMyungjo",serif;   /* 제목: KoPubWorld 바탕 (Medium·Bold) */
+  --sans:"KNU Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;   /* 본문: Apple SD 산돌고딕 Neo (Medium·SemiBold) */
   box-sizing:border-box;
 }
 @media (prefers-color-scheme: dark){
@@ -1547,10 +1547,22 @@ function select(id,push){
   COURSES.forEach(c=>{ const b=document.getElementById(`tab-${c.id}`), on=c.id===id; b.setAttribute("aria-selected",on?"true":"false"); b.tabIndex=on?0:-1; if(on) b.scrollIntoView({block:"nearest",inline:"nearest"}); });
   VIEWS.forEach(v=>{ document.getElementById(`panel-${v}`).hidden = v!==id; });
   if(push) history.replaceState(null,"",`#${id}`);
+  if(LAST_VIEW&&id!=="gichul"&&id!=="tools"){ LAST_VIEW[SEM1_VIEWS.includes(id)?1:2]=id; try{ localStorage.setItem("knu1.lastview",JSON.stringify(LAST_VIEW)); }catch(e){} }
+  document.dispatchEvent(new CustomEvent("knu1:sem",{detail:SEM}));
   const hdr=document.querySelector("header.top"), top=hdr.offsetTop+hdr.offsetHeight;
   if(window.scrollY>top) window.scrollTo(0,top);
 }
-document.querySelectorAll("#semsw button").forEach(b=>b.addEventListener("click",()=>{ const n=+b.dataset.sem; if(n===SEM) return; const cur=(location.hash||"").slice(1); if(n===1) select(cur==="gichul"||cur==="tools"?cur:"sem1p",true); else select(cur==="gichul"||cur==="tools"?cur:"timetable",true); }));
+/* 학기를 바꾸면 같은 종류의 탭으로: 강의계획서↔강의계획서, 수업 후기↔수업 후기, 기출·학습자료·PDF 도구는 그대로.
+   짝이 없는 탭(2학기 시간표, 1학기 자료 정리)은 그 학기에서 마지막으로 보던 탭으로 */
+var LAST_VIEW={1:"sem1p",2:"timetable"};
+try{ const v=JSON.parse(localStorage.getItem("knu1.lastview")||"{}"); if(v[1]) LAST_VIEW[1]=v[1]; if(v[2]) LAST_VIEW[2]=v[2]; }catch(e){}
+function semPair(cur,n){
+  if(cur==="gichul"||cur==="tools") return cur;
+  if(n===1){ if(COURSES.some(c=>c.id===cur)) return "sem1p"; if(cur==="prof") return "sem1"; return SEM1_VIEWS.includes(LAST_VIEW[1])?LAST_VIEW[1]:"sem1p"; }
+  if(cur==="sem1p") return lastCourse; if(cur==="sem1") return "prof"; if(cur==="sem1d") return "gichul";
+  const v=LAST_VIEW[2]; return v&&!SEM1_VIEWS.includes(v)&&v!=="gichul"&&v!=="tools"?v:"timetable";
+}
+document.querySelectorAll("#semsw button").forEach(b=>b.addEventListener("click",()=>{ const n=+b.dataset.sem; if(n===SEM) return; const cur=(location.hash||"").slice(1)||"timetable"; SEM=n; select(semPair(cur,n),true); }));
 ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="sem1d"?"sem1d":g==="sem1p"?"sem1p":g==="gichul"?"gichul":g==="tools"?"tools":lastCourse,true); }));
 function tabKeys(list){
   list.addEventListener("keydown",e=>{
@@ -2680,6 +2692,7 @@ window.S2=(function(){
     neuro:[{name:'1차 CBT',d:'2026-12-31'},{name:'2차 CBT',d:'2027-01-13'}],
     resp:[{name:'OSCE 폐진찰 평가',d:'2027-01-27'},{name:'1차',d:'2027-01-29'},{name:'2차',d:'2027-02-05'}]
   };
+  window.KNU_EXAMS=EXAMS;   // 머리의 시험 D-day 가 씀
 
   /* ── 과목 → 교수님 → 수업 (강의계획서 2026년 칸, 없으면 시간표) ── */
   function hoursOf(hs){
@@ -3114,7 +3127,7 @@ window.S2=(function(){
 window.APPX=(function(){
   const APP=window.APP;
   if(!APP) return null;
-  const upDir=s=>s.updir||('올리기/'+s.subject);   // 과목 폴더 '올리기/01. 진단의 기본'
+  const upDir=s=>s.updir||('올리기/'+s.subject);   // 과목 폴더 '올리기/2학기/01. 진단의 기본'
   const h=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const css=`
   .ax-ov{position:fixed; inset:0; z-index:50; background:rgba(15,20,28,.55); display:flex; align-items:stretch; justify-content:center}
@@ -3501,7 +3514,7 @@ window.S3=(function(){
   const IDX=GICHUL;
   const GH='https://github.com/'+IDX.repo;
   const blob = p => GH+'/blob/main/'+p.split('/').map(encodeURIComponent).join('/');
-  const sDir=(s,top)=>top+'/'+((s.updir||'').split('/')[1]||s.subject);   // 과목 폴더 '01. 진단의 기본'
+  const sDir=(s,top)=>top+'/'+((s.updir||'').replace(/^올리기\//,'')||s.subject);   // 과목 폴더 '2학기/01. 진단의 기본'
   const tree = p => GH+'/tree/main/'+p.split('/').map(encodeURIComponent).join('/');
   const CID={'진단의기본':'jindan','치료의기본':'chiryo','인체감염학':'infect','정신건강의학':'psych','신경학':'neuro','호흡기·알레르기병학':'resp','사례바탕의료인문1':'hum'};
   const order=COURSES.map(c=>c.id);
@@ -3510,7 +3523,7 @@ window.S3=(function(){
     const lectures=s.lectures.map(l=>({...l, total:Object.values(l.n||{}).reduce((a,b)=>a+b,0)}));
     const years=[...new Set(s.exams.map(e=>e.year))].sort((a,b)=>b-a);
     const course=COURSES.find(c=>c.id===cid);
-    return {...s, cid, tab:course?course.tab:s.name, lectures, years, total:lectures.reduce((a,l)=>a+l.total,0)};
+    return {...s, cid, sem:s.sem||2, tab:course?course.tab:s.name, lectures, years, total:lectures.reduce((a,l)=>a+l.total,0)};
   }).sort((a,b)=>order.indexOf(a.cid)-order.indexOf(b.cid));
   const norm=t=>String(t||'').replace(/Ⅰ/g,'I').replace(/Ⅱ/g,'II').replace(/[\s·.,\/()（）\-–—:]+/g,'').toLowerCase();
   const BY={}, BYN={}; SUBJ.forEach(s=>{ BY[s.cid]={}; BYN[s.cid]={}; s.lectures.forEach(l=>{ l.cid=s.cid; BY[s.cid][l.name]=l; BYN[s.cid][norm(l.name)]=l; }); });
@@ -3663,14 +3676,22 @@ window.S3=(function(){
     const restHtml=rest.length?`<details class="g-rest"${query?' open':''}><summary>${shown.length?'기출 없는 수업':'수업 목록'} ${rest.length}개${GUEST?'':' · 학습자료 만들기'}</summary>${rest.map(l=>lecture(s,l)).join('')}</details>`:'';
     return `<section class="subject" id="g-${s.cid}">${head}${todo}${shown.map(l=>lecture(s,l)).join('')}${restHtml}</section>`;
   }
-  function visible(){ return SUBJ.filter(s=>(subj==='all'||subj===s.cid)&&(!query||s.lectures.some(l=>lecHit(s,l)))); }
+  /* 학기 구분: 지금 고른 학기(1학기/2학기) 과목만 */
+  const curSem=()=>{ try{ return SEM; }catch(e){ return 2; } };
+  const inSem=s=>s.sem===curSem();
+  function visible(){ return SUBJ.filter(s=>inSem(s)&&(subj==='all'||subj===s.cid)&&(!query||s.lectures.some(l=>lecHit(s,l)))); }
   /* 탭이 가려져 있을 때는 그리지 않고 미뤘다가 탭을 열 때 그린다 (앱 여는 시간 단축) */
   let dirty=false;
   function render(){ if(panel.hidden){ dirty=true; return; } dirty=false; renderNow(); }
   new MutationObserver(()=>{ if(!panel.hidden&&dirty) render(); }).observe(panel,{attributes:true,attributeFilter:['hidden']});
   function renderNow(){
     const list=visible();
-    $('#g-results').innerHTML=list.map(subject).join('')||`<div class="s1-empty"><strong>“${h(query)}”에 해당하는 수업이 없어요</strong>수업 번호나 이름으로 다시 찾아보세요.</div>`;
+    const semEmpty=!SUBJ.some(inSem);
+    $('#g-results').innerHTML=list.map(subject).join('')||(semEmpty?`<div class="s1-empty g-semempty"><strong>${curSem()}학기 과목은 아직 정리된 기출·학습자료가 없어요</strong>
+        기출 PDF를 저장소 <a href="${h(tree('올리기/'+curSem()+'학기'))}" target="_blank" rel="noopener">올리기/${curSem()}학기</a>의 과목 폴더에 올리면 수업별 문제지·해설지로 정리돼요.
+        직접 만든 정리본은 <a href="${h(tree('자료실/'+curSem()+'학기'))}" target="_blank" rel="noopener">자료실/${curSem()}학기</a>에.
+        ${curSem()===1?'<br><button type="button" class="clink" data-goto-sem1d>1학기 자료 정리 탭 열기</button>':''}</div>`
+      :`<div class="s1-empty"><strong>“${h(query)}”에 해당하는 수업이 없어요</strong>수업 번호나 이름으로 다시 찾아보세요.</div>`);
     $('#g-clear').hidden=!query;
     const hc=$('#g-hitcount'); hc.hidden=!query;
     if(query) hc.textContent=`${list.length}개 과목 · 수업 ${list.reduce((n,s)=>n+s.lectures.filter(l=>lecHit(s,l)).length,0)}개`;
@@ -3682,7 +3703,7 @@ window.S3=(function(){
   }
   function renderRail(){
     $('#g-rail').innerHTML=`<li><button type="button" class="rl-subj${subj==='all'?' on':''}" data-rs="all">전체 과목</button></li>`+
-      SUBJ.map(s=>{
+      SUBJ.filter(inSem).map(s=>{
         const open=subj===s.cid;
         return `<li><button type="button" class="rl-subj${open?' on':''}" data-rs="${s.cid}" aria-expanded="${open}"><span>${h(s.tab)}</span><span class="n">${s.total?`기출 ${s.total}`:`수업 ${s.lectures.length}`}</span></button>
           ${open?`<div class="rl-lecs">${lecLinks(s,'rl-l').join('')||'<p class="rl-none">해당하는 수업이 없어요</p>'}</div>`:''}</li>`;
@@ -3709,6 +3730,14 @@ window.S3=(function(){
   $('#g-chips').innerHTML=`<button class="s1-chip" type="button" data-s="all" aria-pressed="true">전체</button>`+
     SUBJ.map(s=>`<button class="s1-chip" type="button" data-s="${s.cid}" aria-pressed="false">${h(s.tab)}${s.total?` <span class="g-cn">${s.total}</span>`:''}</button>`).join('');
   function setSubj(id){ subj=id; [...$('#g-chips').children].forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.s===id))); render(); }
+  function syncSem(){        // 학기가 바뀌면 그 학기 과목 버튼만 보이게
+    [...$('#g-chips').children].forEach(c=>{ const x=SUBJ.find(q=>q.cid===c.dataset.s); c.hidden=!!x&&!inSem(x); });
+    $('#g-chips').hidden=!SUBJ.some(inSem);
+    const cur=SUBJ.find(q=>q.cid===subj); if(cur&&!inSem(cur)) setSubj('all'); else render();
+  }
+  document.addEventListener('knu1:sem',syncSem);
+  panel.addEventListener('click',e=>{ if(e.target.closest('[data-goto-sem1d]')) select('sem1d',true); });
+  syncSem();
   $('#g-chips').addEventListener('click',e=>{ const b=e.target.closest('.s1-chip'); if(b) setSubj(b.dataset.s); });
   let t;
   $('#g-q').addEventListener('input',e=>{ clearTimeout(t); t=setTimeout(()=>{ query=e.target.value.trim(); render(); },120); });
@@ -4222,6 +4251,25 @@ window.D1=(function(){
 })();
 </script>
 <style>
+/* ===== 글씨체 =====
+   본문: Apple SD 산돌고딕 Neo Medium(보통) · SemiBold(굵게) — 아이폰·아이패드·맥은 기기에 있는 것을 씀.
+         (애플 기기 밖으로는 배포할 수 없는 글씨체라 윈도우·안드로이드는 가장 비슷한 무료 글씨체 Pretendard)
+   제목: KoPubWorld 바탕 Medium · Bold — 앱 사이트(knu1/fonts)에 올려 둠 (무료 배포 글씨체) */
+@font-face{font-family:"KNU Sans"; font-weight:100 550; font-display:swap;
+  src:local("AppleSDGothicNeo-Medium"),local("Apple SD Gothic Neo Medium"),
+      url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2-subset/Pretendard-Medium.subset.woff2") format("woff2")}
+@font-face{font-family:"KNU Sans"; font-weight:551 1000; font-display:swap;
+  src:local("AppleSDGothicNeo-SemiBold"),local("Apple SD Gothic Neo SemiBold"),
+      url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2-subset/Pretendard-SemiBold.subset.woff2") format("woff2")}
+@font-face{font-family:"KNU Serif"; font-weight:100 550; font-display:swap; src:url("fonts/KoPubWorldBatang-Medium.subset.woff2") format("woff2")}
+@font-face{font-family:"KNU Serif"; font-weight:551 1000; font-display:swap; src:url("fonts/KoPubWorldBatang-Bold.subset.woff2") format("woff2")}
+body{font-weight:500}
+/* 제목은 KoPub 바탕 Bold, 쪽 소개 글은 KoPub 바탕 Medium */
+header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var(--serif); font-weight:700; letter-spacing:-.02em}
+.s1-head .subtitle{font-family:var(--serif); font-weight:500; letter-spacing:-.01em}
+.session-subject{font-weight:600}
+</style>
+<style>
 /* ===== 과목 색: 2학기 7과목마다 한 가지 색 — 시간표 카드 왼쪽 줄, 과목 버튼 점, 과목 제목 앞 막대 ===== */
 :root{
   --c-jindan:#2563A8; --c-chiryo:#B83A2E; --c-infect:#2E7D4B; --c-psych:#6B4BAA; --c-neuro:#A36B00; --c-resp:#0E7A84; --c-hum:#9B4569;
@@ -4242,7 +4290,7 @@ window.D1=(function(){
 .session-card{position:relative; padding-left:22px; border-color:var(--rule); box-shadow:0 1px 0 rgba(20,30,45,.03)}
 .session-card[data-cid]::before{content:""; position:absolute; left:9px; top:14px; bottom:14px; width:4px; border-radius:4px; background:var(--sc)}
 .session-course{margin-left:8px; padding-left:8px; border-left:1px solid var(--rule); color:var(--sc,var(--muted)); font-weight:600}
-.session-subject{font-size:16.5px; font-weight:700; letter-spacing:-.01em}
+.session-subject{font-size:16.5px; letter-spacing:-.01em}
 .session-tag{font-weight:600}
 .tt-doc{border-color:var(--rule); background:var(--sheet)}
 .tt-doc.tt-up{border:0; background:none; color:var(--muted); padding-inline:6px; text-decoration:underline; text-decoration-color:var(--rule); text-underline-offset:3px}
@@ -4272,21 +4320,66 @@ window.D1=(function(){
 #s2-results .subject-head h2::before,#g-results .subject-head h2::before{content:""; align-self:center; flex:none; width:5px; height:.95em; border-radius:3px; background:var(--sc,var(--ink))}
 .rvw .g-id{color:var(--sc,inherit)}
 
-/* 글꼴 정리: 제목은 본문과 같은 글꼴을 굵게 */
-header.top h1{font-weight:700; letter-spacing:-.03em}
-.rvw .s1-title{font-weight:700; letter-spacing:-.025em}
-.date-heading{font-weight:700; letter-spacing:-.01em}
 </style>
+<style>
+/* ===== 머리 오른쪽 위: 블럭 시험 D-day ===== */
+.hd-right{display:flex; align-items:center; gap:8px; position:relative}
+.dday{display:inline-flex; align-items:center; gap:7px; font:inherit; font-size:13.5px; font-weight:600; color:var(--ink); background:var(--sheet);
+      border:1px solid var(--rule); border-radius:999px; padding:5px 12px 5px 10px; min-height:34px; cursor:pointer; white-space:nowrap}
+.dday::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--sc,var(--crimson)); flex:none}
+.dday b{font-weight:600; color:var(--sc,var(--crimson)); font-variant-numeric:tabular-nums}
+.dday.soon{border-color:color-mix(in srgb,var(--sc,var(--crimson)) 55%,var(--rule))}
+.dday-pop{position:absolute; right:0; top:calc(100% + 8px); z-index:45; min-width:260px; background:var(--sheet); border:1px solid var(--rule);
+      border-radius:14px; box-shadow:0 12px 32px rgba(20,30,45,.14); padding:8px; margin:0; list-style:none}
+.dday-pop[hidden]{display:none}
+.dday-pop li{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:10px; padding:8px 8px; border-radius:10px; font-size:14px}
+.dday-pop li+li{border-top:1px solid var(--soft)}
+.dday-pop i{width:8px; height:8px; border-radius:50%; background:var(--sc,var(--faint))}
+.dday-pop .w{color:var(--muted); font-size:12.5px}
+.dday-pop b{font-weight:600; font-variant-numeric:tabular-nums; color:var(--sc,var(--ink))}
+@media (max-width:640px){ .dday{font-size:12.5px; padding:4px 10px 4px 9px; min-height:32px} .dday .nx{display:none} .hd-right{gap:6px} .hd-right .ax-acct{max-width:92px; overflow:hidden; text-overflow:ellipsis} }
+</style>
+<script>
+/* 오늘 기준으로 아직 안 본 블럭 시험 중 가장 가까운 것을 머리 오른쪽 위에 D-day 로. 누르면 남은 시험 전부 */
+(function(){
+  const EX=window.KNU_EXAMS, hdr=document.querySelector('header.top'); if(!EX||!hdr) return;
+  const pad=n=>String(n).padStart(2,'0'), t=new Date(), today=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+  const days=d=>Math.round((Date.parse(d+'T00:00:00')-Date.parse(today+'T00:00:00'))/864e5);
+  const W='일월화수목금토';
+  const list=[];
+  COURSES.forEach(c=>(EX[c.id]||[]).forEach(e=>{ const n=days(e.d); if(n>=0) list.push({cid:c.id, sub:c.tab, name:e.name, d:e.d, n}); }));
+  list.sort((a,b)=>a.n-b.n);
+  const right=document.createElement('div'); right.className='hd-right';
+  const acct=hdr.querySelector('.ax-acct'), today_=hdr.querySelector('.today');
+  (today_||hdr.lastElementChild).after(right);
+  if(list.length){
+    const x=list[0], label=n=>n===0?'D-DAY':'D-'+n, nm=e=>`${e.sub} ${/^\d차$/.test(e.name)?e.name+' 시험':e.name}`;
+    const b=document.createElement('button'); b.type='button'; b.className='dday'+(x.n<=7?' soon':''); b.dataset.cid=x.cid;
+    b.setAttribute('aria-expanded','false'); b.title='남은 시험 보기';
+    b.innerHTML=`<b>${label(x.n)}</b>${esc(x.sub)}<span class="nx"> ${esc(/^\d차$/.test(x.name)?x.name+' 시험':x.name)}</span>`;
+    const pop=document.createElement('ul'); pop.className='dday-pop'; pop.hidden=true;
+    pop.innerHTML=list.map(e=>{ const dt=new Date(e.d+'T00:00:00'); return `<li data-cid="${e.cid}"><i></i><span>${nm(e)}<br><span class="w">${dt.getMonth()+1}/${dt.getDate()} (${W[dt.getDay()]})</span></span><b>${label(e.n)}</b></li>`; }).join('');
+    b.onclick=e=>{ e.stopPropagation(); pop.hidden=!pop.hidden; b.setAttribute('aria-expanded',String(!pop.hidden)); };
+    document.addEventListener('click',e=>{ if(!pop.hidden&&!pop.contains(e.target)){ pop.hidden=true; b.setAttribute('aria-expanded','false'); } });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!pop.hidden){ pop.hidden=true; b.setAttribute('aria-expanded','false'); b.focus(); } });
+    right.append(b,pop);
+  }
+  if(acct) right.appendChild(acct);
+  if(!right.children.length) right.remove();
+})();
+</script>
 <style>
 /* ===== 휴대폰 화면 (640px 이하): 아래 탭 막대 · 짧은 머리 · 접히는 소개 ===== */
 .ptabs .ti,.ptabs .ts{display:none}
 @media (max-width:640px){
   header.top{padding-block:14px 10px; align-items:center; row-gap:8px}
-  header.top .eyebrow{font-size:12px; margin-bottom:2px}
+  header.top .eyebrow{display:none}
   header.top h1{font-size:24px}
   header.top .today{font-size:13.5px; order:2; flex:1 1 auto}
   header.top .semsw{margin:0; order:3}
-  header.top>div:first-child{flex:1 1 auto}
+  header.top>div:first-child{flex:1 1 0; min-width:0}
+  header.top .hd-right{order:1; flex:none}
+  header.top h1{font-size:23px; white-space:nowrap}
   .semsw button{padding:4px 14px; min-height:32px; font-size:14px}
   .tabs:has(> .ctabs[hidden]){border-bottom:0}
   .mnav{position:fixed; left:0; right:0; bottom:0; z-index:40; background:color-mix(in srgb,var(--sheet) 92%,transparent);
