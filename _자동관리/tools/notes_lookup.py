@@ -9,13 +9,15 @@
 글자 추출은 work/notes/<과목>/ 에 저장해 두고 다시 쓴다 (커밋하지 않음).
 """
 import argparse, datetime, glob, json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import subjects as SJ  # noqa: E402  (과목 키 ↔ 보이는 폴더 '01. 진단의 기본')
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # 저장소 맨 위 (이 파일은 _자동관리/tools/)
 
 
 def notes_for(subject, year):
     out = {}
-    for d in sorted(glob.glob(os.path.join(ROOT, '학습자료', subject, '*', '필기본'))):
+    for d in sorted(glob.glob(os.path.join(ROOT, '학습자료', SJ.folder(subject), '*', '필기본'))):
         lec = os.path.basename(os.path.dirname(d))
         have = {}
         for p in glob.glob(os.path.join(d, '필기본_*.pdf')):
@@ -56,12 +58,13 @@ def main():
     ap.add_argument('terms', nargs='*')
     ap.add_argument('--year', type=int, default=datetime.date.today().year - 1)
     a = ap.parse_args()
+    a.subject = SJ.key(a.subject)
     notes = notes_for(a.subject, a.year)
     if not notes:
-        print(f'[없음] 학습자료/{a.subject}/*/필기본/ 에 필기본이 없다 → 일반 지식으로 판단')
+        print(f'[없음] 학습자료/{SJ.folder(a.subject)}/*/필기본/ 에 필기본이 없다 → 일반 지식으로 판단')
         return
     if a.cmd == 'list':
-        lec_dirs = sorted(os.path.basename(p) for p in glob.glob(os.path.join(ROOT, '학습자료', a.subject, '*'))
+        lec_dirs = sorted(os.path.basename(p) for p in glob.glob(os.path.join(ROOT, '학습자료', SJ.folder(a.subject), '*'))
                           if os.path.isdir(p))
         for lec in lec_dirs:
             if lec in notes:

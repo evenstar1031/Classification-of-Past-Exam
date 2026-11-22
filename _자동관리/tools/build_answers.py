@@ -17,6 +17,7 @@ import argparse, glob, html, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # 저장소 맨 위 (이 파일은 _자동관리/tools/)
 sys.path.insert(0, os.path.join(ROOT, '_자동관리/tools'))
 import build_lectures as BL  # noqa: E402
+import subjects as SJ  # noqa: E402  (과목 키 ↔ 보이는 폴더 '01. 진단의 기본')
 B = BL.B
 
 OK = '#0b6e4f'
@@ -119,6 +120,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('subject'); ap.add_argument('--only', nargs='*'); ap.add_argument('--no-exams', action='store_true')
     a = ap.parse_args()
+    a.subject = SJ.key(a.subject)
     inf = json.load(open(os.path.join(ROOT, '_자동관리/과목정보', f'{a.subject}.json'), encoding='utf-8'))
     L = {x['id']: x for x in inf['lectures']}; L['99'] = BL.OTHER
     files = sorted(glob.glob(os.path.join(ROOT, '_자동관리/분류', a.subject, '*.json')))
@@ -141,7 +143,7 @@ def main():
     for lid in groups:
         groups[lid].sort(key=lambda t: (-t[0]['year'], -(int(re.sub(r'\D', '', t[0].get('date') or '0') or 0)),
                                         t[0]['id'], t[1]['n']))
-    outdir = os.path.join(ROOT, '해설지', a.subject)
+    outdir = os.path.join(ROOT, '해설지', SJ.folder(a.subject))
     os.makedirs(os.path.join(outdir, '시험별'), exist_ok=True)
     B.IMG_ABS = True
     ok = True
@@ -252,7 +254,7 @@ def main():
 
     print(f"\n[{'OK' if ok else 'FAIL'}] 모든 정답·해설 PDF 검증 (폰트·문항번호·정답 상자)")
     print(f"[{'OK' if no_ex == 0 else 'WARN'}] 해설이 비어 있는 문항: {no_ex}")
-    print(f'목차: 해설지/{a.subject}/README.md')
+    print(f'목차: 해설지/{SJ.folder(a.subject)}/README.md')
     sys.exit(0 if ok else 1)
 
 

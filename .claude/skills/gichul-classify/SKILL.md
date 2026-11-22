@@ -8,6 +8,10 @@ description: The main workflow of this repository — take 기출 PDFs from 올�
 Three stages per exam, then one build per subject. Every stage has a check that must
 say OK before moving on. The user does not code: report in plain Korean, results first.
 
+> **과목 폴더 이름** — 보이는 폴더(`문제지/`·`해설지/`·`학습자료/`·`올리기/`·`자료실/`)의 과목 폴더는 `01. 진단의 기본` 처럼 「순서 번호. 과목 이름」이고,
+> `_자동관리/` 안(분류·해설·작업기록·원본·과목정보)과 프로그램 인자는 과목 키(`진단의기본`)다. 아래 `<과목>` 은 그 위치에 맞게 읽는다.
+> 대응표: `python3 _자동관리/tools/subjects.py`. 프로그램에는 키·폴더 이름 어느 쪽을 넣어도 된다. 새 과목은 `subjects.py` 의 ORDER 끝에 더한다.
+
 ## 0. Session start
 ```bash
 bash _자동관리/tools/setup.sh              # packages, wkhtmltopdf, fonts

@@ -17,7 +17,8 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # 저장소 맨 위 (이 파일은 _자동관리/tools/)
 sys.path.insert(0, os.path.join(ROOT, '_자동관리/tools'))
-from build_lectures import ensure_work  # noqa: E402  (work/ 가 없으면 원본에서 다시 만든다)
+from build_lectures import ensure_work  # noqa: E402
+import subjects as SJ  # noqa: E402  (과목 키 ↔ 보이는 폴더 '01. 진단의 기본')  (work/ 가 없으면 원본에서 다시 만든다)
 
 NOTE_HEAD = re.compile(r'^\s*ⓘ\s*(오답노트|해설)\s*$')
 
@@ -49,7 +50,7 @@ def note_text(lines):
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
-    subj = sys.argv[1]
+    subj = SJ.key(sys.argv[1])
     base = os.path.join(ROOT, '_자동관리/분류', subj)
     exams = sys.argv[2:] or sorted(f[:-5] for f in os.listdir(base) if f.endswith('.json'))
     for ex_id in exams:

@@ -24,6 +24,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..'))
 sys.path.insert(0, os.path.join(ROOT, '_자동관리/tools'))
 import build_lectures as BL  # noqa: E402
+import subjects as SJ  # noqa: E402  (과목 키 ↔ 보이는 폴더 '01. 진단의 기본')
 B = BL.B
 
 CIRCLE = B.CIRCLE
@@ -141,7 +142,7 @@ def counts(subj):
 
 
 def folder(subj, L):
-    return os.path.join(ROOT, '학습자료', subj, f"{L['id']}_{BL.safe(BL.lname(L))}")
+    return os.path.join(ROOT, '학습자료', SJ.folder(subj), f"{L['id']}_{BL.safe(BL.lname(L))}")
 
 
 def byline(ex, q, e):
@@ -498,7 +499,7 @@ def cmd_build(a):
 
     doc = (f'<!doctype html><html><head><meta charset="utf-8"><style>{B.CSS}{BL.EXTRA_CSS}{CSS}</style></head>'
            f'<body>{cover}{p1}{p2}{p3}</body></html>')
-    out = os.path.join(ROOT, '학습자료', a.subject, f"{L['id']}_{BL.safe(name)}_학습자료.pdf")
+    out = os.path.join(ROOT, '학습자료', SJ.folder(a.subject), f"{L['id']}_{BL.safe(name)}_학습자료.pdf")
     work = os.path.join(ROOT, 'work', '_study', a.subject, L['id']); os.makedirs(work, exist_ok=True)
     print(f'== {os.path.relpath(out, ROOT)}  (기출 {len(items)} · 연습 {len(practice)})')
     total = B.render_pdf(doc, work, out, f"{inf['name']} {name} 학습자료")
@@ -548,6 +549,7 @@ def main():
     fg.add_argument('--pdf', help='필기본 PDF (기본: 수업 폴더 필기본/ 의 마지막 PDF)')
     fg.add_argument('--dpi', type=int, default=170)
     a = ap.parse_args()
+    a.subject = SJ.key(a.subject)
     {'find': cmd_find, 'gichul': cmd_gichul, 'build': cmd_build, 'fig': cmd_fig}[a.cmd](a)
 
 

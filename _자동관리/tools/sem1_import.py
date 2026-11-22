@@ -19,6 +19,8 @@
 """
 import argparse, datetime as dt, hashlib, json, os, re, shutil, subprocess, sys, tempfile, unicodedata, zipfile
 from pathlib import Path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import subjects as SJ  # noqa: E402  (과목 키 → 보이는 폴더 '01. 진단의 기본')
 
 ROOT = Path(__file__).resolve().parent.parent.parent   # 저장소 맨 위 (이 파일은 _자동관리/tools/)
 BASE = '1학기'
@@ -462,7 +464,8 @@ def sync(m=None):
         sd['items'] = keep
         real = info.get(norm(subj))
         sd['info'] = real
-        sd['gichul'] = real if real and (ROOT / '문제지' / real).is_dir() else None
+        sd['gichul'] = real if real and (ROOT / '문제지' / SJ.folder(real)).is_dir() else None
+        sd['upload'] = f'올리기/{SJ.folder(real)}' if real else None   # 「수업별 문제지로 만들기」가 옮길 곳
     m['subjects'] = {s: sd for s, sd in m['subjects'].items() if sd.get('items') or sd.get('skipped')}
     changed = json.dumps(m, ensure_ascii=False, sort_keys=True) != before
     if own and changed:
