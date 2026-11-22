@@ -3230,22 +3230,42 @@ window.APPX=(function(){
   const b64=file=>new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=()=>rej(r.error); r.readAsDataURL(file); });
   async function commitFiles(files, message, onProgress){
     const R=`repos/${APP.repo}`;
-    for(let attempt=0; attempt<2; attempt++){
+    // 1) 파일은 한 번만 올린다 (큰 파일을 다시 올리지 않도록)
+    const tree=[];
+    for(let i=0;i<files.length;i++){
+      onProgress&&onProgress(i, files.length, files[i].path);
+      let blob;
+      try{ blob=await APP.gh(`${R}/git/blobs`,{method:'POST', body:{content:await b64(files[i].file), encoding:'base64'}}); }
+      catch(e){ e.file=files[i].file; throw e; }
+      tree.push({path:files[i].path, mode:'100644', type:'blob', sha:blob.sha});
+    }
+    onProgress&&onProgress(files.length, files.length, '');
+    // 2) main 끝에 붙인다. GitHub Actions 가 그새 main 에 올렸으면(자주 그렇다) 새 끝에 다시 붙인다
+    for(let attempt=0; ; attempt++){
       const ref=await APP.gh(`${R}/git/ref/heads/main`);
       const base=await APP.gh(`${R}/git/commits/${ref.object.sha}`);
-      const tree=[];
-      for(let i=0;i<files.length;i++){
-        onProgress&&onProgress(i, files.length, files[i].path);
-        const blob=await APP.gh(`${R}/git/blobs`,{method:'POST', body:{content:await b64(files[i].file), encoding:'base64'}});
-        tree.push({path:files[i].path, mode:'100644', type:'blob', sha:blob.sha});
-      }
-      onProgress&&onProgress(files.length, files.length, '');
       const t=await APP.gh(`${R}/git/trees`,{method:'POST', body:{base_tree:base.tree.sha, tree}});
       const c=await APP.gh(`${R}/git/commits`,{method:'POST', body:{message, tree:t.sha, parents:[ref.object.sha]}});
       try{ await APP.gh(`${R}/git/refs/heads/main`,{method:'PATCH', body:{sha:c.sha}}); return c.sha; }
-      catch(e){ if(e.status!==422||attempt) throw e; }   // 그새 누가 올렸으면 한 번 더
+      catch(e){ if(e.status!==422||attempt>=5) throw e; await new Promise(r=>setTimeout(r,800*(attempt+1))); }
     }
   }
+  /* 올리기 실패 안내: 로그인 만료면 다시 로그인 버튼, 큰 파일이면 압축 안내 */
+  function upErr(e, where){
+    const big=e&&e.file&&e.file.size>40*1024*1024;
+    const msg=e&&e.status===401?'GitHub 로그인이 만료됐습니다(다른 기기에서 여러 번 로그인하면 예전 로그인이 끊깁니다).'
+      : e&&(e.status===404||e.status===403)?'저장소에 쓰기 권한이 있는지(초대 수락) 확인해 주세요.'
+      : big?`${h(e.file.name)}(${Math.round(e.file.size/1048576)}MB)이 커서 GitHub가 받지 못한 것 같습니다. 「PDF 압축」으로 줄인 뒤 다시 올려 주세요.`
+      : (e&&e.status===0||/Failed to fetch|NetworkError|Load failed/i.test(e&&e.message||''))?'인터넷 연결이 끊겼습니다. 다시 눌러 주세요.'
+      : errText(e);
+    return `<p class="ax-err">${h(where)} ${msg}</p>`+
+      (e&&e.status===401?`<p><button type="button" class="ax-btn pri" data-relogin>GitHub 다시 로그인</button></p>`:'')+
+      (big&&e.status!==401?`<p><button type="button" class="ax-btn" data-compress>PDF 압축 열기</button></p>`:'');
+  }
+  document.addEventListener('click',ev=>{
+    if(ev.target.closest('[data-relogin]')) APP.signIn();
+    const c=ev.target.closest('[data-compress]'); if(c){ const ov=c.closest('.ax-ov'); if(ov) ov.querySelector('.ax-x').click(); select('tools',true); showTool('compress'); }
+  });
   const YEAR=new Date().getFullYear();
   const extOf=f=>(f.name.match(/\.[A-Za-z0-9]+$/)||['.pdf'])[0].toLowerCase();
 
@@ -3282,6 +3302,7 @@ window.APPX=(function(){
     }
     w.body.querySelectorAll('input[name=ax-stage]').forEach(r=>r.onchange=()=>{ st=r.value; paintStage(); });
     paintStage();
+    let uploaded=false;
     w.acts.querySelector('#ax-go').onclick=async()=>{
       const go=w.acts.querySelector('#ax-go');
       const f1=[...w.body.querySelector('#ax-f1').files], f2=isStudy?[...w.body.querySelector('#ax-f2').files]:[];
@@ -3297,10 +3318,11 @@ window.APPX=(function(){
       const pm=stEl.querySelector('#ax-pm'), bar=stEl.querySelector('.ax-bar i');
       try{
         if(files.length){
+          uploaded=false;
           await commitFiles(files, isStudy?`${s.subject} ${l.id} ${l.show||l.name}: ${st==='pre'?'작년':'올해'} 필기본 올림 (앱, ${APP.login})`:`${s.subject}: 기출 올림 (앱, ${APP.login})`,
             (i,n,p)=>{ pm.textContent=i<n?`올리는 중… ${i+1}/${n} ${p.split('/').pop()}`:'저장하는 중…'; bar.style.width=Math.round(i/n*100)+'%'; });
         }
-        bar.style.width='100%';
+        bar.style.width='100%'; uploaded=files.length>0;
         const paths=files.map(f=>f.path);
         const where=paths.length?paths.map(p=>'`'+p+'`').join(', '):`\`${folder}/필기본/\` (이미 올라와 있음)`;
         if(now&&!isStudy){                                  // 기출: 올리면 「기출 자동 정리」 워크플로가 바로 시작
@@ -3328,7 +3350,8 @@ window.APPX=(function(){
         go.textContent='닫기'; go.disabled=false; go.onclick=w.close;
       }catch(e){
         go.disabled=false;
-        stEl.innerHTML=`<p class="ax-err">올리지 못했습니다. ${h(e.status===404||e.status===403?'저장소에 쓰기 권한이 있는지(초대 수락) 확인해 주세요.':errText(e))}</p>`;
+        stEl.innerHTML=upErr(e, uploaded?'파일은 올렸지만 요청(이슈)을 만들지 못했습니다. 다시 누르면 요청만 다시 보냅니다.':'올리지 못했습니다.');
+        if(uploaded){ w.body.querySelector('#ax-f1').value=''; const f2=w.body.querySelector('#ax-f2'); if(f2) f2.value=''; have.push(String(mainYear())); }
       }
     };
   }

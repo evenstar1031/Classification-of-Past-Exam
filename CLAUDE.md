@@ -32,8 +32,9 @@
   애매하면 댓글로 묻고 끝낸다(다음 `@claude` 댓글로 이어서 한다).
 - 일은 평소대로 `pilgi-study` / `gichul-classify` 스킬을 끝까지 따른다. **검증·미리보기 확인 단계를 건너뛰지 않는다.**
   미리보기 PNG는 Read 로 열어서 본다. SendUserFile 은 없다.
-- **저장**: `git add` 로 만든 결과만(`work/` 제외) 커밋한 뒤 `git push origin HEAD:main`. 밀리면 `git pull --rebase origin main` 후 다시.
-  그래도 안 되면 지금 브랜치를 올리고 이슈에 PR 링크를 남긴다. main 에 들어가면 `build-pdfs.yml` 이 해설지를 다시 만든다.
+- **저장**: `git add` 로 만든 결과만(`work/` 제외) 커밋한 뒤, 이슈 모드가 정해 준 작업 브랜치(`claude/issue-<번호>-…`)에 올린다.
+  워크플로 마지막 단계(「결과를 main 에 합치기」)가 그 브랜치를 **자동으로 main 에 합친다** — 사용자에게 PR 을 만들거나 Merge 를 누르라고 하지 않는다.
+  main 에 들어가면 `build-pdfs.yml` 이 해설지를, `app-index.yml` 이 앱 현황을 다시 만든다.
 - **마지막 댓글**(짧게, 한국어): 만든 파일 링크 — `https://github.com/evenstar1031/Classification-of-Past-Exam/blob/main/<경로>`
   (경로는 한 칸씩 URL 인코딩), 그리고 스킬이 정한 보고 한두 줄. 고칠 점은 이 이슈에 `@claude ...` 로 다시 말하면 된다고 덧붙인다.
 - 일이 끝났으면 이슈를 닫지 않는다(사용자가 확인 후 닫는다).
@@ -59,7 +60,7 @@
 | `학습자료/<과목>/` | 수업별 학습자료 PDF(설명·기출·연습문제) + `<id>_<수업명>/` 에 필기본·`1_설명.md`·`3_연습문제.json` |
 | `원본/<과목>/` | 처리 끝난 원본 |
 | `자료실/<과목>/` | 사용자가 직접 올린 정리본. 이름 앞 번호 = 수업(`33·34_` 는 둘 다), 번호 없으면 과목 전체. 새로 받으면 저장소의 학습자료·문제지·해설지·자료실과 겹치는지(같은 파일·같은 글) 확인해 겹치는 건 빼고 `README.md` 에 기록 |
-| `fonts/` | 문제지 폰트 2개 (현재 Apple SD 산돌고딕 Neo Medium / SemiBold). `setup_fonts.py`가 파일명으로 보통/굵은체를 구분 |
+| `fonts/` | 문제지 폰트 (현재 Apple SD 산돌고딕 Neo Medium / SemiBold). 다른 폰트가 같이 있어도 `setup_fonts.py` 가 Apple SD 만 고른다(`fonts/사용할폰트.txt` 로 바꿈). 파일명으로 보통/굵은체 구분 |
 | `1학기/<과목>/` | 1학기 압축을 풀어 넣은 자료(원래 폴더 구조 그대로). `1학기/목록.json` 은 `tools/sem1_import.py` 가 만들고 앱 「1학기 자료」 탭이 읽고 고친다 — 손으로 고치지 말 것. 압축은 Release(태그 `1학기-…`)로 올리면 `sem1-import.yml` 이 정리 |
 | `app/` | 웹앱 본체(`app.html`), 기출 현황(`gichul_index.json`, 자동 생성 — 손으로 고치지 말 것), Supabase SQL |
 | `work/` | 임시, 커밋 금지 |

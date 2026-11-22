@@ -51,8 +51,11 @@ jobs:
 
       - name: 프로그램 설치
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq p7zip-full p7zip-rar ghostscript || sudo apt-get install -y -qq p7zip-full ghostscript
+          for i in 1 2 3 4; do
+            sudo apt-get update -qq -o Acquire::Retries=3 && \
+            { sudo apt-get install -y -qq -o Acquire::Retries=3 p7zip-full p7zip-rar ghostscript || sudo apt-get install -y -qq -o Acquire::Retries=3 p7zip-full ghostscript; } && break
+            echo "apt 설치 다시 시도 ($i)"; sleep 30
+          done
           pip install -q pymupdf==1.28.2
           git config --global core.quotepath false
           git config user.name "github-actions[bot]"

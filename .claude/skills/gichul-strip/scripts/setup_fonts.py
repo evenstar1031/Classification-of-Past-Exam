@@ -79,6 +79,7 @@ def otf2ttf(src, dst, style):
 BOLD = ('extrabold', 'semibold', 'demibold', 'ultrabold', 'bold', 'heavy', 'black')
 REG_PREF = ('medium', 'regular', 'book', 'normal', 'roman')
 THIN = ('extralight', 'ultralight', 'light', 'thin', 'hairline')
+DEFAULT_FAMILY = 'AppleSDGothicNeo'   # fonts/ 에 여러 폰트가 있을 때 문제지에 쓰는 것 (fonts/사용할폰트.txt 로 바꿈)
 
 
 def weight_of(base):
@@ -99,16 +100,31 @@ def main():
     files = [p for p in glob.glob(os.path.join(up, '*')) if p.lower().endswith(('.otf', '.ttf'))]
     if not files:
         sys.exit(f'!! {up}/ 에 폰트 파일(.otf/.ttf)이 없습니다. 보통체 1개 + 굵은체 1개를 올려 주세요.')
+    fam_of = lambda p: re.sub(r'\d+$', '', weight_of(os.path.basename(os.path.splitext(p)[0]))[2])
+    fams = sorted({fam_of(p) for p in files})
+    if len(fams) > 1:
+        # 여러 폰트가 들어 있으면(다른 용도로 같이 올려 둔 경우) 문제지용 한 가지만 고른다.
+        # fonts/사용할폰트.txt 첫 줄(파일 이름 일부, 예: AppleSDGothicNeo)이 있으면 그것, 없으면 지금까지 쓰던 Apple SD 산돌고딕 Neo.
+        want = DEFAULT_FAMILY
+        pick_file = os.path.join(up, '사용할폰트.txt')
+        if os.path.exists(pick_file):
+            first = open(pick_file, encoding='utf-8').read().strip().splitlines()
+            if first and first[0].strip():
+                want = first[0].strip()
+        key = re.sub(r'[^a-z]', '', want.lower())
+        chosen = [f for f in fams if key and (key in f or f in key)]
+        if not chosen:
+            sys.exit(f'!! fonts/ 에 폰트가 여러 가지라 「{want}」을(를) 찾았는데 없습니다. '
+                     f'fonts/사용할폰트.txt 첫 줄에 쓸 폰트 파일 이름 일부를 적어 주세요. 있는 파일:\n   '
+                     + '\n   '.join(os.path.basename(p) for p in sorted(files)))
+        files = [p for p in files if fam_of(p) == chosen[0]]
+        print(f'fonts/ 에 폰트가 {len(fams)}가지 있어 문제지에는 「{want}」만 씁니다.')
     cand = {'Regular': [], 'Bold': []}
-    fams = set()
     for p in files:
         role, w, fam = weight_of(os.path.basename(os.path.splitext(p)[0]))
-        fams.add(re.sub(r'\d+$', '', fam))
         cand[role].append((p, w))
-    if len(fams) > 1:
-        sys.exit('!! fonts/ 에 서로 다른 폰트가 섞여 있습니다. 한 가지 폰트의 보통체+굵은체 두 파일만 남겨 주세요:\n   '
-                 + '\n   '.join(os.path.basename(p) for p in sorted(files)))
-    order = {'Regular': REG_PREF + ('',) + THIN, 'Bold': ('bold', 'semibold', 'demibold', 'extrabold', 'ultrabold', 'heavy', 'black')}
+    # 굵은체는 SemiBold 가 있으면 그것(지금까지 문제지가 SemiBold 로 만들어져 왔다), 없으면 Bold
+    order = {'Regular': REG_PREF + ('',) + THIN, 'Bold': ('semibold', 'bold', 'demibold', 'extrabold', 'ultrabold', 'heavy', 'black')}
     found = {}
     for role, lst in cand.items():
         if lst:

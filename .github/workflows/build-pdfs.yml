@@ -50,21 +50,39 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # 앞 워크플로(기출 자동 정리·Claude)가 아무것도 올리지 않았으면(매시간 확인만 하고 끝난 경우 등) 건너뛴다
+      - name: 할 일이 있나
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" = workflow_run ] && [ "$(git rev-parse HEAD)" = "${{ github.event.workflow_run.head_sha }}" ]; then
+            echo "앞 워크플로가 main 에 올린 것이 없음 → 건너뜀"; echo "go=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=1" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v6
+        if: steps.gate.outputs.go == '1'
         with:
           python-version: '3.11'
 
       # 로컬(클라우드 세션)과 같은 버전을 써야 같은 내용이면 PDF도 똑같이 나온다
       - name: 프로그램·폰트 설치
+        if: steps.gate.outputs.go == '1'
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei
+          # 우분투 서버가 가끔 503 을 내서 설치가 실패한다 → 몇 번 다시 시도
+          for i in 1 2 3 4; do
+            sudo apt-get update -qq -o Acquire::Retries=3 && \
+            sudo apt-get install -y -qq -o Acquire::Retries=3 --fix-missing wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei && break
+            echo "apt 설치 다시 시도 ($i)"; sleep 30
+          done
+          command -v wkhtmltopdf
           wkhtmltopdf --version
           pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 \
                          numpy==2.4.6 pillow==12.3.0 cffi==2.1.1
           python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
 
       - name: PDF 만들기
+        if: steps.gate.outputs.go == '1'
         env:
           SUBJECT: ${{ github.event.inputs.subject }}
         run: |
@@ -87,6 +105,7 @@ jobs:
           done
 
       - name: 바뀐 파일 저장 (커밋)
+        if: steps.gate.outputs.go == '1'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

@@ -35,19 +35,39 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 1
+
+      # 앞 워크플로(기출 자동 정리·Claude)가 아무것도 올리지 않았으면(매시간 확인만 하고 끝난 경우 등) 건너뛴다
+      - name: 할 일이 있나
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" = workflow_run ] && [ "$(git rev-parse HEAD)" = "${{ github.event.workflow_run.head_sha }}" ]; then
+            echo "앞 워크플로가 main 에 올린 것이 없음 → 건너뜀"; echo "go=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=1" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v6
+        if: steps.gate.outputs.go == '1'
         with:
           python-version: '3.11'
       - name: 현황 만들기
+        if: steps.gate.outputs.go == '1'
         run: |
           pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 numpy==2.4.6 pillow==12.3.0
           python3 tools/make_app_index.py
           # 1학기 자료 목록: 기출이 올리기 → 원본으로 옮겨졌거나 지워졌으면 맞춘다
           if [ -f 1학기/목록.json ]; then python3 tools/sem1_import.py sync; fi
       - name: 바뀌었으면 저장
+        if: steps.gate.outputs.go == '1'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # 저장소 위치(sha)·날짜만 바뀐 거면 커밋하지 않는다 (쓸데없는 「앱 현황 갱신」 커밋이 main 을 자꾸 움직여 앱 올리기와 부딪힘)
+          if git show HEAD:app/gichul_index.json > /tmp/old.json 2>/dev/null && python3 -c "
+          import json,sys
+          a,b=(json.load(open(p,encoding='utf-8')) for p in ('/tmp/old.json','app/gichul_index.json'))
+          [d.pop(k,None) for d in (a,b) for k in ('sha','date')]
+          sys.exit(0 if a==b else 1)"; then git checkout -- app/gichul_index.json; fi
           git add app/gichul_index.json
           if [ -f 1학기/목록.json ]; then git add 1학기/목록.json; fi
           if git diff --cached --quiet; then echo "바뀐 것 없음"; exit 0; fi
