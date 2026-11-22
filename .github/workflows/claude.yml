@@ -45,8 +45,13 @@ jobs:
       # tools/setup.sh · build-pdfs.yml 과 같은 버전 (같은 내용이면 PDF도 똑같이 나오도록)
       - name: 프로그램·글씨체 설치
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei
+          # 우분투 서버가 가끔 503 을 내서 설치가 실패한다 → 몇 번 다시 시도
+          for i in 1 2 3 4; do
+            sudo apt-get update -qq -o Acquire::Retries=3 && \
+            sudo apt-get install -y -qq -o Acquire::Retries=3 --fix-missing wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei && break
+            echo "apt 설치 다시 시도 ($i)"; sleep 30
+          done
+          command -v wkhtmltopdf
           pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 \
                          numpy==2.4.6 pillow==12.3.0 cffi==2.1.1 markdown
           python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
@@ -54,6 +59,7 @@ jobs:
           git config --global core.quotepath false
 
       - uses: anthropics/claude-code-action@v1
+        id: claude
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # 「기출」 라벨 이슈(기출 정리)는 Sonnet, 제목에 「해설」이 있거나 학습자료 등 나머지는 Opus
@@ -61,4 +67,34 @@ jobs:
             --model ${{ (contains(github.event.issue.labels.*.name, '기출') && !contains(github.event.issue.title, '해설')) && 'claude-sonnet-5-5' || 'claude-opus-5-5' }}
             --max-turns 300
             --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
-            --append-system-prompt "이 저장소의 CLAUDE.md, 특히 'GitHub 이슈에서 @claude 로 불렸을 때' 절을 따른다. 사용자에게는 이슈 댓글로 한국어로 짧게 보고한다."
+            --append-system-prompt "이 저장소의 CLAUDE.md, 특히 'GitHub 이슈에서 @claude 로 불렸을 때' 절을 따른다. 사용자에게는 이슈 댓글로 한국어로 짧게 보고한다. 결과는 이 작업용 브랜치에 올리면 워크플로가 끝나자마자 main 에 자동으로 합친다 — 사용자에게 PR 을 만들거나 Merge 를 누르라고 하지 말고, 파일 링크는 main 경로로 단다."
+
+      # claude-code-action 은 이슈에서 불리면 결과를 claude/issue-<번호>-… 브랜치에만 올린다.
+      # 사용자가 매번 PR 을 만들어 합치지 않아도 되게 여기서 바로 main 에 합친다(서버에서 merge — 깊은 기록 필요 없음).
+      # 이어서 「문제지·해설지 PDF 만들기」·「앱 현황 갱신」이 이 워크플로가 끝난 것을 보고 돈다.
+      - name: 결과를 main 에 합치기
+        if: always() && steps.claude.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+          OK: ${{ steps.claude.outcome }}
+        run: |
+          R="$GITHUB_REPOSITORY"
+          branches=$(gh api "repos/$R/git/matching-refs/heads/claude/issue-$N-" -q '.[].ref' | sed 's#^refs/heads/##')
+          [ -z "$branches" ] && { echo "합칠 브랜치 없음 (main 에 바로 올렸거나 만든 것 없음)"; exit 0; }
+          for b in $branches; do
+            ahead=$(gh api "repos/$R/compare/main...$b" -q '.ahead_by' 2>/dev/null || echo 0)
+            if [ "$ahead" = 0 ]; then echo "$b: 이미 main 에 있음"; gh api -X DELETE "repos/$R/git/refs/heads/$b" >/dev/null 2>&1 || true; continue; fi
+            if [ "$OK" != success ]; then
+              gh issue comment "$N" -R "$R" --body "⚠️ 작업이 중간에 멈춰서 결과를 main 에 합치지 않았어요(브랜치 \`$b\` 에 남아 있음). 이 이슈에 \`@claude 이어서 해줘\` 라고 쓰면 다시 시작합니다. 기록: ${GITHUB_SERVER_URL}/${R}/actions/runs/${GITHUB_RUN_ID}"
+              continue
+            fi
+            code=$(gh api -X POST "repos/$R/merges" -f base=main -f head="$b" -f commit_message="이슈 #$N 결과 합치기 ($b)" -i 2>/dev/null | head -1 | awk '{print $2}')
+            echo "$b → main: HTTP $code"
+            if [ "$code" = 201 ] || [ "$code" = 204 ]; then
+              gh api -X DELETE "repos/$R/git/refs/heads/$b" >/dev/null 2>&1 || true
+              gh issue comment "$N" -R "$R" --body "✅ 결과를 main 에 합쳤어요. 앱 「기출·학습자료」 탭에는 몇 분 뒤(앱 현황 갱신 후) 나옵니다."
+            else
+              gh issue comment "$N" -R "$R" --body "⚠️ 결과를 main 에 자동으로 합치지 못했어요(같은 파일을 그새 다른 곳에서 고침). [비교·합치기](${GITHUB_SERVER_URL}/${R}/compare/main...$b?expand=1)에서 Merge 를 누르거나, 이 이슈에 \`@claude main 에 합쳐줘\` 라고 써 주세요."
+            fi
+          done

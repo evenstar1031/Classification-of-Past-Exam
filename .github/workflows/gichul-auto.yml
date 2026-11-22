@@ -101,8 +101,13 @@ jobs:
       - name: 프로그램·글씨체 설치
         if: steps.check.outputs.work == '1'
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei
+          # 우분투 서버가 가끔 503 을 내서 설치가 실패한다 → 몇 번 다시 시도
+          for i in 1 2 3 4; do
+            sudo apt-get update -qq -o Acquire::Retries=3 && \
+            sudo apt-get install -y -qq -o Acquire::Retries=3 --fix-missing wkhtmltopdf fontconfig fonts-dejavu-core fonts-liberation fonts-wqy-zenhei && break
+            echo "apt 설치 다시 시도 ($i)"; sleep 30
+          done
+          command -v wkhtmltopdf
           pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 \
                          numpy==2.4.6 pillow==12.3.0 cffi==2.1.1 markdown
           python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
