@@ -21,6 +21,8 @@ import argparse, glob, html, json, os, re, shutil, subprocess, sys, urllib.parse
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # 저장소 맨 위 (이 파일은 _자동관리/tools/)
 S = os.path.join(ROOT, '.claude', 'skills', 'gichul-strip', 'scripts')
 sys.path.insert(0, S)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import subjects as SJ  # noqa: E402  (과목 키 ↔ 보이는 폴더 '01. 진단의 기본')
 import build as B  # noqa: E402
 
 OTHER = {'id': '99', 'name': '기타 (수업 특정 불가)'}
@@ -188,6 +190,7 @@ def main():
     ap.add_argument('subject'); ap.add_argument('--only', nargs='*'); ap.add_argument('--allow-missing', action='store_true')
     ap.add_argument('--readme-only', action='store_true')
     a = ap.parse_args()
+    a.subject = SJ.key(a.subject)
     inf = json.load(open(os.path.join(ROOT, '_자동관리/과목정보', f'{a.subject}.json'), encoding='utf-8'))
     L = {x['id']: x for x in inf['lectures']}; L['99'] = OTHER
     files = sorted(glob.glob(os.path.join(ROOT, '_자동관리/분류', a.subject, '*.json')))
@@ -220,12 +223,12 @@ def main():
     for lid in groups:
         groups[lid].sort(key=lambda t: (-t[0]['year'], -(int(re.sub(r'\D', '', t[0].get('date') or '0') or 0)),
                                         t[0]['id'], t[1]['n']))
-    outdir = os.path.join(ROOT, '문제지', a.subject)
+    outdir = os.path.join(ROOT, '문제지', SJ.folder(a.subject))
     os.makedirs(outdir, exist_ok=True)
     order = [x['id'] for x in inf['lectures']] + ['99']
     if a.readme_only:
         write_readme(a.subject, inf, L, groups, order, len(files), total, outdir)
-        print(f'목차·분류 결과: 문제지/{a.subject}/README.md'); return
+        print(f'목차·분류 결과: 문제지/{SJ.folder(a.subject)}/README.md'); return
     B.IMG_ABS = True
     todo = [lid for lid in order if lid in groups and (not a.only or lid in a.only)]
     made, all_ok, sections = set(), True, []
@@ -267,7 +270,7 @@ def main():
     counted = sum(len(n) for _, _, n in sections)
     print(f"\n[{'OK' if counted == total else 'FAIL'}] 분류된 문항 {total}개 = 수업별 PDF 문항 합계 {counted}개")
     print(f"[{'OK' if all_ok else 'FAIL'}] 모든 PDF 검증 (폰트·문항번호·정답 유출)")
-    print(f'목차: 문제지/{a.subject}/README.md')
+    print(f'목차: 문제지/{SJ.folder(a.subject)}/README.md')
     sys.exit(0 if all_ok and counted == total else 1)
 
 

@@ -17,6 +17,8 @@
   내용 / 직접    Claude(내용 판단) 또는 사용자가 정한 것 — auto 를 다시 돌려도 유지됨
 """
 import argparse, json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import subjects as SJ  # noqa: E402  (과목 키 ↔ 보이는 폴더 '01. 진단의 기본')
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # 저장소 맨 위 (이 파일은 _자동관리/tools/)
 NAME_RE = re.compile(r'[가-힣]{2,4}')
@@ -244,7 +246,9 @@ def main():
     p.add_argument('--why', default=''); p.add_argument('--by', default='내용', choices=['내용', '직접'])
     p.set_defaults(f=cmd_set)
     p = sp.add_parser('check'); p.add_argument('subject'); p.add_argument('exam', nargs='?'); p.set_defaults(f=cmd_check)
-    a = ap.parse_args(); a.f(a)
+    a = ap.parse_args()
+    if getattr(a, 'subject', None): a.subject = SJ.key(a.subject)
+    a.f(a)
 
 
 if __name__ == '__main__':

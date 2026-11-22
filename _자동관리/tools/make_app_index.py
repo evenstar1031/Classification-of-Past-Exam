@@ -6,6 +6,7 @@ import glob, json, os, re, subprocess, sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
 import build_lectures as BL  # noqa: E402  (safe, lname — 학습자료 폴더 이름 규칙)
+import subjects as SJ  # noqa: E402  (과목 키 → 보이는 폴더 '01. 진단의 기본')
 
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))   # 저장소 맨 위
 sha = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
@@ -19,7 +20,7 @@ def jaryo_dir(subj, info):
     for x in sorted(os.listdir('자료실')) if os.path.isdir('자료실') else []:
         if os.path.isdir(f'자료실/{x}') and norm(x) in want:
             return f'자료실/{x}'
-    return f'자료실/{subj}'
+    return f'자료실/{SJ.folder(subj)}'
 
 def ls(d):
     return sorted(os.listdir(d)) if os.path.isdir(d) else []
@@ -42,7 +43,8 @@ out = []
 for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
     info = json.load(open(f, encoding='utf8'))
     subj = info['subject']
-    q_files, a_files, s_files = ls(f'문제지/{subj}'), ls(f'해설지/{subj}'), ls(f'학습자료/{subj}')
+    SF = SJ.folder(subj)            # 문제지·해설지·학습자료·올리기의 과목 폴더 이름
+    q_files, a_files, s_files = ls(f'문제지/{SF}'), ls(f'해설지/{SF}'), ls(f'학습자료/{SF}')
     exams, counts = [], {}
     for cf in sorted(glob.glob(f'_자동관리/분류/{subj}/*.json')):
         c = json.load(open(cf, encoding='utf8'))
@@ -79,20 +81,20 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         a = next((x for x in a_files if x.startswith(lid + '_') and x.endswith('_정답해설.pdf')), None)
         s = next((x for x in s_files if x.startswith(lid + '_') and x.endswith('_학습자료.pdf')), None)
         one = next((x for x in s_files if x.startswith(lid + '_') and x.endswith('_한장정리.pdf')), None)
-        sdir = next((x for x in s_files if x.startswith(lid + '_') and os.path.isdir(f'학습자료/{subj}/{x}')), None)
+        sdir = next((x for x in s_files if x.startswith(lid + '_') and os.path.isdir(f'학습자료/{SF}/{x}')), None)
         lectures.append({
             'id': lid, 'name': L['name'], 'cat': L.get('category'), 'exam': L.get('exam', True),
             'n': counts.get(lid, {}),
-            'q': f'문제지/{subj}/{q}' if q else None,
-            'a': f'해설지/{subj}/{a}' if a else None,
-            's': f'학습자료/{subj}/{s}' if s else None,
-            'one': f'학습자료/{subj}/{one}' if one else None,
-            'dir': f'학습자료/{subj}/{sdir}' if sdir else None,
-            'folder': f"학습자료/{subj}/{lid}_{BL.safe(BL.lname(L))}",
+            'q': f'문제지/{SF}/{q}' if q else None,
+            'a': f'해설지/{SF}/{a}' if a else None,
+            's': f'학습자료/{SF}/{s}' if s else None,
+            'one': f'학습자료/{SF}/{one}' if one else None,
+            'dir': f'학습자료/{SF}/{sdir}' if sdir else None,
+            'folder': f"학습자료/{SF}/{lid}_{BL.safe(BL.lname(L))}",
             'show': BL.lname(L),
             'mine': mine.get(lid, []),
-            'stage': stage_of(f'학습자료/{subj}/{sdir}') if sdir and s else None,
-            'notes': note_years(f'학습자료/{subj}/{sdir}') if sdir else [],
+            'stage': stage_of(f'학습자료/{SF}/{sdir}') if sdir and s else None,
+            'notes': note_years(f'학습자료/{SF}/{sdir}') if sdir else [],
         })
     extra = counts.get('99', {})
     whole_q = next((x for x in q_files if x.startswith('00_전체') and x.endswith('.pdf')), None)
@@ -102,8 +104,9 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         'exams': exams, 'etc': extra, 'lectures': lectures,
         'mine_all': mine_all,
         'jaryo': jdir,
-        'whole_q': f'문제지/{subj}/{whole_q}' if whole_q else None,
-        'whole_a': f'해설지/{subj}/{whole_a}' if whole_a else None,
+        'updir': f'올리기/{SF}',
+        'whole_q': f'문제지/{SF}/{whole_q}' if whole_q else None,
+        'whole_a': f'해설지/{SF}/{whole_a}' if whole_a else None,
     })
 res = {'repo': 'evenstar1031/Classification-of-Past-Exam', 'sha': sha, 'date': date, 'subjects': out}
 os.makedirs('_자동관리/app', exist_ok=True)
