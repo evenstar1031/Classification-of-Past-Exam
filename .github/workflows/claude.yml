@@ -42,7 +42,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      # tools/setup.sh · build-pdfs.yml 과 같은 버전 (같은 내용이면 PDF도 똑같이 나오도록)
+      # _자동관리/tools/setup.sh · build-pdfs.yml 과 같은 버전 (같은 내용이면 PDF도 똑같이 나오도록)
       - name: 프로그램·글씨체 설치
         run: |
           # 우분투 서버가 가끔 503 을 내서 설치가 실패한다 → 몇 번 다시 시도
@@ -54,7 +54,7 @@ jobs:
           command -v wkhtmltopdf
           pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 \
                          numpy==2.4.6 pillow==12.3.0 cffi==2.1.1 markdown
-          python3 .claude/skills/gichul-strip/scripts/setup_fonts.py fonts
+          python3 .claude/skills/gichul-strip/scripts/setup_fonts.py _자동관리/fonts
           python3 .claude/skills/pilgi-study/scripts/setup_fonts.py
           git config --global core.quotepath false
 

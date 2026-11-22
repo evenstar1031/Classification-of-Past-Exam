@@ -12,17 +12,17 @@ usage (저장소 맨 위 폴더에서):
 
 입력 (Claude 가 쓴다):  학습자료/<과목>/<id>_<수업명>/1_설명.md        1부 (Markdown)
                        학습자료/<과목>/<id>_<수업명>/3_연습문제.json   3부
-기출 (자동):           분류/<과목>/*.json 에서 그 수업 문항 + 해설/<과목>/<시험id>.json 의 정답·해설
+기출 (자동):           _자동관리/분류/<과목>/*.json 에서 그 수업 문항 + _자동관리/해설/<과목>/<시험id>.json 의 정답·해설
 출력:                  학습자료/<과목>/<id>_<수업명>_학습자료.pdf
 
-글씨체: 본문 StudyBatang(KoPubWorld 바탕, scripts/setup_fonts.py), 제목·문항 GichulTT(저장소 fonts/ =
+글씨체: 본문 StudyBatang(KoPubWorld 바탕, scripts/setup_fonts.py), 제목·문항 GichulTT(저장소 _자동관리/fonts/ =
 문제지와 같은 Apple SD 산돌고딕 Neo). 기출 문항은 문제지/ 의 수업별 PDF와 똑같은 코드(build_q)로 그린다.
 """
 import argparse, glob, html, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..'))
-sys.path.insert(0, os.path.join(ROOT, 'tools'))
+sys.path.insert(0, os.path.join(ROOT, '_자동관리/tools'))
 import build_lectures as BL  # noqa: E402
 B = BL.B
 
@@ -37,10 +37,10 @@ pt, mm = B.pt, B.mm
 
 # ------------------------------------------------------------------ lookup
 def load_info(subj):
-    p = os.path.join(ROOT, '과목정보', f'{subj}.json')
+    p = os.path.join(ROOT, '_자동관리/과목정보', f'{subj}.json')
     if not os.path.exists(p):
-        have = ', '.join(os.path.splitext(os.path.basename(x))[0] for x in sorted(glob.glob(os.path.join(ROOT, '과목정보', '*.json'))))
-        sys.exit(f'!! 과목정보/{subj}.json 이 없습니다. 있는 과목: {have}')
+        have = ', '.join(os.path.splitext(os.path.basename(x))[0] for x in sorted(glob.glob(os.path.join(ROOT, '_자동관리/과목정보', '*.json'))))
+        sys.exit(f'!! _자동관리/과목정보/{subj}.json 이 없습니다. 있는 과목: {have}')
     return json.load(open(p, encoding='utf-8'))
 
 
@@ -67,7 +67,7 @@ def find_lecture(inf, key):
 
 def collect(subj, inf, lid):
     """[(exam, parsed_q, class_entry, answer_entry)] of one lecture, newest year first (문제지와 같은 순서)."""
-    files = sorted(glob.glob(os.path.join(ROOT, '분류', subj, '*.json')))
+    files = sorted(glob.glob(os.path.join(ROOT, '_자동관리/분류', subj, '*.json')))
     items, exams = [], []
     for f in files:
         d = json.load(open(f, encoding='utf-8'))
@@ -78,7 +78,7 @@ def collect(subj, inf, lid):
             continue
         ex['_work'] = BL.ensure_work(subj, ex)
         parsed = {str(q['n']): q for q in json.load(open(os.path.join(ex['_work'], 'parsed.json'), encoding='utf-8'))}
-        ap = os.path.join(ROOT, '해설', subj, f"{ex['id']}.json")
+        ap = os.path.join(ROOT, '_자동관리/해설', subj, f"{ex['id']}.json")
         ans = json.load(open(ap, encoding='utf-8'))['questions'] if os.path.exists(ap) else {}
         for n in mine:
             items.append((ex, parsed[n], d['questions'][n], ans.get(n, {})))
@@ -133,7 +133,7 @@ def _extra_one(subj, lid, p):
 
 def counts(subj):
     c = {}
-    for f in glob.glob(os.path.join(ROOT, '분류', subj, '*.json')):
+    for f in glob.glob(os.path.join(ROOT, '_자동관리/분류', subj, '*.json')):
         d = json.load(open(f, encoding='utf-8'))
         for e in d['questions'].values():
             c[e.get('lecture')] = c.get(e.get('lecture'), 0) + 1
@@ -161,7 +161,7 @@ def cmd_find(a):
     inf = load_info(a.subject)
     c = counts(a.subject)
     if not c:
-        print(f'!! 분류/{a.subject}/ 에 분류된 기출이 없습니다 — 기출이 없으면 2부는 비어 있게 됩니다.')
+        print(f'!! _자동관리/분류/{a.subject}/ 에 분류된 기출이 없습니다 — 기출이 없으면 2부는 비어 있게 됩니다.')
     for x in inf['lectures']:
         if a.key and norm(a.key) not in norm(x['name']) and norm(a.key) not in norm(BL.lname(x)) and a.key != x['id']:
             continue
@@ -191,7 +191,7 @@ def cmd_gichul(a):
         print(f"정답: {ans_label(an)}")
         print(f"해설: {an.get('explanation') or '(없음)'}\n")
         if not an.get('explanation'):
-            no_ex.append(f"해설/{a.subject}/{ex['id']}.json {q['n']}번")
+            no_ex.append(f"_자동관리/해설/{a.subject}/{ex['id']}.json {q['n']}번")
     if no_ex:
         print('!! 해설이 비어 있는 기출 (build 전에 그 JSON 의 "explanation" 을 채울 것):\n  ' + '\n  '.join(no_ex))
 
@@ -470,7 +470,7 @@ def cmd_build(a):
     else:
         nums, missing, pending = [], [], []
         p2 = (part_head(2, '기출문제', '분류된 기출 없음') +
-              f'<p class="empty">저장소 분류/{html.escape(a.subject)}/ 에 이 수업으로 분류된 기출이 없습니다.</p>')
+              f'<p class="empty">저장소 _자동관리/분류/{html.escape(a.subject)}/ 에 이 수업으로 분류된 기출이 없습니다.</p>')
 
     # 3부 연습문제 + 해설 모음 (수업 전 자료에는 없음)
     p3 = part_head(3, '연습문제', f'{len(practice)}문항 · 해설은 3부 끝에')
@@ -506,7 +506,7 @@ def cmd_build(a):
     if pending:
         print(f'[CHECK] 정답·해설을 아직 안 넣은 기출 {len(pending)}문항 — 나중에 채워 다시 build')
     if missing:
-        print(f'[FAIL] 해설이 비어 있는 기출 {len(missing)}개: {missing} — 해설/{a.subject}/<시험id>.json 에 채운 뒤 다시 build')
+        print(f'[FAIL] 해설이 비어 있는 기출 {len(missing)}개: {missing} — _자동관리/해설/{a.subject}/<시험id>.json 에 채운 뒤 다시 build')
         ok = False
     sys.exit(0 if ok else 1)
 

@@ -4,11 +4,11 @@ description: Repo version of exam-answer-strip — extract and typeset one answe
 ---
 
 > **Repository paths (override every path below).** Run from the repo root.
-> Scripts: `S=.claude/skills/gichul-strip/scripts`. Fonts: `python3 $S/setup_fonts.py fonts`
-> (done by `bash tools/setup.sh`). `<시험id>` = the PDF file name without `.pdf`.
+> Scripts: `S=.claude/skills/gichul-strip/scripts`. Fonts: `python3 $S/setup_fonts.py _자동관리/fonts`
+> (done by `bash _자동관리/tools/setup.sh`). `<시험id>` = the PDF file name without `.pdf`.
 > Input: `올리기/<과목>/<시험id>.pdf`. Workdir: `work/<시험id>/` (git-ignored).
 > Output of step 5: `문제지/<과목>/시험별/<YYMMDD>_<시험명>_문제.pdf`.
-> After step 5 passes, copy `fixes.json` + `meta.json` to `작업기록/<과목>/<시험id>/`.
+> After step 5 passes, copy `fixes.json` + `meta.json` to `_자동관리/작업기록/<과목>/<시험id>/`.
 > "Deliver" is not present_files: this skill is step 1 of the `gichul-classify` workflow,
 > which continues with classification, lecture PDFs and the commit.
 
@@ -33,7 +33,7 @@ between user skills and plugins).
 
 ### 1. Fonts
 ```bash
-python $S/setup_fonts.py fonts      # regular + bold file of one font in fonts/ (now Apple SD Gothic Neo Medium/SemiBold)
+python $S/setup_fonts.py _자동관리/fonts      # regular + bold file of one font in _자동관리/fonts/ (now Apple SD Gothic Neo Medium/SemiBold)
 ```
 If either font file is missing, ask the user to upload it before going further.
 The script registers TrueType copies of the two files as
@@ -215,11 +215,11 @@ Knowing these helps when a new file breaks a check:
 - **What is dropped is still recorded (for the separate 정답·해설 edition only).** Each
   question in `parsed.json` keeps `notes` (the dropped ⓘ 오답노트/해설 lines), `answer_text`
   (주관식 typed answers) and, per choice, `mk_num` (the choice number itself was marked) and
-  `mk_lines` (marked text lines). `build.py` never prints these; `tools/answer_key.py` reads
-  them to make `해설/<과목>/*.json`. An old `parsed.json` without these keys → delete
+  `mk_lines` (marked text lines). `build.py` never prints these; `_자동관리/tools/answer_key.py` reads
+  them to make `_자동관리/해설/<과목>/*.json`. An old `parsed.json` without these keys → delete
   `work/<시험id>` and let `build_lectures.ensure_work` re-extract.
 - **PDFs are reproducible.** `render_pdf` renames the random 6-letter font-subset tags in
   order of appearance, and `setup_fonts.py` keeps the source font's timestamp, so the same
   input gives a byte-identical PDF on any machine with the pinned package versions
-  (`tools/setup.sh` = the GitHub workflow) — no git churn when GitHub Actions or a later
+  (`_자동관리/tools/setup.sh` = the GitHub workflow) — no git churn when GitHub Actions or a later
   session rebuilds unchanged files.
