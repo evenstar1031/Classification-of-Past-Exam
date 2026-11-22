@@ -3,7 +3,7 @@
 
 usage: build.py WORKDIR OUTPUT.pdf
 
-Also importable (tools/build_lectures.py): load(workdir) switches the current exam,
+Also importable (_자동관리/tools/build_lectures.py): load(workdir) switches the current exam,
 build_q(q, disp, byline) renders one question, CSS / render_pdf / verify are shared.
 
 Steps: HTML -> wkhtmltopdf -> "n / N" page-number overlay -> verification
@@ -35,7 +35,7 @@ def src_of(path):
 
 F = 1.30259            # wkhtmltopdf lays out at 125dpi, prints at 96dpi -> pre-scale all CSS
 BODY_MM = 186.0        # A4 210 - 12 - 12
-FAMILY = 'GichulTT'     # registered by setup_fonts.py from whatever font is in fonts/
+FAMILY = 'GichulTT'     # registered by setup_fonts.py from whatever font is in _자동관리/fonts/
 CIRCLE = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳'
 HANGUL = re.compile(r'[\uac00-\ud7a3\u3131-\u318e]')
 NO_SPACE_BEFORE = '.,)]}?!;:%’”℃/'
@@ -415,7 +415,7 @@ def _splits(raw, n_q):
 
 
 PB = '<div style="page-break-before:always"></div>'
-YR = '<h2 class="yr"'     # year header of the lecture PDFs (tools/build_lectures.py)
+YR = '<h2 class="yr"'     # year header of the lecture PDFs (_자동관리/tools/build_lectures.py)
 
 
 def _stranded(raw, n_h):

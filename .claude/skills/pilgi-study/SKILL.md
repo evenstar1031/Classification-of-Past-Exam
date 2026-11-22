@@ -11,7 +11,7 @@ description: 필기본(강의 필기)으로 수업 하나의 학습자료 PDF를
 |---|---|---|
 | 표지 | 과목 · 강 번호 · 수업명 · 목차 | 자동 |
 | 1부 개념 설명 | 필기본의 **모든** 내용을 설명 + 공부해야 할 **표·도식·사진은 필기본에서 잘라 넣기** | Claude가 `1_설명.md` 작성, 그림은 `fig` |
-| 2부 기출문제 | 그 수업으로 분류된 기출 전부, 최신 연도부터, `문제지/`와 같은 양식 → 끝에 **정답·해설 모음** | `분류/` + `해설/` 에서 자동 |
+| 2부 기출문제 | 그 수업으로 분류된 기출 전부, 최신 연도부터, `문제지/`와 같은 양식 → 끝에 **정답·해설 모음** | `_자동관리/분류/` + `_자동관리/해설/` 에서 자동 |
 | 3부 연습문제 | 새로 만든 문제 → 끝에 **정답표**(번호·정답만) → **해설 모음** | Claude가 `3_연습문제.json` 작성 |
 
 ## 두 단계 (수업 전 → 수업 후)
@@ -35,12 +35,12 @@ description: 필기본(강의 필기)으로 수업 하나의 학습자료 PDF를
   "수업 전판"인지 보여 준다.
 - 보고에 단계를 적는다: "수업 전판 · 1부 n단원 · 기출 n문항" / "수업 후판 · 올해 추가 n곳 · 바뀐 곳 n곳 · 연습문제 n문항".
 
-글씨체: 본문·해설 = KoPubWorld 바탕(이 스킬의 `fonts/`), 제목·문항 = Apple SD 산돌고딕 Neo(저장소 `fonts/`,
+글씨체: 본문·해설 = KoPubWorld 바탕(이 스킬의 `fonts/`), 제목·문항 = Apple SD 산돌고딕 Neo(저장소 `_자동관리/fonts/`,
 문제지와 같음). 사용자가 글씨체를 첨부하지 않아도 된다 — 아래 0단계가 설치한다.
 
 ## 0. 준비 (세션마다 한 번)
 ```bash
-bash tools/setup.sh                                          # 패키지, wkhtmltopdf, 문항 글씨체(GichulTT)
+bash _자동관리/tools/setup.sh                                          # 패키지, wkhtmltopdf, 문항 글씨체(GichulTT)
 python3 .claude/skills/pilgi-study/scripts/setup_fonts.py    # 본문 글씨체(StudyBatang) — 처음 40초쯤
 ```
 `check_private.py` 가 `[OK]` 가 아니면 PDF는 만들어 보내되 **커밋·푸시는 하지 않는다**(기출이 들어 있다).
@@ -50,7 +50,7 @@ python3 .claude/skills/pilgi-study/scripts/setup_fonts.py    # 본문 글씨체(
 S=.claude/skills/pilgi-study/scripts/study.py
 python3 $S find <과목> [검색어]        # 예: find 치료의기본 기도 → "32 응급기도관리 기출 13문항"
 ```
-과목 = `과목정보/<과목>.json` 이름(띄어쓰기 없이: 진단의기본, 치료의기본, 인체감염학 …). 필기본 파일 이름·제목·
+과목 = `_자동관리/과목정보/<과목>.json` 이름(띄어쓰기 없이: 진단의기본, 치료의기본, 인체감염학 …). 필기본 파일 이름·제목·
 내용으로 과목과 수업을 추정하고, 후보가 둘 이상이면 사용자에게 묻는다. 과목정보에 없는 과목이면 새 과목 추가
 (gichul-classify 스킬의 "New subject")가 먼저 필요하다고 알린다.
 
@@ -143,7 +143,7 @@ python3 $S build <과목> <수업>
 
 ## 6. 저장·전달
 ```bash
-python3 tools/check_private.py && git add 학습자료/<과목> 해설 && git commit -m "<과목>: <id> <수업명> 학습자료"
+python3 _자동관리/tools/check_private.py && git add 학습자료/<과목> _자동관리/해설 && git commit -m "<과목>: <id> <수업명> 학습자료"
 git push        # main 에 못 올리면 브랜치를 올리고 PR — 사용자에게 초록 Merge 버튼 안내
 ```
 `work/` 는 커밋하지 않는다. PDF는 SendUserFile 로 바로 보낸다(사용자는 대화에서 받아 본다).
@@ -153,6 +153,6 @@ git push        # main 에 못 올리면 브랜치를 올리고 PR — 사용자
 
 ## 고쳐 달라고 할 때
 - "설명 더 자세히 / 이 부분 빼줘 / 연습문제 더" → `1_설명.md`·`3_연습문제.json` 만 고치고 5–6단계.
-- "기출 n번 해설 틀렸어" → 2부 n번의 출처(시험·원번호)를 찾아 `해설/<과목>/<시험id>.json` 을 고친다(같은 문제가
+- "기출 n번 해설 틀렸어" → 2부 n번의 출처(시험·원번호)를 찾아 `_자동관리/해설/<과목>/<시험id>.json` 을 고친다(같은 문제가
   다른 해에도 있으면 함께). 해설지도 같은 JSON을 쓰므로 gichul-classify 규칙대로 `build_answers.py <과목> --only <id>`.
 - "기출 n번은 이 수업 아니야" → gichul-classify 의 `classify.py set` 으로 옮기고 이 PDF와 문제지·해설지 다시 만들기.

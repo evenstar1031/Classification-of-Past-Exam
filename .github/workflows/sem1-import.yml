@@ -1,4 +1,4 @@
-# 1학기 자료 압축 → 1학기/<과목>/ 로 정리 (tools/sem1_import.py)
+# 1학기 자료 압축 → 1학기/<과목>/ 로 정리 (_자동관리/tools/sem1_import.py)
 #
 # 올리는 법: 저장소 → Releases → Draft a new release → 태그를 「1학기-」로 시작(예: 1학기-자료) →
 #            압축 파일들을 끌어다 놓고(파일 하나 2GB까지, 과목별로 나눠도 됨) → Publish release.
@@ -62,7 +62,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: 공개 여부 확인
-        run: python3 tools/check_private.py
+        run: python3 _자동관리/tools/check_private.py
 
       - name: 압축 받기
         run: |
@@ -72,7 +72,7 @@ jobs:
           df -h / | tail -1
 
       - name: 풀어서 정리하고 올리기
-        run: python3 tools/sem1_import.py import --src work/sem1_dl --tag "$TAG" --commit
+        run: python3 _자동관리/tools/sem1_import.py import --src work/sem1_dl --tag "$TAG" --commit
 
       - name: 결과 이슈
         if: always()

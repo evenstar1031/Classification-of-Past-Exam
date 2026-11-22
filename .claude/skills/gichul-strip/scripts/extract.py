@@ -408,7 +408,7 @@ for q in qs:
                             row['mk_lines'].append(s['t'])
                     continue
                 print(f'  !! Q{q["n"]}: box line after choices kept nowhere: {s["t"][:60]!r}')
-    # notes / answer_text / mk_num / mk_lines feed the answer edition (tools/build_answers.py);
+    # notes / answer_text / mk_num / mk_lines feed the answer edition (_자동관리/tools/build_answers.py);
     # the question-only build never reads them
     out.append({'n': q['n'], 'blocks': blocks, 'notes': notes, 'answer_text': answer_text,
                 'choices': [{k: c[k] for k in ('n', 'lines', 'figs', 'label', 'mk', 'mk_num', 'mk_lines')}
