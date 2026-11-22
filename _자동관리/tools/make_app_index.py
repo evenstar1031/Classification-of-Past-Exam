@@ -11,6 +11,16 @@ os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))  
 sha = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
 date = subprocess.run(['git', 'log', '-1', '--format=%cs'], capture_output=True, text=True).stdout.strip()
 
+
+def jaryo_dir(subj, info):
+    """자료실 과목 폴더 찾기 — 이름 앞 순서 번호("02. 치료의 기본")와 띄어쓰기는 무시하고 과목과 맞춘다."""
+    norm = lambda t: re.sub(r'\s+', '', re.sub(r'^\d+\s*[.)_-]?\s*', '', t))
+    want = {norm(subj), norm(info.get('name') or subj)}
+    for x in sorted(os.listdir('자료실')) if os.path.isdir('자료실') else []:
+        if os.path.isdir(f'자료실/{x}') and norm(x) in want:
+            return f'자료실/{x}'
+    return f'자료실/{subj}'
+
 def ls(d):
     return sorted(os.listdir(d)) if os.path.isdir(d) else []
 
@@ -51,7 +61,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         return None
     # 자료실/<과목>/ — 사용자가 직접 올린 자료. 파일 이름 앞 번호(예 "33·34_")로 수업에 붙이고, 번호가 없으면 과목 전체 자료
     mine, mine_all = {}, []
-    jdir = f'자료실/{subj}'
+    jdir = jaryo_dir(subj, info)
     for x in ls(jdir):
         if x.startswith('.') or x.lower() == 'readme.md' or os.path.isdir(f'{jdir}/{x}'):
             continue
@@ -91,6 +101,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         'subject': subj, 'name': info['name'], 'code': info.get('code'),
         'exams': exams, 'etc': extra, 'lectures': lectures,
         'mine_all': mine_all,
+        'jaryo': jdir,
         'whole_q': f'문제지/{subj}/{whole_q}' if whole_q else None,
         'whole_a': f'해설지/{subj}/{whole_a}' if whole_a else None,
     })

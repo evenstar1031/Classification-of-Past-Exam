@@ -3651,7 +3651,7 @@ window.S3=(function(){
           s.exams.length&&a(tree('문제지/'+s.subject),'문제지 폴더'),
           (s.lectures.some(l=>l.s))&&a(tree('학습자료/'+s.subject),'학습자료 폴더'),
           ...(s.mine_all||[]).map(p=>a(blob(p),'<span class="g-tag">내 자료</span>'+h(mineLabel(p)),'g-link g-mine',p)),
-          (s.lectures.some(l=>l.mine&&l.mine.length)||(s.mine_all||[]).length)&&a(tree('자료실/'+s.subject),'자료실 폴더'),
+          a(tree(s.jaryo||('자료실/'+s.subject)),'자료실 폴더'),          // 누구나 열어 보고, 정리본은 거기서 Upload files
           GUEST?'':APPM?(OWNER()&&upBtn('gichul','now',s,null,'기출 정리 바로 맡기기','g-make g-now')):(CAN&&a(gichulURL(s),'기출 정리 바로 맡기기','g-make g-now')),
           GUEST?'':APPM?upBtn('gichul','mine',s,null,'내 Claude로 기출 정리','g-make'):a(codeURL(gichulPrompt(s)),'내 Claude로 기출 정리','g-make'),
         ].filter(Boolean).join('')}</p>
