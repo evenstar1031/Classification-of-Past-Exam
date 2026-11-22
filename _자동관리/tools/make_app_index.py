@@ -105,6 +105,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         'mine_all': mine_all,
         'jaryo': jdir,
         'updir': f'올리기/{SF}',
+        'sem': SJ.semester(subj) or 2,
         'whole_q': f'문제지/{SF}/{whole_q}' if whole_q else None,
         'whole_a': f'해설지/{SF}/{whole_a}' if whole_a else None,
     })
