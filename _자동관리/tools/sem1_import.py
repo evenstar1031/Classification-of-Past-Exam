@@ -173,19 +173,39 @@ def visible_children(d):
     return out
 
 
+def sem1_subject(name):
+    """'01'·'1'·'01. 생리학'·'생리학' → '생리학' (1학기 과목 순서·이름으로), 모르면 None"""
+    n = nfc(str(name)).strip()
+    m = re.fullmatch(r'0*(\d{1,2})', n)
+    if m and 1 <= int(m.group(1)) <= len(SJ.ORDER[1]):
+        return SJ.ORDER[1][int(m.group(1)) - 1][1]
+    f = SJ._find(n)
+    return f[3] if f and f[0] == 1 else None
+
+
+def subject_name(name):
+    return sem1_subject(name) or clean_subject(name)
+
+
 def subjects_in(top, fallback):
-    """압축을 푼 폴더 → [(과목 이름, 과목 폴더)] , 과목 밖 파일 [(path)]"""
+    """압축을 푼 폴더 → [(과목 이름, 과목 폴더)] , 과목 밖 파일 [(path)]
+    압축 이름이 과목(「01.zip」=1학기 1번 과목, 「생리학.zip」)이고 안의 폴더가 과목 이름이 아니면(1차·2차·교과서 …)
+    압축 전체를 그 과목 하나로 본다."""
     d = top
+    whole = sem1_subject(fallback)
     while True:
         kids = visible_children(d)
         dirs = [k for k in kids if k.is_dir()]
         files = [k for k in kids if k.is_file()]
         if dirs and all(KIND_FOLDER.match(k.name) for k in dirs):     # 아래가 기출·강의자료 … → 여기가 과목
             name = d.name if d != top else fallback
-            return [(clean_subject(name), d)], []
+            return [(subject_name(name), d)], []
         if len(dirs) == 1 and not files:
+            if sem1_subject(dirs[0].name): return [(sem1_subject(dirs[0].name), dirs[0])], []
             d = dirs[0]; continue
-        return [(clean_subject(k.name), k) for k in dirs], files
+        if whole and not any(sem1_subject(k.name) for k in dirs):
+            return [(whole, d)], []
+        return [(subject_name(k.name), k) for k in dirs], files
 
 
 def kind_of(rel_parts):
