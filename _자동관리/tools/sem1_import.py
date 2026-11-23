@@ -7,7 +7,7 @@
 하는 일 (import)
   1) 압축(zip·7z·rar·나눈 압축 .001)을 푼다. 윈도에서 만든 zip 의 한글 이름(CP949)도 살린다. 압축 속 압축도 한 번 더 푼다.
   2) 맨 위 폴더 = 과목. 과목 폴더 밖의 파일은 「(과목 미정)」.
-  3) 파일마다 종류(기출·교과서·정리본)를 파일 이름 → 위 폴더 이름 순으로 정한다.
+  3) 파일마다 종류(교과서·기출·수업·과제)를 파일 이름 → 위 폴더 이름 순으로 정한다.
   4) 넣지 않는 것(skipped): 찌꺼기(.DS_Store·__MACOSX·~$ 임시파일·빈 파일), 저장소/압축 안에 똑같은 파일이 이미 있는 것,
      녹음·영상, 100MB 넘는 것(PDF 는 먼저 줄여 보고 그래도 크면).
   5) 넣되 사용자가 볼 것
@@ -34,12 +34,14 @@ JUNK_EXT = {'.tmp', '.lnk', '.url', '.ini', '.crdownload', '.part', '.download'}
 MEDIA_EXT = {'.mp4', '.mov', '.avi', '.mkv', '.wmv', '.webm', '.m4v', '.m4a', '.mp3', '.wav', '.aac', '.wma', '.flac', '.ogg', '.amr'}
 ARCH_EXT = {'.zip', '.7z', '.rar', '.tar', '.gz', '.tgz', '.bz2', '.xz'}
 IMG_EXT = {'.png', '.jpg', '.jpeg', '.heic', '.webp', '.gif', '.bmp', '.tif', '.tiff'}
-KINDS = [  # 앞에 있을수록 우선 — 종류는 기출·교과서·정리본 셋
+KINDS = [  # 앞에 있을수록 우선 — 종류는 교과서·기출·수업·과제 넷 (앱에는 교과서·기출·수업·과제 순서로 보임)
     ('기출', re.compile(r'기출|족보|시험|고사|퀴즈|쪽지|quiz|exam|midterm|mid-term|final ?test', re.I)),
-    ('정리본', re.compile(r'정리|요약|summary|단권|핵심|암기|요점|필기|필야|노트|note|굿노트|goodnote|녹취|판서', re.I)),
+    ('수업', re.compile(r'정리|요약|summary|단권|핵심|암기|요점|필기|필야|노트|note|굿노트|goodnote|녹취|판서', re.I)),
+    ('과제', re.compile(r'과제|발표|대본|레포트|report|논문|\d+\s*조(?!혈)', re.I)),
     ('교과서', re.compile(r'교과서|textbook|\d+(st|nd|rd|th) ?ed|edition|매뉴얼|manual|강의|lecture|\blec|슬라이드|slide|교안|수업 ?자료|handout|강의록|프린트|스크립트|script', re.I)),
 ]
-KIND_FOLDER = re.compile(r'^\s*(\d+[.)_\-\s]+)?(' + '|'.join(k[1].pattern for k in KINDS) + r'|자료|기타|etc|과제|실습)', re.I)
+TASK_FOLDER = re.compile(r'^\s*(\d+[.)_\-\s]+)?(실습|cbl)', re.I)   # 「05. 실습」「04. CBL6」 폴더 → 과제 (파일 이름에선 안 봄: 매뉴얼·기출에도 CBL 이 붙음)
+KIND_FOLDER = re.compile(r'^\s*(\d+[.)_\-\s]+)?(' + '|'.join(k[1].pattern for k in KINDS) + r'|자료|기타|etc|과제|실습|cbl)', re.I)
 COPY_TAIL = re.compile(r'(\s*\(\d+\)|\s*-?\s*(복사본|사본)(\s*\(\d+\))?|\s*copy(\s*\d+)?)+$', re.I)       # 같은 것의 사본
 NEWER_TAIL = re.compile(r'([\s_\-]*(최종|final|수정본?|v\d+|ver\.?\s?\d+|new))+$', re.I)                          # 고친 새 판
 def strip_tails(stem):
@@ -210,12 +212,12 @@ def subjects_in(top, fallback):
 def kind_of(rel_parts):
     ext = Path(rel_parts[-1]).suffix.lower()
     comps = [Path(rel_parts[-1]).stem] + list(reversed(rel_parts[:-1]))
-    for c in comps:
-        hits = [k for k, rx in KINDS if rx.search(c)]
+    for i, c in enumerate(comps):
+        hits = [k for k, rx in KINDS if rx.search(c) or (k == '과제' and i > 0 and TASK_FOLDER.match(c))]
         if hits:
-            amb = hits[0] == '기출' and len(hits) > 1 and '정리본' in hits
+            amb = hits[0] == '기출' and len(hits) > 1 and '수업' in hits
             return hits[0], amb
-    return '정리본', None     # 이름·폴더로 알 수 없음 → 정리본으로 넣고 확인 필요
+    return '수업', None     # 이름·폴더로 알 수 없음 → 수업으로 넣고 확인 필요
 
 
 def pdf_info(path):
@@ -346,9 +348,9 @@ def do_import(src, tag, commit):
             if subj == NOSUBJ:
                 it.update(state='check', why='과목 폴더 밖에 있던 파일이에요. 어느 과목인지 확인해 주세요.')
             elif amb:
-                it.update(state='check', why='기출인지 정리본인지 이름만으로 애매해요.')
+                it.update(state='check', why='기출인지 수업 정리인지 이름만으로 애매해요.')
             elif amb is None:
-                it.update(state='check', why='이름·폴더로 종류를 알 수 없어 정리본으로 넣었어요. 맞는지 보고 남길지 정해 주세요.')
+                it.update(state='check', why='이름·폴더로 종류를 알 수 없어 수업으로 넣었어요. 맞는지 보고 남길지 정해 주세요.')
             elif kind == '기출' and ext != '.pdf':
                 it.update(state='check', why=('사진으로 된 기출이에요.' if ext in IMG_EXT else 'PDF가 아닌 기출이에요.')
                           + ' Claude에게 맡기면 문제지로 만들 수 있어요.')

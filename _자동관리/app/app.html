@@ -3926,7 +3926,7 @@ if(window.S2) S2.sync();
 .d1 .d1-nm a:hover{text-decoration:underline; text-underline-offset:2px}
 .d1 .kind{font-size:11.5px; font-weight:700; border-radius:5px; padding:0 6px; line-height:1.7; white-space:nowrap; background:var(--soft); color:var(--muted)}
 .d1 .kind.k-기출{background:var(--tag-exam-bg); color:var(--tag-exam-c)} .d1 .kind.k-교과서{background:var(--tag-tbl-bg); color:var(--tag-tbl-c)}
-.d1 .kind.k-정리본{background:var(--tag-caseh-bg); color:var(--tag-caseh-c)}
+.d1 .kind.k-수업{background:var(--tag-caseh-bg); color:var(--tag-caseh-c)} .d1 .kind.k-과제{background:var(--tag-cp-bg); color:var(--tag-cp-c)}
 .d1 select.kind{border:0; font:inherit; font-size:11.5px; font-weight:700; cursor:pointer; padding:0 2px 0 6px; appearance:auto}
 .d1 .newb{font-size:11px; font-weight:700; color:var(--teal); letter-spacing:.02em}
 .d1 .d1-meta{grid-column:1; margin:0; font-size:13px; color:var(--faint); line-height:1.5; overflow-wrap:anywhere}
@@ -3975,7 +3975,7 @@ window.D1=(function(){
   const enc=p=>p.split('/').map(encodeURIComponent).join('/');
   const blobURL=p=>GH+'/blob/main/'+enc(p), treeURL=p=>GH+'/tree/main/'+enc(p);
   const mb=n=>n>=1073741824?(n/1073741824).toFixed(1)+'GB':n>=1048576?(n/1048576).toFixed(1)+'MB':Math.max(1,Math.round(n/1024))+'KB';
-  const KINDS=['기출','교과서','정리본'];
+  const KINDS=['교과서','기출','수업','과제'];
   let M=null, view='todo', subj='all', query='', loaded=false, rels=null;
 
   /* ── 읽기 ── */
@@ -4051,7 +4051,7 @@ window.D1=(function(){
     const remake=OWNER&&sd.info&&gpdf.length?`<button type="button" class="d1-btn sm" data-act="gichul-all" data-s="${h(s)}" title="이미 수업별로 정리돼 있으면 누르지 않아도 돼요">수업별 문제지로도 만들기 (${gpdf.length}개)</button>`:'';
     const blk=(cls,title,sub,list,extra)=>list.length?`<section class="d1-block ${cls}"><header><h3>${title}<small>${list.length}개</small></h3>${extra||''}${sub?`<p>${sub}</p>`:''}</header>${list.map(it=>row(s,it)).join('')}</section>`:'';
     const kinds=KINDS.map(k=>{
-      const l=rest.filter(it=>(KINDS.includes(it.kind)?it.kind:'정리본')===k); if(!l.length) return '';
+      const l=rest.filter(it=>(KINDS.includes(it.kind)?it.kind:'수업')===k); if(!l.length) return '';
       const nw=l.filter(isNew).length;
       return `<details${(query||view==='new'||l.length<=6)?' open':''}><summary>${h(k)} <span class="n">${l.length}개</span>${nw&&nw<l.length?`<span class="newb">새로 ${nw}</span>`:''}</summary>${k==='기출'&&remake?`<div class="d1-remake">${remake}<span>이미 수업별로 정리된 기출이면 그대로 두면 돼요.</span></div>`:''}${l.map(it=>row(s,it)).join('')}</details>`;
     }).join('');
