@@ -1,0 +1,93 @@
+[
+  {"stem": "52세 남자가 신장이식 후 면역억제제를 복용하고 있다. 증상은 없으나 정기 혈액검사에서 거대세포바이러스(CMV) DNA 수치가 미리 정해 둔 기준 이상으로 올라 항바이러스제를 시작하였다. 이와 같은 투여 목적에 해당하는 것은?",
+   "choices": ["예방적(prophylactic) 투여", "선제적(pre-emptive) 투여", "경험적(empirical) 투여", "확정적(definite) 투여", "병용(combination) 투여"],
+   "answer": [2],
+   "explanation": "감염 증상이 나타나기 전, 고위험군에서 미리 정한 감시 지표(surrogate marker — 여기서는 CMV 수치)가 기준 이상으로 오를 때 투여하는 것이 선제적(pre-emptive) 투여다.\n예방적 투여는 지표와 상관없이 감염이 없는 고위험군에 미리 주는 것(수술 전 예방 항생제), 경험적 투여는 감염은 확인됐지만 원인균을 모를 때, 확정적 투여는 배양으로 균을 확인한 뒤 주는 것이다.",
+   "point": "사용 목적에 따른 분류"},
+
+  {"stem": "수술 전 예방적 항생제 사용 원칙으로 옳은 것만을 <보기>에서 있는 대로 고른 것은?",
+   "box": ["ㄱ. 대장 절제처럼 clean-contaminated 수술은 적응증이다.", "ㄴ. 수술 후 24시간 이내에 중단한다.", "ㄷ. 충분한 조직 농도를 위해 피부 절개 2–3시간 전에 투여한다.", "ㄹ. 인공관절 삽입 수술은 적응증이다."],
+   "choices": ["ㄱ, ㄴ", "ㄱ, ㄷ", "ㄱ, ㄴ, ㄹ", "ㄴ, ㄷ, ㄹ", "ㄱ, ㄴ, ㄷ, ㄹ"],
+   "answer": [3],
+   "explanation": "적응증은 clean-contaminated 수술, 인공물·임플란트 수술, 고위험군이고(ㄱ, ㄹ), 수술 후 24시간 이내·단일 약제가 원칙이다(ㄴ).\nㄷ: 투여 시점은 피부 절개 30–60분 이내다. 너무 일찍 주면 수술 중에 혈중·조직 농도가 떨어진다.",
+   "point": "수술 전 예방적 항생제"},
+
+  {"stem": "어떤 균주에 대해 항생제 A의 MIC는 2 µg/mL, MBC는 64 µg/mL로 측정되었다. 항생제 A로 가장 가능성이 높은 것은?",
+   "choices": ["Penicillin G", "Cefazolin", "Gentamicin", "Ciprofloxacin", "Tetracycline"],
+   "answer": [5],
+   "explanation": "MIC와 MBC의 차이가 크면, MIC 농도에서는 균이 자라지 못할 뿐 죽지는 않는다는 뜻이므로 정균제(bacteriostatic)다. 보기 중 정균제는 tetracycline(30S 결합 단백 합성 억제)이다.\nPenicillin·cefazolin(세포벽), gentamicin(30S에 붙지만 살균인 예외), ciprofloxacin(DNA gyrase)은 MIC와 MBC가 가까운 살균제다.",
+   "point": "MIC와 MBC / 살균 vs 정균"},
+
+  {"stem": "Fosfomycin에 대한 설명으로 옳지 않은 것은?",
+   "choices": ["발열과 늑척추각 압통이 있는 신우신염 의심 환자에게 1차로 쓴다.", "신장에서 변형되지 않고 배설되어 소변 내 고농도를 유지한다.", "대부분의 ESBL 생성 장내세균에 효과가 있다.", "VRE를 포함한 장구균에도 효과가 있다.", "3 g을 1회 경구 복용하면 소변 내 고농도가 48시간 이상 유지된다."],
+   "answer": [1],
+   "explanation": "Fosfomycin은 조직 침투와 혈중 농도가 낮아 신우신염이 의심되면 쓰지 않는다. 적응증은 단순 방광염의 치료·예방이다.\n나머지는 모두 옳다: 소변으로 변형 없이 배설되어 고농도이고, ESBL 생성균·VRE 포함 장구균에도 효과가 있으며, 3 g 단회 경구 투여다.",
+   "point": "요로 전용 약 — fosfomycin"},
+
+  {"stem": "항생제와 그 항생제에 자연내성(intrinsic resistance)을 보이는 균의 연결로 옳지 않은 것은?",
+   "choices": ["Aminoglycoside – Pseudomonas aeruginosa", "Vancomycin – 모든 그람음성균", "Aztreonam – 모든 그람양성균", "Tetracycline – Pseudomonas 종", "Macrolide – 장내세균(Enterobacterales)"],
+   "answer": [1],
+   "explanation": "Aminoglycoside의 자연내성 균은 혐기균과 Enterococcus이다. 녹농균에는 오히려 amikacin·tobramycin을 쓴다.\n나머지 연결(vancomycin–그람음성, aztreonam–그람양성, tetracycline–Pseudomonas, macrolide–장내세균)은 강의의 자연내성 표 그대로다. 이 표에서는 「cephalosporin–Enterococcus」가 기출에 가장 자주 나왔다.",
+   "point": "자연내성"},
+
+  {"stem": "65세 남자가 Enterococcus faecalis에 의한 감염성 심내막염으로 진단되었다. 올해 강의에서 시너지(같은 경로의 다른 단계 차단) 병용의 예로 든 조합은?",
+   "choices": ["Vancomycin + meropenem", "Ampicillin + ceftriaxone", "Piperacillin/tazobactam + metronidazole", "Carbapenem + colistin", "Isoniazid + rifampin"],
+   "answer": [2],
+   "explanation": "올해 필기는 장구균 심내막염의 시너지 예로 ampicillin + ceftriaxone을 들었다. 예전에는 β-lactam(penicillin) + aminoglycoside를 썼지만 신독성 때문에 지침이 바뀌어 지금은 잘 병용하지 않는다.\nCarbapenem + colistin은 CRE에서 감수성을 확보하려는 「예전 방식」 병용이고, INH + RIF는 내성 억제, β-lactam + metronidazole은 다균종(혐기균) 커버 목적이다.",
+   "point": "병용요법"},
+
+  {"stem": "58세 남자가 간농양으로 ceftriaxone과 metronidazole을 2주간 정맥 투여받았다. 혈액 배양에서 자란 Klebsiella pneumoniae는 두 약에 모두 감수성이었으나 38.5℃의 발열이 계속된다. 복부 CT에서 직경 7 cm의 농양이 크기 변화 없이 남아 있다. 가장 적절한 다음 조치는?",
+   "choices": ["Ceftriaxone을 cefepime으로 바꾼다.", "Meropenem으로 바꾼다.", "Aminoglycoside를 추가한다.", "농양을 배농한다.", "같은 약으로 4주 더 투여한다."],
+   "answer": [4],
+   "explanation": "감수성이 있는 약을 썼는데도 낫지 않을 때는 「약이 닿기 어려운 곳」을 먼저 생각한다. 배농되지 않은 농양은 그 자체가 항생제 침투를 떨어뜨려 조직 농도가 낮으므로 배농 같은 수술적 처치가 필요하다.\n감수성이 있는 균에 약만 더 넓히거나(cefepime, meropenem) 추가하거나 기간만 늘리는 것은 원인을 해결하지 못한다.",
+   "point": "치료 실패 시 고려할 것"},
+
+  {"stem": "임신 20주인 28세 여자가 배뇨통과 빈뇨로 왔다. 발열과 옆구리 통증은 없고 소변검사에서 농뇨가 있다. 항생제로 가장 적절한 것은?",
+   "choices": ["Ciprofloxacin", "Doxycycline", "Cephalexin", "Gentamicin", "Chloramphenicol"],
+   "answer": [3],
+   "explanation": "임신 중 비교적 안전한 항생제는 penicillin과 cephalosporin이다(cephalexin은 1세대 경구 세팔로스포린).\nQuinolone은 연골 손상, tetracycline(doxycycline)은 치아 착색·골 성장 억제, aminoglycoside는 태아 제8뇌신경 손상, chloramphenicol은 gray baby syndrome 위험이 있다.",
+   "point": "임신 중 항생제"},
+
+  {"stem": "70세 여자가 요로감염에 의한 균혈증으로 입원하였다. 혈액 배양에서 E. coli가 자랐고 감수성 결과는 cefotaxime R, ceftazidime R, cefoxitin S, ESBL 선별검사 양성이었다. 치료제로 가장 적절한 것은?",
+   "choices": ["Ceftriaxone", "Aztreonam", "Ampicillin", "Meropenem", "Cefazolin"],
+   "answer": [4],
+   "explanation": "ESBL은 oxyimino-β-lactam(ceftriaxone, ceftazidime, cefotaxime, aztreonam)을 분해하므로 3세대 세팔로스포린과 aztreonam에 내성이다. ESBL 균혈증에는 carbapenem(ertapenem, imipenem, meropenem)을 쓴다.\nCefoxitin(cefamycin)이 S로 나오는 경우가 많다는 것도 강의 감수성 결과에 나온 포인트다. Ampicillin·cefazolin은 처음부터 부적절하다.",
+   "point": "ESBL 균주"},
+
+  {"stem": "중환자실 환자의 혈액에서 NDM형 carbapenemase를 생성하는 Klebsiella pneumoniae가 분리되었다. 강의 내용에 따를 때 이 균을 덮을 수 있는 약은?",
+   "choices": ["Ertapenem", "Ceftazidime/avibactam", "Meropenem/vaborbactam", "Imipenem/relebactam", "Cefiderocol"],
+   "answer": [5],
+   "explanation": "NDM은 VIM·IMP와 함께 금속 β-lactamase(MBL)다. 강의에서 MBL까지 덮는 약은 cefiderocol(국내 사용 가능)과 aztreonam-avibactam이었다. Cefiderocol은 철과 함께 세균 안으로 들어가는 「트로이 목마」 약으로, CPE를 전부 덮는 현재의 최후의 보루다.\nCeftazidime/avibactam은 NDM·VIM·IMP를 제외한 CRE(KPC 정도)만, meropenem/vaborbactam과 imipenem/relebactam은 KPC만 덮는다. Ertapenem은 carbapenem이라 CRE에 쓸 수 없다.",
+   "point": "CRE / 신약"},
+
+  {"stem": "Ertapenem에 대한 설명으로 옳은 것은?",
+   "choices": ["녹농균 감염에 효과적이다.", "MRSA 감염에 효과적이다.", "ESBL 생성 장내세균 감염에 쓸 수 있다.", "Enterococcus faecium에 효과적이다.", "Carbapenem 내성 장내세균(CRE)에 쓴다."],
+   "answer": [3],
+   "explanation": "Ertapenem은 그람양성·그람음성·혐기균과 ESBL 생성 장내세균을 덮지만, 다른 carbapenem과 달리 녹농균과 Acinetobacter는 덮지 못한다.\nMRSA, E. faecium, Stenotrophomonas는 carbapenem 전체의 예외이고, CRE는 정의상 carbapenem에 내성이다.",
+   "point": "Carbapenem — ertapenem"},
+
+  {"stem": "Fluoroquinolone에 대한 설명으로 옳은 것은?",
+   "choices": ["세대가 올라갈수록 녹농균에 대한 항균력이 커진다.", "Ciprofloxacin은 녹농균에 쓸 수 있는 가장 강력한 경구제다.", "4세대(moxifloxacin)는 혐기균을 덮지 못한다.", "임신 중에도 비교적 안전하게 쓴다.", "경구 생체이용률이 낮아 골수염에는 쓰지 않는다."],
+   "answer": [2],
+   "explanation": "녹농균에 가장 강력한 경구제는 2세대 ciprofloxacin이고, 3·4세대에서는 오히려 녹농균 항균력이 줄어든다(①). 세팔로스포린과 방향이 반대인 점이 함정이다.\n4세대 moxifloxacin은 혐기균을 덮고(③), FQ는 임신 금기다(④, 동물에서 연골 손상). 경구 생체이용률과 뼈 침투가 매우 좋아 만성 골수염에 쓴다(⑤).",
+   "point": "Fluoroquinolones"},
+
+  {"stem": "45세 남자가 VRE 균혈증으로 3주째 항생제를 투여받고 있다. 혈소판이 35,000/µL로 줄었고 양쪽 손발이 저리다고 한다. 투여 중인 약으로 가장 가능성이 높은 것은?",
+   "choices": ["Vancomycin", "Daptomycin", "Colistin", "Tigecycline", "Linezolid"],
+   "answer": [5],
+   "explanation": "Linezolid는 VRE 혈류감염에 쓰는 50S 억제제(정균)로, 골수의 미토콘드리아에 작용해 골수억제·혈소판 감소를 일으키고, 말초신경염·시신경염은 비가역일 수 있다.\nDaptomycin도 VRE 균혈증에 쓰지만 대표 부작용은 CPK 상승·근병증이다. Vancomycin은 VRE에 듣지 않고, colistin은 그람음성 전용이며, tigecycline은 정균이라 균혈증에 불리하고 부작용은 위장관 증상이다.",
+   "point": "Oxazolidinone — linezolid"},
+
+  {"stem": "Tigecycline에 대한 설명으로 옳은 것만을 <보기>에서 있는 대로 고른 것은?",
+   "box": ["ㄱ. MRSA와 CRE에 효과가 있다.", "ㄴ. 녹농균 감염에 쓸 수 있다.", "ㄷ. 지용성이라 조직 농도는 높지만 혈중 농도가 낮아 균혈증에 불리하다.", "ㄹ. 살균제이므로 중증 감염의 단독 치료에 적합하다."],
+   "choices": ["ㄱ, ㄴ", "ㄱ, ㄷ", "ㄴ, ㄹ", "ㄱ, ㄷ, ㄹ", "ㄱ, ㄴ, ㄷ, ㄹ"],
+   "answer": [2],
+   "explanation": "Tigecycline(glycylcycline, 3세대 tetracycline)은 MRSA·VRE·CRE·carbapenem 내성 A. baumannii까지 덮는다(ㄱ). 지용성이라 조직·지방에 잘 달라붙어 혈중 농도가 낮으므로 균혈증에 잘 듣지 않는다(ㄷ).\nㄴ: Proteus, 녹농균, Providencia, Morganella에는 효과가 없다. ㄹ: 정균제라서 빨리 균을 없애야 하는 중증 감염·균혈증에서는 효과가 떨어진다.",
+   "point": "Tigecycline"},
+
+  {"stem": "60세 남자에게 MRSA 폐렴으로 vancomycin을 처음 투여하였다. 빠르게 주입하던 중 얼굴과 목, 상체가 붉어지고 가려워졌다. 혈압과 산소포화도는 정상이다. 이 반응에 대한 설명으로 옳은 것은?",
+   "choices": ["IgE 매개 1형 과민반응이므로 vancomycin을 다시 쓰면 안 된다.", "Type IV 세포매개 과민반응이다.", "Vancomycin의 신독성으로 생긴다.", "과립구에서 히스타민이 분비되어 생기며, 주입 속도를 늦추면 다시 쓸 수 있다.", "탈감작(desensitization)을 해야만 다시 쓸 수 있다."],
+   "answer": [4],
+   "explanation": "Red man syndrome은 vancomycin을 처음에 빠르게 주입할 때 과립구에서 히스타민이 과다 분비되어 생기는 아나필락시스 유사(anaphylactoid) 반응이다. 진짜 알레르기(IgE)가 아니므로 주입 속도를 늦추면 다시 쓸 수 있다.\nType I 과민반응의 과거력이 중요한 것은 β-lactam 알레르기에서다(예측력이 가장 좋은 것은 과거 1형 과민반응 병력). 탈감작은 진짜 즉시형 알레르기에서 꼭 필요한 약을 써야 할 때 한다.",
+   "point": "항생제 부작용 — red man syndrome"}
+]
