@@ -36,9 +36,9 @@ ARCH_EXT = {'.zip', '.7z', '.rar', '.tar', '.gz', '.tgz', '.bz2', '.xz'}
 IMG_EXT = {'.png', '.jpg', '.jpeg', '.heic', '.webp', '.gif', '.bmp', '.tif', '.tiff'}
 KINDS = [  # 앞에 있을수록 우선 — 종류는 교과서·기출·수업·과제 넷 (앱에는 교과서·기출·수업·과제 순서로 보임)
     ('기출', re.compile(r'기출|족보|시험|고사|퀴즈|쪽지|quiz|exam|midterm|mid-term|final ?test', re.I)),
-    ('수업', re.compile(r'정리|요약|summary|단권|핵심|암기|요점|필기|필야|노트|note|굿노트|goodnote|녹취|판서', re.I)),
+    ('수업', re.compile(r'정리|요약|summary|단권|핵심|암기|요점|필기|필야|노트|note|굿노트|goodnote|녹취|판서|매뉴얼|manual|강의|lecture|\blec|슬라이드|slide|교안|수업 ?자료|handout|강의록|프린트|스크립트|script', re.I)),
     ('과제', re.compile(r'과제|발표|대본|레포트|report|논문|\d+\s*조(?!혈)', re.I)),
-    ('교과서', re.compile(r'교과서|textbook|\d+(st|nd|rd|th) ?ed|edition|매뉴얼|manual|강의|lecture|\blec|슬라이드|slide|교안|수업 ?자료|handout|강의록|프린트|스크립트|script', re.I)),
+    ('교과서', re.compile(r'교과서|textbook|\d+(st|nd|rd|th) ?ed\b|edition', re.I)),   # 진짜 교과서만
 ]
 TASK_FOLDER = re.compile(r'^\s*(\d+[.)_\-\s]+)?(실습|cbl)', re.I)   # 「05. 실습」「04. CBL6」 폴더 → 과제 (파일 이름에선 안 봄: 매뉴얼·기출에도 CBL 이 붙음)
 KIND_FOLDER = re.compile(r'^\s*(\d+[.)_\-\s]+)?(' + '|'.join(k[1].pattern for k in KINDS) + r'|자료|기타|etc|과제|실습|cbl)', re.I)
