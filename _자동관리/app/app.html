@@ -3266,7 +3266,7 @@ window.APPX=(function(){
     onProgress&&onProgress(files.length, files.length, '');
     // 2) main 끝에 붙인다. GitHub Actions 가 그새 main 에 올렸으면(자주 그렇다) 새 끝에 다시 붙인다
     for(let attempt=0; ; attempt++){
-      const ref=await APP.gh(`${R}/git/ref/heads/main`);
+      const ref=await APP.gh(`${R}/git/ref/heads/main?t=${Date.now()}`,{cache:'no-store'});
       const base=await APP.gh(`${R}/git/commits/${ref.object.sha}`);
       const t=await APP.gh(`${R}/git/trees`,{method:'POST', body:{base_tree:base.tree.sha, tree}});
       const c=await APP.gh(`${R}/git/commits`,{method:'POST', body:{message, tree:t.sha, parents:[ref.object.sha]}});
@@ -3925,8 +3925,9 @@ if(window.S2) S2.sync();
 .d1 .d1-nm a{color:var(--ink); font-weight:600; font-size:15px; text-decoration:none; overflow-wrap:anywhere; line-height:1.45}
 .d1 .d1-nm a:hover{text-decoration:underline; text-underline-offset:2px}
 .d1 .kind{font-size:11.5px; font-weight:700; border-radius:5px; padding:0 6px; line-height:1.7; white-space:nowrap; background:var(--soft); color:var(--muted)}
-.d1 .kind.k-기출{background:var(--tag-exam-bg); color:var(--tag-exam-c)} .d1 .kind.k-강의자료{background:var(--tag-tbl-bg); color:var(--tag-tbl-c)}
-.d1 .kind.k-필기{background:var(--tag-cp-bg); color:var(--tag-cp-c)} .d1 .kind.k-정리본{background:var(--tag-caseh-bg); color:var(--tag-caseh-c)}
+.d1 .kind.k-기출{background:var(--tag-exam-bg); color:var(--tag-exam-c)} .d1 .kind.k-교과서{background:var(--tag-tbl-bg); color:var(--tag-tbl-c)}
+.d1 .kind.k-정리본{background:var(--tag-caseh-bg); color:var(--tag-caseh-c)}
+.d1 select.kind{border:0; font:inherit; font-size:11.5px; font-weight:700; cursor:pointer; padding:0 2px 0 6px; appearance:auto}
 .d1 .newb{font-size:11px; font-weight:700; color:var(--teal); letter-spacing:.02em}
 .d1 .d1-meta{grid-column:1; margin:0; font-size:13px; color:var(--faint); line-height:1.5; overflow-wrap:anywhere}
 .d1 .d1-why{grid-column:1; margin:2px 0 0; font-size:14px; color:var(--muted); line-height:1.55}
@@ -3974,7 +3975,7 @@ window.D1=(function(){
   const enc=p=>p.split('/').map(encodeURIComponent).join('/');
   const blobURL=p=>GH+'/blob/main/'+enc(p), treeURL=p=>GH+'/tree/main/'+enc(p);
   const mb=n=>n>=1073741824?(n/1073741824).toFixed(1)+'GB':n>=1048576?(n/1048576).toFixed(1)+'MB':Math.max(1,Math.round(n/1024))+'KB';
-  const KINDS=['기출','강의자료','필기','정리본','기타'];
+  const KINDS=['기출','교과서','정리본'];
   let M=null, view='todo', subj='all', query='', loaded=false, rels=null;
 
   /* ── 읽기 ── */
@@ -4027,7 +4028,7 @@ window.D1=(function(){
       else if(it.state==='ok'||it.state==='wait') acts.push(`<button type="button" class="d1-btn sm" data-act="rm">지우기</button>`);
     }
     return `<div class="d1-row" data-s="${h(s)}" data-p="${h(it.path)}" id="d1-${h(it.sha)}">
-      <div class="d1-nm"><span class="kind k-${h(it.kind)}">${h(it.kind)}</span><a href="${h(blobURL(it.path))}" target="_blank" rel="noopener"${pdf?` data-path="${h(it.path)}"`:''}>${h(it.name)}</a>${isNew(it)?'<span class="newb">새로</span>':''}${it.state==='queued'?'<span class="st run">정리 중</span>':it.state==='done'?'<span class="st ok">문제지</span>':it.state==='wait'?'<span class="st wait">정리 대기</span>':''}</div>
+      <div class="d1-nm">${OWNER&&it.state!=='queued'&&it.state!=='done'?`<select class="kind k-${h(it.kind)}" data-kind aria-label="종류 바꾸기" title="종류 바꾸기">${KINDS.map(k=>`<option${k===it.kind?' selected':''}>${k}</option>`).join('')}</select>`:`<span class="kind k-${h(it.kind)}">${h(it.kind)}</span>`}<a href="${h(blobURL(it.path))}" target="_blank" rel="noopener"${pdf?` data-path="${h(it.path)}"`:''}>${h(it.name)}</a>${isNew(it)?'<span class="newb">새로</span>':''}${it.state==='queued'?'<span class="st run">정리 중</span>':it.state==='done'?'<span class="st ok">문제지</span>':it.state==='wait'?'<span class="st wait">정리 대기</span>':''}</div>
       ${meta?`<p class="d1-meta">${h(meta)}</p>`:''}
       ${why?`<p class="d1-why">${why}</p>`:''}
       ${acts.length?`<div class="d1-acts">${acts.join('')}</div>`:''}
@@ -4050,7 +4051,7 @@ window.D1=(function(){
     const remake=OWNER&&sd.info&&gpdf.length?`<button type="button" class="d1-btn sm" data-act="gichul-all" data-s="${h(s)}" title="이미 수업별로 정리돼 있으면 누르지 않아도 돼요">수업별 문제지로도 만들기 (${gpdf.length}개)</button>`:'';
     const blk=(cls,title,sub,list,extra)=>list.length?`<section class="d1-block ${cls}"><header><h3>${title}<small>${list.length}개</small></h3>${extra||''}${sub?`<p>${sub}</p>`:''}</header>${list.map(it=>row(s,it)).join('')}</section>`:'';
     const kinds=KINDS.map(k=>{
-      const l=rest.filter(it=>it.kind===k); if(!l.length) return '';
+      const l=rest.filter(it=>(KINDS.includes(it.kind)?it.kind:'정리본')===k); if(!l.length) return '';
       const nw=l.filter(isNew).length;
       return `<details${(query||view==='new'||l.length<=6)?' open':''}><summary>${h(k)} <span class="n">${l.length}개</span>${nw&&nw<l.length?`<span class="newb">새로 ${nw}</span>`:''}</summary>${k==='기출'&&remake?`<div class="d1-remake">${remake}<span>이미 수업별로 정리된 기출이면 그대로 두면 돼요.</span></div>`:''}${l.map(it=>row(s,it)).join('')}</details>`;
     }).join('');
@@ -4127,7 +4128,8 @@ window.D1=(function(){
   async function edit(message, mutate){
     const R=`repos/${REPO}`;
     for(let attempt=0; attempt<3; attempt++){
-      const ref=await APP.gh(`${R}/git/ref/heads/main`), head=ref.object.sha;
+      if(attempt) await new Promise(r=>setTimeout(r,1500*attempt));
+      const ref=await APP.gh(`${R}/git/ref/heads/main?t=${Date.now()}`,{cache:'no-store'}), head=ref.object.sha;  /* 브라우저가 1분 동안 저장해 둔 옛 main 을 쓰면 422(not a fast forward) */
       const base=await APP.gh(`${R}/git/commits/${head}`);
       const cur=await readList(head), tree=[];
       mutate(cur, tree);
@@ -4188,6 +4190,13 @@ window.D1=(function(){
     const tabs=document.querySelector('nav.tabs'), tools=$('.tools');
     window.scrollTo(0, window.scrollY+el.getBoundingClientRect().top-(tabs.offsetHeight+tools.offsetHeight+12));
   }
+  panel.addEventListener('change',async e=>{
+    const sel=e.target.closest('select[data-kind]'); if(!sel||!OWNER) return;
+    const r=sel.closest('.d1-row'), s=r.dataset.s, p=r.dataset.p, k=sel.value;
+    r.classList.add('busy'); sel.disabled=true;
+    try{ await edit(`1학기 자료: ${s} ${p.split('/').pop()} 종류 → ${k}`, c=>{ const x=find(c,s,p); if(x) x.kind=k; }); toast(`${k}(으)로 바꿨어요`); }
+    catch(err){ r.classList.remove('busy'); sel.disabled=false; toast('하지 못했어요: '+(err.message||'')); }
+  });
   panel.addEventListener('click',e=>{
     const v=e.target.closest('[data-v]'); if(v){ view=v.dataset.v; render(); return; }
     const sb=e.target.closest('[data-subj]'); if(sb){ subj=subj===sb.dataset.subj&&sb.closest('#d1-rail')?'all':sb.dataset.subj; render(); scrollTo($('#d1-results')); return; }
