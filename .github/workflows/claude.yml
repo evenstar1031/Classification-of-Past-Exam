@@ -26,7 +26,7 @@ jobs:
         (contains(github.event.issue.title, '@claude') || contains(github.event.issue.body, '@claude'))) ||
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')))
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
+    timeout-minutes: 330   # 100쪽 넘는 필기본의 수업 후판도 끝낼 수 있게 (GitHub 최대 360)
     permissions:
       contents: write
       issues: write
@@ -65,7 +65,7 @@ jobs:
           # 「기출」 라벨 이슈(기출 정리)는 Sonnet, 제목에 「해설」이 있거나 학습자료 등 나머지는 Opus
           claude_args: |
             --model ${{ (contains(github.event.issue.labels.*.name, '기출') && !contains(github.event.issue.title, '해설')) && 'claude-sonnet-5-5' || 'claude-opus-5-5' }}
-            --max-turns 300
+            --max-turns 600
             --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
             --append-system-prompt "이 저장소의 CLAUDE.md, 특히 'GitHub 이슈에서 @claude 로 불렸을 때' 절을 따른다. 사용자에게는 이슈 댓글로 한국어로 짧게 보고한다. 결과는 이 작업용 브랜치에 올리면 워크플로가 끝나자마자 main 에 자동으로 합친다 — 사용자에게 PR 을 만들거나 Merge 를 누르라고 하지 말고, 파일 링크는 main 경로로 단다."
 
