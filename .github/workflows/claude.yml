@@ -4,6 +4,8 @@
 #   - 그 밖에 이슈 댓글로 "@claude 연습문제 5개 더" 처럼 고쳐 달라고 하기
 # 처음 한 번: Claude GitHub App 설치 + 저장소 Secret CLAUDE_CODE_OAUTH_TOKEN (README "Claude 자동 실행 설정")
 # 저장소 주인(evenstar1031)이 쓴 이슈·댓글에만 반응한다.
+# 멈추면 「왜 멈췄는지」(한도 초과·서버 혼잡·시간 초과 …)를 이슈 댓글로 적고(→ 메일로 옴),
+# 한도 초과처럼 기다리면 풀리는 경우는 「자동재시도」 라벨을 붙여 claude-retry.yml 이 매시간 이어서 돌린다.
 name: Claude (@claude)
 
 on:
@@ -11,9 +13,15 @@ on:
     types: [opened]
   issue_comment:
     types: [created]
+  # claude-retry.yml(매시간)이 「자동재시도」 이슈를 이어서 돌릴 때 쓴다. 손으로 돌려도 된다.
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: '이어서 할 이슈 번호'
+        required: true
 
 concurrency:
-  group: claude-issue-${{ github.event.issue.number }}
+  group: claude-issue-${{ github.event.issue.number || inputs.issue }}
   cancel-in-progress: false
 
 jobs:
@@ -24,7 +32,8 @@ jobs:
       github.actor == github.repository_owner && (
       (github.event_name == 'issues' &&
         (contains(github.event.issue.title, '@claude') || contains(github.event.issue.body, '@claude'))) ||
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')))
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))) ||
+      (github.event_name == 'workflow_dispatch' && (github.actor == github.repository_owner || github.actor == 'github-actions[bot]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 330   # 100쪽 넘는 필기본의 수업 후판도 끝낼 수 있게 (GitHub 최대 360)
     permissions:
@@ -58,26 +67,108 @@ jobs:
           python3 .claude/skills/pilgi-study/scripts/setup_fonts.py
           git config --global core.quotepath false
 
+      - name: 이슈 정보
+        id: info
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number || inputs.issue }}
+        run: |
+          echo "n=$N" >> "$GITHUB_OUTPUT"
+          info=$(gh issue view "$N" -R "$GITHUB_REPOSITORY" --json title,labels -q '[.title, ([.labels[].name]|join(","))]|@tsv')
+          title=$(printf '%s' "$info" | cut -f1); labels=$(printf '%s' "$info" | cut -f2)
+          # 「기출」 라벨 이슈(기출 정리)는 Sonnet, 제목에 「해설」이 있거나 학습자료 등 나머지는 Opus
+          case ",$labels," in *,기출,*) case "$title" in *해설*) m=claude-opus-5-5;; *) m=claude-sonnet-5-5;; esac;; *) m=claude-opus-5-5;; esac
+          echo "model=$m" >> "$GITHUB_OUTPUT"
+          # 지금 돌기 시작했으니 자동 재시도 대기 표시는 뗀다(또 멈추면 아래 단계가 다시 붙임)
+          gh issue edit "$N" -R "$GITHUB_REPOSITORY" --remove-label 자동재시도 >/dev/null 2>&1 || true
+          echo "이슈 #$N · $title · 모델 $m"
+
       - uses: anthropics/claude-code-action@v1
         id: claude
+        if: github.event_name != 'workflow_dispatch'
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # 「기출」 라벨 이슈(기출 정리)는 Sonnet, 제목에 「해설」이 있거나 학습자료 등 나머지는 Opus
           claude_args: |
-            --model ${{ (contains(github.event.issue.labels.*.name, '기출') && !contains(github.event.issue.title, '해설')) && 'claude-sonnet-5-5' || 'claude-opus-5-5' }}
+            --model ${{ steps.info.outputs.model }}
             --max-turns 600
             --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
             --append-system-prompt "이 저장소의 CLAUDE.md, 특히 'GitHub 이슈에서 @claude 로 불렸을 때' 절을 따른다. 사용자에게는 이슈 댓글로 한국어로 짧게 보고한다. 결과는 이 작업용 브랜치에 올리면 워크플로가 끝나자마자 main 에 자동으로 합친다 — 사용자에게 PR 을 만들거나 Merge 를 누르라고 하지 말고, 파일 링크는 main 경로로 단다."
+
+      # 자동 이어 하기: 이슈 화면 없이 지시문(prompt)으로 돌린다. 이슈 댓글을 읽고 같은 브랜치에서 이어 간다.
+      - uses: anthropics/claude-code-action@v1
+        id: retry
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_bots: '*'   # claude-retry.yml(github-actions 봇)이 시작한다 (잡 if 에서 주인·봇만 통과)
+          prompt: |
+            이슈 #${{ steps.info.outputs.n }} 의 일이 Claude 사용량 한도·서버 오류·시간 초과 등으로 중간에 멈춰서, 자동으로 이어서 하는 실행이다.
+            1) `gh issue view ${{ steps.info.outputs.n }} --comments` 로 이슈 본문과 댓글을 모두 읽고 무엇을 부탁받았는지, 어디까지 했는지 파악한다.
+            2) 작업 브랜치: `git fetch origin 'refs/heads/claude/issue-${{ steps.info.outputs.n }}-*:refs/remotes/origin/claude/issue-${{ steps.info.outputs.n }}-*'` 후
+               `git branch -r --list 'origin/claude/issue-${{ steps.info.outputs.n }}-*'` 에 브랜치가 있으면 가장 최근 것을 체크아웃해 이어 하고,
+               없으면 `git checkout -b claude/issue-${{ steps.info.outputs.n }}-retry` 로 새로 만든다. 이미 main 에 들어간 결과(학습자료 폴더 등)도 확인해 했던 일을 다시 하지 않는다.
+            3) CLAUDE.md(특히 'GitHub 이슈에서 @claude 로 불렸을 때')와 해당 스킬을 끝까지 따른다. 검증·미리보기 확인 단계를 건너뛰지 않는다.
+            4) 중간중간 커밋하고 `git push origin HEAD` 로 그 작업 브랜치에 올린다(main 에 직접 올리지 않는다 — 워크플로가 끝나면 자동으로 main 에 합친다).
+            5) 끝나면 `gh issue comment ${{ steps.info.outputs.n }}` 로 CLAUDE.md 가 정한 마지막 댓글(한국어, 짧게, main 경로 파일 링크)을 단다.
+            **자동 실행이라 대화를 끝내면 그 순간 모든 것이 꺼진다.** 도우미(서브에이전트)를 쓰지 말고, 명령을 백그라운드로 돌리지 말고, "기다리겠다"며 끝내지 말라.
+          claude_args: |
+            --model ${{ steps.info.outputs.model }}
+            --max-turns 600
+            --allowedTools "Bash,Read,Write,Edit,MultiEdit,Glob,Grep,TodoWrite"
+            --disallowedTools "Agent,Task"
+
+      # 왜 멈췄는지 알아내서 이슈 댓글(→ 메일)·실행 화면에 한국어로 적는다.
+      # 기다리면 풀리는 경우(한도·서버 혼잡·준비 실패)와 시간·턴 초과(처음 2번까지)는 「자동재시도」 라벨 → claude-retry.yml 이 매시간 이어서 돌린다.
+      - name: 멈춘 이유 알리기
+        id: why
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ steps.info.outputs.n }}
+          STEP_OUTCOME: ${{ steps.claude.outcome != 'skipped' && steps.claude.outcome || steps.retry.outcome }}
+          EXEC: ${{ steps.claude.outputs.execution_file || steps.retry.outputs.execution_file }}
+        run: |
+          R="$GITHUB_REPOSITORY"
+          [ -z "$N" ] && N="${{ github.event.issue.number || inputs.issue }}"
+          python3 _자동관리/tools/why_failed.py "$EXEC" > /tmp/why.txt || echo "kind=error" > /tmp/why.txt
+          kind=$(sed -n 's/^kind=//p' /tmp/why.txt); title=$(sed -n 's/^title=//p' /tmp/why.txt); detail=$(sed -n 's/^detail=//p' /tmp/why.txt)
+          echo "kind=$kind" >> "$GITHUB_OUTPUT"
+          [ "$kind" = ok ] && { echo "정상 완료"; exit 0; }
+          tries=$(gh api "repos/$R/issues/$N/comments" --paginate -q '[.[] | select(.body | contains("<!-- auto-retry -->"))] | length' | awk '{s+=$1} END{print s+0}')
+          case "$kind" in
+            limit|overload|setup) max=24 ;;   # 한도는 길면 하루 가까이 걸릴 수 있다
+            turns|timeout) max=2 ;;
+            *) max=0 ;;
+          esac
+          if [ "$tries" -lt "$max" ]; then
+            gh label create 자동재시도 -R "$R" --color FBCA04 --description "한도·오류로 멈춤 — 매시간 자동으로 이어서 함" >/dev/null 2>&1 || true
+            gh issue edit "$N" -R "$R" --add-label 자동재시도 >/dev/null
+            next="⏳ 매시간 자동으로 다시 시도해서 이어서 해요(지금까지 자동 재시도 ${tries}번). 따로 할 일은 없어요."
+          elif [ "$max" -gt 0 ]; then
+            next="🛑 자동 재시도를 ${tries}번 했는데도 안 돼서 멈췄어요. 이 이슈에 \`@claude 이어서 해줘\` 라고 쓰면 다시 시작해요."
+          elif [ "$kind" = auth ]; then
+            next="🛑 토큰을 바꾼 뒤 이 이슈에 \`@claude 이어서 해줘\` 라고 쓰면 다시 시작해요."
+          else
+            next="🛑 이 이슈에 \`@claude 이어서 해줘\` 라고 쓰면 다시 시작해요."
+          fi
+          body="**⚠️ 작업이 멈췄어요 — ${title}**"$'\n\n'"${detail}"$'\n\n'"${next}"$'\n\n'"실행 기록: ${GITHUB_SERVER_URL}/${R}/actions/runs/${GITHUB_RUN_ID}"
+          gh issue comment "$N" -R "$R" --body "$body"
+          echo "::error title=멈춘 이유: ${title}::${detail}"
+          { echo "## ⚠️ ${title}"; echo; echo "${detail}"; echo; echo "${next}"; } >> "$GITHUB_STEP_SUMMARY"
+          exit 1
 
       # claude-code-action 은 이슈에서 불리면 결과를 claude/issue-<번호>-… 브랜치에만 올린다.
       # 사용자가 매번 PR 을 만들어 합치지 않아도 되게 여기서 바로 main 에 합친다(서버에서 merge — 깊은 기록 필요 없음).
       # 이어서 「문제지·해설지 PDF 만들기」·「앱 현황 갱신」이 이 워크플로가 끝난 것을 보고 돈다.
       - name: 결과를 main 에 합치기
-        if: always() && steps.claude.outcome != 'skipped'
+        if: always() && steps.info.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
-          N: ${{ github.event.issue.number }}
-          OK: ${{ steps.claude.outcome }}
+          N: ${{ steps.info.outputs.n }}
+          OK: ${{ steps.why.outputs.kind }}
         run: |
           R="$GITHUB_REPOSITORY"
           branches=$(gh api "repos/$R/git/matching-refs/heads/claude/issue-$N-" -q '.[].ref' | sed 's#^refs/heads/##')
@@ -85,10 +176,8 @@ jobs:
           for b in $branches; do
             ahead=$(gh api "repos/$R/compare/main...$b" -q '.ahead_by' 2>/dev/null || echo 0)
             if [ "$ahead" = 0 ]; then echo "$b: 이미 main 에 있음"; gh api -X DELETE "repos/$R/git/refs/heads/$b" >/dev/null 2>&1 || true; continue; fi
-            if [ "$OK" != success ]; then
-              gh issue comment "$N" -R "$R" --body "⚠️ 작업이 중간에 멈춰서 결과를 main 에 합치지 않았어요(브랜치 \`$b\` 에 남아 있음). 이 이슈에 \`@claude 이어서 해줘\` 라고 쓰면 다시 시작합니다. 기록: ${GITHUB_SERVER_URL}/${R}/actions/runs/${GITHUB_RUN_ID}"
-              continue
-            fi
+            # 멈춘 경우: 중간 결과는 브랜치에 그대로 두고(이어 하기가 그 브랜치에서 계속함) 합치지 않는다. 이유는 위 단계가 댓글로 알림.
+            if [ "$OK" != ok ]; then echo "$b: 멈춘 작업이라 합치지 않음"; continue; fi
             code=$(gh api -X POST "repos/$R/merges" -f base=main -f head="$b" -f commit_message="이슈 #$N 결과 합치기 ($b)" -i 2>/dev/null | head -1 | awk '{print $2}')
             echo "$b → main: HTTP $code"
             if [ "$code" = 201 ] || [ "$code" = 204 ]; then

@@ -116,6 +116,7 @@ jobs:
 
       # 1단계 (Sonnet): 답 제거 → 수업 분류 → 수업별 문제지. 규칙대로 하는 일이라 Sonnet 으로 충분하고, 검증 단계가 지켜 준다.
       - name: "1단계 · 답 제거·분류·문제지 (Sonnet)"
+        id: s1
         uses: anthropics/claude-code-action@v1
         if: steps.check.outputs.work == '1' && steps.check.outputs.count != '0'
         env:
@@ -144,6 +145,7 @@ jobs:
 
       # 2·3단계 (Opus): 분류 결과 확인(애매한 문항 재검토) → 정답·해설판. 의학 내용 판단이 들어가서 Opus.
       - name: "2·3단계 · 분류 재검토·정답·해설 (Opus)"
+        id: s2
         uses: anthropics/claude-code-action@v1
         if: steps.check.outputs.work == '1'
         env:
@@ -178,6 +180,20 @@ jobs:
             --disallowedTools "Agent,Task"
 
       # 올리기에 아직 남은 기출이 있고, 이번에 하나라도 줄었으면 한 번 더 (1학기 자료처럼 한꺼번에 많이 올라온 경우)
+      # 실패 메일·실행 화면에 「왜 멈췄는지」(한도 초과 등)를 한국어로 남긴다. 다시 시도는 위 schedule 이 매시간 한다.
+      - name: 멈춘 이유 알리기
+        if: failure()
+        env:
+          STEP_OUTCOME: failure
+        run: |
+          for f in "${{ steps.s2.outputs.execution_file }}" "${{ steps.s1.outputs.execution_file }}"; do
+            [ -n "$f" ] && [ -f "$f" ] && { python3 _자동관리/tools/why_failed.py "$f" > /tmp/why.txt; break; }
+          done
+          [ -s /tmp/why.txt ] || python3 _자동관리/tools/why_failed.py > /tmp/why.txt
+          title=$(sed -n 's/^title=//p' /tmp/why.txt); detail=$(sed -n 's/^detail=//p' /tmp/why.txt)
+          echo "::error title=기출 자동 정리 멈춤: ${title}::${detail} 1시간마다 자동으로 다시 시도해요."
+          { echo "## ⚠️ ${title}"; echo; echo "${detail}"; echo; echo "1시간마다 자동으로 다시 시도해요(연속 8번 실패하면 멈춤)."; } >> "$GITHUB_STEP_SUMMARY"
+
       - name: 남은 기출 이어서
         if: steps.check.outputs.work == '1'
         env:
