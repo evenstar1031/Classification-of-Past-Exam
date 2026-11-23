@@ -13,7 +13,7 @@ usage (저장소 맨 위 폴더에서):
 입력 (Claude 가 쓴다):  학습자료/<과목>/<id>_<수업명>/1_설명.md        1부 (Markdown)
                        학습자료/<과목>/<id>_<수업명>/3_연습문제.json   3부
 기출 (자동):           _자동관리/분류/<과목>/*.json 에서 그 수업 문항 + _자동관리/해설/<과목>/<시험id>.json 의 정답·해설
-출력:                  학습자료/<과목>/<id>_<수업명>_학습자료.pdf
+출력:                  학습자료/<과목>/<id>_<수업명>_학습자료(수업 전|수업 후).pdf
 
 글씨체: 본문 StudyBatang(KoPubWorld 바탕, scripts/setup_fonts.py), 제목·문항 GichulTT(저장소 _자동관리/fonts/ =
 문제지와 같은 Apple SD 산돌고딕 Neo). 기출 문항은 문제지/ 의 수업별 PDF와 똑같은 코드(build_q)로 그린다.
@@ -499,11 +499,19 @@ def cmd_build(a):
 
     doc = (f'<!doctype html><html><head><meta charset="utf-8"><style>{B.CSS}{BL.EXTRA_CSS}{CSS}</style></head>'
            f'<body>{cover}{p1}{p2}{p3}</body></html>')
-    out = os.path.join(ROOT, '학습자료', SJ.folder(a.subject), f"{L['id']}_{BL.safe(name)}_학습자료.pdf")
+    # 파일 이름에 단계를 붙여 폴더에서도 바로 구분되게: …_학습자료(수업 전).pdf / …_학습자료(수업 후).pdf
+    sdir = os.path.join(ROOT, '학습자료', SJ.folder(a.subject))
+    out = os.path.join(sdir, f"{L['id']}_{BL.safe(name)}_학습자료({'수업 전' if pre else '수업 후'}).pdf")
     work = os.path.join(ROOT, 'work', '_study', a.subject, L['id']); os.makedirs(work, exist_ok=True)
     print(f'== {os.path.relpath(out, ROOT)}  (기출 {len(items)} · 연습 {len(practice)})')
     total = B.render_pdf(doc, work, out, f"{inf['name']} {name} 학습자료")
     ok = verify(out, work, total, len(items), len(practice), len(pending))
+    if ok:
+        # 같은 수업의 예전 이름·다른 단계 파일은 지운다(수업 후판이 수업 전판을 대신함 — 한 수업에 하나만)
+        for x in os.listdir(sdir):
+            if (x.startswith(L['id'] + '_') and re.search(r'_학습자료(\(수업 [전후]\))?\.pdf$', x)
+                    and os.path.join(sdir, x) != out):
+                os.remove(os.path.join(sdir, x)); print(f'   예전 파일 지움: {x}')
     if pending:
         print(f'[CHECK] 정답·해설을 아직 안 넣은 기출 {len(pending)}문항 — 나중에 채워 다시 build')
     if missing:

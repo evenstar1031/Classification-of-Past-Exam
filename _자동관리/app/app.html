@@ -520,6 +520,16 @@ dialog.pd[open]{display:flex; flex-direction:column}
 .rvw .g-lnm{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .rvw .g-lct{flex:none; font-size:12px; color:var(--crimson); font-weight:600}
 .rvw .rl-l .rl-dot{align-self:center}
+/* 학습자료 단계: 수업 후판 = 채운 초록 점·「수업 후 완료」, 수업 전판 = 빈 노란 점·「수업 전판」 */
+.rvw .rl-dot.pre{background:transparent; border:1.5px solid var(--amber); width:7px; height:7px; box-sizing:border-box}
+.rvw .rl-dot.other{background:var(--ink-3)}
+.rvw .g-stage{display:inline-block; margin-left:8px; font-size:12px; font-weight:600; border-radius:999px; padding:1px 8px; vertical-align:2px; white-space:nowrap}
+.rvw .g-stage.post{background:var(--teal-bg); color:var(--teal)}
+.rvw .g-stage.pre{background:var(--amber-bg); color:var(--amber)}
+.rvw .g-stage.none{color:var(--ink-3); border:1px solid var(--rule)}
+.rvw .g-prog{font-size:13px; color:var(--ink-2); margin:4px 0 0}
+.rvw .g-prog .g-stage:first-child{margin-left:6px}
+.rvw .g-prog b{font-weight:700}
 .rvw .s2-jump .rl-chip .g-lnm{max-width:12em}
 .rvw .g-nav{display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; margin:6px 0 0; font-size:13.5px}
 .rvw .g-nav .clink{font-size:13.5px}
@@ -3603,7 +3613,8 @@ window.S3=(function(){
   const GUEST=APPM&&!!window.APP.guest;     // 로그인 없이 둘러보기: 보기·내려받기만
   const OWNER=()=>APPM?window.APP.isOwner:CAN;
   const upBtn=(kind,mode,s,l,label,cls)=>`<button type="button" class="${cls}" data-up="${kind}" data-mode="${mode}" data-subj="${h(s.subject)}"${l?` data-lid="${h(l.id)}" data-stage="${defStage(l)}"`:''}>${label}</button>`;
-  const studyLabel=l=>'학습자료'+(l.stage==='pre'?' (수업 전판)':'');
+  const studyLabel=l=>'학습자료'+(l.stage==='pre'?' (수업 전판)':' (수업 후)');
+  const stageChip=l=>!l.s?'':l.stage==='pre'?'<span class="g-stage pre">수업 전판</span>':'<span class="g-stage post">✓ 수업 후 완료</span>';
   /* 만들기 버튼 글: 없음 → 만들기 · 수업 전판 → 수업 후 보충 · 수업 후판 → 다시 */
   const makeLabel=(l,who)=>!l.s?(who?'내 Claude로 만들기':'바로 만들기')
     : l.stage==='pre'?(who?'내 Claude로 수업 후 보충':'수업 후 보충하기') : (who?'내 Claude로 다시':'바로 다시 만들기');
@@ -3644,12 +3655,18 @@ window.S3=(function(){
     const syl=COURSES.some(c=>c.id===s.cid)&&COURSES.find(c=>c.id===s.cid).rows.some(r=>r.n===l.name);
     const nav=(syl||nx)?`<p class="g-nav">${syl?`<button type="button" class="clink" data-syl="${s.cid}" data-row="${h(l.name)}">강의계획서</button>`:''}${nx?`<button type="button" class="clink" data-tt="${nx.iso}">시간표 ${h(monthDay(nx.iso))} (${h(nx.w)})${nx.iso===today?' · 오늘':nx.iso>today?'':' · 지난 수업'}</button>`:''}${ds.length>1?`<span class="g-nn">수업 ${ds.length}번</span>`:''}</p>`:'';
     return `<article class="prof g-lec" id="g-${s.cid}-${h(l.id)}">
-      <div class="part-head"><h5><span class="g-id">${hl(l.id)}</span>${hl(l.name)}${l.exam===false?' <span class="pending">실습</span>':''}</h5>
+      <div class="part-head"><h5><span class="g-id">${hl(l.id)}</span>${hl(l.name)}${l.exam===false?' <span class="pending">실습</span>':''}${stageChip(l)}</h5>
         <div class="hours">${w?`<span class="bar" style="width:${w}px"></span>`:''}<span class="n">${l.total?`기출 ${l.total}문항`:'기출 없음'}</span></div></div>
       ${yearsLine(s,l)}
       ${nav}
       ${(links.length||make)?`<p class="g-links">${links.join('')}${make}</p>`:''}
     </article>`;
+  }
+  /* 학습자료 진행: 수업 후 n · 수업 전판 n · 아직 없음 n */
+  function progLine(s){
+    const L=s.lectures.filter(l=>l.exam!==false), post=L.filter(l=>l.s&&l.stage!=='pre').length, pre=L.filter(l=>l.s&&l.stage==='pre').length;
+    if(!post&&!pre) return '';
+    return `<p class="g-prog">학습자료<span class="g-stage post">✓ 수업 후 <b>${post}</b></span><span class="g-stage pre">수업 전판 <b>${pre}</b></span>${L.length-post-pre?`<span class="g-stage none">없음 <b>${L.length-post-pre}</b></span>`:''}</p>`;
   }
   function subject(s){
     const lec=s.lectures.filter(l=>lecHit(s,l));
@@ -3658,6 +3675,7 @@ window.S3=(function(){
     const head=`<div class="subject-head">
         <h2>${hl(s.name)}</h2>
         <p class="sdesc">${h(s.code||'')}${s.exams.length?` · 기출 시험 ${s.exams.length}개 (${s.years[s.years.length-1]}–${s.years[0]}) · ${s.total}문항`:''}</p>
+        ${progLine(s)}
         <p class="g-links">${[
           s.whole_q&&a(blob(s.whole_q),'전체 문제지',0,s.whole_q),
           s.whole_a&&a(blob(s.whole_a),'전체 정답·해설',0,s.whole_a),
@@ -3697,7 +3715,7 @@ window.S3=(function(){
   }
   const hasDoc=l=>!!(l.s||l.one||(l.mine&&l.mine.length));
   function lecLinks(s, cls){
-    return s.lectures.filter(l=>lecHit(s,l)).map(l=>`<a class="${cls}" href="#g-${s.cid}-${h(l.id)}"><span class="g-lid">${h(l.id)}</span><span class="g-lnm">${hl(l.name)}</span>${l.total?`<span class="g-lct">${l.total}</span>`:''}${hasDoc(l)?'<span class="rl-dot" title="자료 있음" aria-label="자료 있음"></span>':''}</a>`);
+    return s.lectures.filter(l=>lecHit(s,l)).map(l=>`<a class="${cls}" href="#g-${s.cid}-${h(l.id)}"><span class="g-lid">${h(l.id)}</span><span class="g-lnm">${hl(l.name)}</span>${l.total?`<span class="g-lct">${l.total}</span>`:''}${l.s?(l.stage==='pre'?'<span class="rl-dot pre" title="수업 전판" aria-label="수업 전판"></span>':'<span class="rl-dot" title="수업 후 완료" aria-label="수업 후 완료"></span>'):hasDoc(l)?'<span class="rl-dot other" title="자료 있음" aria-label="자료 있음"></span>':''}</a>`);
   }
   function renderRail(){
     $('#g-rail').innerHTML=`<li><button type="button" class="rl-subj${subj==='all'?' on':''}" data-rs="all">전체 과목</button></li>`+

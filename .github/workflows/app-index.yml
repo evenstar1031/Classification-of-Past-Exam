@@ -17,6 +17,7 @@ on:
       - '_자동관리/과목정보/**'
       - '자료실/**'
       - '_자동관리/tools/make_app_index.py'
+      - '_자동관리/tools/study_names.py'
       - '_자동관리/tools/sem1_import.py'
       - '.github/workflows/app-index.yml'
 
@@ -54,6 +55,8 @@ jobs:
         if: steps.gate.outputs.go == '1'
         run: |
           pip install -q pymupdf==1.28.2 pypdf==6.19.0 reportlab==5.0.1 fonttools==4.66.1 numpy==2.4.6 pillow==12.3.0
+          # 학습자료 PDF 이름에 단계 붙이기(…_학습자료(수업 전|수업 후).pdf), 수업 후판이 있으면 수업 전판 지우기
+          python3 _자동관리/tools/study_names.py
           python3 _자동관리/tools/make_app_index.py
           # 1학기 자료 목록: 기출이 올리기 → 원본으로 옮겨졌거나 지워졌으면 맞춘다
           if [ -f 1학기/목록.json ]; then python3 _자동관리/tools/sem1_import.py sync; fi
@@ -69,6 +72,7 @@ jobs:
           [d.pop(k,None) for d in (a,b) for k in ('sha','date')]
           sys.exit(0 if a==b else 1)"; then git checkout -- _자동관리/app/gichul_index.json; fi
           git add _자동관리/app/gichul_index.json
+          git add -A 학습자료
           if [ -f 1학기/목록.json ]; then git add 1학기/목록.json; fi
           if git diff --cached --quiet; then echo "바뀐 것 없음"; exit 0; fi
           git commit -q -m "앱 현황 갱신"

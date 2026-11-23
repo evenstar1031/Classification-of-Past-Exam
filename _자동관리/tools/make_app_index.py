@@ -79,7 +79,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         lid = L['id']
         q = next((x for x in q_files if x.startswith(lid + '_') and x.endswith('.pdf')), None)
         a = next((x for x in a_files if x.startswith(lid + '_') and x.endswith('_정답해설.pdf')), None)
-        s = next((x for x in s_files if x.startswith(lid + '_') and x.endswith('_학습자료.pdf')), None)
+        s = next((x for x in s_files if x.startswith(lid + '_') and re.search(r'_학습자료(\(수업 [전후]\))?\.pdf$', x)), None)
         one = next((x for x in s_files if x.startswith(lid + '_') and x.endswith('_한장정리.pdf')), None)
         sdir = next((x for x in s_files if x.startswith(lid + '_') and os.path.isdir(f'학습자료/{SF}/{x}')), None)
         lectures.append({
