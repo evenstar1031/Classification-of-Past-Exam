@@ -5,7 +5,7 @@
 
 <style>
 /* Layout: 본과 1학년 수첩 한 권. 위에 붙는 탭(시간표 · 강의계획서 · 수업 후기 · 기출·학습자료 · 1학기 후기), 아래 내용이 탭마다 바뀜.
-   앞의 세 탭은 2학기, 마지막 탭은 1학기 수업 후기. 글꼴은 모든 탭이 같음(본문 Apple SD 산돌고딕 Neo, 제목 KoPubWorld 바탕 — 아래 「글씨체」) */
+   앞의 세 탭은 2학기, 마지막 탭은 1학기 수업 후기. 글꼴은 모든 탭이 같음(Apple SD 산돌고딕 Neo — 아래 「글씨체」) */
 :root{
   --paper:#F3F4F6; --sheet:#FFFFFF; --ink:#1A2231; --muted:#5A6372; --faint:#8A919C; --rule:#E0E3E8; --soft:#EDEFF2;
   --crimson:#A4122E; --crimson-bg:#F8E7EA; --teal:#1F6F6B; --teal-bg:#E3F0EE; --amber-bg:#FBF1D9; --amber:#8A5A00; --blue-bg:#E6EEF8; --blue:#2F5A8F;
@@ -21,7 +21,7 @@
   --tag-lecture-c:#3B4453;  --tag-lecture-bg:#ECEEF1;
   --tag-jump-c:#34507A;     --tag-jump-bg:#E6EBF3;
   --lunch-c:#8A5A00; --lunch-bg:#FBF1D9; --lunch-bd:#EEDDB4;
-  --serif:"KNU Serif","KoPubWorld Batang","AppleMyungjo",serif;   /* 제목: KoPubWorld 바탕 (Medium·Bold) */
+  --serif:"KNU Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;   /* 제목도 고딕 (SemiBold) */
   --sans:"KNU Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;   /* 본문: Apple SD 산돌고딕 Neo (Medium·SemiBold) */
   box-sizing:border-box;
 }
@@ -4252,19 +4252,17 @@ window.D1=(function(){
 /* ===== 글씨체 =====
    본문: Apple SD 산돌고딕 Neo Medium(보통) · SemiBold(굵게) — 아이폰·아이패드·맥은 기기에 있는 것을 씀.
          (애플 기기 밖으로는 배포할 수 없는 글씨체라 윈도우·안드로이드는 가장 비슷한 무료 글씨체 Pretendard)
-   제목: KoPubWorld 바탕 Medium · Bold — 앱 사이트(knu1/fonts)에 올려 둠 (무료 배포 글씨체) */
+   제목도 같은 고딕을 굵게(SemiBold) */
 @font-face{font-family:"KNU Sans"; font-weight:100 550; font-display:swap;
   src:local("AppleSDGothicNeo-Medium"),local("Apple SD Gothic Neo Medium"),
       url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2-subset/Pretendard-Medium.subset.woff2") format("woff2")}
 @font-face{font-family:"KNU Sans"; font-weight:551 1000; font-display:swap;
   src:local("AppleSDGothicNeo-SemiBold"),local("Apple SD Gothic Neo SemiBold"),
       url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2-subset/Pretendard-SemiBold.subset.woff2") format("woff2")}
-@font-face{font-family:"KNU Serif"; font-weight:100 550; font-display:swap; src:url("fonts/KoPubWorldBatang-Medium.subset.woff2") format("woff2")}
-@font-face{font-family:"KNU Serif"; font-weight:551 1000; font-display:swap; src:url("fonts/KoPubWorldBatang-Bold.subset.woff2") format("woff2")}
 body{font-weight:500}
-/* 제목은 KoPub 바탕 Bold, 쪽 소개 글은 KoPub 바탕 Medium */
-header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var(--serif); font-weight:700; letter-spacing:-.02em}
-.s1-head .subtitle{font-family:var(--serif); font-weight:500; letter-spacing:-.01em}
+/* 제목: 같은 고딕 SemiBold, 글자 사이 조금 좁게 */
+header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var(--sans); font-weight:600; letter-spacing:-.03em}
+.s1-head .subtitle{font-family:var(--sans); font-weight:500}
 .session-subject{font-weight:600}
 </style>
 <style>
