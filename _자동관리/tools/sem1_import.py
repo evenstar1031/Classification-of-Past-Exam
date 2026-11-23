@@ -9,7 +9,7 @@
   2) 맨 위 폴더 = 과목. 과목 폴더 밖의 파일은 「(과목 미정)」.
   3) 파일마다 종류(교과서·기출·수업·과제)를 파일 이름 → 위 폴더 이름 순으로 정한다.
   4) 넣지 않는 것(skipped): 찌꺼기(.DS_Store·__MACOSX·~$ 임시파일·빈 파일), 저장소/압축 안에 똑같은 파일이 이미 있는 것,
-     녹음·영상, 100MB 넘는 것(PDF 는 먼저 줄여 보고 그래도 크면).
+     같은 이름의 PDF 가 옆에 있는 docx·hwp(PDF 로 바꿔 둔 것), 녹음·영상, 100MB 넘는 것(PDF 는 먼저 줄여 보고 그래도 크면).
   5) 넣되 사용자가 볼 것
        del   지워도 될 것 같은 것 — 글이 똑같은 다른 판, 이름만 다른 옛 판((1)·복사본·최종·v2 …)
        check 확인 필요 — 종류가 애매, 과목 폴더 밖, 사진·한글 파일로 된 기출, 열리지 않는 PDF
@@ -33,6 +33,10 @@ JUNK_NAMES = {'thumbs.db', 'desktop.ini', '.ds_store', 'icon\r'}
 JUNK_EXT = {'.tmp', '.lnk', '.url', '.ini', '.crdownload', '.part', '.download'}
 MEDIA_EXT = {'.mp4', '.mov', '.avi', '.mkv', '.wmv', '.webm', '.m4v', '.m4a', '.mp3', '.wav', '.aac', '.wma', '.flac', '.ogg', '.amr'}
 ARCH_EXT = {'.zip', '.7z', '.rar', '.tar', '.gz', '.tgz', '.bz2', '.xz'}
+DOC_EXT = {'.docx', '.doc', '.hwp', '.hwpx'}     # 같은 폴더에 같은 이름의 PDF 가 있으면 PDF 만 넣는다
+def has_pdf_twin(f):
+    stem = nfc(f.stem).lower()
+    return any(p.is_file() and p.suffix.lower() == '.pdf' and nfc(p.stem).lower() == stem for p in f.parent.iterdir())
 IMG_EXT = {'.png', '.jpg', '.jpeg', '.heic', '.webp', '.gif', '.bmp', '.tif', '.tiff'}
 KINDS = [  # 앞에 있을수록 우선 — 종류는 교과서·기출·수업·과제 넷 (앱에는 교과서·기출·수업·과제 순서로 보임)
     ('기출', re.compile(r'기출|족보|시험|고사|퀴즈|쪽지|quiz|exam|midterm|mid-term|final ?test', re.I)),
@@ -299,6 +303,7 @@ def do_import(src, tag, commit):
                     ext = f.suffix.lower()
                     if is_split_rest(f) or is_archive(f): skip(subj, src_name, '풀지 못한 압축'); continue
                     if ext in MEDIA_EXT: skip(subj, src_name, f'녹음·영상 파일이라 넣지 않음 ({mb(f.stat().st_size)})'); continue
+                    if ext in DOC_EXT and has_pdf_twin(f): skip(subj, src_name, '같은 이름의 PDF가 있어 원본 문서는 넣지 않음'); continue
                     staged.append({'subj': subj, 'file': f, 'rel': rel, 'src': src_name})
 
     # ── 파일마다: 크기, 같은 파일, 종류 ──
