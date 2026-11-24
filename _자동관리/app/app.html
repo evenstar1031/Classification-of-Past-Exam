@@ -584,6 +584,7 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
       <button type="button" role="tab" id="ptab-sem1" data-g="sem1" data-sem="1" aria-controls="panel-sem1" aria-selected="false" tabindex="-1" hidden>수업 후기</button>
       <button type="button" role="tab" id="ptab-sem1d" data-g="sem1d" data-sem="1" aria-controls="panel-sem1d" aria-selected="false" tabindex="-1" hidden>자료 정리</button>
       <button type="button" role="tab" id="ptab-gichul" data-g="gichul" data-sem="both" aria-controls="panel-gichul" aria-selected="false" tabindex="-1">기출·학습자료</button>
+      <button type="button" role="tab" id="ptab-knuts" data-g="knuts" data-sem="both" aria-controls="panel-knuts" aria-selected="false" tabindex="-1">전사본</button>
       <button type="button" role="tab" id="ptab-tools" data-g="tools" data-sem="both" aria-controls="panel-tools" aria-selected="false" tabindex="-1" hidden>PDF 압축</button>
     </div>
     <div class="ctabs" role="tablist" id="ctabs" aria-label="과목" hidden></div>
@@ -681,6 +682,7 @@ th[scope=row] .g-badge{margin-left:6px; font-size:11px; padding:0 7px}
     </div>
   </section>
   <section id="panel-tools" role="tabpanel" aria-labelledby="ptab-tools" hidden></section>
+  <section id="panel-knuts" role="tabpanel" aria-labelledby="ptab-knuts" hidden></section>
 
   <section class="s1 rvw" id="panel-sem1" role="tabpanel" aria-labelledby="ptab-sem1" hidden>
     <div class="s1-head">
@@ -1535,9 +1537,9 @@ function initTimetable(){
 }
 
 /* ================= 탭 전환 ================= */
-const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul",...(window.APP?["tools"]:[]),"sem1","sem1d","sem1p"];
+const VIEWS=["timetable",...COURSES.map(c=>c.id),"prof","gichul","knuts",...(window.APP?["tools"]:[]),"sem1","sem1d","sem1p"];
 let lastCourse="jindan";
-function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="sem1d"?"sem1d":id==="sem1p"?"sem1p":id==="gichul"?"gichul":id==="tools"?"tools":"syl"; }
+function groupOf(id){ return id==="timetable"?"tt":id==="prof"?"prof":id==="sem1"?"sem1":id==="sem1d"?"sem1d":id==="sem1p"?"sem1p":id==="gichul"?"gichul":id==="knuts"?"knuts":id==="tools"?"tools":"syl"; }
 let SEM=(function(){ try{ return localStorage.getItem("knu1.sem")==="1"?1:2; }catch(e){ return 2; } })();
 const SEM1_VIEWS=["sem1p","sem1","sem1d"];
 function applySem(){
@@ -1557,7 +1559,8 @@ function select(id,push){
   COURSES.forEach(c=>{ const b=document.getElementById(`tab-${c.id}`), on=c.id===id; b.setAttribute("aria-selected",on?"true":"false"); b.tabIndex=on?0:-1; if(on) b.scrollIntoView({block:"nearest",inline:"nearest"}); });
   VIEWS.forEach(v=>{ document.getElementById(`panel-${v}`).hidden = v!==id; });
   if(push) history.replaceState(null,"",`#${id}`);
-  if(LAST_VIEW&&id!=="gichul"&&id!=="tools"){ LAST_VIEW[SEM1_VIEWS.includes(id)?1:2]=id; try{ localStorage.setItem("knu1.lastview",JSON.stringify(LAST_VIEW)); }catch(e){} }
+  if(id==="knuts"&&window.KNUTS_RENDER) window.KNUTS_RENDER();
+  if(LAST_VIEW&&id!=="gichul"&&id!=="tools"&&id!=="knuts"){ LAST_VIEW[SEM1_VIEWS.includes(id)?1:2]=id; try{ localStorage.setItem("knu1.lastview",JSON.stringify(LAST_VIEW)); }catch(e){} }
   document.dispatchEvent(new CustomEvent("knu1:sem",{detail:SEM}));
   const hdr=document.querySelector("header.top"), top=hdr.offsetTop+hdr.offsetHeight;
   if(window.scrollY>top) window.scrollTo(0,top);
@@ -1567,13 +1570,13 @@ function select(id,push){
 var LAST_VIEW={1:"sem1p",2:"timetable"};
 try{ const v=JSON.parse(localStorage.getItem("knu1.lastview")||"{}"); if(v[1]) LAST_VIEW[1]=v[1]; if(v[2]) LAST_VIEW[2]=v[2]; }catch(e){}
 function semPair(cur,n){
-  if(cur==="gichul"||cur==="tools") return cur;
+  if(cur==="gichul"||cur==="tools"||cur==="knuts") return cur;
   if(n===1){ if(COURSES.some(c=>c.id===cur)) return "sem1p"; if(cur==="prof") return "sem1"; return SEM1_VIEWS.includes(LAST_VIEW[1])?LAST_VIEW[1]:"sem1p"; }
   if(cur==="sem1p") return lastCourse; if(cur==="sem1") return "prof"; if(cur==="sem1d") return "gichul";
   const v=LAST_VIEW[2]; return v&&!SEM1_VIEWS.includes(v)&&v!=="gichul"&&v!=="tools"?v:"timetable";
 }
 document.querySelectorAll("#semsw button").forEach(b=>b.addEventListener("click",()=>{ const n=+b.dataset.sem; if(n===SEM) return; const cur=(location.hash||"").slice(1)||"timetable"; SEM=n; select(semPair(cur,n),true); }));
-ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="sem1d"?"sem1d":g==="sem1p"?"sem1p":g==="gichul"?"gichul":g==="tools"?"tools":lastCourse,true); }));
+ptabs.querySelectorAll("[role=tab]").forEach(b=>b.addEventListener("click",()=>{ const g=b.dataset.g; select(g==="tt"?"timetable":g==="prof"?"prof":g==="sem1"?"sem1":g==="sem1d"?"sem1d":g==="sem1p"?"sem1p":g==="gichul"?"gichul":g==="knuts"?"knuts":g==="tools"?"tools":lastCourse,true); }));
 function tabKeys(list){
   list.addEventListener("keydown",e=>{
     const btns=[...list.querySelectorAll("[role=tab]")], cur=btns.indexOf(document.activeElement);
@@ -4528,4 +4531,140 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   document.addEventListener('click',e=>{ const p=e.target.closest('.s1-head .subtitle'); if(p&&mq.matches) p.classList.toggle('open'); });
 })();
 </script>
+<style>
+/* ---- 전사본(KNUTS) ---- */
+#panel-knuts{padding:14px 0 40px}
+.kn-sub{margin:0 0 18px}
+.kn-sub>h2{font-size:18px;margin:0 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.kn-row{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line,#e2e6ea);border-radius:12px;background:var(--card,#fff);margin-bottom:6px;width:100%;text-align:left;cursor:pointer}
+.kn-row:hover{border-color:#0b5d63}
+.kn-row .kn-id{font-variant-numeric:tabular-nums;font-weight:700;color:#0b5d63;min-width:2.2em}
+.kn-row .kn-nm{flex:1;font-weight:600}
+.kn-row .kn-ct{font-size:12px;color:#5b666b;white-space:nowrap}
+.kn-empty{padding:18px;border:1px dashed var(--line,#e2e6ea);border-radius:12px;color:#5b666b}
+.kn-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.kn-btn{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--line,#e2e6ea);background:var(--card,#fff);cursor:pointer;font-size:14px}
+.kn-btn.on{background:#ffe58a;border-color:#e9b800;font-weight:700}
+.kn-btn.pri{background:#0b5d63;color:#fff;border-color:#0b5d63;font-weight:700;text-decoration:none;display:inline-flex;align-items:center}
+.kn-srch{min-height:40px;padding:8px 12px;border-radius:10px;border:1px solid var(--line,#e2e6ea);font-size:16px;flex:1;min-width:150px}
+.kn-list{max-height:min(72vh,900px);overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line,#e2e6ea);border-radius:12px;padding:8px;background:var(--card,#fff)}
+.kn-p{padding:10px 12px;border-radius:10px;box-shadow:inset 3px 0 0 transparent}
+.kn-p.hl{box-shadow:inset 3px 0 0 #e9b800;background:#fffaea}
+.kn-p+.kn-p{margin-top:2px}
+.kn-t{font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;color:#5b666b;margin-right:6px}
+.kn-p p{margin:2px 0 0;font-size:16px;line-height:1.75}
+.kn-em{background:#ffe58a;border-radius:3px;padding:0 2px;font-weight:700}
+.kn-p mark{background:transparent;outline:2px solid #0b5d63;border-radius:3px}
+@media (prefers-color-scheme:dark){
+  .kn-row,.kn-list,.kn-btn,.kn-srch{background:#151d20;border-color:#27353a}
+  .kn-p.hl{background:rgba(255,214,0,.10)}
+  .kn-em{background:rgba(255,214,0,.30);color:inherit}
+}
+</style>
+<script>
+/* ================= 전사본 (KNUTS) ================= */
+(function(){
+  const panel=document.getElementById('panel-knuts'); if(!panel) return;
+  const G=()=>window.GICHUL_LIVE||(typeof GICHUL!=='undefined'?GICHUL:{subjects:[]});
+  const REPO=()=>(G().repo||'seohoe1031/Classification-of-Past-Exam');
+  const enc=p=>String(p).split('/').map(encodeURIComponent).join('/');
+  const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const EMPH=/(?:이건 )?꼭 외우세요|(?:이건 )?시험에 (?:잘 |꼭 |자주 )?(?:나옵니다|나와요|나온다|안 나옵니다)|국시에 (?:자주|잘) 나오는|(?:정말|굉장히|아주|매우) 중요(?:합니다|해요)|족보에 (?:매년 )?나오는|제일 중요(?:합니다|하다|하고)|좀 중요하죠|여기 중요하죠|중요합니다|강조했습니다|기억하세요|외우세요/g;
+  const fmt=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(Math.floor(n%60)).padStart(2,'0');
+  const isEm=x=>new RegExp(EMPH.source).test(x);
+  const codeURL=q=>`https://claude.ai/code/new?q=${encodeURIComponent(q)}&repo=${encodeURIComponent(REPO())}&branch=main`;
+
+  function srtToParas(text){
+    const cues=[];
+    String(text).replace(/\r/g,'').trim().split(/\n\n+/).forEach(b=>{
+      const L=b.split('\n'), k=L.findIndex(x=>x.includes('-->'));
+      if(k<0) return;
+      const m=L[k].match(/([\d:.,]+)\s*-->\s*([\d:.,]+)/); if(!m) return;
+      const sec=t=>{const q=t.replace(',','.').split(':').map(Number);return q.length===3?q[0]*3600+q[1]*60+q[2]:q[0]*60+q[1];};
+      cues.push({s:sec(m[1]),e:sec(m[2]),t:L.slice(k+1).join(' ').replace(/<[^>]+>/g,'').trim()});
+    });
+    const out=[]; let cur=null;
+    cues.forEach(c=>{ if(!c.t) return;
+      if(!cur) cur={t:c.s,e:c.e,x:c.t}; else { cur.x+=' '+c.t; cur.e=c.e; }
+      const d=cur.e-cur.t;
+      if((d>=40&&/[.?!다요죠까]\s*$/.test(cur.x))||d>=75){ out.push(cur); cur=null; }
+    });
+    if(cur) out.push(cur);
+    return out;
+  }
+
+  let view=null;   /* {sub, lec, file} */
+  const state={q:'',only:false,cache:{}};
+
+  function list(){
+    const subs=G().subjects||[];
+    let html='';
+    subs.forEach(s=>{
+      const ls=(s.lectures||[]).filter(l=>(l.tx||[]).length);
+      if(!ls.length) return;
+      html+=`<section class="kn-sub"><h2>${esc(s.name||s.subject||'')}<a class="kn-btn pri" style="font-size:13px;min-height:32px" href="${codeURL((s.name||s.subject)+' 전사본 정리해줘. 전사본은 각 수업 폴더의 전사본/ 에 있어. 그 수업 필기본과 학습자료를 근거로 의학 용어를 교정하고 정리해줘.')}" target="_blank" rel="noopener">내 Claude로 정리</a></h2>`;
+      ls.forEach(l=>{
+        html+=`<button class="kn-row" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${l.tx.length}개</span><span aria-hidden="true">›</span></button>`;
+      });
+      html+='</section>';
+    });
+    if(!html) html=`<div class="kn-empty"><b>아직 올라온 전사본이 없어요.</b><br>노트북에서 <b>KNUTS 전사.bat</b> 으로 녹음을 전사하고 <b>GitHub 올리기.bat</b> 을 누르면, 날짜·교시로 수업을 찾아 여기에 자동으로 들어옵니다.</div>`;
+    panel.innerHTML=html;
+    panel.querySelectorAll('.kn-row').forEach(b=>b.addEventListener('click',()=>{
+      const subs=G().subjects||[];
+      const s=subs.find(x=>(x.cid||x.name)===b.dataset.s);
+      const l=s&&(s.lectures||[]).find(x=>String(x.id)===b.dataset.l);
+      if(l){ view={s,l,i:0}; state.q=''; state.only=false; open(); }
+    }));
+  }
+
+  async function open(){
+    const {s,l,i}=view, path=l.tx[i];
+    panel.innerHTML=`<div class="kn-bar">
+      <button class="kn-btn" id="kn-back">‹ 목록</button>
+      <b style="flex:1">${esc(l.id)}. ${esc(l.name)}</b>
+      <a class="kn-btn" href="https://github.com/${REPO()}/blob/main/${enc(path)}" target="_blank" rel="noopener">원본</a>
+      <a class="kn-btn pri" href="${codeURL(`${s.name||s.subject} ${l.id}강 ${l.name} 전사본 정리해줘. 전사본은 ${path} 에 있어. 필기본과 학습자료를 근거로 의학 용어를 교정하고, 교수님이 강조한 부분을 정리해줘.`)}" target="_blank" rel="noopener">내 Claude로 정리</a>
+    </div>
+    ${l.tx.length>1?`<div class="kn-bar" id="kn-files">${l.tx.map((p,k)=>`<button class="kn-btn${k===i?' on':''}" data-k="${k}">${esc(p.split('/').pop().replace(/\.srt$/,''))}</button>`).join('')}</div>`:''}
+    <div class="kn-bar"><input class="kn-srch" id="kn-q" type="search" placeholder="전사본 검색" value="${esc(state.q)}"><button class="kn-btn${state.only?' on':''}" id="kn-only">강조만</button></div>
+    <div class="kn-list" id="kn-body"><p style="padding:20px;text-align:center;color:#5b666b">불러오는 중…</p></div>`;
+    panel.querySelector('#kn-back').onclick=()=>{ view=null; list(); };
+    const fs=panel.querySelector('#kn-files');
+    if(fs) fs.querySelectorAll('button').forEach(b=>b.onclick=()=>{ view.i=+b.dataset.k; open(); });
+    panel.querySelector('#kn-only').onclick=()=>{ state.only=!state.only; open(); };
+    const qi=panel.querySelector('#kn-q');
+    qi.oninput=()=>{ state.q=qi.value; draw(); };
+
+    const body=panel.querySelector('#kn-body');
+    try{
+      if(!state.cache[path]){
+        const r=await fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path)}?t=${Date.now()}`);
+        if(!r.ok) throw new Error(r.status);
+        state.cache[path]=srtToParas(await r.text());
+      }
+      draw();
+    }catch(e){
+      body.innerHTML=`<p style="padding:20px;text-align:center;color:#d9264f">전사본을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.</p>`;
+    }
+  }
+
+  function draw(){
+    const body=panel.querySelector('#kn-body'); if(!body||!view) return;
+    const paras=state.cache[view.l.tx[view.i]]||[];
+    const q=state.q.trim();
+    const rows=paras.filter(p=>(!state.only||isEm(p.x))&&(!q||p.x.toLowerCase().includes(q.toLowerCase())));
+    if(!rows.length){ body.innerHTML=`<p style="padding:20px;text-align:center;color:#5b666b">조건에 맞는 문단이 없어요.</p>`; return; }
+    body.innerHTML=rows.map(p=>{
+      const em=isEm(p.x);
+      let t=esc(p.x).replace(new RegExp(EMPH.source,'g'),m=>`<span class="kn-em">${m}</span>`);
+      if(q) t=t.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');
+      return `<div class="kn-p${em?' hl':''}"><span class="kn-t">${fmt(p.t)}</span>${em?'<span class="kn-ct" style="font-size:11px">교수님 강조</span>':''}<p>${t}</p></div>`;
+    }).join('');
+  }
+
+  window.KNUTS_RENDER=()=>{ if(view) open(); else list(); };
+})();
+</script>
+
 </body></html>

@@ -1,0 +1,43 @@
+# 올리기/전사본/ 에 올라온 강의 녹음 전사본을 시간표로 수업을 찾아 학습자료 폴더에 넣는다.
+name: 전사본 자동 분류
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '올리기/전사본/**'
+      - '_자동관리/tools/transcript_file.py'
+      - '.github/workflows/transcript-file.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: transcript-file
+  cancel-in-progress: false
+
+jobs:
+  file:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 수업별로 넣기
+        run: python3 _자동관리/tools/transcript_file.py
+
+      - name: 바뀌었으면 저장
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A 학습자료 올리기/전사본
+          if git diff --cached --quiet; then echo "옮길 전사본 없음"; exit 0; fi
+          git commit -q -m "전사본 수업별로 정리"
+          git pull -q --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
