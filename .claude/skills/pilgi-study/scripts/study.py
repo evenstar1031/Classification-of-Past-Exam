@@ -230,10 +230,11 @@ body {{ font-family:{BATANG}; color:{INK}; font-size:{pt(10.5)}; line-height:1.6
 .notes em {{ font-style:normal; color:{ACC}; font-weight:bold; }}
 .notes code {{ font-family:{GOTHIC}; background:#f1f3f5; padding:0 {pt(2)}; }}
 .notes table {{ border-collapse:collapse; width:100%; margin:{mm(1)} 0 {mm(3.2)} 0; page-break-inside:avoid;
-                font-size:{pt(9.8)}; line-height:1.45; }}
+                font-size:{pt(9.3)}; line-height:1.42; }}
+.notes th, .notes td {{ word-break:keep-all; word-wrap:break-word; overflow-wrap:break-word; }}  /* 칸 안에서 낱말 중간에 줄이 끊기지 않게 */
 .notes th {{ font-family:{GOTHIC}; font-weight:bold; background:#e4ecf4; color:{INK}; border:0.5pt solid #b9c6d3;
-             padding:{mm(1.3)} {mm(1.8)}; text-align:left; }}
-.notes td {{ border:0.5pt solid #c9d3dc; padding:{mm(1.3)} {mm(1.8)}; vertical-align:top; }}
+             padding:{mm(1.2)} {mm(1.6)}; text-align:left; }}
+.notes td {{ border:0.5pt solid #c9d3dc; padding:{mm(1.2)} {mm(1.6)}; vertical-align:top; }}
 .notes tr:nth-child(even) td {{ background:#f7f9fb; }}
 .notes hr {{ border:0; border-top:0.5pt dashed #b9c6d3; margin:{mm(4)} 0; }}
 h2.yr {{ font-family:{GOTHIC}; }}
