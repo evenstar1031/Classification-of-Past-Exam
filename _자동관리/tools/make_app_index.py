@@ -35,6 +35,12 @@ def stage_of(d):
     return 'pre' if m and '전' in m.group(1) else 'post'
 
 
+def tx_files(d):
+    """올라와 있는 강의 녹음 전사본 (전사본/*.srt 등)"""
+    return [f'{d}/전사본/{x}' for x in ls(f'{d}/전사본')
+            if x.lower().endswith(('.srt', '.vtt', '.txt', '.json'))]
+
+
 def note_years(d):
     """올라와 있는 필기본 연도 (필기본/필기본_<연도>.*)"""
     return sorted({m.group(1) for x in ls(f'{d}/필기본') for m in [re.match(r'필기본_(\d{4})', x)] if m}, reverse=True)
@@ -95,6 +101,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
             'mine': mine.get(lid, []),
             'stage': stage_of(f'학습자료/{SF}/{sdir}') if sdir and s else None,
             'notes': note_years(f'학습자료/{SF}/{sdir}') if sdir else [],
+            'tx': tx_files(f'학습자료/{SF}/{sdir}') if sdir else [],
         })
     extra = counts.get('99', {})
     whole_q = next((x for x in q_files if x.startswith('00_전체') and x.endswith('.pdf')), None)

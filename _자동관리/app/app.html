@@ -3608,6 +3608,7 @@ window.S3=(function(){
     ? `${s.subject} ${l.id} ${l.name} 작년 필기본이야. 수업 전 학습자료(작년 필기 + 기출) 만들어줘. 필기본은 첨부했어.`
     : `${s.subject} ${l.id} ${l.name} 올해 필기본이야. 수업 후 학습자료 만들어줘${l.stage==='pre'?' — 수업 전판을 올해 필기로 보충하고 연습문제 붙여서':''}. 필기본은 첨부했어.`;
   const gichulPrompt=s=>`${s.subject} 기출 정리해줘. 기출 PDF는 첨부했어.`;
+  const txPrompt=s=>`${s.subject} 강의 녹음 전사본 정리해줘. 전사본(.srt)은 올리기/전사본/ 에 있어. 어느 수업인지 내용으로 찾아서, 그 수업 필기본과 학습자료를 근거로 의학 용어를 교정하고 정리해줘.`;
   const a=(href,label,cls,path)=>`<a class="${cls||'g-link'}" href="${h(href)}" target="_blank" rel="noopener"${path?` data-path="${h(path)}"`:''}>${label}</a>`;
   const APPM=!!window.APP;                  // 브라우저 앱으로 열렸을 때
   const GUEST=APPM&&!!window.APP.guest;     // 로그인 없이 둘러보기: 보기·내려받기만
@@ -3643,6 +3644,7 @@ window.S3=(function(){
       l.s&&a(blob(l.s),studyLabel(l),'g-link g-study',l.s),
       l.one&&a(blob(l.one),'한장정리',0,l.one),
       ...(l.mine||[]).map(p=>a(blob(p),'<span class="g-tag">내 자료</span>'+h(mineLabel(p)),'g-link g-mine',p)),
+      (l.tx&&l.tx.length)&&a(tree(l.dir+'/전사본'),'<span class="g-tag">전사본</span>'+l.tx.length+'개','g-link g-mine'),
     ].filter(Boolean);
     const again=l.s?' again':'';
     const make=GUEST?'':APPM
@@ -3685,6 +3687,7 @@ window.S3=(function(){
           a(tree(s.jaryo||('자료실/'+s.subject)),'자료실 폴더'),          // 누구나 열어 보고, 정리본은 거기서 Upload files
           GUEST?'':APPM?(OWNER()&&upBtn('gichul','now',s,null,'기출 정리 바로 맡기기','g-make g-now')):(CAN&&a(gichulURL(s),'기출 정리 바로 맡기기','g-make g-now')),
           GUEST?'':APPM?upBtn('gichul','mine',s,null,'내 Claude로 기출 정리','g-make'):a(codeURL(gichulPrompt(s)),'내 Claude로 기출 정리','g-make'),
+          GUEST?'':a(codeURL(txPrompt(s)),'내 Claude로 전사본 정리','g-make'),
         ].filter(Boolean).join('')}</p>
       </div>`;
     const todo=!s.exams.length&&!query?`<div class="todo"><strong>아직 정리된 기출이 없습니다.</strong>
