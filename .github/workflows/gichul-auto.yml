@@ -172,7 +172,7 @@ jobs:
             마지막으로 결과를 이슈 하나로 남긴다 — 처리된 시험이 하나도 없거나 앞 단계가 실패했어도 반드시 남기고, 그때는 `올리기/` 에 남은 파일과 막힌 이유(오류 메시지)를 적는다:
             `gh issue create --label 기출 --title "기출 자동 정리: <과목> <시험>" --body "<보고>"`
             보고(한국어, 짧게): 처리한 시험, 수업별로 늘어난 문항 수, 2단계에서 고친 분류, 확인이 필요한 문항(분류·정답),
-            못 한 파일과 이유, 문제지 폴더 링크 https://github.com/evenstar1031/Classification-of-Past-Exam/tree/main/문제지/<과목> (경로는 URL 인코딩).
+            못 한 파일과 이유, 문제지 폴더 링크 https://github.com/seohoe1031/Classification-of-Past-Exam/tree/main/문제지/<과목> (경로는 URL 인코딩).
           claude_args: |
             --model claude-opus-5-5
             --max-turns 300

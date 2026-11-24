@@ -3432,7 +3432,7 @@ window.APPX=(function(){
   if(top){ const b=document.createElement('button'); b.type='button'; b.className='ax-acct'; b.textContent=APP.guest?'로그인':APP.login; b.setAttribute('aria-label',APP.guest?'로그인':'계정'); b.onclick=APP.guest?openGuest:openAccount; top.after(b); }
 
   /* ── PDF 도구: 같은 사이트의 PDF 압축을 앱 안에 (도구가 하나뿐이면 고르는 버튼은 숨김) ── */
-  const TOOL_HOST='https://evenstar1031.github.io';
+  const TOOL_HOST='https://seohoe1031.github.io';
   const TOOLS=[
     {id:'compress', name:'PDF 압축', src:TOOL_HOST+'/pdf-compress/', input:'#picker',
      desc:'용량을 줄입니다. 글자는 그대로라 검색·복사가 계속 됩니다. 파일은 내 기기 안에서만 처리돼요.'},
@@ -3510,7 +3510,7 @@ window.APPX=(function(){
 </script>
 
 <script>
-const GICHUL = window.GICHUL_LIVE || {"repo":"evenstar1031/Classification-of-Past-Exam","sha":"","date":"","subjects":[]};   // 내용은 앱 껍데기가 _자동관리/app/gichul_index.json 에서 넣어 줌
+const GICHUL = window.GICHUL_LIVE || {"repo":"seohoe1031/Classification-of-Past-Exam","sha":"","date":"","subjects":[]};   // 내용은 앱 껍데기가 _자동관리/app/gichul_index.json 에서 넣어 줌
 </script>
 
 <script>
@@ -3969,7 +3969,7 @@ window.D1=(function(){
   const panel=document.getElementById('panel-sem1d'); if(!panel) return null;
   const $=s=>panel.querySelector(s);
   const h=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const APP=window.APP, REPO=(APP&&APP.repo)||'evenstar1031/Classification-of-Past-Exam', GH='https://github.com/'+REPO;
+  const APP=window.APP, REPO=(APP&&APP.repo)||'seohoe1031/Classification-of-Past-Exam', GH='https://github.com/'+REPO;
   const OWNER=!!(APP&&APP.isOwner);
   const LIST='1학기/목록.json';
   const enc=p=>p.split('/').map(encodeURIComponent).join('/');

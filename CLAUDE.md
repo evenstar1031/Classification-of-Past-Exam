@@ -42,7 +42,7 @@
 - **저장**: `git add` 로 만든 결과만(`work/` 제외) 커밋한 뒤, 이슈 모드가 정해 준 작업 브랜치(`claude/issue-<번호>-…`)에 올린다.
   워크플로 마지막 단계(「결과를 main 에 합치기」)가 그 브랜치를 **자동으로 main 에 합친다** — 사용자에게 PR 을 만들거나 Merge 를 누르라고 하지 않는다.
   main 에 들어가면 `build-pdfs.yml` 이 해설지를, `app-index.yml` 이 앱 현황을 다시 만든다.
-- **마지막 댓글**(짧게, 한국어): 만든 파일 링크 — `https://github.com/evenstar1031/Classification-of-Past-Exam/blob/main/<경로>`
+- **마지막 댓글**(짧게, 한국어): 만든 파일 링크 — `https://github.com/seohoe1031/Classification-of-Past-Exam/blob/main/<경로>`
   (경로는 한 칸씩 URL 인코딩), 그리고 스킬이 정한 보고 한두 줄. 고칠 점은 이 이슈에 `@claude ...` 로 다시 말하면 된다고 덧붙인다.
 - 일이 끝났으면 이슈를 닫지 않는다(사용자가 확인 후 닫는다).
 

@@ -66,5 +66,5 @@ create policy "docs guest read" on public.docs for select to anon
   using (scope = '');
 
 -- 4) 관리자 -------------------------------------------------------------------
-insert into public.members (login, role) values ('evenstar1031', 'owner')
+insert into public.members (login, role) values ('seohoe1031', 'owner')
 on conflict (login) do update set role = 'owner';

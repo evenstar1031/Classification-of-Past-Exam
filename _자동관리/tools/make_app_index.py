@@ -109,7 +109,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
         'whole_q': f'문제지/{SF}/{whole_q}' if whole_q else None,
         'whole_a': f'해설지/{SF}/{whole_a}' if whole_a else None,
     })
-res = {'repo': 'evenstar1031/Classification-of-Past-Exam', 'sha': sha, 'date': date, 'subjects': out}
+res = {'repo': 'seohoe1031/Classification-of-Past-Exam', 'sha': sha, 'date': date, 'subjects': out}
 os.makedirs('_자동관리/app', exist_ok=True)
 with open('_자동관리/app/gichul_index.json', 'w', encoding='utf8') as f:
     json.dump(res, f, ensure_ascii=False, separators=(',', ':'))
