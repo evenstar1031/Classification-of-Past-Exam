@@ -1,0 +1,21 @@
+{
+ "tag": "sem1-downloads",
+ "subjects": {
+  "생리학": {
+   "no": 1,
+   "fp": "5a179187",
+   "count": 165,
+   "bytes": 1720275185,
+   "parts": [
+    {
+     "asset": "sem1-01-physiology.zip",
+     "label": "01. 생리학.zip",
+     "size": 1720275185,
+     "count": 165
+    }
+   ],
+   "built": "2026-11-24 16:09"
+  }
+ },
+ "updated": "2026-11-24 16:09"
+}
