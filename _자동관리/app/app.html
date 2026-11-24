@@ -4541,6 +4541,9 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
 .kn-row .kn-id{font-variant-numeric:tabular-nums;font-weight:700;color:#0b5d63;min-width:2.2em}
 .kn-row .kn-nm{flex:1;font-weight:600}
 .kn-row .kn-ct{font-size:12px;color:#5b666b;white-space:nowrap}
+.kn-row.kn-none{opacity:.55;cursor:default;background:transparent;border-style:dashed}
+.kn-row.kn-none:hover{border-color:var(--line,#e2e6ea)}
+.kn-row.kn-none .kn-id,.kn-row.kn-none .kn-nm{font-weight:500;color:inherit}
 .kn-empty{padding:18px;border:1px dashed var(--line,#e2e6ea);border-radius:12px;color:#5b666b}
 .kn-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
 .kn-btn{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--line,#e2e6ea);background:var(--card,#fff);cursor:pointer;font-size:14px}
@@ -4594,23 +4597,28 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   }
 
   let view=null;   /* {sub, lec, file} */
-  const state={q:'',only:false,cache:{}};
+  const state={q:'',only:false,hideNone:false,cache:{}};
 
   function list(){
     const subs=G().subjects||[];
     let html='';
     subs.forEach(s=>{
-      const ls=(s.lectures||[]).filter(l=>(l.tx||[]).length);
-      if(!ls.length) return;
-      html+=`<section class="kn-sub"><h2>${esc(s.name||s.subject||'')}<a class="kn-btn pri" style="font-size:13px;min-height:32px" href="${codeURL((s.name||s.subject)+' 전사본 정리해줘. 전사본은 각 수업 폴더의 전사본/ 에 있어. 그 수업 필기본과 학습자료를 근거로 의학 용어를 교정하고 정리해줘.')}" target="_blank" rel="noopener">내 Claude로 정리</a></h2>`;
+      const all=(s.lectures||[]), got=all.filter(l=>(l.tx||[]).length);
+      if(!got.length) return;
+      const ls=state.hideNone?got:all;
+      html+=`<section class="kn-sub"><h2>${esc(s.name||s.subject||'')}<span class="kn-ct">전사본 ${got.length} / ${all.length}</span><a class="kn-btn pri" style="font-size:13px;min-height:32px" href="${codeURL((s.name||s.subject)+' 전사본 정리해줘. 전사본은 각 수업 폴더의 전사본/ 에 있어. 그 수업 필기본과 학습자료를 근거로 의학 용어를 교정하고 정리해줘.')}" target="_blank" rel="noopener">내 Claude로 정리</a><button class="kn-btn" style="font-size:13px;min-height:32px" data-hide>${state.hideNone?'없는 수업도 보기':'있는 것만 보기'}</button></h2>`;
       ls.forEach(l=>{
-        html+=`<button class="kn-row" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${l.tx.length}개</span><span aria-hidden="true">›</span></button>`;
+        const n=(l.tx||[]).length;
+        html+=n
+          ? `<button class="kn-row" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${n}개</span><span aria-hidden="true">›</span></button>`
+          : `<div class="kn-row kn-none"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">없음</span></div>`;
       });
       html+='</section>';
     });
     if(!html) html=`<div class="kn-empty"><b>아직 올라온 전사본이 없어요.</b><br>노트북에서 <b>KNUTS 전사.bat</b> 으로 녹음을 전사하고 <b>GitHub 올리기.bat</b> 을 누르면, 날짜·교시로 수업을 찾아 여기에 자동으로 들어옵니다.</div>`;
     panel.innerHTML=html;
-    panel.querySelectorAll('.kn-row').forEach(b=>b.addEventListener('click',()=>{
+    panel.querySelectorAll('[data-hide]').forEach(b=>b.addEventListener('click',()=>{ state.hideNone=!state.hideNone; list(); }));
+    panel.querySelectorAll('button.kn-row').forEach(b=>b.addEventListener('click',()=>{
       const subs=G().subjects||[];
       const s=subs.find(x=>(x.cid||x.name)===b.dataset.s);
       const l=s&&(s.lectures||[]).find(x=>String(x.id)===b.dataset.l);
