@@ -188,11 +188,15 @@ def visible_children(d):
 def sem1_subject(name):
     """'01'·'1'·'01. 생리학'·'생리학' → '생리학' (1학기 과목 순서·이름으로), 모르면 None"""
     n = nfc(str(name)).strip()
-    m = re.fullmatch(r'0*(\d{1,2})', n)
-    if m and 1 <= int(m.group(1)) <= len(SJ.ORDER[1]):
-        return SJ.ORDER[1][int(m.group(1)) - 1][1]
-    f = SJ._find(n)
-    return f[3] if f and f[0] == 1 else None
+    # 한 과목을 나눠 올린 압축: 「05-1」「05_2」「05 (3)」「05. 병원체학 2」「병원체학(1)」「병원체학_part2」 → 그 과목
+    tail = re.compile(r'[\s_\-]*(\(\s*\d+\s*\)|part\s*\d+|파트\s*\d+|\d+\s*부|[-_]\s*\d+|\s+\d+)$', re.I)
+    for cand in (n, tail.sub('', n).strip()):
+        m = re.fullmatch(r'0*(\d{1,2})', cand)
+        if m and 1 <= int(m.group(1)) <= len(SJ.ORDER[1]):
+            return SJ.ORDER[1][int(m.group(1)) - 1][1]
+        f = SJ._find(cand)
+        if f and f[0] == 1: return f[3]
+    return None
 
 
 def subject_name(name):
@@ -495,6 +499,8 @@ def sync(m=None):
             keep.append(it)
         sd['items'] = keep
         real = info.get(norm(subj))
+        f = SJ._find(subj)
+        sd['no'] = f[1] if f and f[0] == 1 else 99            # 앱이 과목을 폴더 번호 순서(01. 생리학 …)로 보여 줌
         sd['info'] = real
         sd['gichul'] = real if real and (ROOT / '문제지' / SJ.folder(real)).is_dir() else None
         sd['upload'] = f'올리기/{SJ.folder(real)}' if real else None   # 「수업별 문제지로 만들기」가 옮길 곳

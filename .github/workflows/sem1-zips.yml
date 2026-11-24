@@ -1,0 +1,53 @@
+# 1학기 자료를 과목마다 zip 으로 묶어 Release 「sem1-downloads」 에 올린다 (_자동관리/tools/sem1_zip.py)
+# 앱 「1학기 자료」 탭의 「과목 전체 내려받기」 버튼이 이 압축을 준다 — 로그인하지 않아도 받을 수 있다.
+# 1학기 자료가 바뀌면(앱에서 지우기, 새 압축 정리) 바뀐 과목만 다시 묶는다. Claude 를 쓰지 않아 구독 사용량이 들지 않는다.
+name: 1학기 과목별 압축
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '1학기/**'
+      - '!1학기/내려받기.json'
+  workflow_run:
+    workflows: ['1학기 자료 정리']      # 자동 정리가 올린 커밋은 push 로 이 워크플로를 깨우지 못해서
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: sem1-zips
+  cancel-in-progress: false            # 도는 중이면 끝나고 마지막 것 하나만 이어서 돈다
+
+jobs:
+  zip:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: 디스크 비우기
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL || true
+          df -h / | tail -1
+
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /_자동관리/tools/
+            /1학기/목록.json
+            /1학기/내려받기.json
+
+      - name: 준비
+        run: |
+          git config --global core.quotepath false
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 묶어서 올리기
+        run: python3 _자동관리/tools/sem1_zip.py build
