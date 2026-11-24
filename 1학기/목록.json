@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24 13:35",
+ "updated": "2026-11-24 16:10",
  "imports": [
   {
    "id": "261123-1학기261124",
@@ -2299,7 +2299,8 @@
    ],
    "info": null,
    "gichul": null,
-   "upload": null
+   "upload": null,
+   "no": 1
   },
   "해부학": {
    "items": [
@@ -2412,7 +2413,8 @@
    "skipped": [],
    "info": null,
    "gichul": null,
-   "upload": null
+   "upload": null,
+   "no": 2
   },
   "면역학": {
    "items": [
@@ -3075,19 +3077,6 @@
      "mtime": 1781512732,
      "pages": 10,
      "th": "1570e529c6db58eb",
-     "why": "이름·폴더로 종류를 알 수 없어 수업으로 넣었어요. 맞는지 보고 남길지 정해 주세요."
-    },
-    {
-     "path": "1학기/면역학/03. 기타자료/21 자료/Ch3 2시간 민주언니-edited.pdf",
-     "name": "Ch3 2시간 민주언니-edited.pdf",
-     "kind": "수업",
-     "size": 614968,
-     "sha": "23c2285262c0304d16db9f1fd5f9f1c0036a3d95",
-     "imp": "261124-1학기2611241105",
-     "src": "03.zip/03. 면역학/03. 기타자료/21 자료/Ch3 2시간 민주언니-edited.pdf",
-     "state": "check",
-     "mtime": 1781483406,
-     "pages": 2,
      "why": "이름·폴더로 종류를 알 수 없어 수업으로 넣었어요. 맞는지 보고 남길지 정해 주세요."
     },
     {
@@ -4365,7 +4354,8 @@
    ],
    "info": null,
    "gichul": null,
-   "upload": null
+   "upload": null,
+   "no": 3
   },
   "병리학": {
    "items": [
@@ -6245,7 +6235,8 @@
    ],
    "info": null,
    "gichul": null,
-   "upload": null
+   "upload": null,
+   "no": 4
   },
   "약리학 총론": {
    "items": [
@@ -8895,7 +8886,8 @@
    ],
    "info": null,
    "gichul": null,
-   "upload": null
+   "upload": null,
+   "no": 6
   },
   "기초의학종합": {
    "items": [
@@ -10478,7 +10470,8 @@
    ],
    "info": null,
    "gichul": null,
-   "upload": null
+   "upload": null,
+   "no": 7
   }
  }
 }
