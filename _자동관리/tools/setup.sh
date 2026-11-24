@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 클라우드 세션을 새로 열 때마다 한 번 실행: 파이썬 패키지, wkhtmltopdf, 폰트 설치.
+# 클라우드 세션을 새로 열 때마다 한 번 실행: 파이썬 패키지, wkhtmltopdf, ghostscript, 폰트 설치.
 # 사용법 (저장소 맨 위 폴더에서):  bash _자동관리/tools/setup.sh
 set -e
 cd "$(dirname "$0")/../.."
@@ -17,6 +17,13 @@ if ! command -v wkhtmltopdf >/dev/null; then
   || echo "!! wkhtmltopdf 설치 실패 — PDF 문제지(gichul-strip) 빌드가 안 됩니다. 사용자에게 알릴 것."
 fi
 command -v wkhtmltopdf >/dev/null && wkhtmltopdf --version
+
+echo "== ghostscript (학습자료 PDF 압축 — 앱 「PDF 압축」과 같은 엔진)"
+if ! command -v gs >/dev/null; then
+  (sudo -n apt-get install -y -qq ghostscript || apt-get install -y -qq ghostscript) >/dev/null 2>&1 \
+  || echo "!! ghostscript 설치 실패 — 학습자료는 만들어지지만 압축은 건너뜁니다."
+fi
+command -v gs >/dev/null && echo "gs $(gs --version)"
 
 echo "== Fonts"
 if [ -n "$(find _자동관리/fonts -maxdepth 1 -iname '*.ttf' -o -maxdepth 1 -iname '*.otf')" ]; then

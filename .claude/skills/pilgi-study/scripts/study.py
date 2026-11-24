@@ -513,6 +513,9 @@ def cmd_build(a):
             if (x.startswith(L['id'] + '_') and re.search(r'_학습자료(\(수업 [전후]\))?\.pdf$', x)
                     and os.path.join(sdir, x) != out):
                 os.remove(os.path.join(sdir, x)); print(f'   예전 파일 지움: {x}')
+        # 마지막: 앱 「PDF 압축」과 같은 설정(Ghostscript /ebook, 1% 미만이면 원본 유지)으로 용량 줄이기
+        import compress_pdf
+        print('   ' + compress_pdf.report(out, compress_pdf.compress(out)))
     if pending:
         print(f'[CHECK] 정답·해설을 아직 안 넣은 기출 {len(pending)}문항 — 나중에 채워 다시 build')
     if missing:

@@ -148,6 +148,11 @@ python3 $S build <과목> <수업>
 읽히는지, 제목만 쪽 끝에 남은 곳이 없는지도 본다. 표가 쪽 밖으로 넘치거나 상자가 어색하게 잘리면 md를 손본다
 (긴 표는 둘로 나누기). 표 칸 안에서 한 낱말이 두 줄로 쪼개지거나 한 칸이 너무 길게 늘어진 곳이 없는지도 본다.
 
+**용량 줄이기(자동)**: 검사가 통과하면 build 가 마지막에 knu1 앱 「PDF 압축」과 같은 설정(Ghostscript 「권장」 = 이미지
+150dpi, 글자 그대로, 1% 미만으로 줄면 원본 유지)으로 결과 PDF를 압축해 `[OK] 압축 a MB → b MB` 를 찍는다. 미리보기는 압축 전
+파일로 만든 것이다. `[CHECK] 압축 건너뜀` 이면(Ghostscript 없음 등) `bash _자동관리/tools/setup.sh` 후
+`python3 _자동관리/tools/compress_pdf.py <PDF>` 로 따로 압축한다. 압축하지 않은 PDF는 올리지 않는다. 보고에 줄어든 용량을 적는다.
+
 ## 6. 저장·전달
 ```bash
 python3 _자동관리/tools/check_private.py && git add 학습자료/<과목> _자동관리/해설 && git commit -m "<과목>: <id> <수업명> 학습자료"
