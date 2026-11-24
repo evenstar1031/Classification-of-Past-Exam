@@ -34,9 +34,15 @@ JUNK_EXT = {'.tmp', '.lnk', '.url', '.ini', '.crdownload', '.part', '.download'}
 MEDIA_EXT = {'.mp4', '.mov', '.avi', '.mkv', '.wmv', '.webm', '.m4v', '.m4a', '.mp3', '.wav', '.aac', '.wma', '.flac', '.ogg', '.amr'}
 ARCH_EXT = {'.zip', '.7z', '.rar', '.tar', '.gz', '.tgz', '.bz2', '.xz'}
 DOC_EXT = {'.docx', '.doc', '.hwp', '.hwpx'}     # 같은 폴더에 같은 이름의 PDF 가 있으면 PDF 만 넣는다
+def twin_key(stem):    # 「04. 자연면역_서인철 (수정)」 = 「04. 자연면역_서인철」, 「90. 25-1 2차」 = 「99. 25-1 2차」
+    k = re.sub(r'^\s*\d+(\s*[-~,]\s*\d+)*\s*[.)_\-]\s*', '', nfc(stem).lower())
+    k = re.sub(r'\(\s*(수정|최종|final)\s*\)|[\s_]+', '', k)
+    return k
 def has_pdf_twin(f):
-    stem = nfc(f.stem).lower()
-    return any(p.is_file() and p.suffix.lower() == '.pdf' and nfc(p.stem).lower() == stem for p in f.parent.iterdir())
+    """같은 폴더, 그 안의 PDF 폴더, 바로 위 폴더에 이름이 같은 PDF 가 있으면 True"""
+    key = twin_key(f.stem)
+    dirs = [f.parent, f.parent.parent] + [d for d in f.parent.iterdir() if d.is_dir() and 'pdf' in d.name.lower()]
+    return any(p.is_file() and p.suffix.lower() == '.pdf' and twin_key(p.stem) == key for d in dirs for p in d.iterdir())
 IMG_EXT = {'.png', '.jpg', '.jpeg', '.heic', '.webp', '.gif', '.bmp', '.tif', '.tiff'}
 KINDS = [  # 앞에 있을수록 우선 — 종류는 교과서·기출·수업·과제 넷 (앱에는 교과서·기출·수업·과제 순서로 보임)
     ('기출', re.compile(r'기출|족보|시험|고사|퀴즈|쪽지|quiz|exam|midterm|mid-term|final ?test', re.I)),
@@ -83,6 +89,7 @@ def subject_info():
 def clean_subject(name):
     n = nfc(name).strip()
     n = re.sub(r'^\s*\d+[.)_\-\s]+', '', n).strip() or n
+    n = COPY_TAIL.sub('', n).strip() or n        # 「해부학 - 복사본」 → 해부학
     return n.replace('/', '·')
 
 
