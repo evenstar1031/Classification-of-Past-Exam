@@ -199,7 +199,9 @@ def cmd_gichul(a):
 
 # ------------------------------------------------------------------ build
 CSS = f"""
-body {{ font-family:{BATANG}; color:{INK}; font-size:{pt(10.5)}; line-height:1.62; }}
+body {{ font-family:{BATANG}; color:{INK}; font-size:{pt(10.5)}; line-height:1.62;
+        word-break:keep-all; word-wrap:break-word; overflow-wrap:break-word; }}  /* 한글 낱말 중간(아|급성)에서 줄이 끊기지 않게 */
+.nw {{ white-space:nowrap; }}  /* {{{{…}}}} 로 묶은 말 — 한 줄에 같이 */
 .q, .q * {{ font-family:{GOTHIC}; }}
 .cover {{ text-align:center; padding-top:{mm(38)}; }}
 .cover .subj {{ font-family:{GOTHIC}; font-size:{pt(12)}; color:#6b7a89; letter-spacing:{pt(1)}; }}
@@ -363,6 +365,49 @@ _NEXT = (r'<div class="fig">(?:(?!</div>).)*?(?:<div class="cap">.*?</div>)?</di
          r'|<(?P<lt>ul|ol)>(?:(?!<(?:ul|ol)>).)*?</(?P=lt)>')
 
 
+_TAG = re.compile(r'(<[^>]+>)')
+_ABBR = r'(?:[A-Z][A-Za-z0-9]{1,5}|[A-Z]-?[A-Za-z0-9]+)'
+
+
+def _glue(t):
+    """글자 부분에서 붙어 다녀야 할 말 사이 띄어쓰기를 줄바꿈 없는 공백(&nbsp;)으로 바꾼다."""
+    nb = '\u00a0'
+    t = re.sub(r'\{\{(.+?)\}\}', lambda m: '\x00' + m.group(1) + '\x01', t)   # {{…}} 직접 묶기
+    t = re.sub(r'\s+\+\s+', nb + '+' + nb, t)                  # 약 조합: vanco + gent + cefepime
+    t = re.sub(r'\s+([=→±×≥≤<>]|&lt;|&gt;)(?=\s)', nb + r'\1', t)  # 기호가 줄 맨 앞에 오지 않게: 급성 =
+    t = re.sub(r'([가-힣]+)\s+(' + _ABBR + r')(?![A-Za-z])', r'\1' + nb + r'\2', t)  # 아급성 NVE, 조기 PVE
+    t = re.sub(r'(\d+(?:\.\d+)?)\s+(mg|g|mL|ml|L|μg|mcg|IU|U|mmHg|cm|mm|kg|%|시간|일|주|개월|년|세트|회)(?![A-Za-z가-힣])',
+               r'\1' + nb + r'\2', t)                           # 숫자 + 단위: 2 g, 1 시간
+    return t
+
+
+def nobreak(body):
+    """1부 HTML: 중요한 말이 두 줄로 갈라지지 않게 한다.
+    - CSS word-break:keep-all 로 한글 낱말은 이미 안 끊긴다(body).
+    - 여기서는 띄어쓰기로 나뉜 '한 덩어리' 말을 붙인다: 약 조합(A + B), 'X = …' 의 X와 =,
+      한글 + 영문 약어(아급성 NVE), 숫자 + 단위(2 g), 그리고 {{…}} 로 직접 묶은 말.
+    - 굵은 글씨·강조(**…**, *…*)는 30자 이하면 통째로 한 줄에."""
+    parts = _TAG.split(body)
+    out, skip = [], 0
+    for x in parts:
+        if x.startswith('<'):
+            if re.match(r'<(code|pre)\b', x):
+                skip += 1
+            elif re.match(r'</(code|pre)>', x):
+                skip = max(0, skip - 1)
+            out.append(x)
+        else:
+            out.append(x if skip else _glue(x))
+    s = ''.join(out).replace('\x00', '<span class="nw">').replace('\x01', '</span>')
+
+    def short(m):
+        inner = m.group(2)
+        plain_ = re.sub(r'<[^>]+>', '', inner)
+        return (f'<{m.group(1)} class="nw">{inner}</{m.group(1)}>' if len(html.unescape(plain_)) <= 30
+                else m.group(0))
+    return re.sub(r'<(strong|em)>((?:(?!</?\1>).)*?)</\1>', short, s, flags=re.S)
+
+
 def keep_headings(body):
     """wkhtmltopdf 는 page-break-after:avoid 를 무시해 제목만 쪽 끝에 남는다. 제목(연속된 제목 포함)을
     바로 다음 덩어리(그림·문단·표·상자·짧은 목록)와 한 묶음으로 만들어 같이 넘어가게 한다."""
@@ -439,7 +484,7 @@ def cmd_build(a):
 
     # 1부
     body_md = markdown.markdown(notes_md, extensions=['tables', 'admonition', 'sane_lists', 'attr_list'])
-    body_md = keep_headings(figures(body_md, fd))
+    body_md = keep_headings(nobreak(figures(body_md, fd)))
     p1 = part_head(1, '개념 설명', f'필기본 {src_years} 정리' if src_years else '필기본 정리') + f'<div class="notes">{body_md}</div>'
 
     # 2부 기출 (문제지와 같은 모양) + 정답·해설 모음
