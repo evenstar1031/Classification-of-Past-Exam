@@ -4552,6 +4552,10 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
 .kn-sub{margin:0 0 18px}
 .kn-sub>h2{font-size:18px;margin:0 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .kn-row{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line,#e2e6ea);border-radius:12px;background:var(--card,#fff);margin-bottom:6px;width:100%;text-align:left;cursor:pointer}
+.kn-row:has(.kn-open){padding:0}
+.kn-open{display:flex;align-items:center;gap:10px;flex:1;min-width:0;padding:12px 4px 12px 14px;border:0;background:transparent;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.kn-go{flex:none;margin-right:10px;padding:6px 12px;border-radius:999px;border:1px solid #0b5d63;color:#0b5d63;background:transparent;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+.kn-go:hover{background:#0b5d63;color:#fff}
 .kn-row:hover{border-color:#0b5d63}
 .kn-row .kn-id{font-variant-numeric:tabular-nums;font-weight:700;color:#0b5d63;min-width:2.2em}
 .kn-row .kn-nm{flex:1;font-weight:600}
@@ -4575,6 +4579,9 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
 .kn-p mark{background:transparent;outline:2px solid #0b5d63;border-radius:3px}
 @media (prefers-color-scheme:dark){
   .kn-row,.kn-list,.kn-btn,.kn-srch{background:#151d20;border-color:#27353a}
+  .kn-open{background:transparent}
+  .kn-go{color:#6fd3c8;border-color:#2f6f72}
+  .kn-go:hover{background:#0b5d63;color:#fff}
   .kn-p.hl{background:rgba(255,214,0,.10)}
   .kn-em{background:rgba(255,214,0,.30);color:inherit}
 }
@@ -4611,6 +4618,13 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     return out;
   }
 
+  const lecPrompt=(s,l)=>{
+    const ps=l.tx||[];
+    const where=ps.length>1?ps[0].replace(/\/[^/]*$/,'')+' 폴더의 전사본들':(ps[0]||'');
+    return `${s.name||s.subject} ${l.id}강 ${l.name} 전사본 정리해줘. 전사본은 ${where} 에 있어. `
+      +`필기본과 학습자료를 근거로 의학 용어를 교정하고, 교수님이 강조한 부분을 정리해줘.`;
+  };
+
   let view=null;   /* {sub, lec, file} */
   const state={q:'',only:false,hideNone:false,cache:{}};
 
@@ -4625,7 +4639,8 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       ls.forEach(l=>{
         const n=(l.tx||[]).length;
         html+=n
-          ? `<button class="kn-row" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${n}개</span><span aria-hidden="true">›</span></button>`
+          ? `<div class="kn-row"><button class="kn-open" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${n}개</span><span aria-hidden="true">›</span></button>`
+            +`<a class="kn-go" href="${codeURL(lecPrompt(s,l))}" target="_blank" rel="noopener" title="${esc(l.name)} 전사본만 Claude로 정리">정리</a></div>`
           : `<div class="kn-row kn-none"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">없음</span></div>`;
       });
       html+='</section>';
@@ -4633,7 +4648,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     if(!html) html=`<div class="kn-empty"><b>아직 올라온 전사본이 없어요.</b><br>노트북에서 <b>KNUTS 전사.bat</b> 으로 녹음을 전사하고 <b>GitHub 올리기.bat</b> 을 누르면, 날짜·교시로 수업을 찾아 여기에 자동으로 들어옵니다.</div>`;
     panel.innerHTML=html;
     panel.querySelectorAll('[data-hide]').forEach(b=>b.addEventListener('click',()=>{ state.hideNone=!state.hideNone; list(); }));
-    panel.querySelectorAll('button.kn-row').forEach(b=>b.addEventListener('click',()=>{
+    panel.querySelectorAll('button.kn-open').forEach(b=>b.addEventListener('click',()=>{
       const subs=G().subjects||[];
       const s=subs.find(x=>(x.cid||x.name)===b.dataset.s);
       const l=s&&(s.lectures||[]).find(x=>String(x.id)===b.dataset.l);
@@ -4647,7 +4662,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       <button class="kn-btn" id="kn-back">‹ 목록</button>
       <b style="flex:1">${esc(l.id)}. ${esc(l.name)}</b>
       <a class="kn-btn" href="https://github.com/${REPO()}/blob/main/${enc(path)}" target="_blank" rel="noopener">원본</a>
-      <a class="kn-btn pri" href="${codeURL(`${s.name||s.subject} ${l.id}강 ${l.name} 전사본 정리해줘. 전사본은 ${path} 에 있어. 필기본과 학습자료를 근거로 의학 용어를 교정하고, 교수님이 강조한 부분을 정리해줘.`)}" target="_blank" rel="noopener">내 Claude로 정리</a>
+      <a class="kn-btn pri" href="${codeURL(lecPrompt(s,l))}" target="_blank" rel="noopener">이 수업 정리</a>
     </div>
     ${l.tx.length>1?`<div class="kn-bar" id="kn-files">${l.tx.map((p,k)=>`<button class="kn-btn${k===i?' on':''}" data-k="${k}">${esc(p.split('/').pop().replace(/\.srt$/,''))}</button>`).join('')}</div>`:''}
     <div class="kn-bar"><input class="kn-srch" id="kn-q" type="search" placeholder="전사본 검색" value="${esc(state.q)}"><button class="kn-btn${state.only?' on':''}" id="kn-only">강조만</button></div>
