@@ -114,6 +114,9 @@ header.top .today{margin:0; font-size:15px; color:var(--muted); font-variant-num
 .daynav{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px}
 .nav-btn{width:42px; height:42px; flex:none; border-radius:999px; border:1px solid var(--rule); background:var(--sheet); color:var(--ink); font-size:20px; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer}
 .nav-btn:hover{border-color:var(--faint)}
+.nav-group{display:flex; gap:6px; flex:none}
+.nav-btn.wk{font-size:18px; letter-spacing:-2px}
+@media (max-width:420px){.daynav{gap:6px}.nav-group{gap:4px}.nav-btn{width:38px;height:38px}}
 .date-block{text-align:center; flex:1; min-width:0}
 .date-heading{margin:0; font-family:var(--serif); font-size:18px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap}
 .badge-today{font-family:var(--sans); font-size:11.5px; font-weight:600; color:var(--today-ink); background:var(--today-bg); padding:1px 9px; border-radius:999px}
@@ -1382,6 +1385,14 @@ function startMemos(db){
 
 function goPrev(){ const i=DATA.findIndex(d=>d.d===currentISO()); if(i>0){ tt.viewDate=DATA[i-1].d; renderAll(); } }
 function goNext(){ const i=DATA.findIndex(d=>d.d===currentISO()); if(i!==-1 && i<DATA.length-1){ tt.viewDate=DATA[i+1].d; renderAll(); } }
+function goWeek(dir){
+  const cur=currentISO(), t=new Date(cur+'T00:00:00Z'); t.setUTCDate(t.getUTCDate()+7*dir);
+  const target=t.toISOString().slice(0,10);
+  let pick;
+  if(dir>0){ pick=DATA.find(d=>d.d>=target) || DATA[DATA.length-1]; }
+  else { for(let i=DATA.length-1;i>=0;i--){ if(DATA[i].d<=target){ pick=DATA[i]; break; } } pick=pick||DATA[0]; }
+  if(pick && pick.d!==cur){ tt.viewDate=pick.d; renderAll(); }
+}
 function clearSearch(){ tt.query=''; const inp=document.getElementById('tt-search'); if(inp) inp.value=''; }
 function goToday(){ tt.viewDate=DATA[findTodayIdx(todayISO())].d; clearSearch(); renderAll(); }
 function jumpTo(iso){ tt.viewDate=iso; clearSearch(); renderAll(); }
@@ -1470,10 +1481,12 @@ function buildDayHTML(){
   const day=DATA.find(d=>d.d===viewDate)||DATA[0];
   const isToday=day.d===today;
   let html='<div class="daynav">';
-  html+='<button type="button" class="nav-btn" data-prev aria-label="이전 날짜">‹</button>';
+  html+='<div class="nav-group"><button type="button" class="nav-btn wk" data-prevweek aria-label="1주 전" title="1주 전">«</button>';
+  html+='<button type="button" class="nav-btn" data-prev aria-label="이전 날짜" title="하루 전">‹</button></div>';
   html+='<div class="date-block"><p class="date-heading">'+esc(shortDateLabel(day.d)+' ('+day.w+')')+(isToday?'<span class="badge-today">오늘</span>':'')+'</p>';
   html+='<p class="week-sub">'+esc(day.wk)+' · '+courseLinks(day.c)+'</p></div>';
-  html+='<button type="button" class="nav-btn" data-next aria-label="다음 날짜">›</button></div>';
+  html+='<div class="nav-group"><button type="button" class="nav-btn" data-next aria-label="다음 날짜" title="하루 뒤">›</button>';
+  html+='<button type="button" class="nav-btn wk" data-nextweek aria-label="1주 뒤" title="1주 뒤">»</button></div></div>';
   if(day.h) html+='<div class="tt-banner holiday">'+esc(day.h)+'</div>';
   if(day.a) html+='<div class="tt-banner allday">'+esc(day.a)+'</div>';
   const sessions=day.s||[];
@@ -1529,6 +1542,8 @@ function initTimetable(){
   document.getElementById('appBody').addEventListener('click',e=>{
     const g=e.target.closest('[data-goto]'); if(g){ select(g.dataset.goto,true); return; }
     const j=e.target.closest('[data-jump]'); if(j){ jumpTo(j.getAttribute('data-jump')); return; }
+    if(e.target.closest('[data-prevweek]')){ goWeek(-1); return; }
+    if(e.target.closest('[data-nextweek]')){ goWeek(1); return; }
     if(e.target.closest('[data-prev]')){ goPrev(); return; }
     if(e.target.closest('[data-next]')){ goNext(); return; }
   });
