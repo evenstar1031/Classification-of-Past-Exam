@@ -115,31 +115,75 @@ def parse_folder(name):
     return (int(d.group(2)), int(d.group(3))), period
 
 
-def best_window(head, name):
-    """head 안에서 name 과 가장 비슷한 자리의 (닮은 정도, 위치)"""
+def scan(text, name):
+    """text 안에서 name 과 0.8 이상 닮은 자리 → (몇 번, 처음 위치, 가장 닮은 정도)
+
+    전사본에는 오타가 섞이므로 글자 단위로 닮은 정도를 본다.
+    느려지지 않게, 이름 토막이 아예 안 보이면 건너뛴다."""
     L = len(name)
-    if L < 4 or len(head) < L:
-        return 0.0, -1
-    best, pos = 0.0, -1
-    for i in range(len(head) - L + 1):
+    if L < 4 or len(text) < L:
+        return 0, -1, 0.0
+    if not any(name[i:i + 4] in text for i in range(0, L - 3, 2)):
+        return 0, -1, 0.0
+    need = -(-L * 8 // 10)          # 0.8 이상 (짧은 이름이 헐겁게 걸리지 않게 올림)
+    count, first, best = 0, -1, 0.0
+    i = 0
+    while i <= len(text) - L:
         same = 0
-        for a, b in zip(head[i:i + L], name):
+        for a, b in zip(text[i:i + L], name):
             if a == b:
                 same += 1
-        r = same / L
-        if r > best:
-            best, pos = r, i
-            if r == 1.0:
-                break
-    return best, pos
+        if same >= need:
+            count += 1
+            best = max(best, same / L)
+            if first < 0:
+                first = i
+            i += L
+        else:
+            i += 1
+    return count, first, best
 
+
+EARLY = 1500           # 이 글자 수 안에 나오면 "오늘 수업 제목"으로 본다
+
+
+def guess_by_text(text, candidates, by_time=None):
+    """수업 이름이 나오는 자리와 횟수로 수업 고르기 → (수업, 닮은 정도, 믿을 만한지)
+
+    교수님은 거의 언제나 처음에 오늘 수업 이름을 말한다. 그래서 앞쪽에 나온 이름을
+    먼저 믿고, 앞쪽에 아무 이름도 안 나오면(잡담으로 시작한 경우) 가장 자주
+    되풀이되는 이름을 택한다. 지나가는 말로 한 번 나온 다른 수업에 끌려가지 않게."""
+    scored = []
+    for cand in candidates:
+        count, first, ratio = 0, -1, 0.0
+        for form in name_forms(cand[2]):
+            n, pos, r = scan(text, form)
+            if n:
+                count = max(count, n)
+                ratio = max(ratio, r)
+                first = pos if first < 0 else min(first, pos)
+        if count:
+            near = 1 if (by_time and by_time[1] == cand[1] and by_time[0] == cand[0]) else 0
+            scored.append((count, first, ratio, near, cand))
+    if not scored:
+        hit = guess_by_prof(text, candidates)
+        return (hit, 0.9, True) if hit else (None, 0.0, False)
+
+    early = [x for x in scored if x[1] < EARLY]
+    if early:                                   # 앞머리에 이름을 말한 쪽
+        early.sort(key=lambda x: (x[1] // 300, -x[3], x[1]))
+        pick, sure = early[0], True
+    else:                                       # 잡담으로 시작했으면 가장 자주 나온 쪽
+        scored.sort(key=lambda x: (-x[0], -x[3], x[1]))
+        pick, sure = scored[0], scored[0][0] >= 2
+    return pick[4], pick[2], sure
 
 # 새 수업이 시작될 때 교수님이 흔히 하는 말
 CUE_START = re.compile(
     r'반갑습니다|안녕하십니까|안녕하세요'
-    r'|교수(입니다|이고|예요|이에요|입니다만)'
+    r'|교수(입니다|이고|예요|이에요)'
     r'|이번 ?시간(에는|은|부터)'
-    r'|오늘 ?(은 )?(제가|저는)? ?.{0,10}(강의|수업)(를|을)? ?(하겠|시작)'
+    r'|오늘 ?수업(에|을|은)? ?(들어가|시작)'
     r'|(에 ?대해서|에 ?대해|를|을) ?(이야기|말씀|강의|공부)(하겠습니다|해 ?보겠습니다)'
 )
 # 앞 수업이 끝날 때 흔히 하는 말
@@ -149,8 +193,9 @@ CUE_END = re.compile(
     r'|질문 ?(있으면|있으시면|없으시면)'
     r'|(끝내|마치)도록 ?하겠습니다'
 )
-MIN_SEC = 300          # 한 수업으로 볼 최소 길이 (5분)
+MIN_SEC = 600          # 한 수업으로 볼 최소 길이 (10분)
 GAP_SEC = 90           # 이만큼 조용하면 쉬는 시간으로 보고 수업이 바뀌는 자리 후보로 삼는다
+TEXT_MAX = 60000       # 한 구간에서 읽을 글자 수 상한
 
 
 def srt_blocks(path):
@@ -197,23 +242,23 @@ def merge_chunks(srts):
         if not blocks:
             continue
         for b in blocks:
-            a, z = b['time'].split('-->')[0], b['time'].split('-->')[-1]
-            b['time'] = shift(a, off) + ' --> ' + shift(z, off)
+            half = b['time'].split('-->')
+            b['time'] = shift(half[0], off) + ' --> ' + shift(half[-1], off)
             out.append(b)
         off = end_sec(out[-1])
     return out
 
 
-def head_of(blocks, start, limit=4000):
-    """blocks[start] 부터의 첫머리 글자"""
+def text_of(blocks, start, stop=None):
+    """구간의 글자만 이어 붙이기"""
     got, n = [], 0
-    for b in blocks[start:]:
+    for b in blocks[start:stop if stop is not None else len(blocks)]:
         for t in b['text']:
             got.append(t)
             n += len(t)
-        if n > limit:
+        if n > TEXT_MAX:
             break
-    return norm(' '.join(got))[:limit]
+    return norm(' '.join(got))[:TEXT_MAX]
 
 
 def write_blocks(blocks, path):
@@ -224,28 +269,54 @@ def write_blocks(blocks, path):
 
 
 def split_points(blocks, cands, by_time):
-    """수업이 바뀌는 자리 → 각 수업이 시작하는 블록 번호 [0, b1, …]"""
+    """수업이 바뀌는 자리 → 각 수업이 시작하는 블록 번호 [0, b1, …]
+
+    쉬는 시간(긴 침묵)과 인사말이 나오는 자리를 모두 후보로 잡아 잘게 나눈 뒤,
+    토막마다 어느 수업인지 가려서 **같은 수업끼리 다시 붙인다.**
+    그래서 한 수업 안에서 잠깐 쉬거나 다른 수업 이름을 한 번 말해도 갈라지지 않는다."""
     if not blocks:
         return [0]
-    last = end_sec(blocks[-1])
-    bounds = [0]
+    cuts = [0]
     for i in range(1, len(blocks)):
-        if start_sec(blocks[i]) - start_sec(blocks[bounds[-1]]) < MIN_SEC:
-            continue
-        if last - start_sec(blocks[i]) < MIN_SEC:
-            break
-        here = ' '.join(blocks[i]['text'])
-        before = ' '.join(blocks[i - 1]['text'])
         quiet = start_sec(blocks[i]) - end_sec(blocks[i - 1]) >= GAP_SEC
-        if not (quiet or CUE_START.search(here) or CUE_END.search(before)):
-            continue
-        a, _ = guess_by_text(head_of(blocks, bounds[-1]), cands,
-                             by_time if len(bounds) == 1 else None)
-        b, _ = guess_by_text(head_of(blocks, i), cands, None)
-        if a and b and (a[0], a[1]) != (b[0], b[1]):
-            bounds.append(i)
-    return bounds
+        if quiet or CUE_START.search(' '.join(blocks[i]['text'])) \
+                or CUE_END.search(' '.join(blocks[i - 1]['text'])):
+            cuts.append(i)
 
+    segs = []
+    for n, a in enumerate(cuts):
+        b = cuts[n + 1] if n + 1 < len(cuts) else len(blocks)
+        hit, _r, sure = guess_by_text(text_of(blocks, a, b), cands, by_time if n == 0 else None)
+        segs.append([a, hit, sure])
+
+    # 이름이 한 번 스치듯 나왔을 뿐인 토막(잡담·복습 중에 다른 수업 이름이 나온 경우)은
+    # 믿을 만한 가장 가까운 토막의 수업에 붙인다
+    sure = [i for i, g in enumerate(segs) if g[1] and g[2]]
+    if sure:
+        for i, g in enumerate(segs):
+            if not (g[1] and g[2]):
+                g[1] = segs[min(sure, key=lambda j: abs(j - i))][1]
+
+    out, prev = [], None
+    for a, hit, _c in segs:
+        if hit is None:                      # 못 가린 토막은 앞 수업에 붙인다
+            if not out:
+                out.append(a)
+            continue
+        key = (hit[0], hit[1])
+        if key == prev:
+            continue
+        if out and prev is None:             # 맨 앞의 못 가린 토막이 이 수업의 시작이었다
+            prev = key
+            continue
+        out.append(a)
+        prev = key
+
+    kept = []                                # 너무 짧은 토막은 따로 두지 않는다
+    for a in (out or [0]):
+        if not kept or start_sec(blocks[a]) - start_sec(blocks[kept[-1]]) >= MIN_SEC:
+            kept.append(a)
+    return kept or [0]
 
 def day_subjects(tt, lec_table, day):
     """그날 시간표에 나오는 과목들의 키"""
@@ -270,27 +341,6 @@ def name_forms(name):
     return forms
 
 
-def guess_by_text(head, candidates, by_time=None):
-    """첫머리에 나오는 수업 이름으로 수업 고르기 → (수업, 닮은 정도)
-
-    같은 점수면 먼저 나온 쪽을, 그래도 같으면 시간표가 가리키는 쪽을 택한다."""
-    scored = []
-    for cand in candidates:
-        best = (0.0, -1)
-        for form in name_forms(cand[2]):
-            ratio, pos = best_window(head, form)
-            if ratio > best[0]:
-                best = (ratio, pos)
-        ratio, pos = best
-        if ratio < 0.8:
-            continue
-        bonus = 0.1 if (by_time and by_time[1] == cand[1] and by_time[0] == cand[0]) else 0.0
-        scored.append((ratio + bonus - pos * 1e-6, ratio, cand))
-    if not scored:
-        hit = guess_by_prof(head, candidates)
-        return (hit, 0.9) if hit else (None, 0.0)
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return scored[0][2], scored[0][1]
 
 
 def find_lecture(tt, lec_table, day, period):
@@ -364,8 +414,8 @@ def main(dry=False):
         plan, bad = [], None
         for n, start in enumerate(bounds):
             stop = bounds[n + 1] if n + 1 < len(bounds) else len(blocks)
-            by_text, _r = guess_by_text(head_of(blocks, start), cands,
-                                        by_time if n == 0 else None)
+            by_text, _r, _c = guess_by_text(text_of(blocks, start, stop), cands,
+                                            by_time if n == 0 else None)
             note = ''
             if by_text:
                 hit = by_text
