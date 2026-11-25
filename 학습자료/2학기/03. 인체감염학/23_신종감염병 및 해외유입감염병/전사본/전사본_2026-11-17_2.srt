@@ -3021,4 +3021,3 @@ Infectious Disease Hospital Information Network
 756
 00:43:51,560 --> 00:43:53,560
 에볼라 환자를 진단할 때
-
