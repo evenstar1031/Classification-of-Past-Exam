@@ -11,6 +11,11 @@
 이름에 교시를 쓰지 않는 이유: 실제 수업 순서가 시간표와 달라지는 일이 잦아
 교시 번호는 틀리기 쉽다. 어느 수업인지는 내용으로 정하고, 이름에는 날짜만 남긴다.
 
+녹음 하나에 두 수업이 이어 붙어 있는 일도 있다(쉬지 않고 다음 교시를 녹음한 경우).
+그래서 1시간 조각들을 한 줄기로 이어 붙인 뒤, "반갑습니다 / 저는 ○○ 교수입니다 /
+이번 시간에는 / 이상으로 마치겠습니다" 같은 말이 나오는 자리를 후보로 잡고,
+그 앞뒤가 서로 **다른 수업**으로 읽히면 그 자리에서 잘라 각각의 수업에 넣는다.
+
     python3 _자동관리/tools/transcript_file.py          # 옮기기
     python3 _자동관리/tools/transcript_file.py --dry    # 어디로 갈지만 보기
 """
@@ -65,6 +70,37 @@ def lectures():
     return table
 
 
+def profs():
+    """{(과목키, 수업 id): [교수 이름]} — 최근 연도부터"""
+    out = {}
+    for f in sorted(INFO.glob('*.json')):
+        data = json.loads(f.read_text(encoding='utf-8'))
+        for lec in data.get('lectures', []):
+            names = []
+            for _year, lst in sorted((lec.get('profs') or {}).items(), reverse=True):
+                for nm in (lst or []):
+                    if nm and nm not in names:
+                        names.append(nm)
+            out[(f.stem, lec.get('id'))] = names
+    return out
+
+
+PROF = {}
+
+
+def guess_by_prof(head, cands):
+    """"저는 ○○ 교수입니다" 처럼 교수님이 자기 이름을 말한 경우로 수업 고르기
+
+    한 분이 여러 수업을 맡으면 가릴 수 없으니, 수업이 하나로 좁혀질 때만 쓴다."""
+    hits = {}
+    for cand in cands:
+        for nm in PROF.get((cand[0], cand[1]), []):
+            if re.search(re.escape(norm(nm)) + r'.{0,3}교수', head):
+                hits[(cand[0], cand[1])] = cand
+                break
+    return list(hits.values())[0] if len(hits) == 1 else None
+
+
 def parse_folder(name):
     """'1117_01.1교시' → ((11, 17), 1).  못 읽으면 None"""
     n = unicodedata.normalize('NFC', name)
@@ -76,19 +112,6 @@ def parse_folder(name):
     if not d:
         return None
     return (int(d.group(2)), int(d.group(3))), period
-
-
-def head_text(srt, limit=4000):
-    """전사본 첫머리 글자 (자막 번호·시간 줄 빼고)"""
-    out = []
-    for line in srt.read_text(encoding='utf-8', errors='replace').split('\n'):
-        t = line.strip()
-        if not t or t.isdigit() or '-->' in t:
-            continue
-        out.append(t)
-        if sum(len(x) for x in out) > limit:
-            break
-    return norm(' '.join(out))[:limit]
 
 
 def best_window(head, name):
@@ -108,6 +131,117 @@ def best_window(head, name):
             if r == 1.0:
                 break
     return best, pos
+
+
+# 새 수업이 시작될 때 교수님이 흔히 하는 말
+CUE_START = re.compile(
+    r'반갑습니다|안녕하십니까|안녕하세요'
+    r'|교수(입니다|이고|예요|이에요|입니다만)'
+    r'|이번 ?시간(에는|은|부터)'
+    r'|오늘 ?(은 )?(제가|저는)? ?.{0,10}(강의|수업)(를|을)? ?(하겠|시작)'
+    r'|(에 ?대해서|에 ?대해|를|을) ?(이야기|말씀|강의|공부)(하겠습니다|해 ?보겠습니다)'
+)
+# 앞 수업이 끝날 때 흔히 하는 말
+CUE_END = re.compile(
+    r'(이상으로|이만|여기서)[^.]{0,12}(마치|마칠|끝내|끝나)'
+    r'|수고(하셨습니다|했습니다)'
+    r'|질문 ?(있으면|있으시면|없으시면)'
+    r'|(끝내|마치)도록 ?하겠습니다'
+)
+MIN_SEC = 300          # 한 수업으로 볼 최소 길이 (5분)
+
+
+def srt_blocks(path):
+    """srt 파일 → [{'time': 시간줄, 'text': [글줄]}]"""
+    blocks, cur = [], None
+    for line in path.read_text(encoding='utf-8', errors='replace').split('\n'):
+        t = line.strip()
+        if '-->' in t:
+            cur = {'time': t, 'text': []}
+            blocks.append(cur)
+        elif t and not t.isdigit() and cur is not None:
+            cur['text'].append(t)
+    return [b for b in blocks if b['text']]
+
+
+def t_sec(stamp):
+    m = re.match(r'(\d+):(\d\d):(\d\d)', stamp.strip())
+    return int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3]) if m else 0
+
+
+def start_sec(block):
+    return t_sec(block['time'].split('-->')[0])
+
+
+def end_sec(block):
+    half = block['time'].split('-->')
+    return t_sec(half[1]) if len(half) > 1 else start_sec(block)
+
+
+def shift(stamp, off):
+    """00:12:34,560 → off 초 만큼 밀기"""
+    m = re.match(r'(\d+):(\d\d):(\d\d)([,.]\d+)?', stamp.strip())
+    if not m:
+        return stamp.strip()
+    sec = int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3]) + off
+    return '%02d:%02d:%02d%s' % (sec // 3600, sec // 60 % 60, sec % 60, m[4] or ',000')
+
+
+def merge_chunks(srts):
+    """1시간 조각들(_part00, _part01 …)을 한 줄기로 이어 붙인다"""
+    out, off = [], 0
+    for path in srts:
+        blocks = srt_blocks(path)
+        if not blocks:
+            continue
+        for b in blocks:
+            a, z = b['time'].split('-->')[0], b['time'].split('-->')[-1]
+            b['time'] = shift(a, off) + ' --> ' + shift(z, off)
+            out.append(b)
+        off = end_sec(out[-1])
+    return out
+
+
+def head_of(blocks, start, limit=4000):
+    """blocks[start] 부터의 첫머리 글자"""
+    got, n = [], 0
+    for b in blocks[start:]:
+        for t in b['text']:
+            got.append(t)
+            n += len(t)
+        if n > limit:
+            break
+    return norm(' '.join(got))[:limit]
+
+
+def write_blocks(blocks, path):
+    out = []
+    for i, b in enumerate(blocks, 1):
+        out.append('%d\n%s\n%s' % (i, b['time'], '\n'.join(b['text'])))
+    path.write_text('\n\n'.join(out) + '\n', encoding='utf-8')
+
+
+def split_points(blocks, cands, by_time):
+    """수업이 바뀌는 자리 → 각 수업이 시작하는 블록 번호 [0, b1, …]"""
+    if not blocks:
+        return [0]
+    last = end_sec(blocks[-1])
+    bounds = [0]
+    for i in range(1, len(blocks)):
+        if start_sec(blocks[i]) - start_sec(blocks[bounds[-1]]) < MIN_SEC:
+            continue
+        if last - start_sec(blocks[i]) < MIN_SEC:
+            break
+        here = ' '.join(blocks[i]['text'])
+        before = ' '.join(blocks[i - 1]['text'])
+        if not (CUE_START.search(here) or CUE_END.search(before)):
+            continue
+        a, _ = guess_by_text(head_of(blocks, bounds[-1]), cands,
+                             by_time if len(bounds) == 1 else None)
+        b, _ = guess_by_text(head_of(blocks, i), cands, None)
+        if a and b and (a[0], a[1]) != (b[0], b[1]):
+            bounds.append(i)
+    return bounds
 
 
 def day_subjects(tt, lec_table, day):
@@ -150,7 +284,8 @@ def guess_by_text(head, candidates, by_time=None):
         bonus = 0.1 if (by_time and by_time[1] == cand[1] and by_time[0] == cand[0]) else 0.0
         scored.append((ratio + bonus - pos * 1e-6, ratio, cand))
     if not scored:
-        return None, 0.0
+        hit = guess_by_prof(head, candidates)
+        return (hit, 0.9) if hit else (None, 0.0)
     scored.sort(key=lambda x: x[0], reverse=True)
     return scored[0][2], scored[0][1]
 
@@ -189,6 +324,7 @@ def main(dry=False):
         return 0
     tt = timetable()
     lec_table = lectures()
+    PROF.update(profs())
     by_subject = {}
     for key, lec_id, name in lec_table.values():
         by_subject.setdefault(key, []).append((key, lec_id, name))
@@ -210,37 +346,51 @@ def main(dry=False):
         cands = [c for k in keys for c in by_subject.get(k, [])]
         if not cands:
             cands = [c for lst in by_subject.values() for c in lst]
-        head = head_text(srts[0])
-        by_text, ratio = guess_by_text(head, cands, by_time)
-
-        hit, note = None, ''
-        if by_text:
-            hit = by_text
-            if by_time and by_time[1] != by_text[1]:
-                tname = by_time[2]
-                note = (f'  (폴더 이름의 {period}교시는 시간표상 "{tname}" 이지만, '
-                        f'내용이 "{by_text[2]}" 이라 내용을 따름)')
-        elif by_time:
-            hit = by_time
-            note = '  (첫머리에서 수업 이름을 못 찾아 시간표대로 넣음 — 확인 필요)'
-        else:
-            left.append((folder.name, why or '시간표·내용 둘 다로 수업을 못 찾음'))
+        blocks = merge_chunks(srts)
+        if not blocks:
+            left.append((folder.name, '전사본이 비어 있음'))
             continue
+        bounds = split_points(blocks, cands, by_time)
         if year is None:
             entry = tt.get(day)
             year = entry[0] if entry else 0
-
-        subj_key, lec_id, lec_name = hit
-        dest = ROOT / '학습자료' / S.folder(subj_key) / f'{lec_id}_{lec_name}' / '전사본'
         stem = f'전사본_{year}-{day[0]:02d}-{day[1]:02d}'
-        for src in srts:
+
+        plan, bad = [], None
+        for n, start in enumerate(bounds):
+            stop = bounds[n + 1] if n + 1 < len(bounds) else len(blocks)
+            by_text, _r = guess_by_text(head_of(blocks, start), cands,
+                                        by_time if n == 0 else None)
+            note = ''
+            if by_text:
+                hit = by_text
+                if n == 0 and by_time and by_time[1] != by_text[1]:
+                    note = (f'  (폴더 이름의 {period}교시는 시간표상 "{by_time[2]}" 이지만, '
+                            f'내용이 "{by_text[2]}" 이라 내용을 따름)')
+            elif n == 0 and by_time:
+                hit = by_time
+                note = '  (첫머리에서 수업 이름을 못 찾아 시간표대로 넣음 — 확인 필요)'
+            else:
+                bad = '이어 붙은 뒷부분이 어느 수업인지 못 찾음'
+                break
+            if len(bounds) > 1:
+                note += f'  (한 녹음 안의 {n + 1}번째 수업, {start_sec(blocks[start]) // 60}분부터)'
+            plan.append((hit, start, stop, note))
+        if bad:
+            left.append((folder.name, bad))
+            continue
+
+        for hit, start, stop, note in plan:
+            subj_key, lec_id, lec_name = hit
+            dest = ROOT / '학습자료' / S.folder(subj_key) / f'{lec_id}_{lec_name}' / '전사본'
             out = free_name(dest, stem, used)
             moved.append((folder.name, out.relative_to(ROOT), note))
-            note = ''
             if not dry:
                 dest.mkdir(parents=True, exist_ok=True)
-                shutil.move(str(src), str(out))
+                write_blocks(blocks[start:stop], out)
         if not dry:
+            for src in srts:
+                src.unlink()
             if all(p.name == '_원본.txt' for p in folder.iterdir()):
                 shutil.rmtree(folder)
 
