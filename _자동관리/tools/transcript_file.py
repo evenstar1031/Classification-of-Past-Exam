@@ -102,15 +102,16 @@ def guess_by_prof(head, cands):
 
 
 def parse_folder(name):
-    """'1117_01.1교시' → ((11, 17), 1).  못 읽으면 None"""
+    """'1117_01.1교시' → ((11, 17), 1),  '1117' → ((11, 17), None).  못 읽으면 None
+
+    교시는 없어도 된다. 하루를 통째로 녹음한 경우 날짜만 쓰면 되고,
+    어느 수업인지는 내용으로 가린다."""
     n = unicodedata.normalize('NFC', name)
-    m = re.search(r'(\d{1,2})\s*(?:교시|차시)', n)
-    if not m:
-        return None
-    period = int(m.group(1))
     d = re.match(r'\D*(?:(20\d{2})[-_.]?)?(\d{1,2})[-_.]?(\d{2})(?!\d)', n)
     if not d:
         return None
+    m = re.search(r'(\d{1,2})\s*(?:교시|차시)', n)
+    period = int(m.group(1)) if m else None
     return (int(d.group(2)), int(d.group(3))), period
 
 
@@ -149,6 +150,7 @@ CUE_END = re.compile(
     r'|(끝내|마치)도록 ?하겠습니다'
 )
 MIN_SEC = 300          # 한 수업으로 볼 최소 길이 (5분)
+GAP_SEC = 90           # 이만큼 조용하면 쉬는 시간으로 보고 수업이 바뀌는 자리 후보로 삼는다
 
 
 def srt_blocks(path):
@@ -234,7 +236,8 @@ def split_points(blocks, cands, by_time):
             break
         here = ' '.join(blocks[i]['text'])
         before = ' '.join(blocks[i - 1]['text'])
-        if not (CUE_START.search(here) or CUE_END.search(before)):
+        quiet = start_sec(blocks[i]) - end_sec(blocks[i - 1]) >= GAP_SEC
+        if not (quiet or CUE_START.search(here) or CUE_END.search(before)):
             continue
         a, _ = guess_by_text(head_of(blocks, bounds[-1]), cands,
                              by_time if len(bounds) == 1 else None)
@@ -295,6 +298,8 @@ def find_lecture(tt, lec_table, day, period):
     if not entry:
         return None, None, '시간표에 그 날짜가 없음'
     year, slots = entry
+    if period is None:
+        return None, year, '폴더 이름에 교시가 없어 내용으로만 가림'
     for a, b, title, _prof in slots:
         if a <= period <= b:
             hit = lec_table.get(norm(title))
