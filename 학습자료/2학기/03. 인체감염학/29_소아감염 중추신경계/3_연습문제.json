@@ -1,0 +1,197 @@
+[
+ {
+  "stem": "생후 6주 된 영아가 하루 전부터 열이 나고 잘 먹지 않으며 처진다고 왔다. 대천문이 불룩하다. 뇌척수액에서 백혈구 2,100/mm<sup>3</sup>(다핵구 90%), 당 30 mg/dL, 단백 220 mg/dL이다. 원인균으로 가장 거리가 먼 것은?",
+  "choices": [
+   "Escherichia coli",
+   "Streptococcus agalactiae",
+   "Listeria monocytogenes",
+   "Haemophilus influenzae type b",
+   "Enterovirus"
+  ],
+  "answer": [
+   5
+  ],
+  "explanation": "CSF가 백혈구 수천, 다핵구 우세, 당 감소, 단백 증가로 세균성 수막염 소견이다. 생후 3개월 이전에는 그람음성 막대균(특히 E. coli), GBS(S. agalactiae), L. monocytogenes가 주 원인이고 Hib도 세균성 원인균이다. 엔테로바이러스는 림프구 우세·당 정상인 바이러스성 수막염을 일으킨다.",
+  "point": "나이에 따른 원인균"
+ },
+ {
+  "stem": "생후 2개월 영아의 세균성 수막염 경험적 치료에서 ampicillin을 포함하는 주된 이유는?",
+  "choices": [
+   "Listeria monocytogenes를 덮기 위해",
+   "폐렴사슬알균의 penicillin 내성 때문",
+   "Hib의 β-lactamase 생성 때문",
+   "수막알균 보균 제거를 위해",
+   "BBB 통과가 cefotaxime보다 좋아서"
+  ],
+  "answer": [
+   1
+  ],
+  "explanation": "3개월 미만은 Listeria가 원인일 수 있고, Listeria는 cephalosporin에 듣지 않아 ampicillin으로 덮는다(성인에서는 50세 이상에서 고려). 그래서 3개월 미만은 ampicillin + aminoglycoside 또는 ampicillin + 3세대 cephalosporin을 쓴다.",
+  "point": "치료 — 항생제"
+ },
+ {
+  "stem": "4세 소아가 하루 전부터 고열·구토가 있고 계속 자려고 한다. 대천문은 닫혀 있고 목이 뻣뻣하다. CSF 백혈구 1,600/mm<sup>3</sup>(다핵구 88%), 당 32 mg/dL(혈당 110), 단백 160 mg/dL이다. 적절한 처치는?",
+  "choices": [
+   "acyclovir",
+   "ampicillin, gentamicin",
+   "cefotaxime, vancomycin, dexamethasone",
+   "보존적 치료",
+   "isoniazid, rifampin, pyrazinamide"
+  ],
+  "answer": [
+   3
+  ],
+  "explanation": "3개월~5세 세균성 수막염이다. 폐렴사슬알균 내성을 고려해 3세대 cephalosporin에 vancomycin을 더하고, 6주 이상이면 dexamethasone을 항생제 전 또는 동시에 투여해 청력 손상을 줄인다. ampicillin + gentamicin은 신생아 조합이다.",
+  "point": "치료 — 항생제와 dexamethasone"
+ },
+ {
+  "stem": "세균성 수막염에서 dexamethasone에 대한 설명으로 옳은 것은?",
+  "choices": [
+   "항생제를 다 쓴 뒤 3일째 시작한다.",
+   "TNF-α, IL-1β를 억제해 청신경 손상을 줄인다.",
+   "생후 2주 신생아에게 가장 효과가 크다.",
+   "바이러스성 수막염의 표준 치료다.",
+   "세균을 직접 죽인다."
+  ],
+  "answer": [
+   2
+  ],
+  "explanation": "dexamethasone은 사이토카인(TNF-α, IL-1β)을 억제해 염증을 줄이고 청력 손상 등 신경학적 결손을 줄인다. 6주 이상 소아에서 항생제 1~2시간 전 또는 동시에(실전에서는 대개 동시에) 준다.",
+  "point": "치료 — Dexamethasone"
+ },
+ {
+  "stem": "의식이 처지고 유두부종이 있으며 한쪽 팔다리 힘이 약한 7세 소아에서 세균성 수막염이 의심된다. 다음 처치로 가장 적절한 것은?",
+  "choices": [
+   "즉시 요추천자를 하고 결과가 나오면 항생제를 시작한다.",
+   "만니톨만 주고 24시간 관찰한다.",
+   "항생제 없이 뇌 영상과 요추천자를 모두 마친 뒤 결정한다.",
+   "뇌 영상을 먼저 하고, 영상 때문에 항생제 투여를 미루지 않는다.",
+   "요추천자는 금기이므로 치료도 하지 않는다."
+  ],
+  "answer": [
+   4
+  ],
+  "explanation": "혼수, 국소 신경 징후, 두개내압 상승이 의심되면 요추천자 전에 뇌 영상을 먼저 한다(뇌탈출로 인한 table death 위험). 그러나 교수님은 영상을 한다고 항생제 투여를 미루지 말라고 했다.",
+  "point": "진단 — 확진은 CSF"
+ },
+ {
+  "stem": "초여름에 4세 소아가 당일 아침부터 고열·구토로 왔다. 약간 처졌지만 의사소통이 잘 되고 국소 신경 이상은 없다. CSF 백혈구 280/mm<sup>3</sup>(림프구 90%), 당 75 mg/dL, 단백 70 mg/dL이다. 가장 흔한 원인과 치료가 바르게 짝지어진 것은?",
+  "choices": [
+   "HSV-1 — acyclovir",
+   "장바이러스 — 보존적 치료",
+   "결핵균 — 4제 항결핵제",
+   "폐렴사슬알균 — cefotaxime + vancomycin",
+   "Cryptococcus — amphotericin B"
+  ],
+  "answer": [
+   2
+  ],
+  "explanation": "림프구 우세, 수백 개, 당 정상은 바이러스성 수막염이고 원인의 80% 이상이 장바이러스(콕사키, 에코)이며 여름~가을에 많다. 치료는 대개 지지요법이다. 의식 변화나 경련이 없다는 점이 HSV 뇌염과 다르다.",
+  "point": "바이러스성 수막염"
+ },
+ {
+  "stem": "8세 소아가 3일 전부터 열이 나고 오늘 전신 경련 후 아픈 자극에도 깨지 않는다. CSF 백혈구 150/mm<sup>3</sup>(림프구 85%), 적혈구 300/mm<sup>3</sup>(비외상성 천자), 당 68 mg/dL, 단백 90 mg/dL이다. 진단에 가장 도움이 되는 소견과 치료가 바르게 짝지어진 것은?",
+  "choices": [
+   "뇌저부 조영 증강 — isoniazid",
+   "CSF 그람음성 쌍알균 — ceftriaxone",
+   "India ink 양성 — amphotericin B",
+   "고리 모양 조영 증강 — metronidazole",
+   "MRI 측두엽 T2 고신호와 EEG PLED — acyclovir"
+  ],
+  "answer": [
+   5
+  ],
+  "explanation": "의식 변화·경련 + 림프구 우세 + 당 정상 + CSF 적혈구는 단순포진 뇌염을 시사한다. MRI에서 측두엽(또는 깊은 전두엽) T2 고신호, EEG에서 PLED가 보이고 CSF PCR로 확진한다. 치료는 acyclovir 10 mg/kg 8시간마다 14~21일이다.",
+  "point": "단순포진 뇌염"
+ },
+ {
+  "stem": "단순포진 뇌염에 대한 설명으로 옳지 않은 것은?",
+  "choices": [
+   "신생아기의 주 원인은 HSV-2다.",
+   "가장 핵심적인 변화는 의식 변화다.",
+   "CSF 당은 대개 정상이다.",
+   "요즘은 진단을 위해 바이러스 배양을 주로 한다.",
+   "사망률이 약 30%로 초반에 놓치면 안 된다."
+  ],
+  "answer": [
+   4
+  ],
+  "explanation": "PCR(multiplex PCR 포함) 검출률이 높아져 바이러스 배양은 잘 하지 않는다. HSV-2는 신생아기, HSV-1은 영유아·소아·청소년의 원인이며, 사망률이 약 30%이고 후유증이 많아 조기 치료가 중요하다.",
+  "point": "단순포진 뇌염"
+ },
+ {
+  "stem": "조부모와 사는 2세 소아가 3주 전부터 미열, 보챔, 구토가 있고 점점 처진다. CSF 백혈구 220/mm<sup>3</sup>(림프구 80%), 당 30 mg/dL, 단백 260 mg/dL이고 MRI에서 뇌저부 수막 조영 증강이 보인다. 이에 대한 설명으로 옳은 것은?",
+  "choices": [
+   "CSF ADA 증가가 진단에 도움이 된다.",
+   "투베르쿨린 검사가 음성이면 배제할 수 있다.",
+   "급성 발병이 특징이다.",
+   "치료는 acyclovir 14일이다.",
+   "치료 기간은 2개월이면 충분하다."
+  ],
+  "answer": [
+   1
+  ],
+  "explanation": "수 주에 걸친 서서히 발병, 결핵 노출 가능성, 림프구 우세·당 감소·단백 크게 증가, 뇌저부 조영 증강은 결핵성 수막염이다. CSF ADA(>4 U/L), AFB 염색, CB-NAAT가 도움이 되고 1/3에서는 투베르쿨린이 음성이다. 치료는 INH·RIF·PZA(+소아 ethionamide) 2개월 후 INH·RIF 10개월, 총 12개월이다.",
+  "point": "결핵성 수막염"
+ },
+ {
+  "stem": "청색증형 선천심질환이 있는 6세 소아가 일주일 전부터 미열과 두통이 있다가 오늘 경련을 했다. MRI에서 고리 모양 조영 증강 병변이 있다. 치료로 가장 적절한 것은?",
+  "choices": [
+   "acyclovir",
+   "ampicillin, gentamicin",
+   "vancomycin, cefotaxime, metronidazole",
+   "amphotericin B, flucytosine",
+   "보존적 치료"
+  ],
+  "answer": [
+   3
+  ],
+  "explanation": "청색증형 선천심질환, 부비동염, 중이염 등이 선행 요인인 뇌농양이다. 원인이 호기·혐기성 연쇄알균, 그람음성 혐기균 등 혼합균이라 vancomycin + 3세대 cephalosporin + metronidazole을 6~8주 쓰고 필요하면 수술한다.",
+  "point": "뇌농양"
+ },
+ {
+  "stem": "기숙사에 사는 16세 학생이 고열과 두통, 하지의 자반으로 입원했고 CSF 그람염색에서 그람음성 쌍알균이 보였다. 같은 방 학생들에 대한 조치로 옳은 것은?",
+  "choices": [
+   "증상이 생기면 그때 항생제를 준다.",
+   "2세 이하 미접종 소아가 있을 때만 rifampin을 준다.",
+   "dexamethasone을 예방적으로 준다.",
+   "나이·면역 상태와 관계없이 밀접 접촉자 모두에게 rifampin 2일을 준다.",
+   "acyclovir를 예방적으로 준다."
+  ],
+  "answer": [
+   4
+  ],
+  "explanation": "수막알균은 전염성이 높아 나이·면역 상태와 관계없이 모든 밀접 접촉자에게 rifampin(12시간마다 2일), ceftriaxone 1회 근주, 또는 ciprofloxacin 1회로 예방한다. 2세 이하 미접종 소아가 있을 때 rifampin 4일을 주는 것은 Hib의 기준이다.",
+  "point": "예방"
+ },
+ {
+  "stem": "세균성 수막염의 합병증으로 거리가 먼 것은?",
+  "choices": [
+   "청력 손상",
+   "SIADH로 인한 저나트륨혈증",
+   "경막하 삼출",
+   "정맥동 혈전에 의한 정맥 경색",
+   "고나트륨혈증성 요붕증으로 인한 다뇨가 가장 흔한 합병증"
+  ],
+  "answer": [
+   5
+  ],
+  "explanation": "세균성 수막염의 신경학적 합병증은 경련, 두개내압 상승, 경막하 삼출·농흉, 정맥 경색, 뇌신경병증(특히 청력 손상), 수두증, 뇌농양이고, 전신 합병증은 SIADH(저나트륨혈증), DIC, 쇼크, 지속 발열이다. 요붕증은 흔한 합병증으로 배우지 않았다.",
+  "point": "합병증"
+ },
+ {
+  "stem": "일본뇌염에 대한 설명으로 옳은 것은?",
+  "choices": [
+   "진드기가 매개한다.",
+   "돼지가 증폭 숙주다.",
+   "대부분 증상이 심하게 나타난다.",
+   "acyclovir가 표준 치료다.",
+   "예방접종 효과가 낮다."
+  ],
+  "answer": [
+   2
+  ],
+  "explanation": "일본뇌염은 Flavivirus로 작은빨간집모기(Culex tritaeniorhynchus)가 매개하고 돼지가 증폭 숙주다. 대부분 무증상이며 8~9월, 5~9세에 호발한다. 치료는 보존적이고 예방접종 효과가 높아 국가예방접종에 들어 있다.",
+  "point": "일본뇌염"
+ }
+]

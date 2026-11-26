@@ -1,0 +1,227 @@
+[
+ {
+  "stem": "24세 남자가 3일 전부터 요도에서 누런 고름이 나오고 소변볼 때 아프다고 왔다. 요도 분비물 그람염색에서 호중구 안에 그람음성 쌍알균이 보인다. 치료로 가장 적절한 것은?",
+  "choices": [
+   "ciprofloxacin 경구 1회",
+   "cefixime 경구 1회",
+   "ceftriaxone 500 mg 근주 1회 + doxycycline 100 mg 하루 2회 7일",
+   "metronidazole 7일",
+   "benzathine penicillin G 240만 단위 근주 1회"
+  ],
+  "answer": [
+   3
+  ],
+  "explanation": "세포 내 그람음성 쌍알균은 임균이다. 임균은 ceftriaxone으로, 함께 다니는 클라미디아는 doxycycline으로 덮는다. 경구 cephalosporin과 fluoroquinolone은 내성 때문에 임균 치료에 권장하지 않는다.",
+  "point": "남성 요도염 — 임균인가, 아닌가"
+ },
+ {
+  "stem": "22세 남자가 요도 분비물로 왔다. 그람염색에서 호중구는 많지만 쌍알균은 보이지 않는다. 다음으로 생각할 원인과 치료가 바르게 짝지어진 것은?",
+  "choices": [
+   "Chlamydia trachomatis — doxycycline",
+   "Treponema pallidum — benzathine penicillin G",
+   "HSV-2 — acyclovir",
+   "Candida albicans — fluconazole",
+   "Neisseria gonorrhoeae — cefixime"
+  ],
+  "answer": [
+   1
+  ],
+  "explanation": "쌍알균이 없어 임균 가능성이 낮으면 비임균성 요도염의 가장 흔한 원인인 클라미디아를 생각한다. 클라미디아는 비정형균으로 배양이 어려워 NAAT로 진단하고 doxycycline 7일로 치료한다.",
+  "point": "임균 vs 클라미디아"
+ },
+ {
+  "stem": "임균의 항생제 내성에 대한 설명으로 옳은 것은?",
+  "choices": [
+   "fluoroquinolone이 현재 1차 치료제다.",
+   "경구 cephalosporin으로 치료하는 것이 권장된다.",
+   "백신으로 내성 문제를 해결했다.",
+   "azithromycin은 내성 증가로 병용요법에서 빠졌다.",
+   "국내 균주는 대부분 penicillin에 감수성이다."
+  ],
+  "answer": [
+   4
+  ],
+  "explanation": "임균은 penicillin, tetracycline, fluoroquinolone, cefixime·azithromycin 순으로 내성이 진화해 왔고 현재는 ceftriaxone만 1차로 남았다. azithromycin은 병용요법에서 빠졌다. 항원 변이 때문에 백신이 없다.",
+  "point": "임균의 내성"
+ },
+ {
+  "stem": "임균과 클라미디아로 요도염을 치료했는데도 요도염이 계속되는 남자에서 다음으로 고려할 원인균과 치료로 가장 적절한 것은?",
+  "choices": [
+   "Treponema pallidum — doxycycline",
+   "Mycoplasma genitalium — moxifloxacin",
+   "Ureaplasma parvum — ceftriaxone",
+   "Gardnerella vaginalis — fluconazole",
+   "HPV — imiquimod"
+  ],
+  "answer": [
+   2
+  ],
+  "explanation": "지속·재발성 요도염의 대표 원인은 세포벽 없는 세균인 M. genitalium이다. macrolide 내성이 늘어 doxycycline 후 moxifloxacin을 쓰는 추세다. U. parvum은 요도염과 무관하다고 했다.",
+  "point": "트리코모나스 · M. genitalium · HPV"
+ },
+ {
+  "stem": "20세 여자가 월경 직후부터 양측 하복부 통증과 37.6 °C 열이 있다. 내진에서 자궁경부 거동 압통이 있다. 항생제를 시작하기 전에 반드시 할 것은?",
+  "choices": [
+   "복강경 검사",
+   "혈액 배양 결과 확인",
+   "자궁내막 생검",
+   "골반 MRI",
+   "임신 배제와 검체 채취"
+  ],
+  "answer": [
+   5
+  ],
+  "explanation": "자궁경부 거동 압통은 PID의 최소 진단기준이다. 치료 약(ceftriaxone, doxycycline, metronidazole)이 태아에 영향을 줄 수 있으므로 임신을 먼저 배제하고 NAAT 등 검체를 채취한 뒤 바로 치료를 시작한다. 복강경·생검·MRI는 특이기준으로 반드시 필요하지는 않다.",
+  "point": "자궁경부염과 PID"
+ },
+ {
+  "stem": "외래에서 치료할 수 있는 PID의 치료로 가장 적절한 것은?",
+  "choices": [
+   "azithromycin 1 g 1회",
+   "ceftriaxone 500 mg IM 1회 + doxycycline 14일 + metronidazole 14일",
+   "fluconazole 150 mg 1회",
+   "ciprofloxacin 3일",
+   "benzathine penicillin G 1회"
+  ],
+  "answer": [
+   2
+  ],
+  "explanation": "PID는 임균(ceftriaxone), 클라미디아(doxycycline), BV 관련 혐기균(metronidazole)을 모두 덮는 병용요법을 쓰고 72시간 안에 재평가한다.",
+  "point": "자궁경부염과 PID"
+ },
+ {
+  "stem": "골반염증질환(PID)에 대한 설명으로 옳지 않은 것은?",
+  "choices": [
+   "치료하지 않은 임질·클라미디아의 10~20%가 PID로 진행한다.",
+   "최근 IUD 삽입과 질 세척은 위험인자다.",
+   "Fitz-Hugh–Curtis 증후군은 우상복부 흉막성 통증을 일으키며 대부분 클라미디아다.",
+   "경구피임약은 PID 위험을 높인다.",
+   "PID를 3회 이상 앓으면 절반 이상이 난관 폐쇄로 불임이 된다."
+  ],
+  "answer": [
+   4
+  ],
+  "explanation": "경구피임약과 난관결찰술은 증상성 PID 위험을 낮춘다(보호 인자). PID 후 난관 폐쇄 불임은 1회 11%, 2회 23%, 3회 이상 54%다.",
+  "point": "자궁경부염과 PID"
+ },
+ {
+  "stem": "28세 남자가 2주 전부터 음경에 1 cm 크기의 궤양이 생겼는데 전혀 아프지 않다고 한다. 궤양 기저부는 깨끗하고 경계가 단단하다. 서혜부 림프절이 단단하게 만져지지만 압통은 없다. 원인균은?",
+  "choices": [
+   "Treponema pallidum",
+   "Haemophilus ducreyi",
+   "HSV-2",
+   "Chlamydia trachomatis L2",
+   "Klebsiella granulomatis"
+  ],
+  "answer": [
+   1
+  ],
+  "explanation": "1개, 무통, 단단하고 깨끗한 기저부의 경성하감과 단단하고 압통 없는 림프절은 1기 매독이다. HSV는 아픈 다발성 수포·궤양, 연성하감은 아픈 궤양과 아프고 화농하는 편측 림프절이다.",
+  "point": "생식기 궤양과 직장염"
+ },
+ {
+  "stem": "30세 남자가 몸통에 발진이 퍼지고 손바닥과 발바닥에도 구진이 생겼다. 3개월 전 아프지 않은 음경 궤양이 있었는데 저절로 없어졌다고 한다. 진단과 치료가 바르게 짝지어진 것은?",
+  "choices": [
+   "콕사키 바이러스 감염 — 보존적 치료",
+   "2기 매독 — aqueous penicillin G IV 14일",
+   "3기 매독 — benzathine penicillin G 주 1회 × 3회",
+   "약물 발진 — 스테로이드",
+   "2기 매독 — benzathine penicillin G 240만 단위 IM 1회"
+  ],
+  "answer": [
+   5
+  ],
+  "explanation": "손발바닥을 포함하는 전신 발진은 2기 매독의 특징이다. 1기·2기·조기 잠복 매독은 감염 1년 이내이므로 benzathine penicillin G 1회 근주로 치료한다. 수용성 penicillin IV는 신경·안구·이과 매독에 쓴다.",
+  "point": "매독 — 병기별 임상상과 치료"
+ },
+ {
+  "stem": "매독 혈청검사에 대한 설명으로 옳은 것은?",
+  "choices": [
+   "TPPA 역가로 치료 반응을 판정한다.",
+   "RPR은 T. pallidum 특이 항체를 측정한다.",
+   "RPR 1:32에서 VDRL 1:8로 떨어지면 적절한 치료 반응이다.",
+   "트레포네마 검사는 치료 후에도 대개 평생 양성이다.",
+   "초기 1기 매독에서는 두 검사가 항상 양성이다."
+  ],
+  "answer": [
+   4
+  ],
+  "explanation": "트레포네마 검사(TPPA 등)는 특이적이지만 평생 양성이라 치료 반응 판정에 쓰지 않는다. 치료 반응은 비트레포네마 검사(RPR, VDRL — cardiolipin 항체) 역가로 보며, 같은 종류의 검사끼리 비교해야 한다. 초기 1기에는 두 검사 모두 음성일 수 있다.",
+  "point": "혈청검사 — 두 종류를 함께 본다"
+ },
+ {
+  "stem": "산전 검사에서 RPR 1:4 양성, TPPA 음성이 나온 임신부가 있다. 해석과 대응으로 가장 적절한 것은?",
+  "choices": [
+   "조기 매독 — benzathine penicillin G 1회",
+   "후기 잠복 매독 — benzathine penicillin G 주 1회 × 3회",
+   "비트레포네마 검사 위양성 — 매독 치료 불필요",
+   "신경매독 — 뇌척수액 검사",
+   "과거 치료된 매독 — 추적 불필요"
+  ],
+  "answer": [
+   3
+  ],
+  "explanation": "트레포네마 검사가 음성이면 매독이 아니다. 임신은 RPR·VDRL 위양성의 원인이므로 매독 치료는 필요 없고 원인을 고려한다. 두 검사가 모두 양성이었다면 치료력이 없을 때 후기 잠복에 준해 치료한다.",
+  "point": "결과 조합 해석"
+ },
+ {
+  "stem": "penicillin 알레르기가 있는 임신부가 잠복 매독으로 진단되었다. 치료로 가장 적절한 것은?",
+  "choices": [
+   "탈감작 후 benzathine penicillin G",
+   "azithromycin 1회",
+   "치료하지 않고 분만 후 치료",
+   "doxycycline 28일",
+   "ceftriaxone 1회"
+  ],
+  "answer": [
+   1
+  ],
+  "explanation": "임신부는 알레르기가 있어도 doxycycline을 쓰지 않는다(태아에 해롭다). 탈감작 후 penicillin을 쓰며, penicillin은 태반을 넘어 태아의 감염도 치료한다.",
+  "point": "매독 치료와 추적"
+ },
+ {
+  "stem": "2기 매독으로 benzathine penicillin G를 맞은 환자가 6시간 뒤 열과 오한, 근육통을 호소한다. 대응으로 가장 적절한 것은?",
+  "choices": [
+   "penicillin 알레르기로 보고 다시는 쓰지 않는다.",
+   "신경매독으로 보고 수용성 penicillin IV를 시작한다.",
+   "Jarisch–Herxheimer 반응으로 보고 지지 치료하며 치료를 유지한다.",
+   "재감염으로 보고 즉시 재치료한다.",
+   "doxycycline으로 바꾼다."
+  ],
+  "answer": [
+   3
+  ],
+  "explanation": "치료 후 24시간 안의 발열·오한·근육통은 Jarisch–Herxheimer 반응이다. 알레르기가 아니므로 치료를 계속하고 지지 치료를 한다.",
+  "point": "매독 치료와 추적"
+ },
+ {
+  "stem": "성기 헤르페스가 자주 재발하는 환자가 '물집이 없을 때는 파트너에게 옮기지 않지요?'라고 묻는다. 옳은 설명은?",
+  "choices": [
+   "물집이 없으면 전파되지 않는다.",
+   "증상이 없을 때도 바이러스가 배출되어 대부분의 전파가 일어난다.",
+   "acyclovir를 먹으면 잠복 바이러스가 완전히 없어진다.",
+   "HSV-2는 재발이 드물어 걱정할 필요가 없다.",
+   "형 특이 혈청검사로 파트너를 선별해야 한다."
+  ],
+  "answer": [
+   2
+  ],
+  "explanation": "HSV는 신경절에 평생 잠복하고, 무증상 바이러스 배출이 대부분의 전파를 일으킨다. acyclovir는 복제 중인 바이러스만 억제해 잠복 바이러스는 없애지 못한다. 콘돔 사용과 파트너에게 알리기를 권한다.",
+  "point": "HSV — 임상상"
+ },
+ {
+  "stem": "acyclovir가 HSV 감염 세포에만 선택적으로 작용하는 이유는?",
+  "choices": [
+   "숙주 세포의 thymidine kinase가 인산화하기 때문",
+   "잠복한 바이러스 DNA를 분해하기 때문",
+   "바이러스 외피에 결합하기 때문",
+   "역전사효소를 억제하기 때문",
+   "바이러스 thymidine kinase가 처음 인산화하기 때문"
+  ],
+  "answer": [
+   5
+  ],
+  "explanation": "acyclovir는 바이러스의 thymidine kinase가 인산화해야 활성화되므로 감염세포에서만 바이러스 DNA 중합효소를 억제한다. 그래서 복제하지 않는 잠복 바이러스에는 효과가 없다.",
+  "point": "HSV — 진단과 치료"
+ }
+]
