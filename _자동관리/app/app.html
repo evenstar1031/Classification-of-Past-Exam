@@ -4639,24 +4639,39 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   let view=null;   /* {sub, lec, file} */
   /* 녹음 듣기: 기기에 있는 녹음 파일을 열면(업로드 없음) 문장을 눌러 그 자리부터 재생 */
   const audio=document.createElement('audio');
-  audio.controls=true; audio.preload='metadata';
-  const au={path:null,name:'',url:null,rate:1};
+  audio.controls=true; audio.preload='none';
+  /* au.path: 지금 소리가 걸린 전사본, au.parts: GitHub 릴리스 녹음 조각 [{file,start,url}] (없으면 기기 파일) */
+  const au={path:null,name:'',url:null,rate:1,parts:null,k:-1};
   let nowEl=null;
+  const ready=()=>!!view&&au.path===view.l.tx[view.i]&&(!!au.url||!!au.parts);
+  const absT=()=>audio.currentTime+(au.parts&&au.k>=0?au.parts[au.k].start:0);
   function setAudio(file){
     if(au.url) URL.revokeObjectURL(au.url);
-    au.url=URL.createObjectURL(file); au.name=file.name; au.path=view.l.tx[view.i];
+    au.url=URL.createObjectURL(file); au.name=file.name; au.parts=null; au.k=-1; au.path=view.l.tx[view.i];
     audio.src=au.url; audio.playbackRate=au.rate;
   }
+  function loadPart(k,off,play){
+    au.k=k; audio.preload='metadata'; audio.src=au.parts[k].url;
+    audio.addEventListener('loadedmetadata',()=>{ audio.playbackRate=au.rate; if(off>0) audio.currentTime=off; },{once:true});
+    if(play) audio.play().catch(()=>{});   /* 눌렀을 때 바로 play (휴대폰 브라우저는 누른 순간에만 재생을 허락) */
+  }
   function seek(t){
-    if(!au.url||au.path!==view.l.tx[view.i]){
+    if(!ready()){
       const b=panel.querySelector('.kn-au'); if(b){ b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); b.scrollIntoView({block:'nearest'}); }
       return;
     }
-    audio.currentTime=Math.max(0,t-0.3); audio.play().catch(()=>{});
+    t=Math.max(0,t-0.3);
+    if(au.parts){
+      let k=0; au.parts.forEach((p,j)=>{ if(p.start<=t) k=j; });
+      if(k!==au.k) loadPart(k,t-au.parts[k].start,true);
+      else { audio.currentTime=t-au.parts[k].start; audio.play().catch(()=>{}); }
+    } else { audio.currentTime=t; audio.play().catch(()=>{}); }
   }
+  audio.addEventListener('ended',()=>{ if(au.parts&&au.k+1<au.parts.length) loadPart(au.k+1,0,true); });
+  audio.addEventListener('error',()=>{ const h=panel.querySelector('#kn-hint'); if(h&&au.parts) h.textContent='녹음을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'; });
   audio.addEventListener('timeupdate',()=>{
-    const body=panel.querySelector('#kn-body'); if(!body||!view||au.path!==view.l.tx[view.i]) return;
-    const t=audio.currentTime;
+    const body=panel.querySelector('#kn-body'); if(!body||!ready()) return;
+    const t=absT();
     let hit=null;
     for(const el of body.querySelectorAll('.kn-c')){ if(+el.dataset.s<=t+0.05) hit=el; else break; }
     if(hit===nowEl) return;
@@ -4679,7 +4694,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       ls.forEach(l=>{
         const n=(l.tx||[]).length;
         html+=n
-          ? `<div class="kn-row"><button class="kn-open" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${n}개</span><span aria-hidden="true">›</span></button>`
+          ? `<div class="kn-row"><button class="kn-open" data-s="${esc(s.cid||s.name)}" data-l="${esc(l.id)}"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">${(l.au||[]).length?'🎧 ':''}${n}개</span><span aria-hidden="true">›</span></button>`
             +`<a class="kn-go" href="${codeURL(lecPrompt(s,l))}" target="_blank" rel="noopener" title="${esc(l.name)} 전사본만 Claude로 정리">정리</a></div>`
           : `<div class="kn-row kn-none"><span class="kn-id">${esc(l.id)}</span><span class="kn-nm">${esc(l.name)}</span><span class="kn-ct">없음</span></div>`;
       });
@@ -4706,7 +4721,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     </div>
     ${l.tx.length>1?`<div class="kn-bar" id="kn-files">${l.tx.map((p,k)=>`<button class="kn-btn${k===i?' on':''}" data-k="${k}">${esc(p.split('/').pop().replace(/\.srt$/,''))}</button>`).join('')}</div>`:''}
     <div class="kn-bar kn-au" id="kn-au">
-      <label class="kn-btn pri" style="cursor:pointer">🎧 녹음 열기<input type="file" id="kn-file" accept="audio/*,video/mp4,video/webm,.mp3,.m4a,.wav,.ogg,.opus,.aac,.mp4" hidden></label>
+      <label class="kn-btn pri" id="kn-pick" style="cursor:pointer">🎧 녹음 열기<input type="file" id="kn-file" accept="audio/*,video/mp4,video/webm,.mp3,.m4a,.wav,.ogg,.opus,.aac,.mp4" hidden></label>
       <span class="kn-hint" id="kn-hint">이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.</span>
       <span id="kn-slot" style="display:contents"></span>
       <button class="kn-btn" id="kn-rate" hidden>1×</button>
@@ -4722,15 +4737,19 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     qi.oninput=()=>{ state.q=qi.value; draw(); };
     /* 녹음 막대 */
     const rateB=panel.querySelector('#kn-rate'), folB=panel.querySelector('#kn-follow');
+    const remote=(l.au||[]).includes(path);
+    panel.querySelector('#kn-pick').hidden=remote;
     const showAu=()=>{
-      const on=!!au.url&&au.path===path;
-      panel.querySelector('#kn-hint').textContent=on?au.name:'이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.';
+      const on=ready();
+      panel.querySelector('#kn-hint').textContent=on?(au.parts?'🎧 수업 녹음 연결됨 — 문장을 누르면 그 자리부터 들려요':au.name)
+        :remote?'수업 녹음 불러오는 중…':'이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.';
       panel.querySelector('#kn-hint').style.flex=on?'0 1 auto':'';
       if(on) panel.querySelector('#kn-slot').appendChild(audio); else if(audio.parentNode) audio.remove();
       rateB.hidden=folB.hidden=!on; rateB.textContent=au.rate+'×';
       panel.querySelector('#kn-body').classList.toggle('kn-on',on);
     };
     if(au.path&&au.path!==path){ audio.pause(); }
+
     panel.querySelector('#kn-file').onchange=e=>{ const f=e.target.files[0]; if(f){ setAudio(f); showAu(); } };
     rateB.onclick=()=>{ const R=[1,1.25,1.5,1.75,2]; au.rate=R[(R.indexOf(au.rate)+1)%R.length]; audio.playbackRate=au.rate; rateB.textContent=au.rate+'×'; };
     folB.onclick=()=>{ state.follow=!state.follow; folB.classList.toggle('on',state.follow); };
@@ -4739,6 +4758,15 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       if(c) seek(+c.dataset.s); else if(tt) seek(+tt.dataset.s);
     });
     showAu();
+    if(remote&&!ready()){
+      audio.pause(); audio.removeAttribute('src'); au.k=-1; au.parts=null; au.path=null;
+      fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path.replace(/\.srt$/,'.음성.json'))}?t=${Date.now()}`)
+        .then(r=>r.ok?r.json():Promise.reject(r.status))
+        .then(j=>{ if(!view||view.l.tx[view.i]!==path) return;
+          au.parts=(j.parts||[]).map(p=>({file:p.file,start:+p.start||0,url:`https://github.com/${REPO()}/releases/download/${encodeURIComponent(j.tag||'lecture-audio')}/${encodeURIComponent(p.file)}`}));
+          au.url=null; au.path=path; if(au.parts.length) loadPart(0,0,false); showAu(); })
+        .catch(()=>{ panel.querySelector('#kn-pick').hidden=false; panel.querySelector('#kn-hint').textContent='수업 녹음을 불러오지 못했어요. 기기에 있는 녹음 파일을 열어도 돼요.'; });
+    }
 
     const body=panel.querySelector('#kn-body');
     try{
@@ -4769,7 +4797,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       }).join(' ');
       return `<div class="kn-p${em?' hl':''}"><span class="kn-t" data-s="${p.t}">${fmt(p.t)}</span>${em?'<span class="kn-ct" style="font-size:11px">교수님 강조</span>':''}<p>${t}</p></div>`;
     }).join('');
-    nowEl=null; if(!audio.paused||audio.currentTime) audio.dispatchEvent(new Event('timeupdate'));
+    nowEl=null; if(ready()&&(!audio.paused||audio.currentTime)) audio.dispatchEvent(new Event('timeupdate'));
   }
 
   window.KNUTS_RENDER=()=>{ if(view) open(); else list(); };

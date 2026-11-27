@@ -234,13 +234,25 @@ def shift(stamp, off):
     return '%02d:%02d:%02d%s' % (sec // 3600, sec // 60 % 60, sec % 60, m[4] or ',000')
 
 
+CHUNK = 3600   # 노트북 전사 스크립트가 녹음을 자르는 길이(초) — 음성 조각 k 는 k*CHUNK 초에서 시작
+
+
+def part_no(path):
+    m = re.search(r'_part(\d+)$', Path(path).stem)
+    return int(m.group(1)) if m else None
+
+
 def merge_chunks(srts):
-    """1시간 조각들(_part00, _part01 …)을 한 줄기로 이어 붙인다"""
+    """1시간 조각들(_part00, _part01 …)을 한 줄기로 이어 붙인다.
+    조각 번호가 있으면 k*CHUNK 초에서 시작하게 해서 음성(mp3 조각)과 시각이 맞게 한다."""
     out, off = [], 0
     for path in srts:
         blocks = srt_blocks(path)
         if not blocks:
             continue
+        k = part_no(path)
+        if k is not None:
+            off = k * CHUNK
         for b in blocks:
             half = b['time'].split('-->')
             b['time'] = shift(half[0], off) + ' --> ' + shift(half[-1], off)
@@ -362,6 +374,27 @@ def find_lecture(tt, lec_table, day, period):
     return None, None, f'{period}교시에 수업이 없음'
 
 
+def audio_plan(folder, srts):
+    """노트북이 함께 올린 _음성.json(전사본 조각 → GitHub 릴리스 mp3 이름)을 읽어
+    수업 전사본 옆에 둘 {tag, parts:[{file, start}]} 를 만든다. 없으면 None."""
+    f = folder / '_음성.json'
+    if not f.exists():
+        return None
+    try:
+        info = json.loads(f.read_text(encoding='utf-8-sig'))
+    except ValueError:
+        return None
+    names = info.get('parts') or {}
+    parts = []
+    for path in srts:
+        a = names.get(Path(path).stem)
+        if a:
+            parts.append({'file': a, 'start': (part_no(path) or 0) * CHUNK})
+    if not parts:
+        return None
+    return {'tag': info.get('tag') or 'lecture-audio', 'parts': parts}
+
+
 def free_name(dest, stem, used):
     """같은 날 같은 수업 전사본이 여럿이면 _2, _3 을 붙인다"""
     cand = dest / f'{stem}.srt'
@@ -443,9 +476,14 @@ def main(dry=False):
             if not dry:
                 dest.mkdir(parents=True, exist_ok=True)
                 write_blocks(blocks[start:stop], out)
+                au = audio_plan(folder, srts)
+                if au:   # 같은 녹음에서 나온 수업들은 시각이 원래 녹음 그대로라 같은 음성 목록을 쓴다
+                    out.with_name(out.stem + '.음성.json').write_text(
+                        json.dumps(au, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
         if not dry:
             for src in srts:
                 src.unlink()
+            (folder / '_음성.json').unlink(missing_ok=True)
             if all(p.name == '_원본.txt' for p in folder.iterdir()):
                 shutil.rmtree(folder)
 

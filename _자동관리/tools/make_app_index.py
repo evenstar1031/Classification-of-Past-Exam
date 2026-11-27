@@ -38,7 +38,12 @@ def stage_of(d):
 def tx_files(d):
     """올라와 있는 강의 녹음 전사본 (전사본/*.srt 등)"""
     return [f'{d}/전사본/{x}' for x in ls(f'{d}/전사본')
-            if x.lower().endswith(('.srt', '.vtt', '.txt', '.json'))]
+            if x.lower().endswith(('.srt', '.vtt', '.txt', '.json')) and not x.endswith('.음성.json')]
+
+
+def tx_audio(d):
+    """GitHub 릴리스 녹음과 연결된 전사본 (전사본_<날짜>.음성.json 이 옆에 있는 것)"""
+    return [f'{d}/전사본/{x[:-len(".음성.json")]}.srt' for x in ls(f'{d}/전사본') if x.endswith('.음성.json')]
 
 
 def note_years(d):
@@ -102,6 +107,7 @@ for f in sorted(glob.glob('_자동관리/과목정보/*.json')):
             'stage': stage_of(f'학습자료/{SF}/{sdir}') if sdir and s else None,
             'notes': note_years(f'학습자료/{SF}/{sdir}') if sdir else [],
             'tx': tx_files(f'학습자료/{SF}/{sdir}') if sdir else [],
+            'au': tx_audio(f'학습자료/{SF}/{sdir}') if sdir else [],
         })
     extra = counts.get('99', {})
     whole_q = next((x for x in q_files if x.startswith('00_전체') and x.endswith('.pdf')), None)
