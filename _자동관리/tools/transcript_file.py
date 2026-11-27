@@ -108,8 +108,11 @@ def parse_folder(name):
     어느 수업인지는 내용으로 가린다."""
     n = unicodedata.normalize('NFC', name)
     d = re.match(r'\D*(?:(20\d{2})[-_.]?)?(\d{1,2})[-_.]?(\d{2})(?!\d)', n)
-    if not d:
-        return None
+    if not d or not (1 <= int(d.group(2)) <= 12 and 1 <= int(d.group(3)) <= 31):
+        # 앞이 아니라 중간에 붙은 날짜 (예: '01.1127. CP-D2 피드백' → 11/27)
+        d = re.search(r'(?<!\d)()(0[1-9]|1[0-2])[-_.]?([0-3]\d)(?!\d)', n)
+        if not d or not 1 <= int(d.group(3)) <= 31:
+            return None
     m = re.search(r'(\d{1,2})\s*(?:교시|차시)', n)
     period = int(m.group(1)) if m else None
     return (int(d.group(2)), int(d.group(3))), period
@@ -473,7 +476,10 @@ def main(dry=False):
             h = lec_table.get(norm(title))
             if h and h not in today:
                 today.append(h)
-        done = taken.setdefault(day, [])
+        if day not in taken:   # 그날 녹음이 이미 들어간 수업(앞서 올린 것)도 '이미 있음'으로 친다
+            taken[day] = [h for h in today
+                          if list((ROOT / '학습자료' / S.folder(h[0]) / f'{h[1]}_{h[2]}' / '전사본').glob(stem + '*.srt'))]
+        done = taken[day]
 
         plan, bad = [], None
         for n, start in enumerate(bounds):
@@ -492,7 +498,8 @@ def main(dry=False):
                     rest = [x for x in today[k:] if x not in done] or rest
                 if rest:
                     by_time = rest[0]
-                    note = f'  (시간표의 그 교시 수업은 이미 다른 녹음이 있어 그날 다음 수업 "{by_time[2]}" 으로 봄 — 확인 필요)'
+                    note = (f'  (시간표의 그 교시 수업은 이미 다른 녹음이 있어 그날 다음 수업 "{by_time[2]}" 으로 봄 — 확인 필요)'
+                            if period else f'  (교시가 없어 그날 아직 녹음이 없는 수업 "{by_time[2]}" 으로 봄 — 확인 필요)')
             if by_text:
                 hit = by_text
                 if n == 0 and by_time and by_time[1] != by_text[1]:

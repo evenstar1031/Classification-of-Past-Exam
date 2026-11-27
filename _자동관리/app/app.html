@@ -4737,9 +4737,40 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     else if(e.key==='ArrowRight'){ e.preventDefault(); skip(5); }
   });
 
+  /* 올라온 녹음 처리 상황: 올리기/전사본 에 남은 폴더(= 아직 수업별로 안 나뉨)와 앱 목록 갱신 여부 */
+  const ST={mode:'',pend:[],at:0,timer:0};
+  const API=p=>fetch(`https://api.github.com/repos/${REPO()}/${p}`,{headers:{Accept:'application/vnd.github+json'}}).then(r=>r.ok?r.json():Promise.reject(r.status));
+  const ago=t=>{ const m=Math.max(0,Math.round((Date.now()-t)/60000)); return m<1?'방금':m+'분 전'; };
+  const last=async path=>{ const c=await API(`commits?path=${encodeURIComponent(path)}&per_page=1&sha=main`); return c[0]?{sha:c[0].sha,at:Date.parse(c[0].commit.committer.date)}:null; };
+  function showStatus(){
+    const box=panel.querySelector('#kn-status'); if(!box) return;
+    let h='';
+    if(ST.mode==='pend') h=`<b>⏳ 올린 녹음 ${ST.pend.length}개를 수업별로 나누는 중</b> — ${ST.pend.map(esc).join(', ')}<br>`
+      +`올린 시각 ${ago(ST.at)}. 보통 <b>올리고 4분쯤</b> 수업별로 나뉘고, <b>4분쯤 더</b> 지나 아래 목록에 들어와요(모두 8분 안팎). 이 화면을 열어 두면 30초마다 저절로 확인해요.`
+      +(Date.now()-ST.at>20*60000?`<br><span style="color:#d9264f">20분이 넘었어요 — 어느 수업인지 못 정해 멈췄을 수 있어요. 과목 화면의 「내 Claude로 전사본 정리」로 맡기면 Claude가 넣어 줘요.</span>`:'');
+    else if(ST.mode==='build') h=`<b>✅ 수업별로 나눴어요</b> (${ago(ST.at)}). 앱 목록을 새로 만드는 중이에요(3–4분). 이 화면을 열어 두면 저절로 확인해요.`;
+    else if(ST.mode==='ready') h=`<b>✅ 새로 올린 녹음이 목록에 들어왔어요.</b> <button class="kn-btn pri" id="kn-reload" style="min-height:32px;font-size:13px">새로 보기</button>`;
+    box.innerHTML=h; box.hidden=!h;
+    const rb=box.querySelector('#kn-reload'); if(rb) rb.onclick=()=>location.reload();
+  }
+  async function checkStatus(){
+    clearTimeout(ST.timer);
+    try{
+      const ls=await API(`contents/${enc('올리기/전사본')}?ref=main`);
+      ST.pend=ls.filter(x=>x.type==='dir').map(x=>x.name);
+      const up=await last('올리기/전사본');                       /* 올리기(사람) 또는 나누기(자동)의 마지막 커밋 */
+      ST.at=up?up.at:Date.now();
+      if(ST.pend.length) ST.mode='pend';
+      else if(!up||Date.now()-up.at>40*60000||String(G().sha||'').startsWith(up.sha.slice(0,7))) ST.mode='';   /* 오래됐거나 이미 이 목록에 들어 있음 */
+      else { const ix=await last('_자동관리/app/gichul_index.json'); ST.mode=ix&&ix.at>=up.at?'ready':'build'; }
+    }catch(e){ /* GitHub 조회 한도(시간당 60번) 등 — 조용히 넘김 */ }
+    showStatus();
+    if(!view&&(ST.mode==='pend'||ST.mode==='build')&&panel.querySelector('#kn-status')) ST.timer=setTimeout(checkStatus,30000);
+  }
+
   function list(){
     const subs=G().subjects||[];
-    let html='';
+    let html='<div class="kn-empty" id="kn-status" hidden style="margin-bottom:14px;line-height:1.7"></div>';
     subs.forEach(s=>{
       const all=(s.lectures||[]), got=all.filter(l=>(l.tx||[]).length);
       if(!got.length) return;
@@ -4754,8 +4785,9 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       });
       html+='</section>';
     });
-    if(!html) html=`<div class="kn-empty"><b>아직 올라온 전사본이 없어요.</b><br>노트북에서 <b>KNUTS 전사.bat</b> 으로 녹음을 전사하고 <b>GitHub 올리기.bat</b> 을 누르면, 날짜·교시로 수업을 찾아 여기에 자동으로 들어옵니다.</div>`;
+    if(!subs.some(s=>(s.lectures||[]).some(l=>(l.tx||[]).length))) html+=`<div class="kn-empty"><b>아직 올라온 전사본이 없어요.</b><br>노트북에서 <b>KNUTS 전사.bat</b> 으로 녹음을 전사하고 <b>GitHub 올리기.bat</b> 을 누르면, 날짜·교시로 수업을 찾아 여기에 자동으로 들어옵니다.</div>`;
     panel.innerHTML=html;
+    showStatus(); checkStatus();
     panel.querySelectorAll('[data-hide]').forEach(b=>b.addEventListener('click',()=>{ state.hideNone=!state.hideNone; list(); }));
     panel.querySelectorAll('button.kn-open').forEach(b=>b.addEventListener('click',()=>{
       const s=(G().subjects||[]).find(x=>(x.cid||x.name)===b.dataset.s);
