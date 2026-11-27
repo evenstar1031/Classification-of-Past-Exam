@@ -4,6 +4,10 @@
 앱 시간표(_자동관리/app/app.html 의 DATA)로 그날 어떤 과목을 했는지 좁힌 뒤,
 **전사본 첫머리를 읽어** 교수님이 말한 수업 이름으로 수업을 정한다.
 (실제 수업 순서가 시간표와 다른 경우가 많아, 시간표는 후보를 좁히는 데만 쓴다.)
+수업 이름을 말하지 않았거나 지나가듯 말한 경우에는 **수업 내용**으로 가린다:
+그날 시간표 수업마다 학습자료(`1_설명.md`, 필기본 PDF, 과목정보 키워드)에 나오는 말과
+전사본의 말이 얼마나 겹치는지(그 수업에만 나오는 말일수록 크게) 비교한다.
+그래서 1·2교시를 연달아 한 뒤 3·4교시를 하는 식으로 실제 순서가 바뀌어도 내용대로 들어간다.
 그 다음 과목정보에서 수업 번호를 찾아 아래로 옮긴다.
 
     학습자료/<학기>/<번호. 과목>/<id>_<수업명>/전사본/전사본_<날짜>.srt
@@ -20,8 +24,11 @@
     python3 _자동관리/tools/transcript_file.py --dry    # 어디로 갈지만 보기
 """
 import json
+import math
 import re
 import shutil
+import subprocess
+from collections import Counter
 import sys
 import unicodedata
 from pathlib import Path
@@ -88,6 +95,89 @@ def profs():
 PROF = {}
 
 
+# ── 내용으로 가리기 ─────────────────────────────────────────────
+# 한글 세 글자 토막(띄어쓰기·영어·숫자 빼고)으로 비교한다. 전사본에는 받아쓰기 오타가 많고
+# 영어 용어가 한글 소리로 적히므로 단어보다 토막이 잘 맞는다. 여러 수업에 두루 나오는 토막은
+# 가볍게(idf), 그 수업에만 나오는 토막은 무겁게 센다.
+DOC = {}          # (과목키, 수업 id) → set(토막)
+IDF = {}
+
+
+def grams(t, n=3):
+    h = re.sub(r'[^가-힣]', '', unicodedata.normalize('NFC', str(t or '')))
+    return Counter(h[i:i + n] for i in range(len(h) - n + 1))
+
+
+def pdf_text(path):
+    try:
+        r = subprocess.run(['pdftotext', '-q', '-enc', 'UTF-8', str(path), '-'],
+                           capture_output=True, timeout=120)
+        return r.stdout.decode('utf-8', 'ignore')
+    except Exception:
+        return ''
+
+
+def load_docs(lec_table):
+    """수업마다 학습자료의 말 모으기: 1_설명.md + 필기본 PDF + 과목정보 키워드"""
+    if DOC:
+        return
+    keywords = {}
+    for f in sorted(INFO.glob('*.json')):
+        for lec in json.loads(f.read_text(encoding='utf-8')).get('lectures', []):
+            keywords[(f.stem, lec.get('id'))] = ' '.join(lec.get('keywords') or []) + ' ' + (lec.get('memo') or '')
+    for key, lid, name in set(lec_table.values()):
+        try:
+            d = ROOT / '학습자료' / S.folder(key) / f'{lid}_{name}'
+        except Exception:
+            continue
+        parts = [keywords.get((key, lid), '')]
+        if (d / '1_설명.md').is_file():
+            parts.append((d / '1_설명.md').read_text(encoding='utf-8', errors='ignore'))
+        for pdf in sorted((d / '필기본').glob('*.pdf')) if (d / '필기본').is_dir() else []:
+            parts.append(pdf_text(pdf))
+        g = set(grams(' '.join(parts)))
+        if len(g) >= 300:                   # 너무 적으면 비교가 안 되므로 없는 것으로 친다
+            DOC[(key, lid)] = g
+    df = Counter(x for g in DOC.values() for x in g)
+    n = max(len(DOC), 1)
+    IDF.update({x: math.log((n + 1) / c) for x, c in df.items()})
+
+
+def content_scores(text, cands):
+    """후보 수업마다 전사본과 학습자료가 겹치는 정도. 학습자료가 없는 수업은 빠진다"""
+    tg = grams(text)
+    out = []
+    for c in cands:
+        g = DOC.get((c[0], c[1]))
+        if not g:
+            continue
+        sc = sum(IDF.get(x, 0) * min(k, 3) for x, k in tg.items() if x in g) / (1 + math.sqrt(len(g)))
+        out.append((sc, c))
+    out.sort(key=lambda x: -x[0])
+    return out
+
+
+CONTENT_MIN_CHARS = 1500   # 이보다 짧은 토막은 내용으로 가리지 않는다
+CONTENT_RATIO = 1.2        # 1등이 2등보다 이만큼 높아야 믿는다
+CONTENT_MIN = 8.0          # 1등 점수가 이보다 낮으면 겹치는 말이 너무 적어 믿지 않는다
+
+
+def guess_by_content(text, pool):
+    """pool(그날 시간표 수업) 중 내용이 가장 잘 맞는 수업 → (수업, 확실한지)
+
+    pool 에 학습자료가 없는 수업이 섞여 있으면 그 수업과는 비교할 수 없으므로 확실하다고 하지 않는다."""
+    if not pool or len(re.sub(r'\s', '', text)) < CONTENT_MIN_CHARS:
+        return None, False, {}
+    sc = content_scores(text, pool)
+    if not sc or sc[0][0] <= 0:
+        return None, False, {}
+    top = sc[0]
+    second = sc[1][0] if len(sc) > 1 else 0.0
+    every = len(sc) == len(pool)
+    sure = every and top[0] >= CONTENT_MIN and top[0] >= CONTENT_RATIO * second
+    return top[1], sure, {c: v for v, c in sc}
+
+
 def guess_by_prof(head, cands):
     """"저는 ○○ 교수입니다" 처럼 교수님이 자기 이름을 말한 경우로 수업 고르기
 
@@ -150,7 +240,7 @@ def scan(text, name):
 EARLY = 1500           # 이 글자 수 안에 나오면 "오늘 수업 제목"으로 본다
 
 
-def guess_by_text(text, candidates, by_time=None):
+def guess_by_text(text, candidates, by_time=None, pool=None):
     """수업 이름이 나오는 자리와 횟수로 수업 고르기 → (수업, 닮은 정도, 믿을 만한지)
 
     교수님은 거의 언제나 처음에 오늘 수업 이름을 말한다. 그래서 앞쪽에 나온 이름을
@@ -168,17 +258,31 @@ def guess_by_text(text, candidates, by_time=None):
         if count:
             near = 1 if (by_time and by_time[1] == cand[1] and by_time[0] == cand[0]) else 0
             scored.append((count, first, ratio, near, cand))
+    by_c, c_sure, c_sc = guess_by_content(text, pool) if pool else (None, False, {})
     if not scored:
         hit = guess_by_prof(text, candidates)
-        return (hit, 0.9, True) if hit else (None, 0.0, False)
+        if hit:
+            return hit, 0.9, True
+        if by_c and c_sure:                     # 수업 이름도 교수님 이름도 안 나오면 내용으로
+            return by_c, 0.0, 'content'
+        return None, 0.0, False
 
     early = [x for x in scored if x[1] < EARLY]
     if early:                                   # 앞머리에 이름을 말한 쪽
         early.sort(key=lambda x: (x[1] // 300, -x[3], x[1]))
         pick, sure = early[0], 'early'      # 참이지만, 앞머리에서 이름을 말했다는 표시
+        # 앞머리 이름이 "지난 시간에 ○○ 했고" 처럼 다른 수업을 가리켰거나("상기도 감염과 달리 하기도는…"),
+        # 받아쓰기 오타로 비슷한 이름에 걸린 경우: 내용이 오늘 다른 수업과 확실히 맞으면 내용을 따른다.
+        # 이름을 정확히 말한 그날 수업이면 내용이 그 수업보다 두 배 넘게 다른 수업에 맞을 때만.
+        if by_c and c_sure and by_c != pick[4] and (
+                pick[4] not in pool or pick[2] < 1.0
+                or c_sc[by_c] >= 2 * c_sc.get(pick[4], 0)):
+            return by_c, 0.0, 'content'
     else:                                       # 잡담으로 시작했으면 가장 자주 나온 쪽
         scored.sort(key=lambda x: (-x[0], -x[3], x[1]))
         pick, sure = scored[0], scored[0][0] >= 2
+        if by_c and c_sure and by_c != pick[4]:   # 이름이 몇 번 스친 것보다 내용을 믿는다
+            return by_c, 0.0, 'content'
     return pick[4], pick[2], sure
 
 # 새 수업이 시작될 때 교수님이 흔히 하는 말
@@ -283,7 +387,34 @@ def write_blocks(blocks, path):
     path.write_text('\n\n'.join(out) + '\n', encoding='utf-8')
 
 
-def split_points(blocks, cands, by_time):
+CUT_STEP = 180         # 내용으로 자를 자리를 이 간격(초)마다 시험해 본다
+LONG_SEC = 2 * 1500    # 이보다 긴 토막은 수업 두 개가 쉬는 시간·인사 없이 붙었을 수 있다
+
+
+def content_cut(blocks, a, b, pool):
+    """a~b 토막 안에서 앞뒤 내용이 서로 다른 수업으로 확실히 갈리는 자리 → 블록 번호 (없으면 None)
+
+    쉬지 않고 녹음했고 인사말도 못 알아들은 경우를 위해, 앞뒤를 나눠 각각 학습자료와 맞춰 본다."""
+    if not pool or start_sec(blocks[b - 1]) - start_sec(blocks[a]) < LONG_SEC:
+        return None
+    t0 = start_sec(blocks[a])
+    best, at, nxt = 0.0, None, t0 + MIN_SEC
+    for c in range(a + 1, b):
+        t = start_sec(blocks[c])
+        if t < nxt or start_sec(blocks[b - 1]) - t < MIN_SEC:
+            continue
+        nxt = t + CUT_STEP
+        lh, ls, lsc = guess_by_content(text_of(blocks, a, c), pool)
+        rh, rs, rsc = guess_by_content(text_of(blocks, c, b), pool)
+        if not (lh and rh and ls and rs and lh != rh):
+            continue
+        gain = lsc[lh] / max(lsc.get(rh, 0), 1e-9) + rsc[rh] / max(rsc.get(lh, 0), 1e-9)
+        if gain > best:
+            best, at = gain, c
+    return at
+
+
+def split_points(blocks, cands, by_time, pool=None):
     """수업이 바뀌는 자리 → 각 수업이 시작하는 블록 번호 [0, b1, …]
 
     쉬는 시간(긴 침묵)과 인사말이 나오는 자리를 모두 후보로 잡아 잘게 나눈 뒤,
@@ -297,11 +428,18 @@ def split_points(blocks, cands, by_time):
         if quiet or CUE_START.search(' '.join(blocks[i]['text'])) \
                 or CUE_END.search(' '.join(blocks[i - 1]['text'])):
             cuts.append(i)
+    if pool:                                 # 긴 토막은 내용이 바뀌는 자리도 후보로
+        for n in range(len(cuts)):
+            a, b = cuts[n], (cuts[n + 1] if n + 1 < len(cuts) else len(blocks))
+            c = content_cut(blocks, a, b, pool)
+            if c:
+                cuts.append(c)
+        cuts.sort()
 
     segs = []
     for n, a in enumerate(cuts):
         b = cuts[n + 1] if n + 1 < len(cuts) else len(blocks)
-        hit, _r, sure = guess_by_text(text_of(blocks, a, b), cands, by_time if n == 0 else None)
+        hit, _r, sure = guess_by_text(text_of(blocks, a, b), cands, by_time if n == 0 else None, pool)
         segs.append([a, hit, sure])
 
     # 이름이 한 번 스치듯 나왔을 뿐인 토막(잡담·복습 중에 다른 수업 이름이 나온 경우)은
@@ -430,6 +568,7 @@ def main(dry=False):
     tt = timetable()
     lec_table = lectures()
     PROF.update(profs())
+    load_docs(lec_table)
     by_subject = {}
     for key, lec_id, name in lec_table.values():
         by_subject.setdefault(key, []).append((key, lec_id, name))
@@ -464,18 +603,17 @@ def main(dry=False):
         if not blocks:
             left.append((folder.name, '전사본이 비어 있음'))
             continue
-        bounds = split_points(blocks, cands, by_time)
-        if year is None:
-            entry = tt.get(day)
-            year = entry[0] if entry else 0
-        stem = f'전사본_{year}-{day[0]:02d}-{day[1]:02d}'
-
-        # 그날 시간표에 있는 수업들 (시간표 순서)
+        # 그날 시간표에 있는 수업들 (시간표 순서) — 내용으로 가릴 때 이 중에서 고른다
         today = []
         for _a, _b, title, _p in (tt.get(day) or (0, []))[1]:
             h = lec_table.get(norm(title))
             if h and h not in today:
                 today.append(h)
+        bounds = split_points(blocks, cands, by_time, today)
+        if year is None:
+            entry = tt.get(day)
+            year = entry[0] if entry else 0
+        stem = f'전사본_{year}-{day[0]:02d}-{day[1]:02d}'
         if day not in taken:   # 그날 녹음이 이미 들어간 수업(앞서 올린 것)도 '이미 있음'으로 친다
             taken[day] = [h for h in today
                           if list((ROOT / '학습자료' / S.folder(h[0]) / f'{h[1]}_{h[2]}' / '전사본').glob(stem + '*.srt'))]
@@ -485,7 +623,7 @@ def main(dry=False):
         for n, start in enumerate(bounds):
             stop = bounds[n + 1] if n + 1 < len(bounds) else len(blocks)
             by_text, _r, how = guess_by_text(text_of(blocks, start, stop), cands,
-                                             by_time if n == 0 else None)
+                                             by_time if n == 0 else None, today)
             note = ''
             # 그날 시간표에 없는 수업은, 앞머리에서 그 수업 이름을 말했을 때만 믿는다
             # (본문에 지나가듯 나온 다른 수업 이름에 끌려가지 않게)
@@ -502,6 +640,8 @@ def main(dry=False):
                             if period else f'  (교시가 없어 그날 아직 녹음이 없는 수업 "{by_time[2]}" 으로 봄 — 확인 필요)')
             if by_text:
                 hit = by_text
+                if how == 'content':
+                    note = '  (수업 이름 대신 내용이 학습자료와 맞아 이 수업으로 봄)'
                 if n == 0 and by_time and by_time[1] != by_text[1]:
                     note = (f'  (폴더 이름의 {period}교시는 시간표상 "{by_time[2]}" 이지만, '
                             f'내용이 "{by_text[2]}" 이라 내용을 따름)')
