@@ -4906,6 +4906,8 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   }
 
   window.KNUTS_RENDER=()=>{ if(view) open(); else list(); };
+  /* 주소가 #knuts 인 채로 열거나 새로고침하면 탭은 이 코드보다 먼저 켜진다 → 여기서 바로 그린다 */
+  if(!panel.hidden) window.KNUTS_RENDER();
 })();
 </script>
 
