@@ -4578,8 +4578,14 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
 .kn-em{background:#ffe58a;border-radius:3px;padding:0 2px;font-weight:700}
 .kn-p mark{background:transparent;outline:2px solid #0b5d63;border-radius:3px}
 .kn-au{position:sticky;top:0;z-index:2;background:var(--card,#fff);border:1px solid var(--line,#e2e6ea);border-radius:12px;padding:8px 10px}
-.kn-au audio{flex:1;min-width:200px;height:40px}
+.kn-au audio{display:none}
 .kn-au .kn-hint{font-size:13px;color:#5b666b;flex:1;min-width:180px}
+.kn-au .kn-hint.on{flex:0 1 auto;min-width:0;font-weight:700;color:#0b5d63}
+.kn-au .kn-ctl{min-width:44px;padding:0 10px}
+.kn-au .kn-pl{background:#0b5d63;color:#fff;border-color:#0b5d63;font-size:16px;min-width:52px}
+.kn-au .kn-time{font-variant-numeric:tabular-nums;font-size:14px;font-weight:700;color:#3d4a4f;min-width:0;padding:0 4px;white-space:nowrap}
+.kn-slot{display:contents}
+.kn-au .kn-seek{flex:1 1 100%;min-width:0;height:28px;padding:0;accent-color:#0b5d63;order:9}
 .kn-au.flash{animation:knflash .9s 2}
 @keyframes knflash{50%{border-color:#e9b800;box-shadow:0 0 0 3px #ffe58a}}
 .kn-c{cursor:pointer;border-radius:3px}
@@ -4595,6 +4601,8 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   .kn-em{background:rgba(255,214,0,.30);color:inherit}
   .kn-au{background:#151d20;border-color:#27353a}
   .kn-c.kn-now{background:#1f4a4a;box-shadow:0 0 0 2px #1f4a4a}
+  .kn-au .kn-time{color:#c9d4d6}
+  .kn-au .kn-hint.on{color:#6fd3c8}
 }
 </style>
 <script>
@@ -4603,13 +4611,17 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   const panel=document.getElementById('panel-knuts'); if(!panel) return;
   const G=()=>window.GICHUL_LIVE||(typeof GICHUL!=='undefined'?GICHUL:{subjects:[]});
   const REPO=()=>(G().repo||'seohoe1031/Classification-of-Past-Exam');
+  const VER=()=>G().sha||String(Date.now());   /* 앱 현황이 바뀔 때만 새로 받기 (그 전엔 브라우저 저장본) */
   const enc=p=>String(p).split('/').map(encodeURIComponent).join('/');
   const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const EMPH=/(?:이건 )?꼭 외우세요|(?:이건 )?시험에 (?:잘 |꼭 |자주 )?(?:나옵니다|나와요|나온다|안 나옵니다)|국시에 (?:자주|잘) 나오는|(?:정말|굉장히|아주|매우) 중요(?:합니다|해요)|족보에 (?:매년 )?나오는|제일 중요(?:합니다|하다|하고)|좀 중요하죠|여기 중요하죠|중요합니다|강조했습니다|기억하세요|외우세요/g;
-  const fmt=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(Math.floor(n%60)).padStart(2,'0');
-  const isEm=x=>new RegExp(EMPH.source).test(x);
+  const EM1=new RegExp(EMPH.source);
+  const p2=n=>String(Math.floor(n)).padStart(2,'0');
+  const fmt=n=>{ n=Math.max(0,n||0); return n>=3600?Math.floor(n/3600)+':'+p2(n/60%60)+':'+p2(n%60):p2(n/60)+':'+p2(n%60); };
   const codeURL=q=>`https://claude.ai/code/new?q=${encodeURIComponent(q)}&repo=${encodeURIComponent(REPO())}&branch=main`;
+  const LS={get:k=>{try{return localStorage.getItem(k);}catch(e){return null;}},set:(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}}};
 
+  /* srt → 문단(40–75초) 묶음. 문장(cue)마다 강조 표시한 HTML을 미리 만들어 둔다 */
   function srtToParas(text){
     const cues=[];
     String(text).replace(/\r/g,'').trim().split(/\n\n+/).forEach(b=>{
@@ -4617,15 +4629,18 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       if(k<0) return;
       const m=L[k].match(/([\d:.,]+)\s*-->\s*([\d:.,]+)/); if(!m) return;
       const sec=t=>{const q=t.replace(',','.').split(':').map(Number);return q.length===3?q[0]*3600+q[1]*60+q[2]:q[0]*60+q[1];};
-      cues.push({s:sec(m[1]),e:sec(m[2]),t:L.slice(k+1).join(' ').replace(/<[^>]+>/g,'').trim()});
+      const t=L.slice(k+1).join(' ').replace(/<[^>]+>/g,'').trim();
+      if(t) cues.push({s:sec(m[1]),e:sec(m[2]),t,h:esc(t).replace(EMPH,m=>`<span class="kn-em">${m}</span>`)});
     });
     const out=[]; let cur=null;
-    cues.forEach(c=>{ if(!c.t) return;
+    cues.forEach(c=>{
       if(!cur) cur={t:c.s,e:c.e,x:c.t,c:[c]}; else { cur.x+=' '+c.t; cur.e=c.e; cur.c.push(c); }
       const d=cur.e-cur.t;
       if((d>=40&&/[.?!다요죠까]\s*$/.test(cur.x))||d>=75){ out.push(cur); cur=null; }
     });
     if(cur) out.push(cur);
+    out.forEach(p=>{ p.low=p.x.toLowerCase(); p.em=EM1.test(p.x); });
+    out.end=cues.length?cues[cues.length-1].e:0;
     return out;
   }
 
@@ -4636,52 +4651,91 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       +`필기본과 학습자료를 근거로 의학 용어를 교정하고, 교수님이 강조한 부분을 정리해줘.`;
   };
 
-  let view=null;   /* {sub, lec, file} */
-  /* 녹음 듣기: 기기에 있는 녹음 파일을 열면(업로드 없음) 문장을 눌러 그 자리부터 재생 */
+  let view=null;   /* {s, l, i} */
+  const state={q:'',only:false,hideNone:false,cache:{},aucache:{},follow:true};
+
+  /* ---- 녹음: GitHub 릴리스 녹음(조각들) 또는 기기에서 연 파일 ---- */
   const audio=document.createElement('audio');
   audio.controls=true; audio.preload='none';
-  /* au.path: 지금 소리가 걸린 전사본, au.parts: GitHub 릴리스 녹음 조각 [{file,start,url}] (없으면 기기 파일) */
-  const au={path:null,name:'',url:null,rate:1,parts:null,k:-1};
-  let nowEl=null;
-  const ready=()=>!!view&&au.path===view.l.tx[view.i]&&(!!au.url||!!au.parts);
+  const au={path:null,name:'',url:null,rate:+(LS.get('kn-rate')||1)||1,parts:null,k:-1};
+  let cueEls=[], cueT=[], nowEl=null, saveAt=0, jump=false;
+  const curPath=()=>view?view.l.tx[view.i]:null;
+  const ready=()=>!!view&&au.path===curPath()&&(!!au.url||!!au.parts);
   const absT=()=>audio.currentTime+(au.parts&&au.k>=0?au.parts[au.k].start:0);
+  const $=s=>panel.querySelector(s);
+
   function setAudio(file){
     if(au.url) URL.revokeObjectURL(au.url);
-    au.url=URL.createObjectURL(file); au.name=file.name; au.parts=null; au.k=-1; au.path=view.l.tx[view.i];
+    au.url=URL.createObjectURL(file); au.name=file.name; au.parts=null; au.k=-1; au.path=curPath();
     audio.src=au.url; audio.playbackRate=au.rate;
   }
   function loadPart(k,off,play){
     au.k=k; audio.preload='metadata'; audio.src=au.parts[k].url;
     audio.addEventListener('loadedmetadata',()=>{ audio.playbackRate=au.rate; if(off>0) audio.currentTime=off; },{once:true});
-    if(play) audio.play().catch(()=>{});   /* 눌렀을 때 바로 play (휴대폰 브라우저는 누른 순간에만 재생을 허락) */
+    if(play) audio.play().catch(()=>{});   /* 누른 순간에 play (휴대폰은 누른 순간에만 재생 허락) */
   }
-  function seek(t){
-    if(!ready()){
-      const b=panel.querySelector('.kn-au'); if(b){ b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); b.scrollIntoView({block:'nearest'}); }
-      return;
-    }
-    t=Math.max(0,t-0.3);
+  function flash(){ const b=$('.kn-au'); if(b){ b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); b.scrollIntoView({block:'nearest'}); } }
+  function seek(t,play=true){
+    if(!ready()){ flash(); return; }
+    t=Math.max(0,t); jump=true;
     if(au.parts){
       let k=0; au.parts.forEach((p,j)=>{ if(p.start<=t) k=j; });
-      if(k!==au.k) loadPart(k,t-au.parts[k].start,true);
-      else { audio.currentTime=t-au.parts[k].start; audio.play().catch(()=>{}); }
-    } else { audio.currentTime=t; audio.play().catch(()=>{}); }
+      if(k!==au.k) loadPart(k,t-au.parts[k].start,play);
+      else { audio.currentTime=t-au.parts[k].start; if(play) audio.play().catch(()=>{}); }
+    } else { audio.currentTime=t; if(play) audio.play().catch(()=>{}); }
   }
-  audio.addEventListener('ended',()=>{ if(au.parts&&au.k+1<au.parts.length) loadPart(au.k+1,0,true); });
-  audio.addEventListener('error',()=>{ const h=panel.querySelector('#kn-hint'); if(h&&au.parts) h.textContent='녹음을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'; });
-  audio.addEventListener('timeupdate',()=>{
-    const body=panel.querySelector('#kn-body'); if(!body||!ready()) return;
-    const t=absT();
-    let hit=null;
-    for(const el of body.querySelectorAll('.kn-c')){ if(+el.dataset.s<=t+0.05) hit=el; else break; }
-    if(hit===nowEl) return;
+  const skip=d=>{ if(ready()) seek(absT()+d,!audio.paused); };
+  const toggle=()=>{ if(!ready()) return flash(); if(audio.paused){ if(au.parts&&au.k<0) loadPart(0,0,true); else audio.play().catch(()=>{}); } else audio.pause(); };
+
+  /* 지금 문장 표시 — 문장 시작 시각 배열에서 이분 탐색 */
+  function mark(){
+    if(!ready()) return;
+    const tot=Math.max((state.cache[au.path]&&state.cache[au.path].end)||0,absT(),!au.parts&&isFinite(audio.duration)?audio.duration:0);
+    const tl=$('#kn-time'); if(tl) tl.textContent=fmt(absT())+(tot?' / '+fmt(tot):'');
+    const sk=$('#kn-seek'); if(sk&&!sk.dataset.drag){ sk.max=Math.ceil(tot)||1; sk.value=Math.floor(absT()); }
+    if(!cueT.length) return;
+    const t=absT()+0.05;
+    let lo=0, hi=cueT.length-1, k=-1;
+    while(lo<=hi){ const m=(lo+hi)>>1; if(cueT[m]<=t){ k=m; lo=m+1; } else hi=m-1; }
+    const hit=k>=0?cueEls[k]:null;
+    if(hit===nowEl&&!jump) return;
     if(nowEl) nowEl.classList.remove('kn-now');
     nowEl=hit;
     if(hit){ hit.classList.add('kn-now');
-      if(!audio.paused&&state.follow){ const L=body.getBoundingClientRect(), r=hit.getBoundingClientRect();
+      const body=$('#kn-body');
+      if(body&&state.follow&&(!audio.paused||jump)){ jump=false; const L=body.getBoundingClientRect(), r=hit.getBoundingClientRect();
         if(r.top<L.top||r.bottom>L.bottom) body.scrollTop+=r.top-L.top-L.height/3; } }
+  }
+  audio.addEventListener('seeked',mark);
+  audio.addEventListener('timeupdate',()=>{
+    mark();
+    if(ready()&&audio.currentTime>0&&Date.now()-saveAt>4000){ saveAt=Date.now(); LS.set('kn-pos:'+au.path,String(Math.floor(absT()))); }
   });
-  const state={q:'',only:false,hideNone:false,cache:{},follow:true};
+  audio.addEventListener('ended',()=>{ if(au.parts&&au.k+1<au.parts.length) loadPart(au.k+1,0,true); });
+  audio.addEventListener('play',()=>{ const b=$('#kn-play'); if(b) b.textContent='⏸'; });
+  audio.addEventListener('pause',()=>{ const b=$('#kn-play'); if(b) b.textContent='▶'; if(ready()) LS.set('kn-pos:'+au.path,String(Math.floor(absT()))); });
+  audio.addEventListener('error',()=>{ const h=$('#kn-hint'); if(h&&au.parts&&audio.getAttribute('src')) h.textContent='녹음을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'; });
+
+  /* 휴대폰 잠금화면·이어폰 버튼 */
+  function media(){
+    if(!('mediaSession' in navigator)||!view) return;
+    try{
+      navigator.mediaSession.metadata=new MediaMetadata({title:`${view.l.id}. ${view.l.name}`,artist:(view.s.name||view.s.subject||'')+' 수업 녹음',album:'전사본'});
+      navigator.mediaSession.setActionHandler('seekbackward',()=>skip(-10));
+      navigator.mediaSession.setActionHandler('seekforward',()=>skip(10));
+      navigator.mediaSession.setActionHandler('play',()=>audio.play());
+      navigator.mediaSession.setActionHandler('pause',()=>audio.pause());
+    }catch(e){}
+  }
+  /* PC: 스페이스 재생/멈춤, ←/→ 5초 (검색칸에 입력 중일 땐 무시) */
+  document.addEventListener('keydown',e=>{
+    if(!view||!ready()||panel.offsetParent===null) return;
+    const tg=e.target, tag=(tg&&tg.tagName)||'';
+    if(/INPUT|TEXTAREA|SELECT|BUTTON/.test(tag)||(tg&&tg.isContentEditable)||e.ctrlKey||e.metaKey||e.altKey) return;
+    if(e.key===' '){ e.preventDefault(); toggle(); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); skip(-5); }
+    else if(e.key==='ArrowRight'){ e.preventDefault(); skip(5); }
+  });
 
   function list(){
     const subs=G().subjects||[];
@@ -4704,15 +4758,33 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     panel.innerHTML=html;
     panel.querySelectorAll('[data-hide]').forEach(b=>b.addEventListener('click',()=>{ state.hideNone=!state.hideNone; list(); }));
     panel.querySelectorAll('button.kn-open').forEach(b=>b.addEventListener('click',()=>{
-      const subs=G().subjects||[];
-      const s=subs.find(x=>(x.cid||x.name)===b.dataset.s);
+      const s=(G().subjects||[]).find(x=>(x.cid||x.name)===b.dataset.s);
       const l=s&&(s.lectures||[]).find(x=>String(x.id)===b.dataset.l);
       if(l){ view={s,l,i:0}; state.q=''; state.only=false; open(); }
     }));
   }
 
+  const HINT_LOCAL='이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.';
+  function showAu(){
+    const path=curPath(), remote=(view.l.au||[]).includes(path), on=ready();
+    const h=$('#kn-hint');
+    h.textContent=on?(au.parts?'🎧 수업 녹음':au.name):remote?'수업 녹음 불러오는 중…':HINT_LOCAL;
+    h.classList.toggle('on',on);
+    $('#kn-pick').hidden=remote&&!state.aufail;
+    if(on) $('#kn-slot').appendChild(audio); else if(audio.parentNode) audio.remove();
+    panel.querySelectorAll('.kn-ctl').forEach(b=>b.hidden=!on);
+    $('#kn-rate').textContent=au.rate+'×';
+    $('#kn-play').textContent=audio.paused?'▶':'⏸';
+    const pos=+(LS.get('kn-pos:'+path)||0), rs=$('#kn-resume');
+    rs.hidden=!(on&&pos>30&&audio.paused&&absT()<5); rs.textContent='이어 듣기 '+fmt(pos); rs.dataset.s=pos;
+    $('#kn-body').classList.toggle('kn-on',on);
+    if(on) media();
+    mark();
+  }
+
   async function open(){
     const {s,l,i}=view, path=l.tx[i];
+    state.aufail=false;
     panel.innerHTML=`<div class="kn-bar">
       <button class="kn-btn" id="kn-back">‹ 목록</button>
       <b style="flex:1">${esc(l.id)}. ${esc(l.name)}</b>
@@ -4722,82 +4794,83 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     ${l.tx.length>1?`<div class="kn-bar" id="kn-files">${l.tx.map((p,k)=>`<button class="kn-btn${k===i?' on':''}" data-k="${k}">${esc(p.split('/').pop().replace(/\.srt$/,''))}</button>`).join('')}</div>`:''}
     <div class="kn-bar kn-au" id="kn-au">
       <label class="kn-btn pri" id="kn-pick" style="cursor:pointer">🎧 녹음 열기<input type="file" id="kn-file" accept="audio/*,video/mp4,video/webm,.mp3,.m4a,.wav,.ogg,.opus,.aac,.mp4" hidden></label>
-      <span class="kn-hint" id="kn-hint">이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.</span>
-      <span id="kn-slot" style="display:contents"></span>
-      <button class="kn-btn" id="kn-rate" hidden>1×</button>
-      <button class="kn-btn${state.follow?' on':''}" id="kn-follow" hidden title="재생 중인 문장을 따라 화면 이동">따라가기</button>
+      <span class="kn-hint" id="kn-hint"></span>
+      <button class="kn-btn kn-ctl" id="kn-b10" hidden title="10초 뒤로">⟲10</button>
+      <button class="kn-btn kn-ctl kn-pl" id="kn-play" hidden title="재생/멈춤 (스페이스)">▶</button>
+      <button class="kn-btn kn-ctl" id="kn-f10" hidden title="10초 앞으로">10⟳</button>
+      <span class="kn-ctl kn-time" id="kn-time" hidden></span>
+      <button class="kn-btn kn-ctl" id="kn-rate" hidden title="재생 속도">1×</button>
+      <button class="kn-btn kn-ctl${state.follow?' on':''}" id="kn-follow" hidden title="재생 중인 문장을 따라 화면 이동">따라가기</button>
+      <button class="kn-btn pri" id="kn-resume" hidden></button>
+      <input type="range" class="kn-ctl kn-seek" id="kn-seek" min="0" max="1" step="1" value="0" hidden aria-label="재생 위치">
+      <span id="kn-slot" class="kn-slot"></span>
     </div>
     <div class="kn-bar"><input class="kn-srch" id="kn-q" type="search" placeholder="전사본 검색" value="${esc(state.q)}"><button class="kn-btn${state.only?' on':''}" id="kn-only">강조만</button></div>
     <div class="kn-list" id="kn-body"><p style="padding:20px;text-align:center;color:#5b666b">불러오는 중…</p></div>`;
-    panel.querySelector('#kn-back').onclick=()=>{ audio.pause(); view=null; list(); };
-    const fs=panel.querySelector('#kn-files');
+    $('#kn-back').onclick=()=>{ audio.pause(); view=null; list(); };
+    const fs=$('#kn-files');
     if(fs) fs.querySelectorAll('button').forEach(b=>b.onclick=()=>{ view.i=+b.dataset.k; open(); });
-    panel.querySelector('#kn-only').onclick=()=>{ state.only=!state.only; open(); };
-    const qi=panel.querySelector('#kn-q');
-    qi.oninput=()=>{ state.q=qi.value; draw(); };
-    /* 녹음 막대 */
-    const rateB=panel.querySelector('#kn-rate'), folB=panel.querySelector('#kn-follow');
-    const remote=(l.au||[]).includes(path);
-    panel.querySelector('#kn-pick').hidden=remote;
-    const showAu=()=>{
-      const on=ready();
-      panel.querySelector('#kn-hint').textContent=on?(au.parts?'🎧 수업 녹음 연결됨 — 문장을 누르면 그 자리부터 들려요':au.name)
-        :remote?'수업 녹음 불러오는 중…':'이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.';
-      panel.querySelector('#kn-hint').style.flex=on?'0 1 auto':'';
-      if(on) panel.querySelector('#kn-slot').appendChild(audio); else if(audio.parentNode) audio.remove();
-      rateB.hidden=folB.hidden=!on; rateB.textContent=au.rate+'×';
-      panel.querySelector('#kn-body').classList.toggle('kn-on',on);
-    };
-    if(au.path&&au.path!==path){ audio.pause(); }
-
-    panel.querySelector('#kn-file').onchange=e=>{ const f=e.target.files[0]; if(f){ setAudio(f); showAu(); } };
-    rateB.onclick=()=>{ const R=[1,1.25,1.5,1.75,2]; au.rate=R[(R.indexOf(au.rate)+1)%R.length]; audio.playbackRate=au.rate; rateB.textContent=au.rate+'×'; };
-    folB.onclick=()=>{ state.follow=!state.follow; folB.classList.toggle('on',state.follow); };
-    panel.querySelector('#kn-body').addEventListener('click',e=>{
+    $('#kn-only').onclick=e=>{ state.only=!state.only; e.currentTarget.classList.toggle('on',state.only); draw(); };
+    const qi=$('#kn-q'); let qt=0;
+    qi.oninput=()=>{ clearTimeout(qt); qt=setTimeout(()=>{ state.q=qi.value; draw(); },180); };
+    $('#kn-file').onchange=e=>{ const f=e.target.files[0]; if(f){ setAudio(f); showAu(); } };
+    $('#kn-rate').onclick=e=>{ const R=[1,1.25,1.5,1.75,2]; au.rate=R[(R.indexOf(au.rate)+1)%R.length]; audio.playbackRate=au.rate; LS.set('kn-rate',au.rate); e.currentTarget.textContent=au.rate+'×'; };
+    $('#kn-follow').onclick=e=>{ state.follow=!state.follow; e.currentTarget.classList.toggle('on',state.follow); };
+    $('#kn-play').onclick=toggle;
+    $('#kn-b10').onclick=()=>skip(-10);
+    $('#kn-f10').onclick=()=>skip(10);
+    const sk=$('#kn-seek');
+    sk.oninput=()=>{ sk.dataset.drag='1'; $('#kn-time').textContent=fmt(+sk.value)+' / '+fmt(+sk.max); };
+    sk.onchange=()=>{ delete sk.dataset.drag; seek(+sk.value,!audio.paused); };
+    $('#kn-resume').onclick=e=>{ e.currentTarget.hidden=true; seek(+e.currentTarget.dataset.s); };
+    $('#kn-body').addEventListener('click',e=>{
       const c=e.target.closest('.kn-c'), tt=e.target.closest('.kn-t');
-      if(c) seek(+c.dataset.s); else if(tt) seek(+tt.dataset.s);
+      if(c) seek(+c.dataset.s-0.3); else if(tt) seek(+tt.dataset.s-0.3);
     });
+
+    if(au.path&&au.path!==path){ audio.pause(); }
+    const remote=(l.au||[]).includes(path);
     showAu();
     if(remote&&!ready()){
       audio.pause(); audio.removeAttribute('src'); au.k=-1; au.parts=null; au.path=null;
-      fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path.replace(/\.srt$/,'.음성.json'))}?t=${Date.now()}`)
-        .then(r=>r.ok?r.json():Promise.reject(r.status))
-        .then(j=>{ if(!view||view.l.tx[view.i]!==path) return;
-          au.parts=(j.parts||[]).map(p=>({file:p.file,start:+p.start||0,url:`https://github.com/${REPO()}/releases/download/${encodeURIComponent(j.tag||'lecture-audio')}/${encodeURIComponent(p.file)}`}));
-          au.url=null; au.path=path; if(au.parts.length) loadPart(0,0,false); showAu(); })
-        .catch(()=>{ panel.querySelector('#kn-pick').hidden=false; panel.querySelector('#kn-hint').textContent='수업 녹음을 불러오지 못했어요. 기기에 있는 녹음 파일을 열어도 돼요.'; });
+      const use=j=>{ if(curPath()!==path) return;
+        au.parts=(j.parts||[]).map(p=>({file:p.file,start:+p.start||0,url:`https://github.com/${REPO()}/releases/download/${encodeURIComponent(j.tag||'lecture-audio')}/${encodeURIComponent(p.file)}`}));
+        au.url=null; au.path=path; au.k=-1; showAu(); };
+      const hit=state.aucache[path];
+      (hit?Promise.resolve(hit):fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path.replace(/\.srt$/,'.음성.json'))}?v=${VER()}`)
+        .then(r=>r.ok?r.json():Promise.reject(r.status)).then(j=>(state.aucache[path]=j)))
+        .then(use)
+        .catch(()=>{ state.aufail=true; showAu(); $('#kn-hint').textContent='수업 녹음을 불러오지 못했어요. 기기에 있는 녹음 파일을 열어도 돼요.'; });
     }
 
-    const body=panel.querySelector('#kn-body');
+    const body=$('#kn-body');
     try{
       if(!state.cache[path]){
-        const r=await fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path)}?t=${Date.now()}`);
+        const r=await fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path)}?v=${VER()}`);
         if(!r.ok) throw new Error(r.status);
         state.cache[path]=srtToParas(await r.text());
       }
-      draw();
+      if(curPath()===path) draw();
     }catch(e){
       body.innerHTML=`<p style="padding:20px;text-align:center;color:#d9264f">전사본을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.</p>`;
     }
   }
 
   function draw(){
-    const body=panel.querySelector('#kn-body'); if(!body||!view) return;
-    const paras=state.cache[view.l.tx[view.i]]||[];
-    const q=state.q.trim();
-    const rows=paras.filter(p=>(!state.only||isEm(p.x))&&(!q||p.x.toLowerCase().includes(q.toLowerCase())));
+    const body=$('#kn-body'); if(!body||!view) return;
+    const paras=state.cache[curPath()]; if(!paras) return;
+    const q=state.q.trim(), ql=q.toLowerCase();
+    const rows=paras.filter(p=>(!state.only||p.em)&&(!q||p.low.includes(ql)));
+    cueEls=[]; cueT=[]; nowEl=null;
     if(!rows.length){ body.innerHTML=`<p style="padding:20px;text-align:center;color:#5b666b">조건에 맞는 문단이 없어요.</p>`; return; }
     const qre=q?new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'):null;
-    body.innerHTML=rows.map(p=>{
-      const em=isEm(p.x);
-      const t=(p.c||[{s:p.t,t:p.x}]).map(c=>{
-        let x=esc(c.t).replace(new RegExp(EMPH.source,'g'),m=>`<span class="kn-em">${m}</span>`);
-        if(qre) x=x.replace(qre,'<mark>$1</mark>');
-        return `<span class="kn-c" data-s="${c.s}">${x}</span>`;
-      }).join(' ');
-      return `<div class="kn-p${em?' hl':''}"><span class="kn-t" data-s="${p.t}">${fmt(p.t)}</span>${em?'<span class="kn-ct" style="font-size:11px">교수님 강조</span>':''}<p>${t}</p></div>`;
-    }).join('');
-    nowEl=null; if(ready()&&(!audio.paused||audio.currentTime)) audio.dispatchEvent(new Event('timeupdate'));
+    const mk=h=>qre?h.replace(/(<[^>]*>)|([^<]+)/g,(m,tag,txt)=>tag||txt.replace(qre,'<mark>$1</mark>')):h;
+    body.innerHTML=rows.map(p=>
+      `<div class="kn-p${p.em?' hl':''}"><span class="kn-t" data-s="${p.t}">${fmt(p.t)}</span>${p.em?'<span class="kn-ct" style="font-size:11px">교수님 강조</span>':''}<p>${p.c.map(c=>`<span class="kn-c" data-s="${c.s}">${mk(c.h)}</span>`).join(' ')}</p></div>`
+    ).join('');
+    cueEls=[...body.querySelectorAll('.kn-c')]; cueT=cueEls.map(e=>+e.dataset.s);
+    if(q){ const f=body.querySelector('mark'); if(f) f.scrollIntoView({block:'nearest'}); }
+    mark();
   }
 
   window.KNUTS_RENDER=()=>{ if(view) open(); else list(); };
