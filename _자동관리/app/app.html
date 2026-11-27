@@ -4577,6 +4577,15 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
 .kn-p p{margin:2px 0 0;font-size:16px;line-height:1.75}
 .kn-em{background:#ffe58a;border-radius:3px;padding:0 2px;font-weight:700}
 .kn-p mark{background:transparent;outline:2px solid #0b5d63;border-radius:3px}
+.kn-au{position:sticky;top:0;z-index:2;background:var(--card,#fff);border:1px solid var(--line,#e2e6ea);border-radius:12px;padding:8px 10px}
+.kn-au audio{flex:1;min-width:200px;height:40px}
+.kn-au .kn-hint{font-size:13px;color:#5b666b;flex:1;min-width:180px}
+.kn-au.flash{animation:knflash .9s 2}
+@keyframes knflash{50%{border-color:#e9b800;box-shadow:0 0 0 3px #ffe58a}}
+.kn-c{cursor:pointer;border-radius:3px}
+.kn-on .kn-c:hover{background:rgba(11,93,99,.10)}
+.kn-c.kn-now{background:#cdeeea;box-shadow:0 0 0 2px #cdeeea}
+.kn-on .kn-t{cursor:pointer;color:#0b5d63}
 @media (prefers-color-scheme:dark){
   .kn-row,.kn-list,.kn-btn,.kn-srch{background:#151d20;border-color:#27353a}
   .kn-open{background:transparent}
@@ -4584,6 +4593,8 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   .kn-go:hover{background:#0b5d63;color:#fff}
   .kn-p.hl{background:rgba(255,214,0,.10)}
   .kn-em{background:rgba(255,214,0,.30);color:inherit}
+  .kn-au{background:#151d20;border-color:#27353a}
+  .kn-c.kn-now{background:#1f4a4a;box-shadow:0 0 0 2px #1f4a4a}
 }
 </style>
 <script>
@@ -4610,7 +4621,7 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     });
     const out=[]; let cur=null;
     cues.forEach(c=>{ if(!c.t) return;
-      if(!cur) cur={t:c.s,e:c.e,x:c.t}; else { cur.x+=' '+c.t; cur.e=c.e; }
+      if(!cur) cur={t:c.s,e:c.e,x:c.t,c:[c]}; else { cur.x+=' '+c.t; cur.e=c.e; cur.c.push(c); }
       const d=cur.e-cur.t;
       if((d>=40&&/[.?!다요죠까]\s*$/.test(cur.x))||d>=75){ out.push(cur); cur=null; }
     });
@@ -4626,7 +4637,36 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   };
 
   let view=null;   /* {sub, lec, file} */
-  const state={q:'',only:false,hideNone:false,cache:{}};
+  /* 녹음 듣기: 기기에 있는 녹음 파일을 열면(업로드 없음) 문장을 눌러 그 자리부터 재생 */
+  const audio=document.createElement('audio');
+  audio.controls=true; audio.preload='metadata';
+  const au={path:null,name:'',url:null,rate:1};
+  let nowEl=null;
+  function setAudio(file){
+    if(au.url) URL.revokeObjectURL(au.url);
+    au.url=URL.createObjectURL(file); au.name=file.name; au.path=view.l.tx[view.i];
+    audio.src=au.url; audio.playbackRate=au.rate;
+  }
+  function seek(t){
+    if(!au.url||au.path!==view.l.tx[view.i]){
+      const b=panel.querySelector('.kn-au'); if(b){ b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); b.scrollIntoView({block:'nearest'}); }
+      return;
+    }
+    audio.currentTime=Math.max(0,t-0.3); audio.play().catch(()=>{});
+  }
+  audio.addEventListener('timeupdate',()=>{
+    const body=panel.querySelector('#kn-body'); if(!body||!view||au.path!==view.l.tx[view.i]) return;
+    const t=audio.currentTime;
+    let hit=null;
+    for(const el of body.querySelectorAll('.kn-c')){ if(+el.dataset.s<=t+0.05) hit=el; else break; }
+    if(hit===nowEl) return;
+    if(nowEl) nowEl.classList.remove('kn-now');
+    nowEl=hit;
+    if(hit){ hit.classList.add('kn-now');
+      if(!audio.paused&&state.follow){ const L=body.getBoundingClientRect(), r=hit.getBoundingClientRect();
+        if(r.top<L.top||r.bottom>L.bottom) body.scrollTop+=r.top-L.top-L.height/3; } }
+  });
+  const state={q:'',only:false,hideNone:false,cache:{},follow:true};
 
   function list(){
     const subs=G().subjects||[];
@@ -4665,14 +4705,40 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
       <a class="kn-btn pri" href="${codeURL(lecPrompt(s,l))}" target="_blank" rel="noopener">이 수업 정리</a>
     </div>
     ${l.tx.length>1?`<div class="kn-bar" id="kn-files">${l.tx.map((p,k)=>`<button class="kn-btn${k===i?' on':''}" data-k="${k}">${esc(p.split('/').pop().replace(/\.srt$/,''))}</button>`).join('')}</div>`:''}
+    <div class="kn-bar kn-au" id="kn-au">
+      <label class="kn-btn pri" style="cursor:pointer">🎧 녹음 열기<input type="file" id="kn-file" accept="audio/*,video/mp4,video/webm,.mp3,.m4a,.wav,.ogg,.opus,.aac,.mp4" hidden></label>
+      <span class="kn-hint" id="kn-hint">이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.</span>
+      <span id="kn-slot" style="display:contents"></span>
+      <button class="kn-btn" id="kn-rate" hidden>1×</button>
+      <button class="kn-btn${state.follow?' on':''}" id="kn-follow" hidden title="재생 중인 문장을 따라 화면 이동">따라가기</button>
+    </div>
     <div class="kn-bar"><input class="kn-srch" id="kn-q" type="search" placeholder="전사본 검색" value="${esc(state.q)}"><button class="kn-btn${state.only?' on':''}" id="kn-only">강조만</button></div>
     <div class="kn-list" id="kn-body"><p style="padding:20px;text-align:center;color:#5b666b">불러오는 중…</p></div>`;
-    panel.querySelector('#kn-back').onclick=()=>{ view=null; list(); };
+    panel.querySelector('#kn-back').onclick=()=>{ audio.pause(); view=null; list(); };
     const fs=panel.querySelector('#kn-files');
     if(fs) fs.querySelectorAll('button').forEach(b=>b.onclick=()=>{ view.i=+b.dataset.k; open(); });
     panel.querySelector('#kn-only').onclick=()=>{ state.only=!state.only; open(); };
     const qi=panel.querySelector('#kn-q');
     qi.oninput=()=>{ state.q=qi.value; draw(); };
+    /* 녹음 막대 */
+    const rateB=panel.querySelector('#kn-rate'), folB=panel.querySelector('#kn-follow');
+    const showAu=()=>{
+      const on=!!au.url&&au.path===path;
+      panel.querySelector('#kn-hint').textContent=on?au.name:'이 수업 녹음 파일(mp3 등)을 열면 문장을 눌러 그 자리부터 들을 수 있어요. 파일은 이 기기 안에서만 재생되고 어디에도 올라가지 않아요.';
+      panel.querySelector('#kn-hint').style.flex=on?'0 1 auto':'';
+      if(on) panel.querySelector('#kn-slot').appendChild(audio); else if(audio.parentNode) audio.remove();
+      rateB.hidden=folB.hidden=!on; rateB.textContent=au.rate+'×';
+      panel.querySelector('#kn-body').classList.toggle('kn-on',on);
+    };
+    if(au.path&&au.path!==path){ audio.pause(); }
+    panel.querySelector('#kn-file').onchange=e=>{ const f=e.target.files[0]; if(f){ setAudio(f); showAu(); } };
+    rateB.onclick=()=>{ const R=[1,1.25,1.5,1.75,2]; au.rate=R[(R.indexOf(au.rate)+1)%R.length]; audio.playbackRate=au.rate; rateB.textContent=au.rate+'×'; };
+    folB.onclick=()=>{ state.follow=!state.follow; folB.classList.toggle('on',state.follow); };
+    panel.querySelector('#kn-body').addEventListener('click',e=>{
+      const c=e.target.closest('.kn-c'), tt=e.target.closest('.kn-t');
+      if(c) seek(+c.dataset.s); else if(tt) seek(+tt.dataset.s);
+    });
+    showAu();
 
     const body=panel.querySelector('#kn-body');
     try{
@@ -4693,12 +4759,17 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     const q=state.q.trim();
     const rows=paras.filter(p=>(!state.only||isEm(p.x))&&(!q||p.x.toLowerCase().includes(q.toLowerCase())));
     if(!rows.length){ body.innerHTML=`<p style="padding:20px;text-align:center;color:#5b666b">조건에 맞는 문단이 없어요.</p>`; return; }
+    const qre=q?new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'):null;
     body.innerHTML=rows.map(p=>{
       const em=isEm(p.x);
-      let t=esc(p.x).replace(new RegExp(EMPH.source,'g'),m=>`<span class="kn-em">${m}</span>`);
-      if(q) t=t.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');
-      return `<div class="kn-p${em?' hl':''}"><span class="kn-t">${fmt(p.t)}</span>${em?'<span class="kn-ct" style="font-size:11px">교수님 강조</span>':''}<p>${t}</p></div>`;
+      const t=(p.c||[{s:p.t,t:p.x}]).map(c=>{
+        let x=esc(c.t).replace(new RegExp(EMPH.source,'g'),m=>`<span class="kn-em">${m}</span>`);
+        if(qre) x=x.replace(qre,'<mark>$1</mark>');
+        return `<span class="kn-c" data-s="${c.s}">${x}</span>`;
+      }).join(' ');
+      return `<div class="kn-p${em?' hl':''}"><span class="kn-t" data-s="${p.t}">${fmt(p.t)}</span>${em?'<span class="kn-ct" style="font-size:11px">교수님 강조</span>':''}<p>${t}</p></div>`;
     }).join('');
+    nowEl=null; if(!audio.paused||audio.currentTime) audio.dispatchEvent(new Event('timeupdate'));
   }
 
   window.KNUTS_RENDER=()=>{ if(view) open(); else list(); };
