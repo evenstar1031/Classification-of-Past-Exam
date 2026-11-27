@@ -4669,8 +4669,8 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     au.url=URL.createObjectURL(file); au.name=file.name; au.parts=null; au.k=-1; au.path=curPath();
     audio.src=au.url; audio.playbackRate=au.rate;
   }
-  function loadPart(k,off,play){
-    au.k=k; audio.preload='metadata'; audio.src=au.parts[k].url;
+  function loadPart(k,off,play,src){
+    au.k=k; au.off=off; au.alt=!!src; audio.preload='metadata'; audio.src=src||au.parts[k].url;
     audio.addEventListener('loadedmetadata',()=>{ audio.playbackRate=au.rate; if(off>0) audio.currentTime=off; },{once:true});
     if(play) audio.play().catch(()=>{});   /* 누른 순간에 play (휴대폰은 누른 순간에만 재생 허락) */
   }
@@ -4714,7 +4714,12 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
   audio.addEventListener('ended',()=>{ if(au.parts&&au.k+1<au.parts.length) loadPart(au.k+1,0,true); });
   audio.addEventListener('play',()=>{ const b=$('#kn-play'); if(b) b.textContent='⏸'; });
   audio.addEventListener('pause',()=>{ const b=$('#kn-play'); if(b) b.textContent='▶'; if(ready()) LS.set('kn-pos:'+au.path,String(Math.floor(absT()))); });
-  audio.addEventListener('error',()=>{ const h=$('#kn-hint'); if(h&&au.parts&&audio.getAttribute('src')) h.textContent='녹음을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'; });
+  audio.addEventListener('error',()=>{
+    if(!au.parts||!audio.getAttribute('src')) return;
+    const p=au.parts[au.k];
+    if(p&&p.alt&&!au.alt){ loadPart(au.k,au.off||0,true,p.alt); return; }   /* Pages 에 아직 없으면 릴리스 주소로 한 번 더 */
+    const h=$('#kn-hint'); if(h) h.textContent=navigator.onLine===false?'인터넷 연결이 끊겼어요. 연결 후 다시 눌러 주세요.':'이 기기에서 녹음을 재생하지 못했어요. 잠시 뒤 다시 시도해 주세요.';
+  });
 
   /* 휴대폰 잠금화면·이어폰 버튼 */
   function media(){
@@ -4866,7 +4871,11 @@ header.top h1,.rvw .s1-title,.date-heading,.rvw .subject-head h2{font-family:var
     if(remote&&!ready()){
       audio.pause(); audio.removeAttribute('src'); au.k=-1; au.parts=null; au.path=null;
       const use=j=>{ if(curPath()!==path) return;
-        au.parts=(j.parts||[]).map(p=>({file:p.file,start:+p.start||0,url:`https://github.com/${REPO()}/releases/download/${encodeURIComponent(j.tag||'lecture-audio')}/${encodeURIComponent(p.file)}`}));
+        /* Pages(audio/mpeg — 아이패드·아이폰 Safari 재생 가능)를 먼저, 안 되면 릴리스(octet-stream) 주소로 */
+        const [own,rn]=REPO().split('/');
+        au.parts=(j.parts||[]).map(p=>({file:p.file,start:+p.start||0,
+          url:`https://${own.toLowerCase()}.github.io/${rn}/audio/${encodeURIComponent(p.file)}`,
+          alt:`https://github.com/${REPO()}/releases/download/${encodeURIComponent(j.tag||'lecture-audio')}/${encodeURIComponent(p.file)}`}));
         au.url=null; au.path=path; au.k=-1; showAu(); };
       const hit=state.aucache[path];
       (hit?Promise.resolve(hit):fetch(`https://raw.githubusercontent.com/${REPO()}/main/${enc(path.replace(/\.srt$/,'.음성.json'))}?v=${VER()}`)

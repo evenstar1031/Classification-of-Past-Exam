@@ -1,0 +1,87 @@
+# 강의 녹음(릴리스 lecture-audio 의 MP3)을 GitHub Pages 로 내보낸다.
+# 릴리스 다운로드는 "application/octet-stream + 첨부파일" 로 와서 아이패드·아이폰 Safari 가 재생하지 못한다.
+# Pages 는 audio/mpeg 로 보내고 구간 요청(건너뛰기)도 되므로 앱은 Pages 주소를 먼저 쓰고, 안 되면 릴리스 주소로 돌아간다.
+# MP3 는 저장소(git)에 넣지 않고 배포할 때마다 릴리스에서 받아 묶는다.
+# 처음 한 번: 저장소 Settings → Pages → Source 를 "GitHub Actions" 로.
+name: 강의 녹음 Pages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */3 * * *'   # 노트북이 릴리스에만 올리고 커밋이 없을 때를 위해 3시간마다
+  push:
+    branches: [main]
+    paths:
+      - '올리기/전사본/**'
+      - '학습자료/**/*.음성.json'
+      - '.github/workflows/audio-pages.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: audio-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.dep.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: lecture-audio
+    steps:
+      - name: 릴리스 녹음 목록
+        id: list
+        run: |
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[] | select(.name|test("\\.(mp3|m4a)$";"i")) | "\(.name)\t\(.size)"' > list.tsv
+          cat list.tsv
+          echo "sig=$(sha1sum list.tsv | cut -c1-12)" >> "$GITHUB_OUTPUT"
+
+      - name: 이미 같은 목록으로 배포했으면 건너뛰기
+        id: same
+        uses: actions/cache@v4
+        with:
+          path: list.done
+          key: audio-pages-${{ steps.list.outputs.sig }}
+
+      - name: 녹음 받기
+        if: steps.same.outputs.cache-hit != 'true' || github.event_name != 'schedule'
+        run: |
+          mkdir -p site/audio
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir site/audio --pattern '*.mp3' --pattern '*.m4a'
+          ls -la site/audio
+          echo '<!doctype html><meta charset="utf-8"><title>강의 녹음</title><p>앱 전사본 화면에서 쓰는 강의 녹음입니다.</p>' > site/index.html
+          touch site/.nojekyll
+          du -sh site
+          touch list.done
+
+      - uses: actions/configure-pages@v5
+        if: steps.same.outputs.cache-hit != 'true' || github.event_name != 'schedule'
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.same.outputs.cache-hit != 'true' || github.event_name != 'schedule'
+        with:
+          path: site
+      - id: dep
+        if: steps.same.outputs.cache-hit != 'true' || github.event_name != 'schedule'
+        uses: actions/deploy-pages@v4
+
+      - name: 오디오로 나가는지 확인
+        if: steps.same.outputs.cache-hit != 'true' || github.event_name != 'schedule'
+        run: |
+          f=$(head -1 list.tsv | cut -f1)
+          [ -n "$f" ] || exit 0
+          u="${{ steps.dep.outputs.page_url }}audio/$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$f")"
+          for i in 1 2 3 4 5 6; do
+            h=$(curl -sIL -r 0-1 "$u" || true)
+            echo "$h" | grep -iE '^HTTP|content-type|content-range' || true
+            if echo "$h" | grep -qiE '^content-type: *audio/'; then echo "OK $u"; exit 0; fi
+            sleep 20
+          done
+          echo "::warning::Pages 에서 audio/* 로 확인되지 않음: $u"
