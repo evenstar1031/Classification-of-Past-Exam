@@ -172,7 +172,7 @@ def guess_by_text(text, candidates, by_time=None):
     early = [x for x in scored if x[1] < EARLY]
     if early:                                   # 앞머리에 이름을 말한 쪽
         early.sort(key=lambda x: (x[1] // 300, -x[3], x[1]))
-        pick, sure = early[0], True
+        pick, sure = early[0], 'early'      # 참이지만, 앞머리에서 이름을 말했다는 표시
     else:                                       # 잡담으로 시작했으면 가장 자주 나온 쪽
         scored.sort(key=lambda x: (-x[0], -x[3], x[1]))
         pick, sure = scored[0], scored[0][0] >= 2
@@ -395,6 +395,20 @@ def audio_plan(folder, srts):
     return {'tag': info.get('tag') or 'lecture-audio', 'parts': parts}
 
 
+def upload_day(folder):
+    """폴더를 올린 커밋의 날짜(한국 시간) → (월, 일). git 이 없거나 기록이 없으면 오늘(한국)."""
+    import datetime
+    import subprocess
+    kst = datetime.timezone(datetime.timedelta(hours=9))
+    try:
+        out = subprocess.run(['git', '-C', str(ROOT), 'log', '-1', '--format=%ct', '--', str(folder)],
+                             capture_output=True, text=True, timeout=30).stdout.strip()
+        t = datetime.datetime.fromtimestamp(int(out), kst) if out else datetime.datetime.now(kst)
+    except (OSError, ValueError, subprocess.SubprocessError):
+        t = datetime.datetime.now(kst)
+    return (t.month, t.day)
+
+
 def free_name(dest, stem, used):
     """같은 날 같은 수업 전사본이 여럿이면 _2, _3 을 붙인다"""
     cand = dest / f'{stem}.srt'
@@ -417,12 +431,21 @@ def main(dry=False):
     for key, lec_id, name in lec_table.values():
         by_subject.setdefault(key, []).append((key, lec_id, name))
     moved, left, used = [], [], set()
+    taken = {}   # 날짜 → 이번에 이미 녹음이 들어간 수업들 (같은 날 녹음 두 개가 한 수업으로 몰리지 않게)
 
     for folder in sorted(p for p in INBOX.iterdir() if p.is_dir()):
         srts = sorted(folder.glob('*.srt'))
         if not srts:
             continue
         parsed = parse_folder(folder.name)
+        guessed = ''
+        if not parsed:
+            # 폴더 이름에 날짜가 없으면 올린 날(그 폴더를 올린 커밋의 한국 날짜)로 시간표를 찾는다
+            up = upload_day(folder)
+            if up:
+                m = re.search(r'(\d{1,2})\s*(?:교시|차시)', unicodedata.normalize('NFC', folder.name))
+                parsed = (up, int(m.group(1)) if m else None)
+                guessed = f'  (폴더 이름에 날짜가 없어 올린 날 {up[0]}/{up[1]} 수업으로 봄)'
         if not parsed:
             left.append((folder.name, '폴더 이름에서 날짜·교시를 못 읽음 (예: 1117_1교시)'))
             continue
@@ -444,12 +467,32 @@ def main(dry=False):
             year = entry[0] if entry else 0
         stem = f'전사본_{year}-{day[0]:02d}-{day[1]:02d}'
 
+        # 그날 시간표에 있는 수업들 (시간표 순서)
+        today = []
+        for _a, _b, title, _p in (tt.get(day) or (0, []))[1]:
+            h = lec_table.get(norm(title))
+            if h and h not in today:
+                today.append(h)
+        done = taken.setdefault(day, [])
+
         plan, bad = [], None
         for n, start in enumerate(bounds):
             stop = bounds[n + 1] if n + 1 < len(bounds) else len(blocks)
-            by_text, _r, _c = guess_by_text(text_of(blocks, start, stop), cands,
-                                            by_time if n == 0 else None)
+            by_text, _r, how = guess_by_text(text_of(blocks, start, stop), cands,
+                                             by_time if n == 0 else None)
             note = ''
+            # 그날 시간표에 없는 수업은, 앞머리에서 그 수업 이름을 말했을 때만 믿는다
+            # (본문에 지나가듯 나온 다른 수업 이름에 끌려가지 않게)
+            if by_text and today and by_text not in today and how != 'early':
+                by_text = None
+            if not by_text and n == 0 and today and (not by_time or by_time in done):
+                rest = [x for x in today if x not in done]
+                if by_time in today:   # 시간표에서 그 교시 뒤의 수업부터
+                    k = today.index(by_time)
+                    rest = [x for x in today[k:] if x not in done] or rest
+                if rest:
+                    by_time = rest[0]
+                    note = f'  (시간표의 그 교시 수업은 이미 다른 녹음이 있어 그날 다음 수업 "{by_time[2]}" 으로 봄 — 확인 필요)'
             if by_text:
                 hit = by_text
                 if n == 0 and by_time and by_time[1] != by_text[1]:
@@ -457,13 +500,15 @@ def main(dry=False):
                             f'내용이 "{by_text[2]}" 이라 내용을 따름)')
             elif n == 0 and by_time:
                 hit = by_time
-                note = '  (첫머리에서 수업 이름을 못 찾아 시간표대로 넣음 — 확인 필요)'
+                note = note or '  (첫머리에서 수업 이름을 못 찾아 시간표대로 넣음 — 확인 필요)'
             else:
                 bad = '이어 붙은 뒷부분이 어느 수업인지 못 찾음'
                 break
+            note += guessed if n == 0 else ''
             if len(bounds) > 1:
                 note += f'  (한 녹음 안의 {n + 1}번째 수업, {start_sec(blocks[start]) // 60}분부터)'
             plan.append((hit, start, stop, note))
+            done.append(hit)
         if bad:
             left.append((folder.name, bad))
             continue
