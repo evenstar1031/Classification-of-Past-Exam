@@ -42,6 +42,16 @@ APP = ROOT / '_자동관리' / 'app' / 'app.html'
 INFO = ROOT / '_자동관리' / '과목정보'
 
 
+def lec_dir(key, lid, name):
+    """학습자료 수업 폴더. 이름의 ':' 같은 글자는 build_lectures.safe 와 똑같이 뺀다
+    (예: '소아감염: 바이러스 질환' → '17_소아감염 바이러스 질환'). 안 그러면 폴더가 둘로 갈리고
+    학습자료를 못 찾아 내용 비교에서 그 수업이 빠진다."""
+    s = re.sub(r'\s*/\s*', '·', name)
+    s = re.sub(r'[\\:*?"<>|]', '', s)
+    s = re.sub(r'\s+', ' ', s).strip()
+    return ROOT / '학습자료' / S.folder(key) / f'{lid}_{s}'
+
+
 def norm(t):
     """비교용: 공백·기호 빼고 한글 정규화"""
     t = unicodedata.normalize('NFC', str(t or ''))
@@ -127,7 +137,7 @@ def load_docs(lec_table):
             keywords[(f.stem, lec.get('id'))] = ' '.join(lec.get('keywords') or []) + ' ' + (lec.get('memo') or '')
     for key, lid, name in set(lec_table.values()):
         try:
-            d = ROOT / '학습자료' / S.folder(key) / f'{lid}_{name}'
+            d = lec_dir(key, lid, name)
         except Exception:
             continue
         parts = [keywords.get((key, lid), '')]
@@ -616,7 +626,7 @@ def main(dry=False):
         stem = f'전사본_{year}-{day[0]:02d}-{day[1]:02d}'
         if day not in taken:   # 그날 녹음이 이미 들어간 수업(앞서 올린 것)도 '이미 있음'으로 친다
             taken[day] = [h for h in today
-                          if list((ROOT / '학습자료' / S.folder(h[0]) / f'{h[1]}_{h[2]}' / '전사본').glob(stem + '*.srt'))]
+                          if list((lec_dir(h[0], h[1], h[2]) / '전사본').glob(stem + '*.srt'))]
         done = taken[day]
 
         plan, bad = [], None
@@ -662,7 +672,7 @@ def main(dry=False):
 
         for hit, start, stop, note in plan:
             subj_key, lec_id, lec_name = hit
-            dest = ROOT / '학습자료' / S.folder(subj_key) / f'{lec_id}_{lec_name}' / '전사본'
+            dest = lec_dir(subj_key, lec_id, lec_name) / '전사본'
             out = free_name(dest, stem, used)
             moved.append((folder.name, out.relative_to(ROOT), note))
             if not dry:
